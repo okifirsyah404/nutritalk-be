@@ -27,7 +27,7 @@ jobs:
           cache: 'npm'
       - run: |
           touch .env
-          echo "${{secrets.WORKFLOW_ENV}}" >> .env"
+          echo "${{secrets.WORKFLOW_ENV}}" >> .env
           cat .env
       - run: npm ci
       - run: npm run db:generate
