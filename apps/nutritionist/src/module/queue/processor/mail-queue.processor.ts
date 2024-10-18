@@ -6,8 +6,8 @@ import {
   Processor,
 } from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
-import { MailQueueConstant } from 'apps/nutritionist/src/common/constant/queue/mail-queue.constant';
 import { Job } from 'bull';
+import { MailQueueConstant } from '../../../common/constant/queue/mail-queue.constant';
 
 @Processor(MailQueueConstant.MAIL_QUEUE_PROCESSOR)
 export class MailQueueProcessor {

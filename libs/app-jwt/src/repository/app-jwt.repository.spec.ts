@@ -1,18 +1,20 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { TestBed } from '@automock/jest';
+import { PrismaService } from '@database/prisma';
 import { AppJwtRepository } from './app-jwt.repository';
 
-describe('AppJwtRepository', () => {
-  let provider: AppJwtRepository;
+describe('AppJwtRepository Unit Test', () => {
+  let repository: AppJwtRepository;
+  let prisma: jest.Mocked<PrismaService>;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [AppJwtRepository],
-    }).compile();
+  beforeEach(() => {
+    const { unit, unitRef } = TestBed.create(AppJwtRepository).compile();
 
-    provider = module.get<AppJwtRepository>(AppJwtRepository);
+    repository = unit;
+    prisma = unitRef.get(PrismaService);
   });
 
   it('should be defined', () => {
-    expect(provider).toBeDefined();
+    expect(repository).toBeDefined();
+    expect(prisma).toBeDefined();
   });
 });

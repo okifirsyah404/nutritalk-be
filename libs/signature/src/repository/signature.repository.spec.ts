@@ -1,18 +1,20 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { TestBed } from '@automock/jest';
+import { PrismaService } from '@database/prisma';
 import { SignatureRepository } from './signature.repository';
 
-describe('SignatureRepository', () => {
-  let provider: SignatureRepository;
+describe('SignatureRepository Unit Test', () => {
+  let repository: SignatureRepository;
+  let prisma: jest.Mocked<PrismaService>;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [SignatureRepository],
-    }).compile();
+  beforeEach(() => {
+    const { unit, unitRef } = TestBed.create(SignatureRepository).compile();
 
-    provider = module.get<SignatureRepository>(SignatureRepository);
+    repository = unit;
+    prisma = unitRef.get(PrismaService);
   });
 
   it('should be defined', () => {
-    expect(provider).toBeDefined();
+    expect(repository).toBeDefined();
+    expect(prisma).toBeDefined();
   });
 });

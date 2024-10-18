@@ -1,18 +1,20 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { TestBed } from '@automock/jest';
+import { AppJwtRepository } from '../repository/app-jwt.repository';
 import { AppJwtService } from './app-jwt.service';
 
-describe('AppJwtService', () => {
+describe('AppJwtService Unit Test', () => {
   let service: AppJwtService;
+  let repository: jest.Mocked<AppJwtRepository>;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [AppJwtService],
-    }).compile();
+  beforeEach(() => {
+    const { unit, unitRef } = TestBed.create(AppJwtService).compile();
 
-    service = module.get<AppJwtService>(AppJwtService);
+    service = unit;
+    repository = unitRef.get(AppJwtRepository);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+    expect(repository).toBeDefined();
   });
 });
