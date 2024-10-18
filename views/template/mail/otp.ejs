@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>One-Time Password (OTP) Email</title>
+  </head>
+  <body
+    style="
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333333;
+    "
+  >
+    <div
+      style="
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+      "
+    >
+      <h1 style="text-align: center; color: #e38c4c">
+        One-Time Password (OTP) Untuk <%= purpose %>
+      </h1>
+      <p>Halo <%= recipientName %>,</p>
+      <p>Kode OTP (One-Time Password) anda untuk <%= purpose %></p>
+      <div
+        style="
+          text-align: center;
+          background-color: #e38c4c;
+          padding: 10px;
+          border: 1px solid #e0e0e0;
+          border-radius: 5px;
+        "
+      >
+        <strong style="font-size: 20px"><%= otpCode %></strong>
+      </div>
+      <p>Harap gunakan kode OTP di atas dalam <%= minutes %> menit ke depan.</p>
+      <p>
+        Jika permintaan kode OTP ini bukan bagian dari aktivitas anda, harap
+        abaikan kode ini.
+      </p>
+      <p>Terima Kasih,</p>
+      <p>
+        <strong
+          >Teaching Factory Nutrition Care Center Politeknik Negeri
+          Jember</strong
+        >
+      </p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,79 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2022",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": false,
+    "resolveJsonModule": true,
+    "paths": {
+      "@config/app-config": [
+        "libs/app-config/src"
+      ],
+      "@config/app-config/*": [
+        "libs/app-config/src/*"
+      ],
+      "@s3storage/s3storage": [
+        "libs/s3storage/src"
+      ],
+      "@s3storage/s3storage/*": [
+        "libs/s3storage/src/*"
+      ],
+      "@common/common": [
+        "libs/common/src"
+      ],
+      "@common/common/*": [
+        "libs/common/src/*"
+      ],
+      "@database/prisma": [
+        "libs/prisma/src"
+      ],
+      "@database/prisma/*": [
+        "libs/prisma/src/*"
+      ],
+      "@util/util": [
+        "libs/util/src"
+      ],
+      "@util/util/*": [
+        "libs/util/src/*"
+      ],
+      "@otp/otp": [
+        "libs/otp/src"
+      ],
+      "@otp/otp/*": [
+        "libs/otp/src/*"
+      ],
+      "@mail/mailer": [
+        "libs/mailer/src"
+      ],
+      "@mail/mailer/*": [
+        "libs/mailer/src/*"
+      ],
+      "@sign/signature": [
+        "libs/signature/src"
+      ],
+      "@sign/signature/*": [
+        "libs/signature/src/*"
+      ],
+      "@jwt/app-jwt": [
+        "libs/app-jwt/src"
+      ],
+      "@jwt/app-jwt/*": [
+        "libs/app-jwt/src/*"
+      ]
+    }
+  }
+}

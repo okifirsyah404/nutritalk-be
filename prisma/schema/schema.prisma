@@ -1,0 +1,739 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// ------------------------------------------------------------------
+// MODELS
+// ------------------------------------------------------------------
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+// ------------------------------------------------------------------
+// ACCOUNT MODEL
+// ------------------------------------------------------------------
+model Account {
+  id String @id @default(cuid())
+
+  // Main Fields
+  email        String  @unique
+  password     String
+  role         Role
+  googleId     String? @unique
+  fcmToken     String?
+  refreshToken String? @unique
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  patient      Patient?
+  nutritionist Nutritionist?
+}
+
+// ------------------------------------------------------------------
+// PROFILE MODEL
+// ------------------------------------------------------------------
+model Profile {
+  id String @id @default(cuid())
+
+  // Main Fields
+  name         String
+  gender       Gender
+  phoneNumber  String?
+  address      String?
+  placeOfBirth String?
+  dateOfBirth  DateTime?
+  age          Int?
+  imageKey     String?
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  patient      Patient?
+  nutritionist Nutritionist?
+}
+
+// ------------------------------------------------------------------
+// ADMIN MODEL
+// ------------------------------------------------------------------
+model Admin {
+  id String @id @default(cuid())
+
+  // Main Fields
+  apiKey String @unique
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------------------------------------
+// PATIENT MODEL
+// ------------------------------------------------------------------
+model Patient {
+  id String @id @default(cuid())
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  account          Account?          @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  profile          Profile?          @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  medicalRecordKey MedicalRecordKey? @relation(fields: [medicalRecordKeyId], references: [id], onDelete: Cascade)
+  credit           Credit?
+  transactions     Transaction[]
+
+  // Foreign Keys
+  accountId          String? @unique
+  profileId          String? @unique
+  medicalRecordKeyId String? @unique
+}
+
+// ------------------------------------------------------------------
+// CREDIT MODEL
+// ------------------------------------------------------------------
+model Credit {
+  id String @id @default(cuid())
+
+  // Main Fields
+  balance Int @default(0)
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  patient         Patient?        @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  creditHistories CreditHistory[]
+
+  // Foreign Keys
+  patientId String? @unique
+}
+
+// ------------------------------------------------------------------
+// CREDIT HISTORY MODEL
+// ------------------------------------------------------------------
+model CreditHistory {
+  id String @id @default(cuid())
+
+  // Main Fields
+  action CreditAction
+  amount Int
+  note   String?
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  credit Credit? @relation(fields: [creditId], references: [id], onDelete: Cascade)
+
+  // Foreign Keys
+  creditId String?
+}
+
+// ------------------------------------------------------------------
+// MEDICAL RECORD KEY MODEL
+// ------------------------------------------------------------------
+model MedicalRecordKey {
+  id String @id @default(cuid())
+
+  // Main Fields
+  code String @unique
+  name String
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  patient        Patient?
+  patientDetail  PatientDetail?
+  medicalRecords MedicalRecord[]
+}
+
+// ------------------------------------------------------------------
+// PATIENT DETAIL MODEL
+// ------------------------------------------------------------------
+model PatientDetail {
+  id String @id @default(cuid())
+
+  // Main Fields
+  activityLevel PatientActivity?
+  dailyCalories Int?
+  height        Int?
+  weight        Int?
+  dietPlan      DietPlan?
+  dietGoal      DietGoal?
+  dietPlanDesc  String?
+  bmi           Float?
+  bmiStatus     BmiStatus?
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  medicalRecordKey MedicalRecordKey? @relation(fields: [medicalRecordKeyId], references: [id], onDelete: Cascade)
+
+  // Foreign Keys
+  medicalRecordKeyId String? @unique
+}
+
+// ------------------------------------------------------------------
+// MEDICAL RECORD MODEL
+// ------------------------------------------------------------------
+model MedicalRecord {
+  id String @id @default(cuid())
+
+  // Main Fields
+  height             Int?
+  weight             Int?
+  bmi                Float?
+  bmiStatus          BmiStatus?
+  disability         String?
+  diagnosis          String?
+  allergies          String?
+  foodPreferences    String?
+  foodAvoidances     String?
+  appetite           String?
+  diarrhea           Boolean?
+  constipation       Boolean?
+  vomit              Boolean?
+  nausea             Boolean?
+  bloating           Boolean?
+  swallowingDisorder Boolean?
+  chewingDisorder    Boolean?
+  suckingDisorder    Boolean?
+  notes              String?
+  others             String?
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  medicalRecordKey MedicalRecordKey? @relation(fields: [medicalRecordKeyId], references: [id], onDelete: Cascade)
+
+  // Foreign Keys
+  medicalRecordKeyId String?
+}
+
+// ------------------------------------------------------------------
+// NUTRITIONIST MODEL
+// ------------------------------------------------------------------
+model Nutritionist {
+  id String @id @default(cuid())
+
+  // Main Fields
+  type NutritionistType?
+  nip  String?
+  nidn String?
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  account                 Account?                 @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  profile                 Profile?                 @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  consultationMeta        ConsultationMeta?
+  occupation              Occupation?
+  price                   Price?
+  registrationCertificate RegistrationCertificate?
+  schedules               Schedule[]
+  transactions            Transaction[]
+
+  // Foreign Keys
+  accountId String? @unique
+  profileId String? @unique
+}
+
+// ------------------------------------------------------------------
+// CONSULTATION META MODEL
+// ------------------------------------------------------------------
+model ConsultationMeta {
+  id String @id @default(cuid())
+
+  // Main Fields
+  avgRating           Float? @default(0)
+  consultation        Int?   @default(0)
+  successConsultation Int?   @default(0)
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  nutritionist Nutritionist? @relation(fields: [nutritionistId], references: [id], onDelete: Cascade)
+
+  // Foreign Keys
+  nutritionistId String? @unique
+}
+
+//-------------------------------------------------------------------
+// REGISTRATION CERTIFICATE MODEL
+//-------------------------------------------------------------------
+model RegistrationCertificate {
+  id String @id @default(cuid())
+
+  registrationNumber String    @unique
+  issueDate          DateTime?
+  validUntil         DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  nutritionist Nutritionist? @relation(fields: [nutritionistId], references: [id], onDelete: Cascade)
+
+  nutritionistId String? @unique
+}
+
+// ------------------------------------------------------------------
+// OCCUPATION MODEL
+// ------------------------------------------------------------------
+model Occupation {
+  id String @id @default(cuid())
+
+  // Main Fields
+  name       String @default("Konselor Gizi")
+  workPlace  String @default("TEFA NCC Polije")
+  experience Int    @default(0)
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  nutritionist Nutritionist? @relation(fields: [nutritionistId], references: [id], onDelete: Cascade)
+
+  // Foreign Keys
+  nutritionistId String? @unique
+}
+
+// ------------------------------------------------------------------
+// PRICE MODEL
+// ------------------------------------------------------------------
+model Price {
+  id String @id @default(cuid())
+
+  // Main Fields
+  online  Int
+  offline Int
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  nutritionist Nutritionist? @relation(fields: [nutritionistId], references: [id], onDelete: Cascade)
+
+  // Foreign Keys
+  nutritionistId String? @unique
+}
+
+// ------------------------------------------------------------------
+// SCHEDULE MODEL
+// ------------------------------------------------------------------
+model Schedule {
+  id String @id @default(cuid())
+
+  // Main Fields
+  dayOfWeek      DayOfWeek
+  dayOfWeekIndex Int
+  active         Boolean   @default(true)
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  nutritionist  Nutritionist?  @relation(fields: [nutritionistId], references: [id], onDelete: Cascade)
+  scheduleTimes ScheduleTime[]
+
+  // Foreign Keys
+  nutritionistId String?
+}
+
+// ------------------------------------------------------------------
+// SCHEDULE TIME MODEL
+// ------------------------------------------------------------------
+model ScheduleTime {
+  id String @id @default(cuid())
+
+  // Main Fields
+  start  DateTime
+  end    DateTime
+  active Boolean  @default(true)
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  schedule Schedule? @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+
+  // Foreign Keys
+  scheduleId String?
+}
+
+// ------------------------------------------------------------------
+// TRANSACTION MODEL
+// ------------------------------------------------------------------
+model Transaction {
+  id String @id @default(cuid())
+
+  // Main Fields
+  status TransactionStatus
+  type   ConsultationType
+  note   String?
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  patient            Patient?            @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  nutritionist       Nutritionist?       @relation(fields: [nutritionistId], references: [id], onDelete: Cascade)
+  consultationTime   ConsultationTime?
+  transactionPrice   TransactionPrice?
+  transactionPayment TransactionPayment?
+  consultationReview ConsultationReview?
+
+  // Foreign Keys
+  patientId      String?
+  nutritionistId String?
+}
+
+// ------------------------------------------------------------------
+// CONSULTATION TIME MODEL
+// ------------------------------------------------------------------
+model ConsultationTime {
+  id String @id @default(cuid())
+
+  // Main Fields
+  start DateTime
+  end   DateTime
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  transaction Transaction? @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+
+  // Foreign Keys
+  transactionId String? @unique
+}
+
+// ------------------------------------------------------------------
+// TRANSACTION PRICE MODEL
+// ------------------------------------------------------------------
+model TransactionPrice {
+  id String @id @default(cuid())
+
+  // Main Fields
+  sources  PaymentSource[]
+  price    Int
+  subTotal Int
+  credit   Int             @default(0)
+  total    Int
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  transaction Transaction? @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+
+  // Foreign Keys
+  transactionId String? @unique
+}
+
+// ------------------------------------------------------------------
+// TRANSACTION PAYMENT MODEL
+// ------------------------------------------------------------------
+model TransactionPayment {
+  id String @id @default(cuid())
+
+  // Main Fields
+  method String?
+  code   String?
+  status String?
+  date   DateTime?
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  transaction Transaction? @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+
+  // Foreign Keys
+  transactionId String? @unique
+}
+
+// ------------------------------------------------------------------
+// CONSULTATION REVIEW MODEL
+// ------------------------------------------------------------------
+model ConsultationReview {
+  id String @id @default(cuid())
+
+  // Main Fields
+  rating      Float
+  description String?
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  transaction Transaction? @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+
+  // Foreign Keys
+  transactionId String? @unique
+}
+
+// ------------------------------------------------------------------
+// OTP MODEL
+// ------------------------------------------------------------------
+model Otp {
+  id String @id @default(cuid())
+
+  // Main Fields
+  email   String
+  code    String
+  purpose OtpPurpose
+  expired DateTime
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------------------------------------
+// WORKSPACE SERVICE MODEL
+// ------------------------------------------------------------------
+model WorkspaceService {
+  id String @id @default(cuid())
+
+  // Main Fields
+  name        String
+  description String
+  imageKey    String?
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------------------------------------
+// BMI LIMIT MODEL
+// ------------------------------------------------------------------
+model BmiLimit {
+  id String @id @default(cuid())
+
+  // Main Fields
+  status BmiStatus
+  min    Float
+  max    Float
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------------------------------------
+// FAQ MODEL
+// ------------------------------------------------------------------
+model Faq {
+  id String @id @default(cuid())
+
+  // Main Fields
+  question String
+  answer   String
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------------------------------------
+// PRIVACY POLICY MODEL
+// ------------------------------------------------------------------
+model PrivacyPolicy {
+  id String @id @default(cuid())
+
+  // Main Fields
+  title   String
+  content String
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------------------------------------------------
+// SIGNATURE MODEL
+// ------------------------------------------------------------------
+model Signature {
+  id String @id @default(cuid())
+
+  // Main Fields
+  signature String @unique
+
+  // Date Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([signature])
+}
+
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// ------------------------------------------------------------------
+// ENUMS
+// ------------------------------------------------------------------
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+// ------------------------------------------------------------------
+//  ROLE ENUM
+// ------------------------------------------------------------------
+enum Role {
+  ADMIN
+  PATIENT
+  NUTRITIONIST
+}
+
+// ------------------------------------------------------------------
+// GENDER ENUM
+// ------------------------------------------------------------------
+enum Gender {
+  MALE
+  FEMALE
+}
+
+// ------------------------------------------------------------------
+//  CONSULTATION TYPE ENUM
+// ------------------------------------------------------------------
+enum ConsultationType {
+  ONLINE
+  OFFLINE
+}
+
+// ------------------------------------------------------------------
+//  TRANSACTION STATUS ENUM
+// ------------------------------------------------------------------
+enum TransactionStatus {
+  WAITING_PAYMENT
+  WAITING_CONFIRMATION
+  SCHEDULED
+  ON_PROCESS
+  FINISHED
+  RE_SCHEDULED
+  CANCELED
+}
+
+// ------------------------------------------------------------------
+//  OTP PURPOSE ENUM
+// ------------------------------------------------------------------
+enum OtpPurpose {
+  AUTH
+  AUTH_FORGOT_PASSWORD
+  ACCOUNT
+  ACCOUNT_CHANGE_PASSWORD
+}
+
+// ------------------------------------------------------------------
+//  DAY OF WEEK ENUM
+// ------------------------------------------------------------------
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+// ------------------------------------------------------------------
+//  CREDIT ACTION ENUM
+// ------------------------------------------------------------------
+enum CreditAction {
+  TOPUP
+  PAY_CONSULTATION
+  REFUND
+}
+
+// ------------------------------------------------------------------
+//  PATIENT ACTIVITY ENUM
+// ------------------------------------------------------------------
+enum PatientActivity {
+  SEDENTARY
+  LIGHTLY_ACTIVE
+  MODERATELY_ACTIVE
+  VERY_ACTIVE
+  SUPER_ACTIVE
+}
+
+// ------------------------------------------------------------------
+//  DIET PLAN ENUM
+// ------------------------------------------------------------------
+enum DietPlan {
+  WEIGHT_LOSS
+  WEIGHT_GAIN
+  MAINTAIN
+}
+
+// ------------------------------------------------------------------
+//  DIET GOAL ENUM
+// ------------------------------------------------------------------
+enum DietGoal {
+  FAT_LOSS
+  MUSCLE_GAIN
+  MAINTAIN
+}
+
+// ------------------------------------------------------------------
+//  BMI STATUS ENUM
+// ------------------------------------------------------------------
+enum BmiStatus {
+  UNDERWEIGHT
+  NORMAL
+  OVERWEIGHT
+  OBESE
+  OBESE_II
+  OBESE_III
+}
+
+// ------------------------------------------------------------------
+//  NUTRITIONIST TYPE ENUM
+// ------------------------------------------------------------------
+enum NutritionistType {
+  COUNSELOR
+  EXPERT
+}
+
+// ------------------------------------------------------------------
+//  PAYMENT SOURCE ENUM
+// ------------------------------------------------------------------
+enum PaymentSource {
+  CREDIT
+  MIDTRANS
+}

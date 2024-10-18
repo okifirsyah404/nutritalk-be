@@ -1,0 +1,428 @@
+Enum "BmiStatus" {
+  "UNDERWEIGHT"
+  "NORMAL"
+  "OVERWEIGHT"
+  "OBESE"
+  "OBESE_II"
+  "OBESE_III"
+}
+
+Enum "ConsultationType" {
+  "ONLINE"
+  "OFFLINE"
+}
+
+Enum "CreditAction" {
+  "TOPUP"
+  "PAY_CONSULTATION"
+  "REFUND"
+}
+
+Enum "DayOfWeek" {
+  "MONDAY"
+  "TUESDAY"
+  "WEDNESDAY"
+  "THURSDAY"
+  "FRIDAY"
+  "SATURDAY"
+  "SUNDAY"
+}
+
+Enum "DietGoal" {
+  "FAT_LOSS"
+  "MUSCLE_GAIN"
+  "MAINTAIN"
+}
+
+Enum "DietPlan" {
+  "WEIGHT_LOSS"
+  "WEIGHT_GAIN"
+  "MAINTAIN"
+}
+
+Enum "Gender" {
+  "MALE"
+  "FEMALE"
+}
+
+Enum "NutritionistType" {
+  "COUNSELOR"
+  "EXPERT"
+}
+
+Enum "OtpPurpose" {
+  "AUTH"
+  "ACCOUNT"
+  "AUTH_FORGOT_PASSWORD"
+  "ACCOUNT_CHANGE_PASSWORD"
+}
+
+Enum "PatientActivity" {
+  "SEDENTARY"
+  "LIGHTLY_ACTIVE"
+  "MODERATELY_ACTIVE"
+  "VERY_ACTIVE"
+  "SUPER_ACTIVE"
+}
+
+Enum "PaymentSource" {
+  "CREDIT"
+  "MIDTRANS"
+}
+
+Enum "Role" {
+  "ADMIN"
+  "PATIENT"
+  "NUTRITIONIST"
+}
+
+Enum "TransactionStatus" {
+  "WAITING_PAYMENT"
+  "WAITING_CONFIRMATION"
+  "SCHEDULED"
+  "ON_PROCESS"
+  "FINISHED"
+  "RE_SCHEDULED"
+  "CANCELED"
+}
+
+Table "Account" {
+  "id" text [pk, not null]
+  "email" text [unique, not null]
+  "password" text [not null]
+  "role" Role [not null]
+  "googleId" text [unique]
+  "fcmToken" text
+  "refreshToken" text [unique]
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+}
+
+Table "Admin" {
+  "id" text [pk, not null]
+  "apiKey" text [unique, not null]
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+}
+
+Table "BmiLimit" {
+  "id" text [pk, not null]
+  "status" BmiStatus [not null]
+  "min" float8 [not null]
+  "max" float8 [not null]
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+}
+
+Table "ConsultationMeta" {
+  "id" text [pk, not null]
+  "avgRating" float8 [default: 0]
+  "consultation" int4 [default: 0]
+  "successConsultation" int4 [default: 0]
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+  "nutritionistId" text [unique]
+}
+
+Table "ConsultationReview" {
+  "id" text [pk, not null]
+  "rating" float8 [not null]
+  "description" text
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+  "transactionId" text [unique]
+}
+
+Table "ConsultationTime" {
+  "id" text [pk, not null]
+  "start" timestamp [not null]
+  "end" timestamp [not null]
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+  "transactionId" text [unique]
+}
+
+Table "Credit" {
+  "id" text [pk, not null]
+  "balance" int4 [not null, default: 0]
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+  "patientId" text [unique]
+}
+
+Table "CreditHistory" {
+  "id" text [pk, not null]
+  "action" CreditAction [not null]
+  "amount" int4 [not null]
+  "note" text
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+  "creditId" text
+}
+
+Table "Faq" {
+  "id" text [pk, not null]
+  "question" text [not null]
+  "answer" text [not null]
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+}
+
+Table "MedicalRecord" {
+  "id" text [pk, not null]
+  "height" int4
+  "weight" int4
+  "bmi" float8
+  "bmiStatus" BmiStatus
+  "disability" text
+  "diagnosis" text
+  "allergies" text
+  "foodPreferences" text
+  "foodAvoidances" text
+  "appetite" text
+  "diarrhea" bool
+  "constipation" bool
+  "vomit" bool
+  "nausea" bool
+  "bloating" bool
+  "swallowingDisorder" bool
+  "chewingDisorder" bool
+  "suckingDisorder" bool
+  "notes" text
+  "others" text
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+  "medicalRecordKeyId" text
+}
+
+Table "MedicalRecordKey" {
+  "id" text [pk, not null]
+  "code" text [unique, not null]
+  "name" text [not null]
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+}
+
+Table "Nutritionist" {
+  "id" text [pk, not null]
+  "type" NutritionistType
+  "nip" text
+  "nidn" text
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+  "accountId" text [unique]
+  "profileId" text [unique]
+}
+
+Table "Occupation" {
+  "id" text [pk, not null]
+  "name" text [not null, default: 'Konselor Gizi']
+  "workPlace" text [not null, default: 'TEFA NCC Polije']
+  "experience" int4 [not null, default: 0]
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+  "nutritionistId" text [unique]
+}
+
+Table "Otp" {
+  "id" text [pk, not null]
+  "code" text [not null]
+  "purpose" OtpPurpose [not null]
+  "expired" timestamp [not null]
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+  "email" text [not null]
+}
+
+Table "Patient" {
+  "id" text [pk, not null]
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+  "accountId" text [unique]
+  "profileId" text [unique]
+  "medicalRecordKeyId" text [unique]
+}
+
+Table "PatientDetail" {
+  "id" text [pk, not null]
+  "activityLevel" PatientActivity
+  "dailyCalories" int4
+  "height" int4
+  "weight" int4
+  "dietPlan" DietPlan
+  "dietGoal" DietGoal
+  "dietPlanDesc" text
+  "bmi" float8
+  "bmiStatus" BmiStatus
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+  "medicalRecordKeyId" text [unique]
+}
+
+Table "Price" {
+  "id" text [pk, not null]
+  "online" int4 [not null]
+  "offline" int4 [not null]
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+  "nutritionistId" text [unique]
+}
+
+Table "PrivacyPolicy" {
+  "id" text [pk, not null]
+  "title" text [not null]
+  "content" text [not null]
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+}
+
+Table "Profile" {
+  "id" text [pk, not null]
+  "name" text [not null]
+  "gender" Gender [not null]
+  "phoneNumber" text
+  "address" text
+  "placeOfBirth" text
+  "dateOfBirth" timestamp
+  "age" int4
+  "imageKey" text
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+}
+
+Table "RegistrationCertificate" {
+  "id" text [pk, not null]
+  "registrationNumber" text [unique, not null]
+  "issueDate" timestamp
+  "validUntil" timestamp
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+  "nutritionistId" text [unique]
+}
+
+Table "Schedule" {
+  "id" text [pk, not null]
+  "dayOfWeek" DayOfWeek [not null]
+  "dayOfWeekIndex" int4 [not null]
+  "active" bool [not null, default: true]
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+  "nutritionistId" text
+}
+
+Table "ScheduleTime" {
+  "id" text [pk, not null]
+  "start" timestamp [not null]
+  "end" timestamp [not null]
+  "active" bool [not null, default: true]
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+  "scheduleId" text
+}
+
+Table "Signature" {
+  "id" text [pk, not null]
+  "signature" text [unique, not null]
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+
+  Indexes {
+    signature [type: btree, name: "Signature_signature_idx"]
+  }
+}
+
+Table "Transaction" {
+  "id" text [pk, not null]
+  "status" TransactionStatus [not null]
+  "type" ConsultationType [not null]
+  "note" text
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+  "patientId" text
+  "nutritionistId" text
+}
+
+Table "TransactionPayment" {
+  "id" text [pk, not null]
+  "method" text
+  "code" text
+  "status" text
+  "date" timestamp
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+  "transactionId" text [unique]
+}
+
+Table "TransactionPrice" {
+  "id" text [pk, not null]
+  "price" int4 [not null]
+  "subTotal" int4 [not null]
+  "credit" int4 [not null, default: 0]
+  "total" int4 [not null]
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+  "transactionId" text [unique]
+  "sources" "PaymentSource[]"
+}
+
+Table "WorkspaceService" {
+  "id" text [pk, not null]
+  "name" text [not null]
+  "description" text [not null]
+  "imageKey" text
+  "createdAt" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+  "updatedAt" timestamp [not null]
+}
+
+Table "_prisma_migrations" {
+  "id" varchar(36) [pk, not null]
+  "checksum" varchar(64) [not null]
+  "finished_at" timestamptz
+  "migration_name" varchar(255) [not null]
+  "logs" text
+  "rolled_back_at" timestamptz
+  "started_at" timestamptz [not null, default: `now()`]
+  "applied_steps_count" int4 [not null, default: 0]
+}
+
+Ref "ConsultationMeta_nutritionistId_fkey":"Nutritionist"."id" < "ConsultationMeta"."nutritionistId" [update: cascade, delete: cascade]
+
+Ref "ConsultationReview_transactionId_fkey":"Transaction"."id" < "ConsultationReview"."transactionId" [update: cascade, delete: cascade]
+
+Ref "ConsultationTime_transactionId_fkey":"Transaction"."id" < "ConsultationTime"."transactionId" [update: cascade, delete: cascade]
+
+Ref "Credit_patientId_fkey":"Patient"."id" < "Credit"."patientId" [update: cascade, delete: cascade]
+
+Ref "CreditHistory_creditId_fkey":"Credit"."id" < "CreditHistory"."creditId" [update: cascade, delete: cascade]
+
+Ref "MedicalRecord_medicalRecordKeyId_fkey":"MedicalRecordKey"."id" < "MedicalRecord"."medicalRecordKeyId" [update: cascade, delete: cascade]
+
+Ref "Nutritionist_accountId_fkey":"Account"."id" < "Nutritionist"."accountId" [update: cascade, delete: cascade]
+
+Ref "Nutritionist_profileId_fkey":"Profile"."id" < "Nutritionist"."profileId" [update: cascade, delete: cascade]
+
+Ref "Occupation_nutritionistId_fkey":"Nutritionist"."id" < "Occupation"."nutritionistId" [update: cascade, delete: cascade]
+
+Ref "Patient_accountId_fkey":"Account"."id" < "Patient"."accountId" [update: cascade, delete: cascade]
+
+Ref "Patient_medicalRecordKeyId_fkey":"MedicalRecordKey"."id" < "Patient"."medicalRecordKeyId" [update: cascade, delete: cascade]
+
+Ref "Patient_profileId_fkey":"Profile"."id" < "Patient"."profileId" [update: cascade, delete: cascade]
+
+Ref "PatientDetail_medicalRecordKeyId_fkey":"MedicalRecordKey"."id" < "PatientDetail"."medicalRecordKeyId" [update: cascade, delete: cascade]
+
+Ref "Price_nutritionistId_fkey":"Nutritionist"."id" < "Price"."nutritionistId" [update: cascade, delete: cascade]
+
+Ref "RegistrationCertificate_nutritionistId_fkey":"Nutritionist"."id" < "RegistrationCertificate"."nutritionistId" [update: cascade, delete: cascade]
+
+Ref "Schedule_nutritionistId_fkey":"Nutritionist"."id" < "Schedule"."nutritionistId" [update: cascade, delete: cascade]
+
+Ref "ScheduleTime_scheduleId_fkey":"Schedule"."id" < "ScheduleTime"."scheduleId" [update: cascade, delete: cascade]
+
+Ref "Transaction_nutritionistId_fkey":"Nutritionist"."id" < "Transaction"."nutritionistId" [update: cascade, delete: cascade]
+
+Ref "Transaction_patientId_fkey":"Patient"."id" < "Transaction"."patientId" [update: cascade, delete: cascade]
+
+Ref "TransactionPayment_transactionId_fkey":"Transaction"."id" < "TransactionPayment"."transactionId" [update: cascade, delete: cascade]
+
+Ref "TransactionPrice_transactionId_fkey":"Transaction"."id" < "TransactionPrice"."transactionId" [update: cascade, delete: cascade]

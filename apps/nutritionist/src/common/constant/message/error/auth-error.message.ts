@@ -1,0 +1,14 @@
+export abstract class AuthErrorMessage {
+  // Token Error
+  static readonly ERR_TOKEN_EXPIRED = 'ERR_TOKEN_EXPIRED';
+  static readonly ERR_TOKEN_INVALID = 'ERR_TOKEN_INVALID';
+  static readonly ERR_TOKEN_UNAUTHORIZED = 'ERR_TOKEN_UNAUTHORIZED';
+
+  // Account Error
+  static readonly ERR_ACCOUNT_NOT_FOUND = 'ERR_ACCOUNT_NOT_FOUND';
+  static readonly ERR_ACCOUNT_NOT_ADMIN = 'ERR_ACCOUNT_NOT_ADMIN';
+  static readonly ERR_ACCOUNT_NOT_PATIENT = 'ERR_ACCOUNT_NOT_PATIENT';
+  static readonly ERR_ACCOUNT_NOT_NUTRITIONIST = 'ERR_ACCOUNT_NOT_NUTRITIONIST';
+  static readonly ERR_PASSWORD_NOT_MATCH = 'ERR_PASSWORD_NOT_MATCH';
+  static readonly ERR_ACCOUNT_ALREADY_EXIST = 'ERR_ACCOUNT_ALREADY_EXIST';
+}
