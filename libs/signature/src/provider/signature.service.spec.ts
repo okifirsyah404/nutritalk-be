@@ -1,18 +1,20 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { TestBed } from '@automock/jest';
+import { SignatureRepository } from '../repository/signature.repository';
 import { SignatureService } from './signature.service';
 
-describe('SignatureService', () => {
+describe('SignatureService Unit Test', () => {
   let service: SignatureService;
+  let repository: jest.Mocked<SignatureRepository>;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [SignatureService],
-    }).compile();
+  beforeEach(() => {
+    const { unit, unitRef } = TestBed.create(SignatureService).compile();
 
-    service = module.get<SignatureService>(SignatureService);
+    service = unit;
+    repository = unitRef.get(SignatureRepository);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+    expect(repository).toBeDefined();
   });
 });
