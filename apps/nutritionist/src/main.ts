@@ -34,7 +34,7 @@ async function bootstrap(): Promise<void> {
     description: 'Nutritionist App API Documentation',
     version: '1.0',
     tags: DocsTag.tags,
-    metadata: async () => ({}),
+    metadata: async () => new Promise((resolve) => resolve({})),
   });
 
   const appConfig = app.get(AppConfigService).appConfig;

@@ -84,12 +84,14 @@ export class AuthForgetPasswordService {
     email: string;
     reqData: AuthForgetPasswordRequest;
   }): Promise<IOtpRequest> {
-    if (reqData.password !== reqData.confirmPassword) {
-      throw new BadRequestException('Password not match');
-    }
+    return new Promise((resolve) => {
+      if (reqData.password !== reqData.confirmPassword) {
+        throw new BadRequestException('Password not match');
+      }
 
-    return {
-      email,
-    };
+      return resolve({
+        email,
+      });
+    });
   }
 }
