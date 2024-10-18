@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { EmailValidationMessage } from 'apps/nutritionist/src/common/constant/message/validation/email-validation.message';
-import { FcmTokenValidationMessage } from 'apps/nutritionist/src/common/constant/message/validation/fcm-token-validation.message';
-import { PasswordValidationMessage } from 'apps/nutritionist/src/common/constant/message/validation/password-validation.message';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { EmailValidationMessage } from '../../../../common/constant/message/validation/email-validation.message';
+import { FcmTokenValidationMessage } from '../../../../common/constant/message/validation/fcm-token-validation.message';
+import { PasswordValidationMessage } from '../../../../common/constant/message/validation/password-validation.message';
 
 export class AuthSignInRequest {
   @ApiProperty({

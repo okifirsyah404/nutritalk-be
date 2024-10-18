@@ -11,6 +11,7 @@ on:
 
 jobs:
   build:
+    environment: CI
     runs-on: ubuntu-latest
 
     strategy:
@@ -25,6 +26,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+      - run: |
+          touch .env 
+          echo "${{secrets.WORKFLOW_ENV}}" >> .env
+          cat .env
       - run: npm ci
       - run: npm run db:generate
       - run: npm run lint
