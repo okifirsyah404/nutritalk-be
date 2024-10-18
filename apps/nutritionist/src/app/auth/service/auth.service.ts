@@ -11,8 +11,8 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Role } from '@prisma/client';
-import { AuthErrorMessage } from 'apps/nutritionist/src/common/constant/message/error/auth-error.message';
 import * as bcrypt from 'bcrypt';
+import { AuthErrorMessage } from '../../../common/constant/message/error/auth-error.message';
 import { AuthRefreshTokenRequest } from '../dto/request/auth-refresh-token.request';
 import { AuthSignInRequest } from '../dto/request/auth-sign-in.request';
 import { AuthRepository } from '../repository/auth.repository';
@@ -25,6 +25,14 @@ export class AuthService {
     private readonly appJwtService: AppJwtService,
   ) {}
 
+  /**
+   * Signs in a nutritionist user with the provided credentials.
+   *
+   * @param {AuthSignInRequest} reqData - The request data containing email, password, and FCM token.
+   * @returns {Promise<IJwtToken>} A promise that resolves to an object containing the access token and refresh token.
+   * @throws {NotFoundException} If the account is not found.
+   * @throws {UnauthorizedException} If the account is not a nutritionist or if the password does not match.
+   */
   async signIn(reqData: AuthSignInRequest): Promise<IJwtToken> {
     const result = await this.repository
       .findAccountByEmail(reqData.email)
@@ -67,6 +75,15 @@ export class AuthService {
     };
   }
 
+  /**
+   * Refreshes the authentication tokens for a nutritionist account.
+   *
+   * @param token - The JWT refresh token containing the payload with email and subject.
+   * @param reqData - The request data containing the FCM token.
+   * @returns A promise that resolves to an object containing the new access token and refresh token.
+   *
+   * @throws Will throw an error if the nutritionist account cannot be found or if token generation fails.
+   */
   async refreshToken(
     token: IJwtRefresh,
     reqData: AuthRefreshTokenRequest,
@@ -93,6 +110,12 @@ export class AuthService {
     };
   }
 
+  /**
+   * Signs out a user by deleting their refresh token and updating their FCM token to null.
+   *
+   * @param id - The unique identifier of the user to sign out.
+   * @returns A promise that resolves when the sign-out process is complete.
+   */
   async signOut(id: string): Promise<void> {
     await this.appJwtService.deleteRefreshToken(id);
 

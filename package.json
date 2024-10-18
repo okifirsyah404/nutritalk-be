@@ -162,6 +162,7 @@
     "testEnvironment": "node",
     "roots": [
       "<rootDir>/apps/",
+      "<rootDir>/apps/nutritionist/",
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {

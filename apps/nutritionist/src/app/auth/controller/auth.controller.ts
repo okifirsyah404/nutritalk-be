@@ -5,8 +5,8 @@ import GetNutritionistLogged from '@jwt/app-jwt/infrastructure/decorator/get-nut
 import RefreshToken from '@jwt/app-jwt/infrastructure/decorator/refresh-token.decorator';
 import { Body, Controller, Delete, Post, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthSuccessMessage } from 'apps/nutritionist/src/common/constant/message/success/auth-success.message';
-import { DocsTag } from 'apps/nutritionist/src/common/docs/docs';
+import { AuthSuccessMessage } from '../../../common/constant/message/success/auth-success.message';
+import { DocsTag } from '../../../common/docs/docs';
 import { AuthRefreshTokenRequest } from '../dto/request/auth-refresh-token.request';
 import { AuthSignInRequest } from '../dto/request/auth-sign-in.request';
 import { AuthSignInResponse } from '../dto/response/auth-sign-in.response';
