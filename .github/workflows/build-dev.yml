@@ -11,6 +11,7 @@ on:
 
 jobs:
   build:
+    environment: CI
     runs-on: ubuntu-latest
 
     strategy:
@@ -26,7 +27,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: |
-          touch .env
+          touch .env 
           echo "${{secrets.WORKFLOW_ENV}}" >> .env
           cat .env
       - run: npm ci
