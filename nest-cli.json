@@ -19,6 +19,33 @@
         "tsConfigPath": "apps/nutritionist/tsconfig.app.json"
       }
     },
+    "patient": {
+      "type": "application",
+      "root": "apps/patient",
+      "entryFile": "main",
+      "sourceRoot": "apps/patient/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/patient/tsconfig.app.json"
+      }
+    },
+    "admin": {
+      "type": "application",
+      "root": "apps/admin",
+      "entryFile": "main",
+      "sourceRoot": "apps/admin/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/admin/tsconfig.app.json"
+      }
+    },
+    "cron": {
+      "type": "application",
+      "root": "apps/cron",
+      "entryFile": "main",
+      "sourceRoot": "apps/cron/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/cron/tsconfig.app.json"
+      }
+    },
     "app-config": {
       "type": "library",
       "root": "libs/app-config",
