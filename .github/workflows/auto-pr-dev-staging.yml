@@ -2,7 +2,7 @@ name: Scheduled Pull Request from Dev to Staging
 
 on:
   schedule:
-    - cron: '*/40 * * * *' # Runs every Saturday at 1AM UTC
+    - cron: '*/10 * * * *' # Runs every Saturday at 1AM UTC
 
 jobs:
   create-pr:
@@ -32,6 +32,6 @@ jobs:
           title: 'Automated PR: Merge dev into staging'
           body: 'Scheduled weekly update from dev to staging.'
           commit-message: 'Scheduled PR: Merge dev into staging'
-          labels: 'automated pr'
           branch: 'dev'
+          labels: 'automated pr'
           base: 'staging'
