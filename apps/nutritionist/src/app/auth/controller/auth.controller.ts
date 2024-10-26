@@ -1,6 +1,7 @@
-import { BaseApiResponse, IApiResponse, IJwtRefresh } from '@common/common';
+import { BaseApiResponse } from '@common/common';
+import { IApiResponse } from '@contract/contract/response/api-response.interface';
 import { INutritionist } from '@database/prisma';
-import { AccessTokenGuard, RefreshTokenGuard } from '@jwt/app-jwt';
+import { AccessTokenGuard, IJwtRefresh, RefreshTokenGuard } from '@jwt/app-jwt';
 import GetNutritionistLogged from '@jwt/app-jwt/infrastructure/decorator/get-nutritionist-logged.decorator';
 import RefreshToken from '@jwt/app-jwt/infrastructure/decorator/refresh-token.decorator';
 import { Body, Controller, Delete, Post, UseGuards } from '@nestjs/common';

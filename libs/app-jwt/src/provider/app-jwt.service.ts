@@ -1,6 +1,7 @@
-import { createDatabaseErrorHandler, IJwtToken } from '@common/common';
+import { CacheResult } from '@cache/app-cache/decorator/cache-result.decorator';
 import { AppConfigService } from '@config/app-config';
 import { INutritionist, IPatient } from '@database/prisma';
+import { createDatabaseErrorHandler } from '@infrastructure/infrastructure/err_handler/database.error-handler';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Role } from '@prisma/client';
@@ -8,6 +9,7 @@ import { CryptoUtils } from '@util/util';
 import {
   IJwtAccessPayload,
   IJwtRefreshPayload,
+  IJwtToken,
   JwtGenerateTokensOptionsParam,
   JwtGenerateTokensParam,
 } from '../interface/app-jwt.interface';
@@ -151,6 +153,7 @@ export class AppJwtService {
    * @throws Will throw an error if the patient cannot be found or if there is a database error.
    *
    */
+  @CacheResult<IPatient>((id: string) => id)
   async getPatientById(id: string): Promise<IPatient> {
     return await this.repository
       .findPatientById(id)
@@ -168,6 +171,7 @@ export class AppJwtService {
    * @throws Will throw an error if there is an issue with the database operation.
    *
    */
+  @CacheResult<INutritionist>((id: string) => id)
   async getNutritionistById(id: string): Promise<INutritionist> {
     return await this.repository
       .findNutritionistById(id)

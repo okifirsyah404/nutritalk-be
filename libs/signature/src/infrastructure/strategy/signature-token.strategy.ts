@@ -1,5 +1,5 @@
-import { IJwtSignaturePayload } from '@common/common';
 import { AppConfigService } from '@config/app-config';
+import { IJwtSignaturePayload } from '@jwt/app-jwt';
 import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { SignatureService } from '@sign/signature/provider/signature.service';

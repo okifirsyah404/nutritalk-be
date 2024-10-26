@@ -1,6 +1,7 @@
 import { IntersectionType } from '@nestjs/mapped-types';
 import { plainToInstance } from 'class-transformer';
 import { validateSync } from 'class-validator';
+import { AmpqConfigEnvironmentVariables } from '../configs/amqp.config';
 import { AppAdminEnvironmentVariables } from '../configs/app-admin.config';
 import { AppNutritionistEnvironmentVariables } from '../configs/app-nutrtitionist.config';
 import { AppEnvironmentVariables } from '../configs/app.config';
@@ -25,6 +26,7 @@ class EnvironmentVariables extends IntersectionType(
   PaggingEnvironmentVariables,
   DatabaseEnvironmentVariables,
   BcryptEnvironmentVariables,
+  AmpqConfigEnvironmentVariables,
   //   FirebaseEnvironmentVariables,
 ) {}
 

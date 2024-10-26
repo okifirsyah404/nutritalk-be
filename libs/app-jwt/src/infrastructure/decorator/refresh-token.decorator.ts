@@ -1,4 +1,4 @@
-import { IJwtRefresh } from '@common/common';
+import { IJwtRefresh } from '@jwt/app-jwt';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
 const RefreshToken = createParamDecorator(

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { DatabaseErrorMessage } from '@common/common/constant/message/error/database-error.message';
 import {
   InternalServerErrorException,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { DatabaseErrorMessage } from '../constant/message/error/database-error.message';
 
 export function createDatabaseErrorHandler(err: any): PromiseLike<never> {
   if (err instanceof Prisma.PrismaClientKnownRequestError) {

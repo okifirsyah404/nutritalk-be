@@ -1,8 +1,8 @@
-import { validationExceptionFactory } from '@common/common';
 import swaggerDocumentBuilder from '@common/common/docs/swagger-document.builder';
-import HttpExceptionFilter from '@common/common/filter/http-exeption.factory';
-import CreateLogLevel from '@common/common/logger/create-log-level';
 import { AppConfigService } from '@config/app-config';
+import HttpExceptionFilter from '@infrastructure/infrastructure/filter/http-exception.filter';
+import CreateLogLevel from '@infrastructure/infrastructure/logger/create-log-level';
+import { validationExceptionFactory } from '@infrastructure/infrastructure/validation/validation.factory';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';

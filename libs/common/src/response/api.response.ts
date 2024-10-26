@@ -1,4 +1,4 @@
-import { IApiResponse } from '../contract/response/api-response.interface';
+import { IApiResponse } from '@contract/contract/response/api-response.interface';
 
 export class BaseApiResponse<T> implements IApiResponse<T> {
   constructor({

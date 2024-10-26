@@ -1,4 +1,4 @@
-import { IJwtRefreshPayload } from '@common/common';
+import { IJwtRefreshPayload } from '@jwt/app-jwt';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
 /**
