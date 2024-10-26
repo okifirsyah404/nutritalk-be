@@ -1,4 +1,4 @@
-import { IJwtToken } from '@common/common';
+import { IJwtToken } from '@jwt/app-jwt';
 
 export class AuthSignInResponse implements IJwtToken {
   constructor({ accessToken, refreshToken }: IJwtToken) {

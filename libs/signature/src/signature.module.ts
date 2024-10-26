@@ -1,5 +1,4 @@
 import { AppConfigModule, AppConfigService } from '@config/app-config';
-import { PrismaModule } from '@database/prisma';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
@@ -10,7 +9,6 @@ import { SignatureRepository } from './repository/signature.repository';
 @Module({
   imports: [
     AppConfigModule,
-    PrismaModule.forRoot(),
     PassportModule.register({
       property: 'signature',
     }),

@@ -1,10 +1,6 @@
-import {
-  createDatabaseErrorHandler,
-  IJwtRefresh,
-  IJwtToken,
-} from '@common/common';
 import { AppConfigService } from '@config/app-config';
-import { AppJwtService } from '@jwt/app-jwt';
+import { createDatabaseErrorHandler } from '@infrastructure/infrastructure/err_handler/database.error-handler';
+import { AppJwtService, IJwtRefresh, IJwtToken } from '@jwt/app-jwt';
 import {
   Injectable,
   NotFoundException,
@@ -117,6 +113,14 @@ export class AuthService {
    * @returns A promise that resolves when the sign-out process is complete.
    */
   async signOut(id: string): Promise<void> {
+    const account = await this.repository.findAccountById(id);
+
+    if (!account.fcmToken && !account.refreshToken) {
+      throw new UnauthorizedException(
+        AuthErrorMessage.ERR_ACCOUNT_ALREADY_SIGN_OUT,
+      );
+    }
+
     await this.appJwtService.deleteRefreshToken(id);
 
     await this.repository

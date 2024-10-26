@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { AmqpConfig } from '../configs/amqp.config';
 import { AppNutritionistConfig } from '../configs/app-nutrtitionist.config';
 import { AppConfig } from '../configs/app.config';
 import { BcryptConfig } from '../configs/bcrypt.config';
@@ -128,5 +129,9 @@ export class AppConfigService {
    */
   get bcryptConfig(): BcryptConfig {
     return this.config.get<BcryptConfig>('bcryptConfig');
+  }
+
+  get amqpConfig(): AmqpConfig {
+    return this.config.get<AmqpConfig>('amqpConfig');
   }
 }

@@ -1,22 +1,53 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/nutritionist/src",
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/nutritionist/tsconfig.app.json"
+    "tsConfigPath": "apps/nutritionist/tsconfig.app.json",
+    "plugins": [
+      {
+        "name": "@nestjs/swagger",
+        "options": {
+          "introspectComments": true,
+          "controllerKeyOfComment": "description"
+        }
+      }
+    ]
   },
   "monorepo": true,
-  "root": "apps/nutritionist",
+  "generateOptions": {
+    "spec": false
+  },
+  "language": "ts",
   "projects": {
     "nutritionist": {
       "type": "application",
       "root": "apps/nutritionist",
       "entryFile": "main",
       "sourceRoot": "apps/nutritionist/src",
+      "generateOptions": {
+        "spec": false
+      },
       "compilerOptions": {
-        "tsConfigPath": "apps/nutritionist/tsconfig.app.json"
+        "tsConfigPath": "apps/nutritionist/tsconfig.app.json",
+        "deleteOutDir": true,
+        "plugins": [
+          {
+            "name": "@nestjs/swagger",
+            "options": {
+              "introspectComments": true,
+              "controllerKeyOfComment": "deskripsi",
+              "classValidatorShim": true,
+              "dtoFileNameSuffix": [
+                ".dto.ts",
+                ".entity.ts",
+                ".request.ts",
+                ".response.ts"
+              ]
+            }
+          }
+        ]
       }
     },
     "patient": {
@@ -125,6 +156,42 @@
       "sourceRoot": "libs/app-jwt/src",
       "compilerOptions": {
         "tsConfigPath": "libs/app-jwt/tsconfig.lib.json"
+      }
+    },
+    "infrastructure": {
+      "type": "library",
+      "root": "libs/infrastructure",
+      "entryFile": "index",
+      "sourceRoot": "libs/infrastructure/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/infrastructure/tsconfig.lib.json"
+      }
+    },
+    "contract": {
+      "type": "library",
+      "root": "libs/contract",
+      "entryFile": "index",
+      "sourceRoot": "libs/contract/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/contract/tsconfig.lib.json"
+      }
+    },
+    "app-cache": {
+      "type": "library",
+      "root": "libs/app-cache",
+      "entryFile": "index",
+      "sourceRoot": "libs/app-cache/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/app-cache/tsconfig.lib.json"
+      }
+    },
+    "notification": {
+      "type": "application",
+      "root": "apps/notification",
+      "entryFile": "main",
+      "sourceRoot": "apps/notification/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/notification/tsconfig.app.json"
       }
     }
   }
