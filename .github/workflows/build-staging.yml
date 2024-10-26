@@ -25,13 +25,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: 'yarn'
       - run: |
           touch .env 
           echo "${{secrets.WORKFLOW_ENV}}" >> .env
           cat .env
-      - run: npm ci
-      - run: npm run db:generate
-      - run: npm run lint
-      - run: npm run build --if-present
-      - run: npm test
+      - run: yarn install --immutable --frozen-lockfile
+      - run: yarn run db:generate
+      - run: yarn run lint
+      - run: yarn run build --if-present

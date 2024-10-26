@@ -1,4 +1,4 @@
-import { IJwtSignaturePayload } from '@common/common';
+import { IJwtSignaturePayload } from '@jwt/app-jwt';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CryptoUtils } from '@util/util';

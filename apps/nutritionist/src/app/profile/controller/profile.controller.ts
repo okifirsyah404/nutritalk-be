@@ -1,4 +1,4 @@
-import { BaseApiResponse, IApiResponse } from '@common/common';
+import { BaseApiResponse } from '@common/common';
 import { INutritionist } from '@database/prisma';
 import { AccessTokenGuard } from '@jwt/app-jwt';
 import GetNutritionistLogged from '@jwt/app-jwt/infrastructure/decorator/get-nutritionist-logged.decorator';
@@ -17,6 +17,7 @@ import multer from 'multer';
 import { UpdateProfileRequest } from '../dto/request/update-profile.request';
 import { ProfileResponse } from '../dto/response/profile.response';
 import { ProfileService } from '../service/profile.service';
+import { IApiResponse } from '@contract/contract/response/api-response.interface';
 
 @UseGuards(AccessTokenGuard)
 @Controller('profile')

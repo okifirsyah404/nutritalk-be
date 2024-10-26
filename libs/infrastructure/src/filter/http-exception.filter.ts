@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { IApiResponse } from '@contract/contract/response/api-response.interface';
 import {
   ArgumentsHost,
   Catch,
@@ -7,7 +8,6 @@ import {
   Logger,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { IApiResponse } from '../contract/response/api-response.interface';
 
 @Catch(HttpException)
 export default class HttpExceptionFilter implements ExceptionFilter {

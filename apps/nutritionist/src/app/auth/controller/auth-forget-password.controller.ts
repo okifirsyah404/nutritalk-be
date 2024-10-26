@@ -1,8 +1,6 @@
-import {
-  BaseApiResponse,
-  IApiResponse,
-  IJwtSignaturePayload,
-} from '@common/common';
+import { BaseApiResponse } from '@common/common';
+import { IApiResponse } from '@contract/contract/response/api-response.interface';
+import { IJwtSignaturePayload } from '@jwt/app-jwt';
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { SignatureTokenGuard } from '@sign/signature';
 import GetSignaturePayload from '@sign/signature/infrastructure/decorator/get-signature-payload.decorator';
