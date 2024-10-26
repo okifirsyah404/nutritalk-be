@@ -2,7 +2,7 @@ name: Scheduled Pull Request from Dev to Staging
 
 on:
   schedule:
-    - cron: '*/10 * * * *' # Runs every Saturday at 1AM UTC
+    - cron: '0 17 * * 5'
 
 jobs:
   create-pr:
@@ -35,4 +35,3 @@ jobs:
           branch: 'dev'
           labels: 'automated pr'
           base: 'staging'
-          
