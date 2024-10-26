@@ -1,6 +1,5 @@
 import { AppCacheModule } from '@cache/app-cache';
 import { AppConfigModule, AppConfigService } from '@config/app-config';
-import { PrismaModule } from '@database/prisma';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
@@ -13,7 +12,6 @@ import { AppJwtRepository } from './repository/app-jwt.repository';
   imports: [
     AppConfigModule,
     AppCacheModule,
-    PrismaModule.forRoot(),
     PassportModule,
     JwtModule.registerAsync({
       inject: [AppConfigService],

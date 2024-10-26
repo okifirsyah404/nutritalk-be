@@ -23,6 +23,7 @@ import { AppCacheService } from './provider/app-cache.service';
             host: appConfig.redisConfig.host,
             port: appConfig.redisConfig.port,
           },
+          db: appConfig.redisConfig.database,
           ttl,
         });
 

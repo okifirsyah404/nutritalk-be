@@ -1,14 +1,21 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/nutritionist/src",
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/nutritionist/tsconfig.app.json"
+    "tsConfigPath": "apps/nutritionist/tsconfig.app.json",
+    "plugins": [
+      {
+        "name": "@nestjs/swagger",
+        "options": {
+          "introspectComments": true,
+          "controllerKeyOfComment": "description"
+        }
+      }
+    ]
   },
   "monorepo": true,
-  "root": "apps/nutritionist",
   "generateOptions": {
     "spec": false
   },
@@ -19,8 +26,28 @@
       "root": "apps/nutritionist",
       "entryFile": "main",
       "sourceRoot": "apps/nutritionist/src",
+      "generateOptions": {
+        "spec": false
+      },
       "compilerOptions": {
-        "tsConfigPath": "apps/nutritionist/tsconfig.app.json"
+        "tsConfigPath": "apps/nutritionist/tsconfig.app.json",
+        "deleteOutDir": true,
+        "plugins": [
+          {
+            "name": "@nestjs/swagger",
+            "options": {
+              "introspectComments": true,
+              "controllerKeyOfComment": "deskripsi",
+              "classValidatorShim": true,
+              "dtoFileNameSuffix": [
+                ".dto.ts",
+                ".entity.ts",
+                ".request.ts",
+                ".response.ts"
+              ]
+            }
+          }
+        ]
       }
     },
     "patient": {

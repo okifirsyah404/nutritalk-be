@@ -74,6 +74,7 @@ export class AppConfigLoaded {
     return {
       host: process.env.REDIS_HOST,
       port: parseInt(process.env.REDIS_PORT),
+      database: parseInt(process.env.REDIS_DB),
       url: process.env.REDIS_URL,
       ttl: parseInt(process.env.REDIS_TTL),
     };

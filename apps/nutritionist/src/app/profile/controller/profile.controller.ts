@@ -1,4 +1,5 @@
 import { BaseApiResponse } from '@common/common';
+import { IApiResponse } from '@contract/contract/response/api-response.interface';
 import { INutritionist } from '@database/prisma';
 import { AccessTokenGuard } from '@jwt/app-jwt';
 import GetNutritionistLogged from '@jwt/app-jwt/infrastructure/decorator/get-nutritionist-logged.decorator';
@@ -13,12 +14,14 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiTags } from '@nestjs/swagger';
+import { DocsTag } from 'apps/nutritionist/src/common/docs/docs';
 import multer from 'multer';
 import { UpdateProfileRequest } from '../dto/request/update-profile.request';
 import { ProfileResponse } from '../dto/response/profile.response';
 import { ProfileService } from '../service/profile.service';
-import { IApiResponse } from '@contract/contract/response/api-response.interface';
 
+@ApiTags(DocsTag.PROFILE)
 @UseGuards(AccessTokenGuard)
 @Controller('profile')
 export class ProfileController {

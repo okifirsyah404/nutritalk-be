@@ -153,7 +153,6 @@ export class AppJwtService {
    * @throws Will throw an error if the patient cannot be found or if there is a database error.
    *
    */
-  @CacheResult<IPatient>((id: string) => id)
   async getPatientById(id: string): Promise<IPatient> {
     return await this.repository
       .findPatientById(id)

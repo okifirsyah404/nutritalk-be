@@ -7,6 +7,7 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocsTag } from './common/docs/docs';
+import metadata from './metadata';
 import { NutritionistModule } from './nutritionist.module';
 
 async function bootstrap(): Promise<void> {
@@ -34,7 +35,7 @@ async function bootstrap(): Promise<void> {
     description: 'Nutritionist App API Documentation',
     version: '1.0',
     tags: DocsTag.tags,
-    metadata: async () => new Promise((resolve) => resolve({})),
+    metadata: metadata,
   });
 
   const appConfig = app.get(AppConfigService).appConfig;

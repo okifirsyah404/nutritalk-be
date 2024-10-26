@@ -8,16 +8,36 @@ import { Body, Controller, Delete, Post, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthSuccessMessage } from '../../../common/constant/message/success/auth-success.message';
 import { DocsTag } from '../../../common/docs/docs';
+import { AuthSignInDocs } from '../docs/decorator/auth-sign-in.docs-decorator';
+
+import { AuthRefreshTokenDocs } from '../docs/decorator/auth-refresh-token.docs-decorator';
+import { AuthSignOutDocs } from '../docs/decorator/auth-sign-out.docs-decorator';
 import { AuthRefreshTokenRequest } from '../dto/request/auth-refresh-token.request';
 import { AuthSignInRequest } from '../dto/request/auth-sign-in.request';
 import { AuthSignInResponse } from '../dto/response/auth-sign-in.response';
 import { AuthService } from '../service/auth.service';
 
+@ApiTags(DocsTag.AUTH)
 @Controller('auth')
 export class AuthController {
   constructor(private readonly service: AuthService) {}
 
-  @ApiTags(DocsTag.AUTH_SIGN_IN)
+  /**
+   *
+   * Http endpoint for signing up a user.
+   *
+   * Request body:
+   * - email: (required) string
+   * - password: (required) string
+   *
+   * Response:
+   * - status: string
+   * - statusCode: number
+   * - message: string
+   * - data: object of accessToken and refreshToken
+   *
+   */
+  @AuthSignInDocs()
   @Post('sign-in')
   async signIn(
     @Body() reqBody: AuthSignInRequest,
@@ -30,7 +50,21 @@ export class AuthController {
     });
   }
 
-  @ApiTags(DocsTag.AUTH_REFRESH_TOKEN)
+  /**
+   *
+   * Http endpoint for refreshing the access token.
+   *
+   * Request header:
+   * - x-refresh-token: (required) string
+   *
+   * Response:
+   * - status: string
+   * - statusCode: number
+   * - message: string
+   * - data: object of accessToken and refreshToken
+   *
+   */
+  @AuthRefreshTokenDocs()
   @Post('refresh-token')
   @UseGuards(RefreshTokenGuard)
   async getRefreshToken(
@@ -45,6 +79,18 @@ export class AuthController {
     });
   }
 
+  /**
+   *
+   * Http endpoint for signing out a user.
+   *
+   * Response:
+   * - status: string
+   * - statusCode: number
+   * - message: string
+   * - data: undefined
+   *
+   */
+  @AuthSignOutDocs()
   @UseGuards(AccessTokenGuard)
   @Delete('sign-out')
   async signOut(
