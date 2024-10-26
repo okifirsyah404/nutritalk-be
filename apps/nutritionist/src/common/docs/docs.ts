@@ -4,24 +4,24 @@ import { TagObject } from '@common/common';
  * Represents a documentation tag.
  */
 export abstract class DocsTag {
-  static readonly AUTH_SIGN_IN = 'Auth Sign In';
-  static readonly AUTH_REFRESH_TOKEN = 'Auth Refresh Token';
+  static readonly AUTH = 'Auth ';
+  static readonly FORGET_PASSWORD = 'Forget Password';
   static readonly PROFILE = 'Profile';
 
   /**
-   * Represents the authentication tag object.
+   * Represents the auth tag object.
    */
-  private static readonly authSignIn: TagObject = {
-    name: DocsTag.AUTH_SIGN_IN,
-    description: 'Endpoints that require authentication',
+  private static readonly auth: TagObject = {
+    name: DocsTag.AUTH,
+    description: 'Endpoints for authentication',
   };
 
   /**
-   * Represents the refresh token tag object.
+   * Represents the forget password tag object.
    */
-  private static readonly authRefreshToken: TagObject = {
-    name: DocsTag.AUTH_REFRESH_TOKEN,
-    description: 'Endpoints that require refresh token',
+  private static readonly forgetPassword: TagObject = {
+    name: DocsTag.FORGET_PASSWORD,
+    description: 'Endpoints for forget password',
   };
 
   /**
@@ -36,8 +36,8 @@ export abstract class DocsTag {
    * Represents an array of tag objects.
    */
   static readonly tags = [
-    DocsTag.authSignIn,
-    DocsTag.authRefreshToken,
+    DocsTag.auth,
+    DocsTag.forgetPassword,
     DocsTag.profile,
   ];
 }

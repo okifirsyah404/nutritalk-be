@@ -1,6 +1,8 @@
 import { AppConfigService } from '@config/app-config';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import fs from 'fs';
+import { join } from 'path';
 import { TagObject } from './tag';
 
 /**
@@ -39,8 +41,17 @@ export default async function swaggerDocumentBuilder(
     deepScanRoutes: true,
   });
 
+  const customCssPath = join(
+    process.cwd(),
+    'public',
+    'css',
+    'swagger-dark.css',
+  );
+
+  const documentStyle = fs.readFileSync(customCssPath, 'utf8');
+
   SwaggerModule.setup(config?.endpoint ?? '/docs', app, document, {
     customSiteTitle: config?.title || '',
-    customCssUrl: config?.customCss,
+    customCss: documentStyle,
   });
 }

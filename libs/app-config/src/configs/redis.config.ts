@@ -1,5 +1,6 @@
 import { registerAs } from '@nestjs/config';
-import { IsDefined, IsNumberString, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsDefined, IsNumber, IsNumberString, IsString } from 'class-validator';
 
 /**
  * Represents the configuration settings for a Redis instance.
@@ -14,6 +15,7 @@ import { IsDefined, IsNumberString, IsString } from 'class-validator';
 export type RedisConfig = {
   host: string;
   port: number;
+  database: number;
   url: string;
   ttl: number;
 };
@@ -37,6 +39,7 @@ export const redisConfig = registerAs(
   (): RedisConfig => ({
     host: process.env.REDIS_HOST,
     port: parseInt(process.env.REDIS_PORT),
+    database: parseInt(process.env.REDIS_DB),
     url: process.env.REDIS_URL,
     ttl: parseInt(process.env.REDIS_TTL),
   }),
@@ -60,6 +63,11 @@ export class RedisEnvironmentVariables {
   @IsDefined()
   @IsNumberString()
   REDIS_PORT!: string;
+
+  @Type(() => Number)
+  @IsDefined()
+  @IsNumber()
+  REDIS_DB!: number;
 
   @IsDefined()
   @IsString()

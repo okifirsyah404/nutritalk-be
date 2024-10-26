@@ -72,6 +72,7 @@ import { QueueModule } from './module/queue/queue.module';
         redis: {
           host: appConfig.redisConfig.host,
           port: appConfig.redisConfig.port,
+          db: appConfig.redisConfig.database,
         },
       }),
     }),
