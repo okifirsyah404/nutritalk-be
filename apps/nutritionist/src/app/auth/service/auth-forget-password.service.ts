@@ -1,5 +1,8 @@
-import { IOtpRequest, IOtpVerify } from '@common/common';
 import { AppConfigService } from '@config/app-config';
+import {
+  IOtpRequest,
+  IOtpVerify,
+} from '@contract/contract/otp/otp-result.interface';
 import {
   BadRequestException,
   Injectable,

@@ -1,11 +1,12 @@
-import {
-  BaseApiResponse,
-  IApiResponse,
-  IJwtSignaturePayload,
-} from '@common/common';
+import { BaseApiResponse } from '@common/common';
+import { IApiResponse } from '@contract/contract/response/api-response.interface';
+import { IJwtSignaturePayload } from '@jwt/app-jwt';
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { SignatureTokenGuard } from '@sign/signature';
 import GetSignaturePayload from '@sign/signature/infrastructure/decorator/get-signature-payload.decorator';
+import { AuthForgetPasswordSuccessMessage } from 'apps/nutritionist/src/common/constant/message/success/auth-forget-password-success.message';
+import { DocsTag } from 'apps/nutritionist/src/common/docs/docs';
 import { AuthCheckAccountRequest } from '../dto/request/auth-chcek-account.request';
 import { AuthForgetPasswordRequest } from '../dto/request/auth-forget-password.request';
 import { AuthOtpVerifyRequest } from '../dto/request/auth-otp-verify.request';
@@ -13,6 +14,7 @@ import { AuthForgetPasswordResponse } from '../dto/response/auth-forget-password
 import { AuthOtpVerifyForgetPasswordResponse } from '../dto/response/auth-otp-forget-password.response';
 import { AuthForgetPasswordService } from '../service/auth-forget-password.service';
 
+@ApiTags(DocsTag.FORGET_PASSWORD)
 @Controller('auth/forget-password')
 export class AuthForgetPasswordController {
   constructor(private readonly service: AuthForgetPasswordService) {}
@@ -24,7 +26,7 @@ export class AuthForgetPasswordController {
     const result = await this.service.checkAccount(reqBody);
 
     return BaseApiResponse.created({
-      message: 'OTP sent to your email',
+      message: AuthForgetPasswordSuccessMessage.SUCCESS_SEND_OTP_TO_EMAIL,
       data: AuthForgetPasswordResponse.fromEntity(result),
     });
   }
@@ -36,7 +38,7 @@ export class AuthForgetPasswordController {
     const result = await this.service.verifyOtp(reqBody);
 
     return BaseApiResponse.created({
-      message: 'OTP verified',
+      message: AuthForgetPasswordSuccessMessage.SUCCESS_VERIFY_OTP,
       data: AuthOtpVerifyForgetPasswordResponse.fromEntity(result),
     });
   }
@@ -53,7 +55,7 @@ export class AuthForgetPasswordController {
     });
 
     return BaseApiResponse.created({
-      message: 'OTP verified',
+      message: AuthForgetPasswordSuccessMessage.SUCCESS_RESET_PASSWORD,
       data: AuthForgetPasswordResponse.fromEntity(result),
     });
   }

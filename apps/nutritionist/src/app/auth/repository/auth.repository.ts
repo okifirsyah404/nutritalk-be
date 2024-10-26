@@ -28,6 +28,27 @@ export class AuthRepository {
   }
 
   /**
+   * Finds an account by ID.
+   *
+   * @param id - The ID of the account to find.
+   * @returns A promise that resolves to the found account, including the password and associated nutritionist.
+   */
+  async findAccountById(id: string): Promise<IAccount> {
+    return this.prisma.account.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        ...PrismaSelector.account,
+        password: true,
+        nutritionist: {
+          select: PrismaSelector.nutritionist,
+        },
+      },
+    });
+  }
+
+  /**
    * Updates the FCM token for a specific account.
    *
    * @param id - The ID of the account.

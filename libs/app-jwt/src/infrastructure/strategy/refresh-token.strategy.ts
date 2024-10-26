@@ -1,8 +1,12 @@
-import { IJwtRefresh, IJwtRefreshPayload } from '@common/common';
 import { AppConfigService } from '@config/app-config';
+import {
+  IJwtRefresh,
+  IJwtRefreshPayload,
+} from '@jwt/app-jwt/interface/app-jwt.interface';
 import { AppJwtService } from '@jwt/app-jwt/provider/app-jwt.service';
 import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
+import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
 @Injectable()
@@ -28,7 +32,7 @@ export class RefreshTokenStrategy extends PassportStrategy(
     req: Request,
     payload: IJwtRefreshPayload,
   ): Promise<IJwtRefresh> {
-    const token = req.headers['x-refresh-token'] as string;
+    const token = ExtractJwt.fromHeader('x-refresh-token')(req);
 
     const isValid = await this.service.validateRefreshToken(payload.sub, token);
 

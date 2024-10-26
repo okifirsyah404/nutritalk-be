@@ -50,13 +50,13 @@ export type DatabaseConfig = {
 export const databaseConfig = registerAs(
   'databaseConfig',
   (): DatabaseConfig => ({
-    provider: process.env.DB_PROVIDER!,
-    host: process.env.DB_HOST!,
-    port: parseInt(process.env.DB_PORT!),
-    name: process.env.DB_NAME!,
-    user: process.env.DB_USERNAME!,
-    password: process.env.DB_PASSWORD!,
-    url: process.env.DATABASE_URL!,
+    provider: process.env.DB_PROVIDER,
+    host: process.env.DB_HOST,
+    port: parseInt(process.env.DB_PORT),
+    name: process.env.DB_NAME,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    url: process.env.DATABASE_URL,
     shadowUrl: process.env.SHADOW_DATABASE_URL,
   }),
 );
