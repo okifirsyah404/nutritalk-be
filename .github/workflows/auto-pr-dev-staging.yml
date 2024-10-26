@@ -2,7 +2,7 @@ name: Scheduled Pull Request from Dev to Staging
 
 on:
   schedule:
-    - cron: '*/40 * * * *' # Runs every Saturday at 1AM UTC
+    - cron: '*/10 * * * *' # Runs every Saturday at 1AM UTC
 
 jobs:
   create-pr:
@@ -12,26 +12,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Git
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Check if there are changes between dev and staging
-        run: |
-          git fetch origin dev:dev
-          git fetch origin staging:staging
-          git diff --exit-code staging dev || echo "Changes found"
-        id: check_diff
-        continue-on-error: true
-
       - name: Create Pull Request
-        if: steps.check_diff.outcome == 'failure'
         uses: peter-evans/create-pull-request@v5
         with:
           title: 'Automated PR: Merge dev into staging'
           body: 'Scheduled weekly update from dev to staging.'
           commit-message: 'Scheduled PR: Merge dev into staging'
-          labels: 'automated pr'
           branch: 'dev'
+          labels: 'automated pr'
           base: 'staging'
