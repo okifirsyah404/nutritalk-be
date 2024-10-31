@@ -1,5 +1,5 @@
-import { BaseApiResponse } from '@common/common';
-import { IApiResponse } from '@contract/contract/response/api-response.interface';
+import { BaseApiResponse } from '@common/response/api.response';
+import { IApiResponse } from '@contract/response/api-response.interface';
 import { IJwtSignaturePayload } from '@jwt/app-jwt';
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';

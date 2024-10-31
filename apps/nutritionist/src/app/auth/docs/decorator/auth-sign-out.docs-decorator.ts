@@ -1,4 +1,4 @@
-import { ApplyDecorators } from '@contract/contract/decorator/apply-decorators.type';
+import { ApplyDecorators } from '@contract/decorator/apply-decorators.type';
 import { applyDecorators } from '@nestjs/common';
 import {
   ApiBearerAuth,

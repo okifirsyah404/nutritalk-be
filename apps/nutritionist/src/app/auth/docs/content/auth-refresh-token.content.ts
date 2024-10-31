@@ -1,4 +1,4 @@
-import { BaseApiResponse } from '@common/common';
+import { BaseApiResponse } from '@common/response/api.response';
 import { ContentObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { INVALID_TOKEN_CONTENT } from 'apps/nutritionist/src/common/constant/docs/invalid-token-content.constant';
 import { AuthSuccessMessage } from 'apps/nutritionist/src/common/constant/message/success/auth-success.message';

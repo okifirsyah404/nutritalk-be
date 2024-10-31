@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { DatabaseErrorMessage } from '@common/common/constant/message/error/database-error.message';
+
+import { DatabaseErrorMessage } from '@common/constant/message/error/database-error.message';
 import {
   InternalServerErrorException,
   UnprocessableEntityException,

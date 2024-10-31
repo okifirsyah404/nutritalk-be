@@ -1,4 +1,4 @@
-import { TempUploadPath } from '@common/common';
+import { TempUploadPath } from '@common/constant/path/temp-upload.path';
 import fs from 'fs';
 import path from 'path';
 

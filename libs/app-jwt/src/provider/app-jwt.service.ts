@@ -1,11 +1,11 @@
 import { CacheResult } from '@cache/app-cache/decorator/cache-result.decorator';
 import { AppConfigService } from '@config/app-config';
 import { INutritionist, IPatient } from '@database/prisma';
-import { createDatabaseErrorHandler } from '@infrastructure/infrastructure/err_handler/database.error-handler';
+import { createDatabaseErrorHandler } from '@infrastructure/err_handler/database.error-handler';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Role } from '@prisma/client';
-import { CryptoUtils } from '@util/util';
+import { CryptoUtils } from '@util';
 import {
   IJwtAccessPayload,
   IJwtRefreshPayload,

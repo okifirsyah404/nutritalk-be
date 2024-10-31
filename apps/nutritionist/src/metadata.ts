@@ -5,7 +5,7 @@ export default async () => {
     '@nestjs/swagger': {
       models: [
         [
-          import('../../../libs/common/src/response/api.response'),
+          import('../../../libs/@common/response/api.response'),
           {
             BaseApiResponse: {
               status: { required: true, type: () => String },

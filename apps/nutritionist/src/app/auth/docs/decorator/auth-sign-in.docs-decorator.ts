@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { ApplyDecorators } from '@contract/contract/decorator/apply-decorators.type';
+
 import { applyDecorators } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -10,6 +10,7 @@ import {
 } from '@nestjs/swagger';
 import { AuthOperationDocs } from '../auth.operation';
 import { AuthSignInContentDocs } from '../content/auth-sign-in.content';
+import { ApplyDecorators } from '@contract/decorator/apply-decorators.type';
 
 export function AuthSignInDocs(): ApplyDecorators {
   return applyDecorators(

@@ -1,5 +1,3 @@
-import { BaseApiResponse } from '@common/common';
-import { IApiResponse } from '@contract/contract/response/api-response.interface';
 import { INutritionist } from '@database/prisma';
 import { AccessTokenGuard, IJwtRefresh, RefreshTokenGuard } from '@jwt/app-jwt';
 import GetNutritionistLogged from '@jwt/app-jwt/infrastructure/decorator/get-nutritionist-logged.decorator';
@@ -10,6 +8,8 @@ import { AuthSuccessMessage } from '../../../common/constant/message/success/aut
 import { DocsTag } from '../../../common/docs/docs';
 import { AuthSignInDocs } from '../docs/decorator/auth-sign-in.docs-decorator';
 
+import { BaseApiResponse } from '@common/response/api.response';
+import { IApiResponse } from '@contract/response/api-response.interface';
 import { AuthRefreshTokenDocs } from '../docs/decorator/auth-refresh-token.docs-decorator';
 import { AuthSignOutDocs } from '../docs/decorator/auth-sign-out.docs-decorator';
 import { AuthRefreshTokenRequest } from '../dto/request/auth-refresh-token.request';

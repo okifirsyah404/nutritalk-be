@@ -1,4 +1,4 @@
-import { BaseApiResponse } from '@common/common';
+import { BaseApiResponse } from '@common/response/api.response';
 import { ExamplesObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { AuthErrorMessage } from '../message/error/auth-error.message';
 

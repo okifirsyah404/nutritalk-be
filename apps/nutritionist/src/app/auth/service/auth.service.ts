@@ -1,5 +1,6 @@
 import { AppConfigService } from '@config/app-config';
-import { createDatabaseErrorHandler } from '@infrastructure/infrastructure/err_handler/database.error-handler';
+
+import { createDatabaseErrorHandler } from '@infrastructure/err_handler/database.error-handler';
 import { AppJwtService, IJwtRefresh, IJwtToken } from '@jwt/app-jwt';
 import {
   Injectable,
