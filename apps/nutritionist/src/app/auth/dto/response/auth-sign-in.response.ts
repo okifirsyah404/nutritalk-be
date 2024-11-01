@@ -13,7 +13,7 @@ export class AuthSignInResponse implements IJwtToken {
     return new AuthSignInResponse(entity);
   }
 
-  static exampleData: AuthSignInResponse = new AuthSignInResponse({
+  static readonly exampleData: AuthSignInResponse = new AuthSignInResponse({
     accessToken:
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ',
     refreshToken:
