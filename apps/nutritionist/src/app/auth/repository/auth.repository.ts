@@ -66,6 +66,13 @@ export class AuthRepository {
     });
   }
 
+  /**
+   * Updates the password of an account with the given ID.
+   *
+   * @param id - The unique identifier of the account.
+   * @param password - The new password to be set for the account.
+   * @returns A promise that resolves to the updated account object.
+   */
   async updatePassword(id: string, password: string): Promise<IAccount> {
     return this.prisma.account.update({
       where: {
