@@ -1,5 +1,7 @@
 import { AppConfigService } from '@config/app-config';
-import { createDatabaseErrorHandler } from '@infrastructure/infrastructure/err_handler/database.error-handler';
+
+import { AuthErrorMessage } from '@common/constant/message/error/auth-error.message';
+import { createDatabaseErrorHandler } from '@infrastructure/err_handler/database.error-handler';
 import { AppJwtService, IJwtRefresh, IJwtToken } from '@jwt/app-jwt';
 import {
   Injectable,
@@ -8,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { Role } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
-import { AuthErrorMessage } from '../../../common/constant/message/error/auth-error.message';
 import { AuthRefreshTokenRequest } from '../dto/request/auth-refresh-token.request';
 import { AuthSignInRequest } from '../dto/request/auth-sign-in.request';
 import { AuthRepository } from '../repository/auth.repository';

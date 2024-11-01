@@ -1,7 +1,7 @@
-import { IOtpRequest } from '@contract/contract/otp/otp-result.interface';
+import { IOtpRequest } from '@contract/otp/otp-result.interface';
 
 export class AuthForgetPasswordResponse implements IOtpRequest {
-  constructor(email: string) {
+  private constructor(email: string) {
     this.email = email;
   }
 

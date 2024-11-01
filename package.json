@@ -161,17 +161,17 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
+      "^@contract/contract(|/.*)$": "<rootDir>/libs/@contract/$1",
+      "^@common/common(|/.*)$": "<rootDir>/libs/@common/$1",
+      "^@util(|/.*)$": "<rootDir>/libs/@util/$1",
+      "^@infrastructure/infrastructure(|/.*)$": "<rootDir>/libs/@infrastructure/$1",
       "^@config/app-config(|/.*)$": "<rootDir>/libs/app-config/src/$1",
       "^@s3storage/s3storage(|/.*)$": "<rootDir>/libs/s3storage/src/$1",
-      "^@common/common(|/.*)$": "<rootDir>/libs/common/src/$1",
       "^@database/prisma(|/.*)$": "<rootDir>/libs/prisma/src/$1",
-      "^@util/util(|/.*)$": "<rootDir>/libs/util/src/$1",
       "^@otp/otp(|/.*)$": "<rootDir>/libs/otp/src/$1",
       "^@mail/mailer(|/.*)$": "<rootDir>/libs/mailer/src/$1",
       "^@sign/signature(|/.*)$": "<rootDir>/libs/signature/src/$1",
       "^@jwt/app-jwt(|/.*)$": "<rootDir>/libs/app-jwt/src/$1",
-      "^@infrastructure/infrastructure(|/.*)$": "<rootDir>/libs/infrastructure/src/$1",
-      "^@contract/contract(|/.*)$": "<rootDir>/libs/contract/src/$1",
       "^@cache/app-cache(|/.*)$": "<rootDir>/libs/app-cache/src/$1"
     }
   }

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { JwtTokenError } from '@common/constant/message/error/jwt-token-error.message';
 import {
   ExecutionContext,
   Injectable,
@@ -32,11 +33,17 @@ export class SignatureTokenGuard extends AuthGuard('jwt-signature') {
   ): any {
     if (err || !user) {
       if (info?.name === 'TokenExpiredError') {
-        throw new UnauthorizedException('ERR_SIGNATURE_TOKEN_EXPIRED');
+        throw new UnauthorizedException(
+          JwtTokenError.ERR_SIGNATURE_TOKEN_EXPIRED,
+        );
       } else if (info?.name === 'JsonWebTokenError') {
-        throw new UnauthorizedException('ERR_SIGNATURE_TOKEN_INVALID');
+        throw new UnauthorizedException(
+          JwtTokenError.ERR_SIGNATURE_TOKEN_INVALID,
+        );
       } else {
-        throw new UnauthorizedException('ERR_SIGNATURE_TOKEN_UNAUTHORIZED');
+        throw new UnauthorizedException(
+          JwtTokenError.ERR_SIGNATURE_TOKEN_UNAUTHORIZED,
+        );
       }
     }
 

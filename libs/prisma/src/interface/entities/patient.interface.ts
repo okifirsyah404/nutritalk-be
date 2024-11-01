@@ -1,4 +1,4 @@
-import { IAccount, IAccountWithoutPassword } from './account.interface';
+import { IAccount } from './account.interface';
 import { IBaseEntity } from './base/base.interface';
 import { ICredit } from './credit.interface';
 import { IMedicalRecordKey } from './medical-record-key.interface';
@@ -10,7 +10,7 @@ export interface IPatient extends IBaseEntity {
   profileId?: string | null;
   medicalRecordKeyId?: string | null;
 
-  account?: IAccount | IAccountWithoutPassword | null;
+  account?: IAccount | null;
   profile?: IProfile | null;
   credit?: ICredit | null;
   medicalRecordKey?: IMedicalRecordKey | null;

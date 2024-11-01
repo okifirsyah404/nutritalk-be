@@ -1,5 +1,5 @@
-import { BaseApiResponse } from '@common/common';
-import { IApiResponse } from '@contract/contract/response/api-response.interface';
+import { BaseApiResponse } from '@common/response/api.response';
+import { IApiResponse } from '@contract/response/api-response.interface';
 import { IJwtSignaturePayload } from '@jwt/app-jwt';
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -7,6 +7,11 @@ import { SignatureTokenGuard } from '@sign/signature';
 import GetSignaturePayload from '@sign/signature/infrastructure/decorator/get-signature-payload.decorator';
 import { AuthForgetPasswordSuccessMessage } from 'apps/nutritionist/src/common/constant/message/success/auth-forget-password-success.message';
 import { DocsTag } from 'apps/nutritionist/src/common/docs/docs';
+import {
+  AuthRequestOtpForgetPasswordDecorators,
+  AuthResetPasswordDecorators,
+  AuthVerifyOtpForgetPasswordDecorators,
+} from '../decorator/auth-forget-password.decorators';
 import { AuthCheckAccountRequest } from '../dto/request/auth-chcek-account.request';
 import { AuthForgetPasswordRequest } from '../dto/request/auth-forget-password.request';
 import { AuthOtpVerifyRequest } from '../dto/request/auth-otp-verify.request';
@@ -19,6 +24,21 @@ import { AuthForgetPasswordService } from '../service/auth-forget-password.servi
 export class AuthForgetPasswordController {
   constructor(private readonly service: AuthForgetPasswordService) {}
 
+  /**
+   *
+   * Http endpoint for requesting an OTP to reset the password.
+   *
+   * Request body:
+   * - email: (required) string
+   *
+   * Response:
+   * - status: string
+   * - statusCode: number
+   * - message: string
+   * - data: object of accessToken and refreshToken
+   *
+   */
+  @AuthRequestOtpForgetPasswordDecorators()
   @Post('otp')
   async requestForgetPasswordOtp(
     @Body() reqBody: AuthCheckAccountRequest,
@@ -31,6 +51,22 @@ export class AuthForgetPasswordController {
     });
   }
 
+  /**
+   *
+   * Http endpoint for verifying the OTP to reset the password.
+   *
+   * Request body:
+   * - email: (required) string
+   * - otp: (required) string
+   *
+   * Response:
+   * - status: string
+   * - statusCode: number
+   * - message: string
+   * - data: object of signature
+   *
+   */
+  @AuthVerifyOtpForgetPasswordDecorators()
   @Post('otp/verify')
   async verifyForgetPasswordOtp(
     @Body() reqBody: AuthOtpVerifyRequest,
@@ -43,9 +79,24 @@ export class AuthForgetPasswordController {
     });
   }
 
+  /**
+   *
+   * Http endpoint for resetting the password.
+   *
+   * Request body:
+   * - password: (required) string
+   *
+   * Response:
+   * - status: string
+   * - statusCode: number
+   * - message: string
+   * - data: object of email
+   *
+   */
+  @AuthResetPasswordDecorators()
   @UseGuards(SignatureTokenGuard)
   @Post()
-  async forgetPassword(
+  async resetPassword(
     @Body() reqBody: AuthForgetPasswordRequest,
     @GetSignaturePayload() signaturePayload: IJwtSignaturePayload,
   ): Promise<IApiResponse<AuthForgetPasswordResponse>> {
