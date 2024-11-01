@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
-import { IApiResponse } from '@contract/contract/response/api-response.interface';
+
+import { IApiResponse } from '@contract/response/api-response.interface';
 import {
   ArgumentsHost,
   Catch,

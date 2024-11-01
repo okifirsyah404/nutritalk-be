@@ -65,4 +65,21 @@ export class AuthRepository {
       },
     });
   }
+
+  async updatePassword(id: string, password: string): Promise<IAccount> {
+    return this.prisma.account.update({
+      where: {
+        id,
+      },
+      data: {
+        password,
+      },
+      select: {
+        ...PrismaSelector.account,
+        nutritionist: {
+          select: PrismaSelector.nutritionist,
+        },
+      },
+    });
+  }
 }

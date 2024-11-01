@@ -1,13 +1,14 @@
+import { INVALID_TOKEN_CONTENT } from '@common/constant/docs/content/invalid-token.content';
+import { AuthErrorMessage } from '@common/constant/message/error/auth-error.message';
+import { EmailValidationMessage } from '@common/constant/message/validation/email-validation.message';
+import { FcmTokenValidationMessage } from '@common/constant/message/validation/fcm-token-validation.message';
+import { PasswordValidationMessage } from '@common/constant/message/validation/password-validation.message';
 import { BaseApiResponse } from '@common/response/api.response';
 import { ContentObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
-import { AuthErrorMessage } from 'apps/nutritionist/src/common/constant/message/error/auth-error.message';
 import { AuthSuccessMessage } from 'apps/nutritionist/src/common/constant/message/success/auth-success.message';
-import { EmailValidationMessage } from 'apps/nutritionist/src/common/constant/message/validation/email-validation.message';
-import { FcmTokenValidationMessage } from 'apps/nutritionist/src/common/constant/message/validation/fcm-token-validation.message';
-import { PasswordValidationMessage } from 'apps/nutritionist/src/common/constant/message/validation/password-validation.message';
 import { AuthSignInResponse } from '../../dto/response/auth-sign-in.response';
 
-export abstract class AuthSignInContentDocs {
+export abstract class AuthContentDocs {
   static readonly AUTH_SIGN_IN_SUCCESS: ContentObject = {
     'application/json': {
       example: BaseApiResponse.created({
@@ -76,7 +77,46 @@ export abstract class AuthSignInContentDocs {
     },
   };
 
-  static readonly AUTH_SIGN_IN_NOT_FOUND: ContentObject = {
+  static readonly AUTH_SIGN_OUT_SUCCESS: ContentObject = {
+    'application/json': {
+      example: BaseApiResponse.success({
+        message: AuthSuccessMessage.SUCCESS_AUTH_SIGN_OUT,
+        data: undefined,
+      }),
+    },
+  };
+
+  static readonly AUTH_SIGN_OUT_UNAUTHORIZED: ContentObject = {
+    'application/json': {
+      examples: {
+        'Already Signed Out': {
+          value: BaseApiResponse.unauthorized({
+            message: AuthErrorMessage.ERR_ACCOUNT_ALREADY_SIGN_OUT,
+          }),
+        },
+        ...INVALID_TOKEN_CONTENT,
+      },
+    },
+  };
+
+  static readonly AUTH_REFRESH_TOKEN_SUCCESS: ContentObject = {
+    'application/json': {
+      example: BaseApiResponse.success({
+        message: AuthSuccessMessage.SUCCESS_AUTH_REFRESH_TOKEN,
+        data: AuthSignInResponse.exampleData,
+      }),
+    },
+  };
+
+  static readonly AUTH_UNAUTHORIZED: ContentObject = {
+    'application/json': {
+      examples: {
+        ...INVALID_TOKEN_CONTENT,
+      },
+    },
+  };
+
+  static readonly AUTH_NOT_FOUND: ContentObject = {
     'application/json': {
       example: BaseApiResponse.notFound({
         message: AuthErrorMessage.ERR_ACCOUNT_NOT_FOUND,

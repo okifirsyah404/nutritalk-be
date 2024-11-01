@@ -1,7 +1,7 @@
 import { IJwtToken } from '@jwt/app-jwt';
 
 export class AuthSignInResponse implements IJwtToken {
-  constructor({ accessToken, refreshToken }: IJwtToken) {
+  private constructor({ accessToken, refreshToken }: IJwtToken) {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
   }

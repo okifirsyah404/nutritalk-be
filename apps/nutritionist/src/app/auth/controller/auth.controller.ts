@@ -1,3 +1,5 @@
+import { BaseApiResponse } from '@common/response/api.response';
+import { IApiResponse } from '@contract/response/api-response.interface';
 import { INutritionist } from '@database/prisma';
 import { AccessTokenGuard, IJwtRefresh, RefreshTokenGuard } from '@jwt/app-jwt';
 import GetNutritionistLogged from '@jwt/app-jwt/infrastructure/decorator/get-nutritionist-logged.decorator';
@@ -6,12 +8,11 @@ import { Body, Controller, Delete, Post, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthSuccessMessage } from '../../../common/constant/message/success/auth-success.message';
 import { DocsTag } from '../../../common/docs/docs';
-import { AuthSignInDocs } from '../docs/decorator/auth-sign-in.docs-decorator';
-
-import { BaseApiResponse } from '@common/response/api.response';
-import { IApiResponse } from '@contract/response/api-response.interface';
-import { AuthRefreshTokenDocs } from '../docs/decorator/auth-refresh-token.docs-decorator';
-import { AuthSignOutDocs } from '../docs/decorator/auth-sign-out.docs-decorator';
+import {
+  AuthRefreshTokenDecorators,
+  AuthSignInDecorators,
+  AuthSignOutDecorators,
+} from '../decorator/auth.decorators';
 import { AuthRefreshTokenRequest } from '../dto/request/auth-refresh-token.request';
 import { AuthSignInRequest } from '../dto/request/auth-sign-in.request';
 import { AuthSignInResponse } from '../dto/response/auth-sign-in.response';
@@ -37,7 +38,7 @@ export class AuthController {
    * - data: object of accessToken and refreshToken
    *
    */
-  @AuthSignInDocs()
+  @AuthSignInDecorators()
   @Post('sign-in')
   async signIn(
     @Body() reqBody: AuthSignInRequest,
@@ -64,7 +65,7 @@ export class AuthController {
    * - data: object of accessToken and refreshToken
    *
    */
-  @AuthRefreshTokenDocs()
+  @AuthRefreshTokenDecorators()
   @Post('refresh-token')
   @UseGuards(RefreshTokenGuard)
   async getRefreshToken(
@@ -90,7 +91,7 @@ export class AuthController {
    * - data: undefined
    *
    */
-  @AuthSignOutDocs()
+  @AuthSignOutDecorators()
   @UseGuards(AccessTokenGuard)
   @Delete('sign-out')
   async signOut(

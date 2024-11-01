@@ -1,4 +1,4 @@
-import { IApiResponse } from '@contract/contract/response/api-response.interface';
+import { IApiResponse } from '@contract/response/api-response.interface';
 
 export class BaseApiResponse<T> implements IApiResponse<T> {
   constructor({
@@ -33,8 +33,8 @@ export class BaseApiResponse<T> implements IApiResponse<T> {
     data: T;
   }): BaseApiResponse<T> {
     return new BaseApiResponse<T>({
-      statusCode,
       status: 'Success',
+      statusCode,
       message,
       data,
     });
@@ -50,8 +50,8 @@ export class BaseApiResponse<T> implements IApiResponse<T> {
     data: T;
   }): BaseApiResponse<T> {
     return new BaseApiResponse<T>({
-      statusCode,
       status: 'Created',
+      statusCode,
       message,
       data,
     });
@@ -65,8 +65,8 @@ export class BaseApiResponse<T> implements IApiResponse<T> {
     message: string;
   }): BaseApiResponse<undefined> {
     return new BaseApiResponse<undefined>({
-      statusCode,
       status: 'Bad Request',
+      statusCode,
       message,
       data: undefined,
     });
@@ -80,8 +80,8 @@ export class BaseApiResponse<T> implements IApiResponse<T> {
     message: string;
   }): BaseApiResponse<undefined> {
     return new BaseApiResponse<undefined>({
-      statusCode,
       status: 'Unauthorized',
+      statusCode,
       message,
       data: undefined,
     });
@@ -95,8 +95,8 @@ export class BaseApiResponse<T> implements IApiResponse<T> {
     message: string;
   }): BaseApiResponse<undefined> {
     return new BaseApiResponse<undefined>({
-      statusCode,
       status: 'Not Found',
+      statusCode,
       message,
       data: undefined,
     });
@@ -110,8 +110,8 @@ export class BaseApiResponse<T> implements IApiResponse<T> {
     message: string;
   }): BaseApiResponse<undefined> {
     return new BaseApiResponse<undefined>({
-      statusCode,
       status: 'Forbidden',
+      statusCode,
       message,
       data: undefined,
     });
@@ -125,8 +125,8 @@ export class BaseApiResponse<T> implements IApiResponse<T> {
     message: string;
   }): BaseApiResponse<undefined> {
     return new BaseApiResponse<undefined>({
-      statusCode,
       status: 'Conflict',
+      statusCode,
       message,
       data: undefined,
     });

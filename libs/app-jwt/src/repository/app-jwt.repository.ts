@@ -1,6 +1,5 @@
 import {
   IAccount,
-  IAccountWithoutPassword,
   INutritionist,
   IPatient,
   PrismaService,
@@ -67,7 +66,7 @@ export class AppJwtRepository {
   async findAccountByIdAndRefreshToken(
     id: string,
     refreshToken: string,
-  ): Promise<IAccountWithoutPassword> {
+  ): Promise<IAccount> {
     return this.prisma.account.findUnique({
       where: {
         id,

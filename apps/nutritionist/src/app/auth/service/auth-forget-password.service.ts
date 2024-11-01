@@ -1,6 +1,8 @@
 import { AppConfigService } from '@config/app-config';
 
+import { AuthErrorMessage } from '@common/constant/message/error/auth-error.message';
 import { IOtpRequest, IOtpVerify } from '@contract/otp/otp-result.interface';
+import { IAccount } from '@database/prisma';
 import {
   BadRequestException,
   Injectable,
@@ -9,7 +11,6 @@ import {
 import { OtpService } from '@otp/otp';
 import { OtpPurpose } from '@prisma/client';
 import { SignatureService } from '@sign/signature';
-import { AuthErrorMessage } from '../../../common/constant/message/error/auth-error.message';
 import { MailQueueService } from '../../../module/queue/service/mail-queue.service';
 import { AuthCheckAccountRequest } from '../dto/request/auth-chcek-account.request';
 import { AuthForgetPasswordRequest } from '../dto/request/auth-forget-password.request';
@@ -64,7 +65,7 @@ export class AuthForgetPasswordService {
     });
 
     if (!validateResult) {
-      throw new BadRequestException('OTP not valid');
+      throw new BadRequestException(AuthErrorMessage.ERR_OTP_INVALID);
     }
 
     const signature = await this.signatureService.generateSignature({
@@ -85,14 +86,20 @@ export class AuthForgetPasswordService {
     email: string;
     reqData: AuthForgetPasswordRequest;
   }): Promise<IOtpRequest> {
-    return new Promise((resolve) => {
-      if (reqData.password !== reqData.confirmPassword) {
-        throw new BadRequestException('Password not match');
-      }
+    if (reqData.password !== reqData.confirmPassword) {
+      throw new BadRequestException(AuthErrorMessage.ERR_PASSWORD_NOT_MATCH);
+    }
 
-      return resolve({
-        email,
-      });
-    });
+    const account: IAccount = await this.repository.findAccountByEmail(email);
+
+    if (!account) {
+      throw new NotFoundException(AuthErrorMessage.ERR_ACCOUNT_NOT_FOUND);
+    }
+
+    await this.repository.updatePassword(account.id, reqData.password);
+
+    return {
+      email,
+    };
   }
 }

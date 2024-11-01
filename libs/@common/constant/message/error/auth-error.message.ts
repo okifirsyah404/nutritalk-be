@@ -12,4 +12,11 @@ export abstract class AuthErrorMessage {
   static readonly ERR_PASSWORD_NOT_MATCH = 'ERR_PASSWORD_NOT_MATCH';
   static readonly ERR_ACCOUNT_ALREADY_EXIST = 'ERR_ACCOUNT_ALREADY_EXIST';
   static readonly ERR_ACCOUNT_ALREADY_SIGN_OUT = 'ERR_ACCOUNT_ALREADY_SIGN_OUT';
+
+  // OTP Error
+  static readonly ERR_OTP_EXPIRED = 'ERR_OTP_EXPIRED';
+  static readonly ERR_OTP_INVALID = 'ERR_OTP_INVALID';
+
+  // Signature Error
+  static readonly ERR_SIGNATURE_INVALID = 'ERR_SIGNATURE_INVALID';
 }
