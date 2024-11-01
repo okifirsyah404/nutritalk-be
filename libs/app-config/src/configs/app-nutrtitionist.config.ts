@@ -1,5 +1,6 @@
 import { registerAs } from '@nestjs/config';
-import { IsDefined, IsNumberString, MinLength } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsDefined, IsNumber, MinLength } from 'class-validator';
 
 /**
  * Configuration settings for the Nutritionist application.
@@ -9,6 +10,8 @@ import { IsDefined, IsNumberString, MinLength } from 'class-validator';
  */
 export type AppNutritionistConfig = {
   port: number;
+  version: string;
+  url: string;
 };
 
 /**
@@ -26,6 +29,8 @@ export const appNutritionistConfig = registerAs(
   'appNutritionistConfig',
   (): AppNutritionistConfig => ({
     port: parseInt(process.env.APP_NUTRITIONIST_PORT!),
+    version: process.env.APP_NUTRITIONIST_VERSION,
+    url: process.env.APP_NUTRITIONIST_URL,
   }),
 );
 
@@ -35,8 +40,16 @@ export const appNutritionistConfig = registerAs(
  *
  */
 export class AppNutritionistEnvironmentVariables {
+  @Type(() => Number)
   @IsDefined()
-  @IsNumberString()
+  @IsNumber()
+  APP_NUTRITIONIST_PORT: number;
+
+  @IsDefined()
   @MinLength(1)
-  APP_NUTRITIONIST_PORT!: string;
+  APP_NUTRITIONIST_VERSION: string;
+
+  @IsDefined()
+  @MinLength(1)
+  APP_NUTRITIONIST_URL: string;
 }

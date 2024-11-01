@@ -5,7 +5,7 @@ export default async () => {
     '@nestjs/swagger': {
       models: [
         [
-          import('../../../libs/common/src/response/api.response'),
+          import('../../../libs/@common/response/api.response'),
           {
             BaseApiResponse: {
               status: { required: true, type: () => String },
@@ -115,9 +115,18 @@ export default async () => {
           import('./app/auth/controller/auth-forget-password.controller'),
           {
             AuthForgetPasswordController: {
-              requestForgetPasswordOtp: {},
-              verifyForgetPasswordOtp: {},
-              forgetPassword: {},
+              requestForgetPasswordOtp: {
+                description:
+                  'Http endpoint for requesting an OTP to reset the password.\n\nRequest body:\n- email: (required) string\n\nResponse:\n- status: string\n- statusCode: number\n- message: string\n- data: object of accessToken and refreshToken',
+              },
+              verifyForgetPasswordOtp: {
+                description:
+                  'Http endpoint for verifying the OTP to reset the password.\n\nRequest body:\n- email: (required) string\n- otp: (required) string\n\nResponse:\n- status: string\n- statusCode: number\n- message: string\n- data: object of signature',
+              },
+              forgetPassword: {
+                description:
+                  'Http endpoint for resetting the password.\n\nRequest body:\n- password: (required) string\n\nResponse:\n- status: string\n- statusCode: number\n- message: string\n- data: object of email',
+              },
             },
           },
         ],

@@ -5,7 +5,7 @@ import { IPatient } from './patient.interface';
 
 export interface IAccount extends IBaseEntity {
   email: string;
-  password: string;
+  password?: string;
   role: Role;
   googleId?: string | null;
   fcmToken?: string | null;
@@ -14,5 +14,3 @@ export interface IAccount extends IBaseEntity {
   patient?: IPatient | null;
   nutritionist?: INutritionist | null;
 }
-
-export interface IAccountWithoutPassword extends Omit<IAccount, 'password'> {}

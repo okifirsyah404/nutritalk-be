@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { JwtTokenError } from '@common/common';
+
+import { JwtTokenError } from '@common/constant/message/error/jwt-token-error.message';
 import {
   ExecutionContext,
   Injectable,

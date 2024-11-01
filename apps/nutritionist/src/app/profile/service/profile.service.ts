@@ -3,10 +3,10 @@ import { ClearCache } from '@cache/app-cache/decorator/clear-cache.decorator';
 import { INutritionist } from '@database/prisma';
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { AppS3StorageService } from '@s3storage/s3storage/provider/app-s3storage.service';
-import DateUtils from '@util/util/utilities/date.util';
 import momment from 'moment';
 import { UpdateProfileRequest } from '../dto/request/update-profile.request';
 import { ProfileRepository } from '../repository/profile.repository';
+import DateUtils from '@util/utilities/date.util';
 
 @Injectable()
 export class ProfileService {
