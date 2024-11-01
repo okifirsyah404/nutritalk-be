@@ -28,6 +28,8 @@ export class AppConfigLoaded {
 
     return {
       port: parseInt(process.env.APP_NUTRITIONIST_PORT, 10),
+      version: process.env.APP_NUTRITIONIST_VERSION,
+      url: process.env.APP_NUTRITIONIST_URL,
     };
   }
 

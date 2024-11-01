@@ -1,9 +1,4 @@
-import {
-  IAccount,
-  IAccountWithoutPassword,
-  INutritionist,
-  IProfile,
-} from '@database/prisma';
+import { IAccount, INutritionist, IProfile } from '@database/prisma';
 import { IConsultationMeta } from '@database/prisma/interface/entities/consultation-meta.interface';
 import { IOccupation } from '@database/prisma/interface/entities/occupation.interface';
 import { IPriceEntity } from '@database/prisma/interface/entities/price.interface';
@@ -18,7 +13,7 @@ export class ProfileResponse implements INutritionist {
   accountId?: string;
   profileId?: string;
   type?: NutritionistType;
-  account?: IAccount | IAccountWithoutPassword;
+  account?: IAccount;
   profile?: IProfile;
   consultationMeta?: IConsultationMeta;
   occupation?: IOccupation;

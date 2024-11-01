@@ -1,5 +1,5 @@
 import { NutritionistType } from '@prisma/client';
-import { IAccount, IAccountWithoutPassword } from './account.interface';
+import { IAccount } from './account.interface';
 import { IBaseEntity } from './base/base.interface';
 import { IConsultationMeta } from './consultation-meta.interface';
 import { IOccupation } from './occupation.interface';
@@ -17,7 +17,7 @@ export interface INutritionist extends IBaseEntity {
   accountId?: string | null;
   profileId?: string | null;
 
-  account?: IAccount | IAccountWithoutPassword | null;
+  account?: IAccount | null;
   profile?: IProfile | null;
   consultationMeta?: IConsultationMeta | null;
   occupation?: IOccupation | null;

@@ -1,5 +1,5 @@
-import { BaseApiResponse } from '@common/common';
-import { IApiResponse } from '@contract/contract/response/api-response.interface';
+import { BaseApiResponse } from '@common/response/api.response';
+import { IApiResponse } from '@contract/response/api-response.interface';
 import { INutritionist } from '@database/prisma';
 import { AccessTokenGuard } from '@jwt/app-jwt';
 import GetNutritionistLogged from '@jwt/app-jwt/infrastructure/decorator/get-nutritionist-logged.decorator';

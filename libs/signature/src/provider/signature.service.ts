@@ -1,7 +1,7 @@
 import { IJwtSignaturePayload } from '@jwt/app-jwt';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { CryptoUtils } from '@util/util';
+import { CryptoUtils } from '@util';
 import { ValdateSignatureOptions } from '../interface/signature.interface';
 import { SignatureRepository } from '../repository/signature.repository';
 
