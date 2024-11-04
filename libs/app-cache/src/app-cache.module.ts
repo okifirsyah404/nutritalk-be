@@ -2,7 +2,7 @@ import { AppConfigModule, AppConfigService } from '@config/app-config';
 import { CacheModule, CacheStore } from '@nestjs/cache-manager';
 import { Global, Module } from '@nestjs/common';
 import { redisStore } from 'cache-manager-ioredis-yet';
-import momment from 'moment';
+import moment from 'moment';
 import { AppCacheService } from './provider/app-cache.service';
 
 @Global()
@@ -14,7 +14,7 @@ import { AppCacheService } from './provider/app-cache.service';
       imports: [AppConfigModule],
       inject: [AppConfigService],
       useFactory: async (appConfig: AppConfigService) => {
-        const ttl = momment
+        const ttl = moment
           .duration(appConfig.redisConfig.ttl, 'seconds')
           .asMilliseconds();
 

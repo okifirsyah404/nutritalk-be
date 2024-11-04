@@ -1,0 +1,10 @@
+export abstract class ProfileSuccessMessage {
+  static readonly SUCCESS_PROFILE = 'SUCCESS_PROFILE';
+
+  static readonly SUCCESS_PROFILE_UPDATE = 'SUCCESS_PROFILE_UPDATE';
+
+  static readonly SUCCESS_PROFILE_UPLOAD_IMAGE = 'SUCCESS_PROFILE_UPLOAD_IMAGE';
+
+  static readonly SUCCESS_PROFILE_SET_AVAILABILITY =
+    'SUCCESS_PROFILE_SET_AVAILABILITY';
+}

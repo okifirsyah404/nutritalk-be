@@ -6,7 +6,7 @@ import {
   PrismaClient,
   Role,
 } from '@prisma/client';
-import { hashPassword } from '../../helper/crypto-helper';
+import { hashPassword } from '../helper/crypto-helper';
 
 import * as nutritionistRawData from '../raw/nutritionist.json';
 import * as priceRawData from '../raw/price.json';

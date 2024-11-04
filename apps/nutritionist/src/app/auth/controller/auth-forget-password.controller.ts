@@ -1,4 +1,4 @@
-import { BaseApiResponse } from '@common/response/api.response';
+import { BaseApiResponse } from '@common/response/base-api.response';
 import { IApiResponse } from '@contract/response/api-response.interface';
 import { IJwtSignaturePayload } from '@jwt/app-jwt';
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';

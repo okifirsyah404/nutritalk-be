@@ -26,6 +26,7 @@ module.exports = {
     '@typescript-eslint/no-unused-expressions': ['error'],
     '@typescript-eslint/require-await': ['error'],
     '@typescript-eslint/prefer-readonly': ['warn'],
+    '@typescript-eslint/ban-types': ['warn'],
     camelcase: 'warn',
     'default-case': 'error',
     'no-shadow': 'warn',

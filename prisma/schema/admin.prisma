@@ -1,0 +1,13 @@
+// ------------------------------------------------------------------
+// ADMIN MODEL
+// ------------------------------------------------------------------
+model Admin {
+    id String @id @default(cuid())
+
+    // Main Fields
+    apiKey String @unique
+
+    // Date Metadata
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+}
