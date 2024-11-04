@@ -15,6 +15,33 @@ export abstract class ProfileContentDocs {
     },
   };
 
+  static readonly PROFILE_UPDATE_SUCCESS: ContentObject = {
+    'application/json': {
+      example: BaseApiResponse.success({
+        message: ProfileSuccessMessage.SUCCESS_PROFILE_UPDATE,
+        data: ProfileResponse.exampleData,
+      }),
+    },
+  };
+
+  static readonly PROFILE_UPLOAD_IMAGE_SUCCESS: ContentObject = {
+    'application/json': {
+      example: BaseApiResponse.success({
+        message: ProfileSuccessMessage.SUCCESS_PROFILE_UPLOAD_IMAGE,
+        data: ProfileResponse.exampleData,
+      }),
+    },
+  };
+
+  static readonly PROFILE_SET_AVAILABILITY_SUCCESS: ContentObject = {
+    'application/json': {
+      example: BaseApiResponse.success({
+        message: ProfileSuccessMessage.SUCCESS_PROFILE_SET_AVAILABILITY,
+        data: ProfileResponse.exampleData,
+      }),
+    },
+  };
+
   static readonly PROFILE_NOT_FOUND: ContentObject = {
     'application/json': {
       example: BaseApiResponse.notFound({

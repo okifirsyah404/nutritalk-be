@@ -90,6 +90,9 @@ export class ProfileController {
    *
    */
   @ApiOperation(ProfileOperationDocs.PROFILE_UPDATE)
+  @ApiOkResponse({
+    content: ProfileContentDocs.PROFILE_UPDATE_SUCCESS,
+  })
   @Put()
   async updateProfile(
     @GetNutritionistLogged() nutritionist: INutritionistEntity,
@@ -118,6 +121,9 @@ export class ProfileController {
    *
    */
   @ApiOperation(ProfileOperationDocs.PROFILE_UPLOAD_IMAGE)
+  @ApiOkResponse({
+    content: ProfileContentDocs.PROFILE_UPLOAD_IMAGE_SUCCESS,
+  })
   @Post('upload')
   @UseInterceptors(
     FileInterceptor('image', {
@@ -148,6 +154,9 @@ export class ProfileController {
    *
    */
   @ApiOperation(ProfileOperationDocs.PROFILE_SET_AVAILABILITY)
+  @ApiOkResponse({
+    content: ProfileContentDocs.PROFILE_SET_AVAILABILITY_SUCCESS,
+  })
   @Get('set-availability')
   async setAvailability(
     @GetNutritionistLogged() nutritionist: INutritionistEntity,
