@@ -7,7 +7,6 @@ import { Module } from '@nestjs/common';
 import { seconds, ThrottlerModule } from '@nestjs/throttler';
 import { S3StorageModule } from '@s3storage/s3storage';
 import { AuthModule } from './app/auth/auth.module';
-import { NutritionistController } from './app/nutritionist.controller';
 import { ProfileModule } from './app/profile/profile.module';
 import { QueueModule } from './module/queue/queue.module';
 
@@ -82,7 +81,5 @@ import { QueueModule } from './module/queue/queue.module';
     AuthModule,
     ProfileModule,
   ],
-  controllers: [NutritionistController],
-  providers: [],
 })
 export class NutritionistModule {}

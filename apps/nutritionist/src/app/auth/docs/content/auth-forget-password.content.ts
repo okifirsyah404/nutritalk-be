@@ -4,7 +4,7 @@ import { EmailValidationMessage } from '@common/constant/message/validation/emai
 import { OtpValidationMessage } from '@common/constant/message/validation/otp-validation.message';
 import { PasswordValidationMessage } from '@common/constant/message/validation/password-validation.message';
 import { SignatureValidationMessage } from '@common/constant/message/validation/signature-validation.message';
-import { BaseApiResponse } from '@common/response/api.response';
+import { BaseApiResponse } from '@common/response/base-api.response';
 import { ContentObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { AuthForgetPasswordSuccessMessage } from 'apps/nutritionist/src/common/constant/message/success/auth-forget-password-success.message';
 import { AuthForgetPasswordResponse } from '../../dto/response/auth-forget-password.response';

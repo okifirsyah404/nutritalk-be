@@ -1,0 +1,158 @@
+// ------------------------------------------------------------------
+// NUTRITIONIST MODEL
+// ------------------------------------------------------------------
+model Nutritionist {
+    id String @id @default(cuid())
+
+    // Main Fields
+    type        NutritionistType?
+    nip         String?
+    nidn        String?
+    isAvailable Boolean?          @default(false)
+
+    // Date Metadata
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+
+    // Relations
+    account                 Account?                 @relation(fields: [accountId], references: [id], onDelete: Cascade)
+    profile                 Profile?                 @relation(fields: [profileId], references: [id], onDelete: Cascade)
+    consultationMeta        ConsultationMeta?
+    occupation              Occupation?
+    price                   Price?
+    registrationCertificate RegistrationCertificate?
+    schedules               Schedule[]
+    transactions            Transaction[]
+
+    // Foreign Keys
+    accountId String? @unique
+    profileId String? @unique
+}
+
+// ------------------------------------------------------------------
+// CONSULTATION META MODEL
+// ------------------------------------------------------------------
+model ConsultationMeta {
+    id String @id @default(cuid())
+
+    // Main Fields
+    avgRating           Float? @default(0)
+    consultation        Int?   @default(0)
+    successConsultation Int?   @default(0)
+
+    // Date Metadata
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+
+    // Relations
+    nutritionist Nutritionist? @relation(fields: [nutritionistId], references: [id], onDelete: Cascade)
+
+    // Foreign Keys
+    nutritionistId String? @unique
+}
+
+//-------------------------------------------------------------------
+// REGISTRATION CERTIFICATE MODEL
+//-------------------------------------------------------------------
+model RegistrationCertificate {
+    id String @id @default(cuid())
+
+    registrationNumber String    @unique
+    issueDate          DateTime?
+    validUntil         DateTime?
+
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+
+    nutritionist Nutritionist? @relation(fields: [nutritionistId], references: [id], onDelete: Cascade)
+
+    nutritionistId String? @unique
+}
+
+// ------------------------------------------------------------------
+// OCCUPATION MODEL
+// ------------------------------------------------------------------
+model Occupation {
+    id String @id @default(cuid())
+
+    // Main Fields
+    name       String @default("Konselor Gizi")
+    workPlace  String @default("TEFA NCC Polije")
+    experience Int    @default(0)
+
+    // Date Metadata
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+
+    // Relations
+    nutritionist Nutritionist? @relation(fields: [nutritionistId], references: [id], onDelete: Cascade)
+
+    // Foreign Keys
+    nutritionistId String? @unique
+}
+
+// ------------------------------------------------------------------
+// PRICE MODEL
+// ------------------------------------------------------------------
+model Price {
+    id String @id @default(cuid())
+
+    // Main Fields
+    online  Int
+    offline Int
+
+    // Date Metadata
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+
+    // Relations
+    nutritionist Nutritionist? @relation(fields: [nutritionistId], references: [id], onDelete: Cascade)
+
+    // Foreign Keys
+    nutritionistId String? @unique
+}
+
+// ------------------------------------------------------------------
+// SCHEDULE MODEL
+// ------------------------------------------------------------------
+model Schedule {
+    id String @id @default(cuid())
+
+    // Main Fields
+    dayOfWeek      DayOfWeek
+    dayOfWeekIndex Int
+    active         Boolean   @default(true)
+
+    // Date Metadata
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+
+    // Relations
+    nutritionist  Nutritionist?  @relation(fields: [nutritionistId], references: [id], onDelete: Cascade)
+    scheduleTimes ScheduleTime[]
+
+    // Foreign Keys
+    nutritionistId String?
+}
+
+// ------------------------------------------------------------------
+// SCHEDULE TIME MODEL
+// ------------------------------------------------------------------
+model ScheduleTime {
+    id String @id @default(cuid())
+
+    // Main Fields
+    start  DateTime
+    end    DateTime
+    active Boolean  @default(true)
+
+    // Date Metadata
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+
+    // Relations
+    schedule Schedule? @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+
+    // Foreign Keys
+    scheduleId String?
+}

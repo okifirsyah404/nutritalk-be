@@ -2,7 +2,7 @@ import { AppConfigService } from '@config/app-config';
 
 import { AuthErrorMessage } from '@common/constant/message/error/auth-error.message';
 import { IOtpRequest, IOtpVerify } from '@contract/otp/otp-result.interface';
-import { IAccount } from '@database/prisma';
+import { IAccountEntity } from '@database/prisma';
 import {
   BadRequestException,
   Injectable,
@@ -115,7 +115,8 @@ export class AuthForgetPasswordService {
       throw new BadRequestException(AuthErrorMessage.ERR_PASSWORD_NOT_MATCH);
     }
 
-    const account: IAccount = await this.repository.findAccountByEmail(email);
+    const account: IAccountEntity =
+      await this.repository.findAccountByEmail(email);
 
     if (!account) {
       throw new NotFoundException(AuthErrorMessage.ERR_ACCOUNT_NOT_FOUND);

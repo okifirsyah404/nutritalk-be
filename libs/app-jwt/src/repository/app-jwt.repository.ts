@@ -1,7 +1,7 @@
 import {
-  IAccount,
-  INutritionist,
-  IPatient,
+  IAccountEntity,
+  INutritionistEntity,
+  IPatientEntity,
   PrismaService,
 } from '@database/prisma';
 import PrismaSelector from '@database/prisma/helper/prisma.selector';
@@ -20,13 +20,15 @@ export class AppJwtRepository {
    * @returns A promise that resolves to the nutritionist object if found, otherwise null.
    *
    */
-  async findNutritionistById(nutritionistId: string): Promise<INutritionist> {
+  async findNutritionistById(
+    nutritionistId: string,
+  ): Promise<INutritionistEntity> {
     return this.prisma.nutritionist.findUnique({
       where: { id: nutritionistId },
       select: {
-        ...PrismaSelector.nutritionist,
+        ...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
         account: {
-          select: PrismaSelector.account,
+          select: PrismaSelector.ACCOUNT,
         },
       },
     });
@@ -41,13 +43,13 @@ export class AppJwtRepository {
    * @returns A promise that resolves to the patient object if found, otherwise null.
    *
    */
-  async findPatientById(patientId: string): Promise<IPatient> {
+  async findPatientById(patientId: string): Promise<IPatientEntity> {
     return this.prisma.patient.findUnique({
       where: { id: patientId },
       select: {
-        ...PrismaSelector.patient,
+        ...PrismaSelector.PATIENT,
         account: {
-          select: PrismaSelector.account,
+          select: PrismaSelector.ACCOUNT,
         },
       },
     });
@@ -66,14 +68,14 @@ export class AppJwtRepository {
   async findAccountByIdAndRefreshToken(
     id: string,
     refreshToken: string,
-  ): Promise<IAccount> {
+  ): Promise<IAccountEntity> {
     return this.prisma.account.findUnique({
       where: {
         id,
         refreshToken,
       },
       select: {
-        ...PrismaSelector.account,
+        ...PrismaSelector.ACCOUNT,
       },
     });
   }
@@ -91,7 +93,7 @@ export class AppJwtRepository {
   async updateRefreshToken(
     accountId: string,
     refreshToken: string,
-  ): Promise<IAccount> {
+  ): Promise<IAccountEntity> {
     return this.prisma.account.update({
       where: {
         id: accountId,

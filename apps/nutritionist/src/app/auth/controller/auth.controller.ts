@@ -1,6 +1,6 @@
-import { BaseApiResponse } from '@common/response/api.response';
+import { BaseApiResponse } from '@common/response/base-api.response';
 import { IApiResponse } from '@contract/response/api-response.interface';
-import { INutritionist } from '@database/prisma';
+import { INutritionistEntity } from '@database/prisma';
 import { AccessTokenGuard, IJwtRefresh, RefreshTokenGuard } from '@jwt/app-jwt';
 import GetNutritionistLogged from '@jwt/app-jwt/infrastructure/decorator/get-nutritionist-logged.decorator';
 import RefreshToken from '@jwt/app-jwt/infrastructure/decorator/refresh-token.decorator';
@@ -95,7 +95,7 @@ export class AuthController {
   @UseGuards(AccessTokenGuard)
   @Delete('sign-out')
   async signOut(
-    @GetNutritionistLogged() nutritionist: INutritionist,
+    @GetNutritionistLogged() nutritionist: INutritionistEntity,
   ): Promise<IApiResponse<undefined>> {
     await this.service.signOut(nutritionist.account.id);
 

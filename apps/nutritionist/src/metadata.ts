@@ -5,45 +5,14 @@ export default async () => {
     '@nestjs/swagger': {
       models: [
         [
-          import('../../../libs/@common/response/api.response'),
+          import('../../../libs/@common/response/base-api.response'),
           {
             BaseApiResponse: {
               status: { required: true, type: () => String },
               statusCode: { required: true, type: () => Number },
+              timestamp: { required: true, type: () => Number },
               message: { required: true, type: () => String },
               data: { required: true },
-            },
-          },
-        ],
-        [
-          import('./app/auth/dto/request/auth-sign-in.request'),
-          {
-            AuthSignInRequest: {
-              email: { required: true, type: () => String },
-              password: { required: true, type: () => String },
-              fcmToken: { required: true, type: () => String },
-            },
-          },
-        ],
-        [
-          import('./app/auth/dto/request/auth-chcek-account.request'),
-          { AuthCheckAccountRequest: {} },
-        ],
-        [
-          import('./app/auth/dto/request/auth-forget-password.request'),
-          {
-            AuthForgetPasswordRequest: {
-              password: { required: true, type: () => String },
-              confirmPassword: { required: true, type: () => String },
-              signature: { required: true, type: () => String },
-            },
-          },
-        ],
-        [
-          import('./app/auth/dto/request/auth-otp-verify.request'),
-          {
-            AuthOtpVerifyRequest: {
-              otp: { required: true, type: () => String },
             },
           },
         ],
@@ -65,6 +34,73 @@ export default async () => {
           },
         ],
         [
+          import('./app/auth/dto/request/auth-sign-in.request'),
+          {
+            AuthSignInRequest: {
+              email: {
+                required: true,
+                type: () => String,
+                description:
+                  'Email api property.\n\nDecorators:\n- IsEmail\n- IsString\n- IsNotEmpty',
+              },
+              password: {
+                required: true,
+                type: () => String,
+                description:
+                  'Password api property.\n\nDecorators:\n- IsString\n- IsNotEmpty',
+              },
+              fcmToken: {
+                required: true,
+                type: () => String,
+                description:
+                  'Fcm token api property.\n\nDecorators:\n- IsString\n- IsNotEmpty',
+              },
+            },
+          },
+        ],
+        [
+          import('./app/auth/dto/request/auth-chcek-account.request'),
+          { AuthCheckAccountRequest: {} },
+        ],
+        [
+          import('./app/auth/dto/request/auth-forget-password.request'),
+          {
+            AuthForgetPasswordRequest: {
+              password: {
+                required: true,
+                type: () => String,
+                description:
+                  'Password api property.\n\nDecorators:\n- IsString\n- IsNotEmpty\n- IsStrongPassword',
+              },
+              confirmPassword: {
+                required: true,
+                type: () => String,
+                description:
+                  'Confirm password api property.\n\nDecorators:\n- IsString\n- IsNotEmpty\n- IsStrongPassword',
+              },
+              signature: {
+                required: true,
+                type: () => String,
+                description:
+                  'Signature api property.\n\nDecorators:\n- IsString\n- IsNotEmpty',
+              },
+            },
+          },
+        ],
+        [
+          import('./app/auth/dto/request/auth-otp-verify.request'),
+          {
+            AuthOtpVerifyRequest: {
+              otp: {
+                required: true,
+                type: () => String,
+                description:
+                  'Otp api property.\n\nDecorators:\n- IsString\n- IsNotEmpty',
+              },
+            },
+          },
+        ],
+        [
           import('./app/auth/dto/response/auth-sign-in.response'),
           {
             AuthSignInResponse: {
@@ -78,6 +114,21 @@ export default async () => {
           { AuthRefreshTokenRequest: {} },
         ],
         [
+          import('./app/profile/dto/response/profile.response'),
+          {
+            ProfileResponse: {
+              id: { required: true, type: () => String },
+              type: { required: true, type: () => Object },
+              nip: { required: true, type: () => String },
+              nidn: { required: true, type: () => String },
+              isAvailable: { required: true, type: () => Boolean },
+              account: { required: false, type: () => Object },
+              profile: { required: false, type: () => Object },
+              consultationMeta: { required: false, type: () => Object },
+            },
+          },
+        ],
+        [
           import('./app/profile/dto/request/update-profile.request'),
           {
             UpdateProfileRequest: {
@@ -86,26 +137,6 @@ export default async () => {
               address: { required: true, type: () => String },
               placeOfBirth: { required: true, type: () => String },
               dateOfBirth: { required: true, type: () => Date },
-            },
-          },
-        ],
-        [
-          import('./app/profile/dto/response/profile.response'),
-          {
-            ProfileResponse: {
-              id: { required: true, type: () => String },
-              nip: { required: false, type: () => String },
-              nidn: { required: false, type: () => String },
-              accountId: { required: false, type: () => String },
-              profileId: { required: false, type: () => String },
-              type: { required: false, type: () => Object },
-              account: { required: false, type: () => Object },
-              profile: { required: false, type: () => Object },
-              consultationMeta: { required: false, type: () => Object },
-              occupation: { required: false, type: () => Object },
-              price: { required: false, type: () => Object },
-              registrationCertificate: { required: false, type: () => Object },
-              schedules: { required: false, type: () => [Object] },
             },
           },
         ],
@@ -123,7 +154,7 @@ export default async () => {
                 description:
                   'Http endpoint for verifying the OTP to reset the password.\n\nRequest body:\n- email: (required) string\n- otp: (required) string\n\nResponse:\n- status: string\n- statusCode: number\n- message: string\n- data: object of signature',
               },
-              forgetPassword: {
+              resetPassword: {
                 description:
                   'Http endpoint for resetting the password.\n\nRequest body:\n- password: (required) string\n\nResponse:\n- status: string\n- statusCode: number\n- message: string\n- data: object of email',
               },
@@ -150,16 +181,25 @@ export default async () => {
           },
         ],
         [
-          import('./app/nutritionist.controller'),
-          { NutritionistController: { getHello: { type: String } } },
-        ],
-        [
           import('./app/profile/controller/profile.controller'),
           {
             ProfileController: {
-              getProfile: {},
-              updateProfile: {},
-              uploadProfile: {},
+              getProfile: {
+                description:
+                  'Http endpoint for getting the profile of a nutritionist.\n\nResponse:\n- status: string\n- statusCode: number\n- message: string\n- data: object of profile information',
+              },
+              updateProfile: {
+                description:
+                  'Http endpoint for updating the profile of a nutritionist.\n\nRequest body:\n- name: (required) string\n- phoneNumber: (required) string\n- address: (required) string\n- placeOfBirth: (required) string\n- dateOfBirth: (required) string\n\nResponse:\n- status: string\n- statusCode: number\n- message: string\n- data: object of updated profile information',
+              },
+              uploadProfile: {
+                description:
+                  'Http endpoint for uploading a profile image.\n\nRequest body:\n- image: (required) file\n\nResponse:\n- status: string\n- statusCode: number\n- message: string\n- data: object of updated profile information',
+              },
+              setAvailability: {
+                description:
+                  'Http endpoint for setting the availability of a nutritionist.\n\nResponse:\n- status: string\n- statusCode: number\n- message: string\n- data: object of updated profile information',
+              },
             },
           },
         ],

@@ -1,6 +1,6 @@
 import { CacheResult } from '@cache/app-cache/decorator/cache-result.decorator';
 import { AppConfigService } from '@config/app-config';
-import { INutritionist, IPatient } from '@database/prisma';
+import { INutritionistEntity, IPatientEntity } from '@database/prisma';
 import { createDatabaseErrorHandler } from '@infrastructure/err_handler/database.error-handler';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -126,12 +126,12 @@ export class AppJwtService {
    *
    * @param payload - The JWT access payload containing the user's role and ID.
    *
-   * @returns { INutritionist | IPatient | null} A promise that resolves to the user object (either a Nutritionist or a Patient) if found, or null if the role is not recognized or the user is not found.
+   * @returns { INutritionistEntity | IPatientEntity | null} A promise that resolves to the user object (either a Nutritionist or a Patient) if found, or null if the role is not recognized or the user is not found.
    *
    */
   async validateAccessToken(
     payload: IJwtAccessPayload,
-  ): Promise<INutritionist | IPatient | null> {
+  ): Promise<INutritionistEntity | IPatientEntity | null> {
     switch (payload.role) {
       case Role.NUTRITIONIST:
         return await this.repository.findNutritionistById(payload.sub);
@@ -153,7 +153,7 @@ export class AppJwtService {
    * @throws Will throw an error if the patient cannot be found or if there is a database error.
    *
    */
-  async getPatientById(id: string): Promise<IPatient> {
+  async getPatientById(id: string): Promise<IPatientEntity> {
     return await this.repository
       .findPatientById(id)
       .catch(createDatabaseErrorHandler);
@@ -170,8 +170,8 @@ export class AppJwtService {
    * @throws Will throw an error if there is an issue with the database operation.
    *
    */
-  @CacheResult<INutritionist>((id: string) => id)
-  async getNutritionistById(id: string): Promise<INutritionist> {
+  @CacheResult<INutritionistEntity>((id: string) => id)
+  async getNutritionistById(id: string): Promise<INutritionistEntity> {
     return await this.repository
       .findNutritionistById(id)
       .catch(createDatabaseErrorHandler);
