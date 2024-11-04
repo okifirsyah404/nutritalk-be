@@ -2,16 +2,20 @@ import { BaseApiResponse } from '@common/response/base-api.response';
 import { IApiResponse } from '@contract/response/api-response.interface';
 import { IJwtSignaturePayload } from '@jwt/app-jwt';
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { SignatureTokenGuard } from '@sign/signature';
 import GetSignaturePayload from '@sign/signature/infrastructure/decorator/get-signature-payload.decorator';
 import { AuthForgetPasswordSuccessMessage } from 'apps/nutritionist/src/common/constant/message/success/auth-forget-password-success.message';
 import { DocsTag } from 'apps/nutritionist/src/common/docs/docs';
-import {
-  AuthRequestOtpForgetPasswordDecorators,
-  AuthResetPasswordDecorators,
-  AuthVerifyOtpForgetPasswordDecorators,
-} from '../decorator/auth-forget-password.decorators';
+import { AuthOperationDocs } from '../docs/auth.operation';
+import { AuthForgetPasswordContent } from '../docs/content/auth-forget-password.content';
 import { AuthCheckAccountRequest } from '../dto/request/auth-chcek-account.request';
 import { AuthForgetPasswordRequest } from '../dto/request/auth-forget-password.request';
 import { AuthOtpVerifyRequest } from '../dto/request/auth-otp-verify.request';
@@ -38,7 +42,17 @@ export class AuthForgetPasswordController {
    * - data: object of accessToken and refreshToken
    *
    */
-  @AuthRequestOtpForgetPasswordDecorators()
+  @ApiOperation(AuthOperationDocs.AUTH_REQUEST_OTP_FORGET_PASSWORD)
+  @ApiBadRequestResponse({
+    content:
+      AuthForgetPasswordContent.AUTH_REQUEST_OTP_FORGET_PASSWORD_BAD_REQUEST,
+  })
+  @ApiNotFoundResponse({
+    content: AuthForgetPasswordContent.AUTH_ACCOUNT_NOT_FOUND,
+  })
+  @ApiCreatedResponse({
+    content: AuthForgetPasswordContent.AUTH_REQUEST_OTP_FORGET_PASSWORD_SUCCESS,
+  })
   @Post('otp')
   async requestForgetPasswordOtp(
     @Body() reqBody: AuthCheckAccountRequest,
@@ -66,7 +80,14 @@ export class AuthForgetPasswordController {
    * - data: object of signature
    *
    */
-  @AuthVerifyOtpForgetPasswordDecorators()
+  @ApiOperation(AuthOperationDocs.AUTH_VERIFY_OTP_FORGET_PASSWORD)
+  @ApiBadRequestResponse({
+    content:
+      AuthForgetPasswordContent.AUTH_VERIFY_OTP_FORGET_PASSWORD_BAD_REQUEST,
+  })
+  @ApiCreatedResponse({
+    content: AuthForgetPasswordContent.AUTH_VERIFY_OTP_FORGET_PASSWORD_SUCCESS,
+  })
   @Post('otp/verify')
   async verifyForgetPasswordOtp(
     @Body() reqBody: AuthOtpVerifyRequest,
@@ -93,7 +114,19 @@ export class AuthForgetPasswordController {
    * - data: object of email
    *
    */
-  @AuthResetPasswordDecorators()
+  @ApiOperation(AuthOperationDocs.AUTH_RESET_PASSWORD)
+  @ApiCreatedResponse({
+    content: AuthForgetPasswordContent.AUTH_RESET_PASSWORD_SUCCESS,
+  })
+  @ApiBadRequestResponse({
+    content: AuthForgetPasswordContent.AUTH_RESET_PASSWORD_BAD_REQUEST,
+  })
+  @ApiUnauthorizedResponse({
+    content: AuthForgetPasswordContent.AUTH_RESET_PASSWORD_UNAUTHORIZED,
+  })
+  @ApiNotFoundResponse({
+    content: AuthForgetPasswordContent.AUTH_ACCOUNT_NOT_FOUND,
+  })
   @UseGuards(SignatureTokenGuard)
   @Post()
   async resetPassword(

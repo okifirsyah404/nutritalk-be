@@ -5,14 +5,21 @@ import { AccessTokenGuard, IJwtRefresh, RefreshTokenGuard } from '@jwt/app-jwt';
 import GetNutritionistLogged from '@jwt/app-jwt/infrastructure/decorator/get-nutritionist-logged.decorator';
 import RefreshToken from '@jwt/app-jwt/infrastructure/decorator/refresh-token.decorator';
 import { Body, Controller, Delete, Post, UseGuards } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiHeader,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { AuthSuccessMessage } from '../../../common/constant/message/success/auth-success.message';
 import { DocsTag } from '../../../common/docs/docs';
-import {
-  AuthRefreshTokenDecorators,
-  AuthSignInDecorators,
-  AuthSignOutDecorators,
-} from '../decorator/auth.decorators';
+import { AuthOperationDocs } from '../docs/auth.operation';
+import { AuthContentDocs } from '../docs/content/auth.content';
 import { AuthRefreshTokenRequest } from '../dto/request/auth-refresh-token.request';
 import { AuthSignInRequest } from '../dto/request/auth-sign-in.request';
 import { AuthSignInResponse } from '../dto/response/auth-sign-in.response';
@@ -38,7 +45,19 @@ export class AuthController {
    * - data: object of accessToken and refreshToken
    *
    */
-  @AuthSignInDecorators()
+  @ApiOperation(AuthOperationDocs.AUTH_SIGN_IN)
+  @ApiCreatedResponse({
+    content: AuthContentDocs.AUTH_SIGN_IN_SUCCESS,
+  })
+  @ApiBadRequestResponse({
+    content: AuthContentDocs.AUTH_SIGN_IN_BAD_REQUEST,
+  })
+  @ApiUnauthorizedResponse({
+    content: AuthContentDocs.AUTH_SIGN_IN_UNAUTHORIZED,
+  })
+  @ApiNotFoundResponse({
+    content: AuthContentDocs.AUTH_NOT_FOUND,
+  })
   @Post('sign-in')
   async signIn(
     @Body() reqBody: AuthSignInRequest,
@@ -65,7 +84,19 @@ export class AuthController {
    * - data: object of accessToken and refreshToken
    *
    */
-  @AuthRefreshTokenDecorators()
+  @ApiOperation(AuthOperationDocs.AUTH_REFRESH_TOKEN)
+  @ApiCreatedResponse({
+    content: AuthContentDocs.AUTH_REFRESH_TOKEN_SUCCESS,
+  })
+  @ApiUnauthorizedResponse({
+    content: AuthContentDocs.AUTH_UNAUTHORIZED,
+  })
+  @ApiHeader({
+    name: 'x-refresh-token',
+    required: true,
+    description:
+      'The refresh token to be used for refreshing the access token.',
+  })
   @Post('refresh-token')
   @UseGuards(RefreshTokenGuard)
   async getRefreshToken(
@@ -91,7 +122,14 @@ export class AuthController {
    * - data: undefined
    *
    */
-  @AuthSignOutDecorators()
+  @ApiBearerAuth()
+  @ApiOperation(AuthOperationDocs.AUTH_SIGN_OUT)
+  @ApiOkResponse({
+    content: AuthContentDocs.AUTH_SIGN_OUT_SUCCESS,
+  })
+  @ApiUnauthorizedResponse({
+    content: AuthContentDocs.AUTH_SIGN_OUT_UNAUTHORIZED,
+  })
   @UseGuards(AccessTokenGuard)
   @Delete('sign-out')
   async signOut(
