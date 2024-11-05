@@ -34,10 +34,10 @@ import { ProfileService } from '../service/profile.service';
 @ApiTags(DocsTag.PROFILE)
 @ApiBearerAuth()
 @ApiUnauthorizedResponse({
-  content: ProfileContentDocs.PROFILE_UNAUTHORIZED,
+  content: ProfileContentDocs.UNAUTHORIZED,
 })
 @ApiNotFoundResponse({
-  content: ProfileContentDocs.PROFILE_NOT_FOUND,
+  content: ProfileContentDocs.NOT_FOUND,
 })
 @UseGuards(AccessTokenGuard)
 @Controller('profile')
@@ -55,9 +55,9 @@ export class ProfileController {
    * - data: object of profile information
    *
    */
-  @ApiOperation(ProfileOperationDocs.PROFILE)
+  @ApiOperation(ProfileOperationDocs.GET_PROFILE)
   @ApiOkResponse({
-    content: ProfileContentDocs.PROFILE_SUCCESS,
+    content: ProfileContentDocs.GET_PROFILE_SUCCESS,
   })
   @Get()
   async getProfile(
@@ -66,7 +66,7 @@ export class ProfileController {
     const result = await this.service.getProfileById(nutritionist.id);
 
     return BaseApiResponse.success({
-      message: ProfileSuccessMessage.SUCCESS_PROFILE,
+      message: ProfileSuccessMessage.SUCCESS_GET_PROFILE,
       data: ProfileResponse.fromEntity(result),
     });
   }
@@ -89,7 +89,7 @@ export class ProfileController {
    * - data: object of updated profile information
    *
    */
-  @ApiOperation(ProfileOperationDocs.PROFILE_UPDATE)
+  @ApiOperation(ProfileOperationDocs.UPDATE_PROFILE)
   @ApiOkResponse({
     content: ProfileContentDocs.PROFILE_UPDATE_SUCCESS,
   })
@@ -120,7 +120,7 @@ export class ProfileController {
    * - data: object of updated profile information
    *
    */
-  @ApiOperation(ProfileOperationDocs.PROFILE_UPLOAD_IMAGE)
+  @ApiOperation(ProfileOperationDocs.UPLOAD_IMAGE_PROFILE)
   @ApiOkResponse({
     content: ProfileContentDocs.PROFILE_UPLOAD_IMAGE_SUCCESS,
   })
@@ -153,9 +153,9 @@ export class ProfileController {
    * - data: object of updated profile information
    *
    */
-  @ApiOperation(ProfileOperationDocs.PROFILE_SET_AVAILABILITY)
+  @ApiOperation(ProfileOperationDocs.SET_AVAILABILITY)
   @ApiOkResponse({
-    content: ProfileContentDocs.PROFILE_SET_AVAILABILITY_SUCCESS,
+    content: ProfileContentDocs.SET_AVAILABILITY_SUCCESS,
   })
   @Get('set-availability')
   async setAvailability(
