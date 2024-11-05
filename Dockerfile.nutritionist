@@ -23,7 +23,7 @@ RUN apk add --no-cache bash
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/yarn.lock ./
-COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/dist/apps/nutritionist ./dist/dist/apps/nutritionist
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/.credentials ./.credentials
 COPY --from=builder /app/tsconfig.* ./
