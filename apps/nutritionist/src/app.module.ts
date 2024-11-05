@@ -9,6 +9,7 @@ import { S3StorageModule } from '@s3storage/s3storage';
 import { AuthModule } from './app/auth/auth.module';
 import { ProfileModule } from './app/profile/profile.module';
 import { QueueModule } from './module/queue/queue.module';
+import { DashboardModule } from './app/dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -80,6 +81,7 @@ import { QueueModule } from './module/queue/queue.module';
     // Routes
     AuthModule,
     ProfileModule,
+    DashboardModule,
   ],
 })
 export class NutritionistModule {}
