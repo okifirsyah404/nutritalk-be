@@ -10,6 +10,7 @@ import { AuthModule } from './app/auth/auth.module';
 import { ProfileModule } from './app/profile/profile.module';
 import { QueueModule } from './module/queue/queue.module';
 import { DashboardModule } from './app/dashboard/dashboard.module';
+import { AccountModule } from './app/account/account.module';
 
 @Module({
   imports: [
@@ -82,6 +83,7 @@ import { DashboardModule } from './app/dashboard/dashboard.module';
     AuthModule,
     ProfileModule,
     DashboardModule,
+    AccountModule,
   ],
 })
 export class NutritionistModule {}

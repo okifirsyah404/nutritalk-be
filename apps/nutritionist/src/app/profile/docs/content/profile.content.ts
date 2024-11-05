@@ -6,10 +6,10 @@ import { ProfileSuccessMessage } from '@nutritionist/common/constant/message/suc
 import { ProfileResponse } from '../../dto/response/profile.response';
 
 export abstract class ProfileContentDocs {
-  static readonly PROFILE_SUCCESS: ContentObject = {
+  static readonly GET_PROFILE_SUCCESS: ContentObject = {
     'application/json': {
       example: BaseApiResponse.success({
-        message: ProfileSuccessMessage.SUCCESS_PROFILE,
+        message: ProfileSuccessMessage.SUCCESS_GET_PROFILE,
         data: ProfileResponse.exampleData,
       }),
     },
@@ -18,7 +18,7 @@ export abstract class ProfileContentDocs {
   static readonly PROFILE_UPDATE_SUCCESS: ContentObject = {
     'application/json': {
       example: BaseApiResponse.success({
-        message: ProfileSuccessMessage.SUCCESS_PROFILE_UPDATE,
+        message: ProfileSuccessMessage.SUCCESS_UPDATE_PROFILE,
         data: ProfileResponse.exampleData,
       }),
     },
@@ -27,22 +27,22 @@ export abstract class ProfileContentDocs {
   static readonly PROFILE_UPLOAD_IMAGE_SUCCESS: ContentObject = {
     'application/json': {
       example: BaseApiResponse.success({
-        message: ProfileSuccessMessage.SUCCESS_PROFILE_UPLOAD_IMAGE,
+        message: ProfileSuccessMessage.SUCCESS_UPLOAD_IMAGE_PROFILE,
         data: ProfileResponse.exampleData,
       }),
     },
   };
 
-  static readonly PROFILE_SET_AVAILABILITY_SUCCESS: ContentObject = {
+  static readonly SET_AVAILABILITY_SUCCESS: ContentObject = {
     'application/json': {
       example: BaseApiResponse.success({
-        message: ProfileSuccessMessage.SUCCESS_PROFILE_SET_AVAILABILITY,
+        message: ProfileSuccessMessage.SUCCESS_SET_AVAILABILITY,
         data: ProfileResponse.exampleData,
       }),
     },
   };
 
-  static readonly PROFILE_NOT_FOUND: ContentObject = {
+  static readonly NOT_FOUND: ContentObject = {
     'application/json': {
       example: BaseApiResponse.notFound({
         message: ProfileErrorMessage.ERR_PROFILE_NOT_FOUND,
@@ -50,7 +50,7 @@ export abstract class ProfileContentDocs {
     },
   };
 
-  static readonly PROFILE_UNAUTHORIZED: ContentObject = {
+  static readonly UNAUTHORIZED: ContentObject = {
     'application/json': {
       examples: {
         ...INVALID_TOKEN_CONTENT,

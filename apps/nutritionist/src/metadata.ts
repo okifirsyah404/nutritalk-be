@@ -140,6 +140,19 @@ export default async () => {
             },
           },
         ],
+        [
+          import('./app/account/dto/response/account.response'),
+          {
+            AccountResponse: {
+              id: { required: true, type: () => String },
+              email: { required: true, type: () => String },
+              role: { required: true, type: () => Object },
+              googleId: { required: true, type: () => String },
+              createdAt: { required: false, type: () => Date },
+              updatedAt: { required: false, type: () => Date },
+            },
+          },
+        ],
       ],
       controllers: [
         [
@@ -199,6 +212,17 @@ export default async () => {
               setAvailability: {
                 description:
                   'Http endpoint for setting the availability of a nutritionist.\n\nResponse:\n- status: string\n- statusCode: number\n- message: string\n- data: object of updated profile information',
+              },
+            },
+          },
+        ],
+        [
+          import('./app/account/controller/account.controller'),
+          {
+            AccountController: {
+              getAccount: {
+                description:
+                  'Http endpoint for getting the account of a nutritionist.\n\nResponse:\n- status: string\n- statusCode: number\n- message: string\n- data: object of account information',
               },
             },
           },
