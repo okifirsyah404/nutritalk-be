@@ -42,6 +42,7 @@ export default async () => {
                 type: () => String,
                 description:
                   'Email api property.\n\nDecorators:\n- IsEmail\n- IsString\n- IsNotEmpty',
+                format: 'email',
               },
               password: {
                 required: true,
@@ -154,21 +155,21 @@ export default async () => {
           },
         ],
         [
-          import('./app/price/dto/request/update-price.request'),
-          {
-            UpdatePriceRequest: {
-              online: { required: true, type: () => Number, minimum: 50000 },
-              offline: { required: true, type: () => Number, minimum: 50000 },
-            },
-          },
-        ],
-        [
           import('./app/price/dto/response/price.response'),
           {
             PriceResponse: {
               id: { required: true, type: () => String },
               online: { required: true, type: () => Number },
               offline: { required: true, type: () => Number },
+            },
+          },
+        ],
+        [
+          import('./app/price/dto/request/update-price.request'),
+          {
+            UpdatePriceRequest: {
+              online: { required: true, type: () => Number, minimum: 50000 },
+              offline: { required: true, type: () => Number, minimum: 50000 },
             },
           },
         ],
@@ -231,6 +232,17 @@ export default async () => {
               setAvailability: {
                 description:
                   'Http endpoint for setting the availability of a nutritionist.\n\nResponse:\n- status: string\n- statusCode: number\n- message: string\n- data: object of updated profile information',
+              },
+            },
+          },
+        ],
+        [
+          import('./app/dashboard/controller/dashboard.controller'),
+          {
+            DashboardController: {
+              getDashboardData: {
+                description:
+                  'Http endpoint for getting the dashboard data of a nutritionist.\n\nResponse:\n- status: string\n- statusCode: number\n- message: string\n- data: object of dashboard data',
               },
             },
           },
