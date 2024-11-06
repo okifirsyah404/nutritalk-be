@@ -1,0 +1,142 @@
+// ------------------------------------------------------------------
+// ACCOUNT MODEL
+// ------------------------------------------------------------------
+model Account {
+    id String @id @default(cuid())
+
+    // Main Fields
+    email        String  @unique
+    password     String
+    role         Role
+    googleId     String? @unique
+    fcmToken     String?
+    refreshToken String? @unique
+
+    // Date Metadata
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+
+    // Relations
+    patient      Patient?
+    nutritionist Nutritionist?
+}
+
+// ------------------------------------------------------------------
+// PROFILE MODEL
+// ------------------------------------------------------------------
+model Profile {
+    id String @id @default(cuid())
+
+    // Main Fields
+    name         String
+    gender       Gender
+    phoneNumber  String?
+    address      String?
+    placeOfBirth String?
+    dateOfBirth  DateTime?
+    age          Int?
+    imageKey     String?
+
+    // Date Metadata
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+
+    // Relations
+    patient      Patient?
+    nutritionist Nutritionist?
+}
+
+// ------------------------------------------------------------------
+// OTP MODEL
+// ------------------------------------------------------------------
+model Otp {
+    id String @id @default(cuid())
+
+    // Main Fields
+    email   String
+    code    String
+    purpose OtpPurpose
+    expired DateTime
+
+    // Date Metadata
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+}
+
+// ------------------------------------------------------------------
+// WORKSPACE SERVICE MODEL
+// ------------------------------------------------------------------
+model WorkspaceService {
+    id String @id @default(cuid())
+
+    // Main Fields
+    name        String
+    description String
+    imageKey    String?
+
+    // Date Metadata
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+}
+
+// ------------------------------------------------------------------
+// BMI LIMIT MODEL
+// ------------------------------------------------------------------
+model BmiLimit {
+    id String @id @default(cuid())
+
+    // Main Fields
+    status BmiStatus
+    min    Float
+    max    Float
+
+    // Date Metadata
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+}
+
+// ------------------------------------------------------------------
+// FAQ MODEL
+// ------------------------------------------------------------------
+model Faq {
+    id String @id @default(cuid())
+
+    // Main Fields
+    question String
+    answer   String
+
+    // Date Metadata
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+}
+
+// ------------------------------------------------------------------
+// PRIVACY POLICY MODEL
+// ------------------------------------------------------------------
+model PrivacyPolicy {
+    id String @id @default(cuid())
+
+    // Main Fields
+    title   String
+    content String
+
+    // Date Metadata
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+}
+
+// ------------------------------------------------------------------
+// SIGNATURE MODEL
+// ------------------------------------------------------------------
+model Signature {
+    id String @id @default(cuid())
+
+    // Main Fields
+    signature String @unique
+
+    // Date Metadata
+    createdAt DateTime? @default(now())
+    updatedAt DateTime? @updatedAt
+
+    @@index([signature])
+}

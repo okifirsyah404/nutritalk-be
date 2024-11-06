@@ -1,9 +1,7 @@
 import swaggerDocumentBuilder from '@common/docs/swagger-document.builder';
 import { AppConfigService } from '@config/app-config';
 import HttpExceptionFilter from '@infrastructure/filter/http-exception.filter';
-import { ResponseTransformInterceptor } from '@infrastructure/interceptor/response-transform.interceptor';
 import CreateLogLevel from '@infrastructure/logger/create-log-level';
-import { KebabToCamelCasePipe } from '@infrastructure/pipe/kebab-to-camel-case.pipe';
 import { validationExceptionFactory } from '@infrastructure/validation/validation.factory';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
@@ -21,7 +19,6 @@ async function bootstrap(): Promise<void> {
   );
 
   app.useGlobalPipes(
-    new KebabToCamelCasePipe(),
     new ValidationPipe({
       transform: true,
       whitelist: true,
@@ -33,7 +30,7 @@ async function bootstrap(): Promise<void> {
 
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  app.useGlobalInterceptors(new ResponseTransformInterceptor());
+  // app.useGlobalInterceptors(new ResponseTransformInterceptor());
 
   const appConfig = app.get(AppConfigService).appConfig;
   const config = app.get(AppConfigService).appNutritionistConfig;

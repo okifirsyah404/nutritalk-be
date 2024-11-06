@@ -1,5 +1,5 @@
 import { AppConfigService } from '@config/app-config';
-import { INutritionist, IPatient } from '@database/prisma';
+import { INutritionistEntity, IPatientEntity } from '@database/prisma';
 import { IJwtAccessPayload } from '@jwt/app-jwt';
 import { AppJwtService } from '@jwt/app-jwt/provider/app-jwt.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
@@ -31,8 +31,8 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy) {
 
   async validate(
     payload: IJwtAccessPayload,
-  ): Promise<INutritionist | IPatient> {
-    let user: INutritionist | IPatient;
+  ): Promise<INutritionistEntity | IPatientEntity> {
+    let user: INutritionistEntity | IPatientEntity;
 
     switch (payload.role) {
       case Role.NUTRITIONIST:
@@ -48,7 +48,9 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy) {
     return user;
   }
 
-  private async _validateNutritionist(id: string): Promise<INutritionist> {
+  private async _validateNutritionist(
+    id: string,
+  ): Promise<INutritionistEntity> {
     const nutritionist = await this.service.getNutritionistById(id);
 
     if (!nutritionist) {
@@ -57,7 +59,7 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy) {
     return nutritionist;
   }
 
-  private async _validatePatient(id: string): Promise<IPatient> {
+  private async _validatePatient(id: string): Promise<IPatientEntity> {
     const patient = await this.service.getPatientById(id);
 
     if (!patient) {

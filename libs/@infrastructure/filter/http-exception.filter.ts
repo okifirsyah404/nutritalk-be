@@ -32,6 +32,7 @@ export default class HttpExceptionFilter implements ExceptionFilter {
       baseResponse = {
         status: 'Not Found',
         statusCode: 404,
+        timestamp: Date.now(),
         message: 'ERR_ENOENT_RESOURCE_FILE_NOT_FOUND',
       } as IApiResponse<never>;
 
@@ -44,6 +45,7 @@ export default class HttpExceptionFilter implements ExceptionFilter {
       baseResponse = {
         status: 'Internal Server Error',
         statusCode: 500,
+        timestamp: Date.now(),
         message: 'ERR_UNCAUGHT_EXCEPTION',
       } as IApiResponse<never>;
 
@@ -56,6 +58,7 @@ export default class HttpExceptionFilter implements ExceptionFilter {
       baseResponse = {
         status: 'Internal Server Error',
         statusCode: 500,
+        timestamp: Date.now(),
         message: 'ERR_UNHANDLED_REJECTION',
       } as IApiResponse<never>;
 
@@ -65,6 +68,7 @@ export default class HttpExceptionFilter implements ExceptionFilter {
     baseResponse = {
       status: this._toFriendlyErrorStatus(exception.name),
       statusCode: status,
+      timestamp: Date.now(),
       message: message,
     } as IApiResponse<never>;
 

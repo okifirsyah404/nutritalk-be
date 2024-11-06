@@ -53,7 +53,9 @@ export class PrismaService
 
   async onModuleInit(): Promise<void> {
     await this.$connect();
-    this.logger.log(`Prisma connected to ${this.appConfig.databaseConfig.url}`);
+    this.logger.log(
+      `Prisma connected to ${this.appConfig.databaseConfig.host}:${this.appConfig.databaseConfig.port}/${this.appConfig.databaseConfig.name}`,
+    );
   }
 
   async onModuleDestroy(): Promise<void> {

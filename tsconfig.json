@@ -20,6 +20,8 @@
     "noFallthroughCasesInSwitch": false,
     "resolveJsonModule": true,
     "paths": {
+      "@nutritionist": ["apps/nutritionist/src"],
+      "@nutritionist/*": ["apps/nutritionist/src/*"],
       "@common/": ["libs/@common"],
       "@common/*": ["libs/@common/*"],
       "@util": ["libs/@util"],

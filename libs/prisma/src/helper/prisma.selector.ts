@@ -1,14 +1,14 @@
 import { Prisma } from '@prisma/client';
 
 export default abstract class PrismaSelector {
-  static account = {
+  static readonly ACCOUNT = {
     id: true,
     email: true,
     role: true,
     googleId: true,
   } satisfies Prisma.AccountSelect;
 
-  static profile = {
+  static readonly PROFILE = {
     id: true,
     name: true,
     phoneNumber: true,
@@ -20,74 +20,197 @@ export default abstract class PrismaSelector {
     address: true,
   } satisfies Prisma.ProfileSelect;
 
-  static patient = {
+  static readonly PATIENT = {
     id: true,
-    profile: {
-      select: PrismaSelector.profile,
-    },
   } satisfies Prisma.PatientSelect;
 
-  static nutritionistOccupation = {
+  static readonly CREDIT = {
     id: true,
+    balance: true,
+  } satisfies Prisma.CreditSelect;
+
+  static readonly CREDIT_HISTORY = {
+    id: true,
+    action: true,
+    amount: true,
+    note: true,
+  } satisfies Prisma.CreditHistorySelect;
+
+  static readonly MEDICAL_RECORD_KEY = {
+    id: true,
+    code: true,
     name: true,
-    workPlace: true,
-    experience: true,
-  } satisfies Prisma.OccupationSelect;
+  } satisfies Prisma.MedicalRecordKeySelect;
 
-  static registrationCertificate = {
+  static readonly PATIENT_DETAIL = {
     id: true,
-    registrationNumber: true,
-    issueDate: true,
-    validUntil: true,
-  } satisfies Prisma.RegistrationCertificateSelect;
+    activityLevel: true,
+    dailyCalories: true,
+    height: true,
+    weight: true,
+    dietPlan: true,
+    dietGoal: true,
+    dietPlanDescription: true,
+    bmi: true,
+    bmiStatus: true,
+  } satisfies Prisma.PatientDetailSelect;
 
-  static price = {
+  static readonly MEDICAL_RECORD = {
     id: true,
-    online: true,
-    offline: true,
-  } satisfies Prisma.PriceSelect;
+    weight: true,
+    height: true,
+    bmi: true,
+    bmiStatus: true,
+    disability: true,
+    diagnosis: true,
+    allergies: true,
+    foodPreferences: true,
+    foodAvoidances: true,
+    appetite: true,
+    diarrhea: true,
+    constipation: true,
+    vomit: true,
+    nausea: true,
+    bloating: true,
+    swallowingDisorder: true,
+    chewingDisorder: true,
+    suckingDisorder: true,
+    notes: true,
+    others: true,
+  } satisfies Prisma.MedicalRecordSelect;
 
-  static schedule = {
-    id: true,
-    dayOfWeek: true,
-    dayOfWeekIndex: true,
-    active: true,
-  } satisfies Prisma.ScheduleSelect;
-
-  static scheduleTime = {
-    id: true,
-    start: true,
-    end: true,
-    active: true,
-  } satisfies Prisma.ScheduleTimeSelect;
-
-  static nutritionist = {
+  static readonly NUTRITIONIST = {
     id: true,
     nidn: true,
     nip: true,
     type: true,
-    profile: {
-      select: PrismaSelector.profile,
-    },
+    isAvailable: true,
   } satisfies Prisma.NutritionistSelect;
 
-  static transactionMeta = {
+  static readonly CONSULTATION_META = {
     id: true,
     avgRating: true,
     successConsultation: true,
     consultation: true,
   } satisfies Prisma.ConsultationMetaSelect;
 
-  static privacyPolicy = {
+  static readonly REGISTRATION_CERTIFICATE = {
     id: true,
-    title: true,
-    content: true,
-  } satisfies Prisma.PrivacyPolicySelect;
+    registrationNumber: true,
+    issueDate: true,
+    validUntil: true,
+  } satisfies Prisma.RegistrationCertificateSelect;
 
-  static otp = {
+  static readonly OCCUPATION = {
+    id: true,
+    name: true,
+    workPlace: true,
+    experience: true,
+  } satisfies Prisma.OccupationSelect;
+
+  static readonly PRICE = {
+    id: true,
+    online: true,
+    offline: true,
+  } satisfies Prisma.PriceSelect;
+
+  static readonly SCHEDULE = {
+    id: true,
+    dayOfWeek: true,
+    dayOfWeekIndex: true,
+    active: true,
+  } satisfies Prisma.ScheduleSelect;
+
+  static readonly SCHEDULE_TIME = {
+    id: true,
+    start: true,
+    end: true,
+    active: true,
+  } satisfies Prisma.ScheduleTimeSelect;
+
+  static readonly TRANSACTION = {
+    id: true,
+    status: true,
+    type: true,
+    note: true,
+  } satisfies Prisma.TransactionSelect;
+
+  static readonly CONSULTATION_TIME = {
+    id: true,
+    start: true,
+    end: true,
+  } satisfies Prisma.ConsultationTimeSelect;
+
+  static readonly TRANSACTION_PRICE = {
+    id: true,
+    sources: true,
+    price: true,
+    subTotal: true,
+    credit: true,
+    total: true,
+  } satisfies Prisma.TransactionPriceSelect;
+
+  static readonly TRANSACTION_PAYMENT = {
+    method: true,
+    code: true,
+    status: true,
+    date: true,
+  } satisfies Prisma.TransactionPaymentSelect;
+
+  static readonly CONSULTATION_REVIEW = {
+    id: true,
+    rating: true,
+    description: true,
+  } satisfies Prisma.ConsultationReviewSelect;
+
+  static readonly OTP = {
     id: true,
     email: true,
     code: true,
     expired: true,
   } satisfies Prisma.OtpSelect;
+
+  static readonly WORKSPACE_SERVICE = {
+    id: true,
+    description: true,
+    imageKey: true,
+  } satisfies Prisma.WorkspaceServiceSelect;
+
+  static readonly BMI_LIMIT = {
+    id: true,
+    status: true,
+    min: true,
+    max: true,
+  } satisfies Prisma.BmiLimitSelect;
+
+  static readonly FAQ = {
+    id: true,
+    question: true,
+    answer: true,
+  } satisfies Prisma.FaqSelect;
+
+  static readonly PRIVACY_POLICY = {
+    id: true,
+    title: true,
+    content: true,
+  } satisfies Prisma.PrivacyPolicySelect;
+
+  static readonly SIGNATURE = {
+    id: true,
+    signature: true,
+  } satisfies Prisma.SignatureSelect;
+
+  static readonly NUTRITIONIST_WITH_PROFILE = {
+    ...PrismaSelector.NUTRITIONIST,
+    profile: {
+      select: PrismaSelector.PROFILE,
+    },
+  } satisfies Prisma.NutritionistSelect;
+
+  static readonly PATIENT_WITH_PROFILE = {
+    ...PrismaSelector.PATIENT,
+    profile: {
+      select: PrismaSelector.PROFILE,
+    },
+  } satisfies Prisma.PatientSelect;
 }
