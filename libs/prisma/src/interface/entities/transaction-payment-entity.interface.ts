@@ -1,10 +1,13 @@
+import PrismaSelector from '@database/prisma/helper/prisma.selector';
+import { Prisma } from '@prisma/client';
+import { IBaseEntity } from './base/base-entity.interface';
 import { ITransactionEntity } from './transaction-entity.interface';
 
-export interface ITransactionPayment {
-  method?: string | null;
-  code?: string | null;
-  status?: string | null;
-  date?: Date | null;
-  transactionId?: string | null;
-  transaction?: ITransactionEntity | null;
+export interface ITransactionPayment
+  extends IBaseEntity,
+    Prisma.TransactionPaymentGetPayload<{
+      select: (typeof PrismaSelector)['TRANSACTION_PAYMENT'];
+    }> {
+  transaction?: ITransactionEntity;
+  transactionId?: string;
 }

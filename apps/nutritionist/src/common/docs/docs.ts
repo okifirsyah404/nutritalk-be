@@ -10,6 +10,7 @@ export abstract class DocsTag {
   static readonly ACCOUNT = 'Account';
   static readonly CHANGE_PASSWORD = 'Change Password';
   static readonly PRICE = 'Price';
+  static readonly DASHBOARD = 'Dashboard';
 
   /**
    * Represents the auth tag object.
@@ -60,6 +61,14 @@ export abstract class DocsTag {
   };
 
   /**
+   * Represents the dashboard tag object.
+   */
+  private static readonly dashboard: TagObject = {
+    name: DocsTag.DASHBOARD,
+    description: 'Endpoints for managing dashboard data',
+  };
+
+  /**
    * Represents an array of tag objects.
    */
   static readonly tags = [
@@ -69,5 +78,6 @@ export abstract class DocsTag {
     DocsTag.account,
     DocsTag.changePassword,
     DocsTag.price,
+    DocsTag.dashboard,
   ];
 }

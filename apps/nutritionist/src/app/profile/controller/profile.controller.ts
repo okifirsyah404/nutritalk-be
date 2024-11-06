@@ -7,6 +7,7 @@ import {
   Body,
   Controller,
   Get,
+  Logger,
   Post,
   Put,
   UploadedFile,
@@ -18,7 +19,6 @@ import {
   ApiBearerAuth,
   ApiNotFoundResponse,
   ApiOkResponse,
-  ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -26,7 +26,6 @@ import { ProfileSuccessMessage } from '@nutritionist/common/constant/message/suc
 import { DocsTag } from '@nutritionist/common/docs/docs';
 import multer from 'multer';
 import { ProfileContentDocs } from '../docs/content/profile.content';
-import { ProfileOperationDocs } from '../docs/profile.operation';
 import { UpdateProfileRequest } from '../dto/request/update-profile.request';
 import { ProfileResponse } from '../dto/response/profile.response';
 import { ProfileService } from '../service/profile.service';
@@ -44,6 +43,8 @@ import { ProfileService } from '../service/profile.service';
 export class ProfileController {
   constructor(private readonly service: ProfileService) {}
 
+  private readonly logger = new Logger(ProfileController.name);
+
   /**
    *
    * Http endpoint for getting the profile of a nutritionist.
@@ -55,7 +56,6 @@ export class ProfileController {
    * - data: object of profile information
    *
    */
-  @ApiOperation(ProfileOperationDocs.GET_PROFILE)
   @ApiOkResponse({
     content: ProfileContentDocs.GET_PROFILE_SUCCESS,
   })
@@ -89,7 +89,6 @@ export class ProfileController {
    * - data: object of updated profile information
    *
    */
-  @ApiOperation(ProfileOperationDocs.UPDATE_PROFILE)
   @ApiOkResponse({
     content: ProfileContentDocs.PROFILE_UPDATE_SUCCESS,
   })
@@ -120,7 +119,6 @@ export class ProfileController {
    * - data: object of updated profile information
    *
    */
-  @ApiOperation(ProfileOperationDocs.UPLOAD_IMAGE_PROFILE)
   @ApiOkResponse({
     content: ProfileContentDocs.PROFILE_UPLOAD_IMAGE_SUCCESS,
   })
@@ -153,7 +151,6 @@ export class ProfileController {
    * - data: object of updated profile information
    *
    */
-  @ApiOperation(ProfileOperationDocs.SET_AVAILABILITY)
   @ApiOkResponse({
     content: ProfileContentDocs.SET_AVAILABILITY_SUCCESS,
   })

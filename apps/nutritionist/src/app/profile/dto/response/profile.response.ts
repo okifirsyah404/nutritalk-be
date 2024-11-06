@@ -53,5 +53,11 @@ export class ProfileResponse implements INutritionistEntity {
       placeOfBirth: 'Jember',
       imageKey: 'profile-image.jpg',
     },
+    consultationMeta: {
+      id: 'cm32r86wi000b3vptrq0792sp',
+      successConsultation: 100,
+      avgRating: 4.5,
+      consultation: 110,
+    },
   };
 }

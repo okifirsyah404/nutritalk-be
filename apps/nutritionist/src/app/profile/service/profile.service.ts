@@ -1,5 +1,5 @@
 import { CacheResult } from '@cache/app-cache/decorator/cache-result.decorator';
-import { ClearCache } from '@cache/app-cache/decorator/clear-cache.decorator';
+import { RefreshCache } from '@cache/app-cache/decorator/refresh-cache.decorator';
 import { INutritionistEntity } from '@database/prisma';
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { ProfileErrorMessage } from '@nutritionist/common/constant/message/error/profile-error.message';
@@ -11,8 +11,8 @@ import { ProfileRepository } from '../repository/profile.repository';
 @Injectable()
 export class ProfileService {
   constructor(
-    private readonly repository: ProfileRepository,
     private readonly s3Service: AppS3StorageService,
+    private readonly repository: ProfileRepository,
   ) {}
 
   private readonly logger = new Logger(ProfileService.name);
@@ -24,7 +24,10 @@ export class ProfileService {
    * @returns {Promise<INutritionistEntity>} A promise that resolves to the nutritionist profile.
    * @throws {NotFoundException} If the profile is not found.
    */
-  @CacheResult<INutritionistEntity>((id: string) => id)
+  @CacheResult<INutritionistEntity>((id: string) => `profile:${id}`, {
+    ttl: 10,
+    unit: 'minutes',
+  })
   async getProfileById(id: string): Promise<INutritionistEntity> {
     const result = await this.repository.getProfileById(id);
 
@@ -45,7 +48,13 @@ export class ProfileService {
    * @returns A promise that resolves to the updated nutritionist profile.
    * @throws NotFoundException - If the profile is not found.
    */
-  @ClearCache((nutritionist: INutritionistEntity) => nutritionist.id)
+  @RefreshCache(
+    (nutritionist: INutritionistEntity) => `profile:${nutritionist.id}`,
+    {
+      ttl: 10,
+      unit: 'minutes',
+    },
+  )
   async updateProfile(
     nutritionist: INutritionistEntity,
     reqData: UpdateProfileRequest,
@@ -66,8 +75,6 @@ export class ProfileService {
 
     result.profile = await this.s3Service.getProfileSignedUrl(result.profile);
 
-    this.logger.verbose(`Profile updated: ${result.id}`);
-
     return result;
   }
 
@@ -80,7 +87,13 @@ export class ProfileService {
    * @returns A promise that resolves to the updated nutritionist profile.
    * @throws NotFoundException - If the profile is not found in the repository.
    */
-  @ClearCache((nutritionist: INutritionistEntity) => nutritionist.id)
+  @RefreshCache(
+    (nutritionist: INutritionistEntity) => `profile:${nutritionist.id}`,
+    {
+      ttl: 10,
+      unit: 'minutes',
+    },
+  )
   async uploadProfile(
     nutritionist: INutritionistEntity,
     file: Express.Multer.File,
@@ -111,7 +124,10 @@ export class ProfileService {
    * found in the repository.
    *
    */
-  @ClearCache((id: string) => id)
+  @RefreshCache((id: string) => `profile:${id}`, {
+    ttl: 10,
+    unit: 'minutes',
+  })
   async setNutritionistAvailability(id: string): Promise<INutritionistEntity> {
     const nutritionist = await this.getProfileById(id);
 
@@ -123,6 +139,8 @@ export class ProfileService {
     if (!result) {
       throw new NotFoundException(ProfileErrorMessage.ERR_PROFILE_NOT_FOUND);
     }
+
+    result.profile = await this.s3Service.getProfileSignedUrl(result.profile);
 
     return result;
   }

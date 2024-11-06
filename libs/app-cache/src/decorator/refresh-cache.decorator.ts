@@ -4,7 +4,7 @@ import { Inject } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import moment from 'moment';
 
-export const CacheResult = <T>(
+export const RefreshCache = <T>(
   cacheKey: ((...args: any[]) => string) | string,
   options?: { ttl?: number; unit?: moment.DurationInputArg2 },
 ): any => {
@@ -18,7 +18,7 @@ export const CacheResult = <T>(
       const redisConfig = await AppConfigLoaded.redisConfig();
 
       const ttl = moment
-        .duration(options?.ttl || redisConfig.ttl, options?.unit || 'seconds')
+        .duration(options?.ttl || redisConfig.ttl, options.unit ?? 'seconds')
         .asMilliseconds();
 
       const cacheService = (
@@ -30,11 +30,7 @@ export const CacheResult = <T>(
 
       const key = `${target.constructor.name}:${keyBuilder}`;
 
-      const cacheValue: T = await cacheService.get(key);
-
-      if (cacheValue) {
-        return cacheValue;
-      }
+      await cacheService.del(key);
 
       const result = await originalMethod.apply(this, args);
 
