@@ -2,7 +2,7 @@ import { CacheResult } from '@cache/app-cache/decorator/cache-result.decorator';
 import { ClearCache } from '@cache/app-cache/decorator/clear-cache.decorator';
 import { INutritionistEntity } from '@database/prisma';
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { ProfileErrorMessage } from '@nutritionist/common/constant/message/error/profile_error.message';
+import { ProfileErrorMessage } from '@nutritionist/common/constant/message/error/profile-error.message';
 import { AppS3StorageService } from '@s3storage/s3storage/provider/app-s3storage.service';
 import DateUtils from '@util/utilities/date.util';
 import { UpdateProfileRequest } from '../dto/request/update-profile.request';

@@ -153,6 +153,25 @@ export default async () => {
             },
           },
         ],
+        [
+          import('./app/price/dto/request/update-price.request'),
+          {
+            UpdatePriceRequest: {
+              online: { required: true, type: () => Number, minimum: 50000 },
+              offline: { required: true, type: () => Number, minimum: 50000 },
+            },
+          },
+        ],
+        [
+          import('./app/price/dto/response/price.response'),
+          {
+            PriceResponse: {
+              id: { required: true, type: () => String },
+              online: { required: true, type: () => Number },
+              offline: { required: true, type: () => Number },
+            },
+          },
+        ],
       ],
       controllers: [
         [
@@ -223,6 +242,21 @@ export default async () => {
               getAccount: {
                 description:
                   'Http endpoint for getting the account of a nutritionist.\n\nResponse:\n- status: string\n- statusCode: number\n- message: string\n- data: object of account information',
+              },
+            },
+          },
+        ],
+        [
+          import('./app/price/controller/price.controller'),
+          {
+            PriceController: {
+              getPrice: {
+                description:
+                  'Retrieves the price information associated with the currently logged-in nutritionist.\n\nResponse:\n- status: string\n- statusCode: number\n- message: string\n- data: object of price information',
+              },
+              updatePrice: {
+                description:
+                  'Updates the price information associated with the currently logged-in nutritionist.\n\nRequest body:\n- online: (required) int number\n- offline: (required) int number\n\nResponse:\n- status: string\n- statusCode: number\n- message: string\n- data: object of updated price information',
               },
             },
           },
