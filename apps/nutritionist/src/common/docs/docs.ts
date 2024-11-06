@@ -9,6 +9,7 @@ export abstract class DocsTag {
   static readonly PROFILE = 'Profile';
   static readonly ACCOUNT = 'Account';
   static readonly CHANGE_PASSWORD = 'Change Password';
+  static readonly PRICE = 'Price';
 
   /**
    * Represents the auth tag object.
@@ -51,6 +52,14 @@ export abstract class DocsTag {
   };
 
   /**
+   * Represents the price tag object.
+   */
+  private static readonly price: TagObject = {
+    name: DocsTag.PRICE,
+    description: 'Endpoints for managing prices',
+  };
+
+  /**
    * Represents an array of tag objects.
    */
   static readonly tags = [
@@ -59,5 +68,6 @@ export abstract class DocsTag {
     DocsTag.profile,
     DocsTag.account,
     DocsTag.changePassword,
+    DocsTag.price,
   ];
 }
