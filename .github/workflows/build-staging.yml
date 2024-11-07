@@ -34,3 +34,19 @@ jobs:
       - run: yarn run db:generate
       - run: yarn run lint
       - run: yarn run build
+
+  deploy:
+    environment: CD
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to staging server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          script: |
+            cd ~/nutritalk-be
+            git checkout staging
+            git pull
