@@ -12,6 +12,7 @@ import { QueueModule } from './module/queue/queue.module';
 import { DashboardModule } from './app/dashboard/dashboard.module';
 import { AccountModule } from './app/account/account.module';
 import { PriceModule } from './app/price/price.module';
+import { ScheduleModule } from './app/schedule/schedule.module';
 
 @Module({
   imports: [
@@ -86,6 +87,7 @@ import { PriceModule } from './app/price/price.module';
     DashboardModule,
     AccountModule,
     PriceModule,
+    ScheduleModule,
   ],
 })
 export class NutritionistModule {}
