@@ -1,43 +1,63 @@
-import { IAccount, INutritionist, IProfile } from '@database/prisma';
-import { IConsultationMeta } from '@database/prisma/interface/entities/consultation-meta.interface';
-import { IOccupation } from '@database/prisma/interface/entities/occupation.interface';
-import { IPriceEntity } from '@database/prisma/interface/entities/price.interface';
-import { IRegistrationCertificate } from '@database/prisma/interface/entities/registration-certificate.interface';
-import { IScheduleEntity } from '@database/prisma/interface/entities/schedule.interface';
-import { NutritionistType } from '@prisma/client';
+import {
+  IAccountEntity,
+  INutritionistEntity,
+  IProfileEntity,
+} from '@database/prisma';
+import { IConsultationMetaEntity } from '@database/prisma/interface/entities/consultation-meta-entity.interface';
+import { Gender, NutritionistType, Role } from '@prisma/client';
 
-export class ProfileResponse implements INutritionist {
+export class ProfileResponse implements INutritionistEntity {
   id: string;
-  nip?: string;
-  nidn?: string;
-  accountId?: string;
-  profileId?: string;
-  type?: NutritionistType;
-  account?: IAccount;
-  profile?: IProfile;
-  consultationMeta?: IConsultationMeta;
-  occupation?: IOccupation;
-  price?: IPriceEntity;
-  registrationCertificate?: IRegistrationCertificate;
-  schedules?: IScheduleEntity[];
-
-  constructor(data: INutritionist) {
+  type: NutritionistType;
+  nip: string;
+  nidn: string;
+  isAvailable: boolean;
+  account?: IAccountEntity;
+  profile?: IProfileEntity;
+  consultationMeta?: IConsultationMetaEntity;
+  private constructor(data: INutritionistEntity) {
     this.id = data.id;
     this.nip = data.nip;
     this.nidn = data.nidn;
-    this.accountId = data.accountId;
-    this.profileId = data.profileId;
     this.type = data.type;
+    this.isAvailable = data.isAvailable;
     this.account = data.account;
     this.profile = data.profile;
     this.consultationMeta = data.consultationMeta;
-    this.occupation = data.occupation;
-    this.price = data.price;
-    this.registrationCertificate = data.registrationCertificate;
-    this.schedules = data.schedules;
   }
 
-  static fromEntity(data: INutritionist): ProfileResponse {
+  static fromEntity(data: INutritionistEntity): ProfileResponse {
     return new ProfileResponse(data);
   }
+
+  static readonly exampleData: ProfileResponse = {
+    id: 'cm32r86wi000b3vptrq0792sp',
+    type: NutritionistType.COUNSELOR,
+    nip: '202407252005022001',
+    nidn: '0912458102',
+    isAvailable: true,
+    account: {
+      id: 'cm32r86wi000b3vptrq0792sp',
+      email: 'johndoe@example.com',
+      role: Role.NUTRITIONIST,
+      googleId: '1234567890',
+    },
+    profile: {
+      id: 'cm32r86wi000b3vptrq0792sp',
+      name: 'John Doe',
+      phoneNumber: '081234567890',
+      address: 'Jl. Jend. Sudirman No. 1',
+      age: 25,
+      dateOfBirth: new Date('1996-07-25'),
+      gender: Gender.MALE,
+      placeOfBirth: 'Jember',
+      imageKey: 'profile-image.jpg',
+    },
+    consultationMeta: {
+      id: 'cm32r86wi000b3vptrq0792sp',
+      successConsultation: 100,
+      avgRating: 4.5,
+      consultation: 110,
+    },
+  };
 }

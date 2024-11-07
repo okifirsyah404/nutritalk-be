@@ -1,6 +1,6 @@
 import * as awsS3 from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { IProfile } from '@database/prisma';
+import { IProfileEntity } from '@database/prisma';
 import { Injectable } from '@nestjs/common';
 import { Role } from '@prisma/client';
 import FileUtils from '@util/utilities/file.util';
@@ -29,7 +29,7 @@ export class AppS3StorageService {
    * ```
    *
    */
-  async getProfileSignedUrl(profile: IProfile): Promise<IProfile> {
+  async getProfileSignedUrl(profile: IProfileEntity): Promise<IProfileEntity> {
     const key = profile.imageKey;
 
     if (!key) {

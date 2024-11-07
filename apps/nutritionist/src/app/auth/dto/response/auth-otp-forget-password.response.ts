@@ -13,7 +13,7 @@ export class AuthOtpVerifyForgetPasswordResponse implements IOtpVerify {
     return new AuthOtpVerifyForgetPasswordResponse(entity);
   }
 
-  static exampleData: AuthOtpVerifyForgetPasswordResponse =
+  static readonly exampleData: AuthOtpVerifyForgetPasswordResponse =
     new AuthOtpVerifyForgetPasswordResponse({
       signature:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ',

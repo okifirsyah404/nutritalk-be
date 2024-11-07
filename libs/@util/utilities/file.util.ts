@@ -1,6 +1,6 @@
 import { TempUploadPath } from '@common/constant/path/temp-upload.path';
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 
 /**
  * A utility class for handling file operations such as copying, deleting, and extracting file information.
@@ -29,8 +29,6 @@ class FileUtils {
       dir,
       `${seed}.${file.originalname.split('.').pop()}`,
     );
-
-    // fs.writeFileSync(filePath, file.buffer);
 
     await fs.promises.writeFile(filePath, file.buffer);
 

@@ -6,6 +6,15 @@ import { AuthSignInRequest } from './auth-sign-in.request';
 export class AuthOtpVerifyRequest extends PickType(AuthSignInRequest, [
   'email',
 ]) {
+  /**
+   *
+   * Otp api property.
+   *
+   * Decorators:
+   * - IsString
+   * - IsNotEmpty
+   *
+   */
   @ApiProperty({
     example: '123456',
   })
