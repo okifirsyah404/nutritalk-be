@@ -5,6 +5,16 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class AuthSignInRequest {
+  /**
+   *
+   * Email api property.
+   *
+   * Decorators:
+   * - IsEmail
+   * - IsString
+   * - IsNotEmpty
+   *
+   */
   @ApiProperty({
     example: 'johndoe@example.com',
   })
@@ -22,6 +32,15 @@ export class AuthSignInRequest {
   })
   email: string;
 
+  /**
+   *
+   * Password api property.
+   *
+   * Decorators:
+   * - IsString
+   * - IsNotEmpty
+   *
+   */
   @ApiProperty({
     example: 'Secret Password',
   })
@@ -33,6 +52,15 @@ export class AuthSignInRequest {
   })
   password: string;
 
+  /**
+   *
+   * Fcm token api property.
+   *
+   * Decorators:
+   * - IsString
+   * - IsNotEmpty
+   *
+   */
   @ApiProperty({
     example: 'fcmToken',
   })

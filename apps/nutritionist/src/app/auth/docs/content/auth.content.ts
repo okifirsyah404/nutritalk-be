@@ -3,7 +3,7 @@ import { AuthErrorMessage } from '@common/constant/message/error/auth-error.mess
 import { EmailValidationMessage } from '@common/constant/message/validation/email-validation.message';
 import { FcmTokenValidationMessage } from '@common/constant/message/validation/fcm-token-validation.message';
 import { PasswordValidationMessage } from '@common/constant/message/validation/password-validation.message';
-import { BaseApiResponse } from '@common/response/api.response';
+import { BaseApiResponse } from '@common/response/base-api.response';
 import { ContentObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { AuthSuccessMessage } from 'apps/nutritionist/src/common/constant/message/success/auth-success.message';
 import { AuthSignInResponse } from '../../dto/response/auth-sign-in.response';

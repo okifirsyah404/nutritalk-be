@@ -11,6 +11,6 @@ export class AuthForgetPasswordResponse implements IOtpRequest {
     return new AuthForgetPasswordResponse(entity.email);
   }
 
-  static exampleData: AuthForgetPasswordResponse =
+  static readonly exampleData: AuthForgetPasswordResponse =
     new AuthForgetPasswordResponse('johndoe@example.com');
 }

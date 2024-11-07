@@ -7,6 +7,16 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, IsStrongPassword } from 'class-validator';
 
 export class AuthForgetPasswordRequest {
+  /**
+   *
+   * Password api property.
+   *
+   * Decorators:
+   * - IsString
+   * - IsNotEmpty
+   * - IsStrongPassword
+   *
+   */
   @ApiProperty({
     example: 'Secret Password',
   })
@@ -28,6 +38,16 @@ export class AuthForgetPasswordRequest {
   )
   password: string;
 
+  /**
+   *
+   * Confirm password api property.
+   *
+   * Decorators:
+   * - IsString
+   * - IsNotEmpty
+   * - IsStrongPassword
+   *
+   */
   @ApiProperty({
     example: 'Secret Password',
   })
@@ -50,6 +70,15 @@ export class AuthForgetPasswordRequest {
   )
   confirmPassword: string;
 
+  /**
+   *
+   * Signature api property.
+   *
+   * Decorators:
+   * - IsString
+   * - IsNotEmpty
+   *
+   */
   @ApiProperty({
     example:
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ',

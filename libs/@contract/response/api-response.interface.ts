@@ -3,6 +3,7 @@ import { IPaginationMeta } from '../pagination/pagination.interface';
 export interface IApiResponse<T> {
   statusCode: number;
   status: string;
+  timestamp: number;
   message: string;
   data: T;
 }

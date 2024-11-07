@@ -6,7 +6,7 @@ import moment from 'moment';
 
 export const CacheResult = <T>(
   cacheKey: ((...args: any[]) => string) | string,
-  options?: { ttl?: number },
+  options?: { ttl?: number; unit?: moment.DurationInputArg2 },
 ): any => {
   const injectCacheManager = Inject(CACHE_MANAGER);
 
@@ -18,7 +18,7 @@ export const CacheResult = <T>(
       const redisConfig = await AppConfigLoaded.redisConfig();
 
       const ttl = moment
-        .duration(options?.ttl || redisConfig.ttl, `seconds`)
+        .duration(options?.ttl || redisConfig.ttl, options?.unit || 'seconds')
         .asMilliseconds();
 
       const cacheService = (
