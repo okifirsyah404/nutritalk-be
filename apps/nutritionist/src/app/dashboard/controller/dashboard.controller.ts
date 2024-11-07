@@ -1,4 +1,3 @@
-import { INVALID_TOKEN_CONTENT } from '@common/constant/docs/content/invalid-token.content';
 import { BaseApiResponse } from '@common/response/base-api.response';
 import { IApiResponse } from '@contract/response/api-response.interface';
 import { INutritionistEntity } from '@database/prisma';
@@ -11,20 +10,16 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { DashboardSuccessMessage } from '@nutritionist/common/constant/message/success/dashboard-success.message';
+import { DocsTag } from '@nutritionist/common/docs/docs';
+import { DashboardContentDocs } from '../docs/dashboard.content';
 import { DashboardResponse } from '../dto/response/dashboard.response';
 import { DashboardService } from '../service/dashboard.service';
-import { DocsTag } from '@nutritionist/common/docs/docs';
 
 @ApiTags(DocsTag.DASHBOARD)
 @ApiBearerAuth()
 @ApiUnauthorizedResponse({
-  content: {
-    'application/json': {
-      examples: {
-        ...INVALID_TOKEN_CONTENT,
-      },
-    },
-  },
+  content: DashboardContentDocs.UNAUTHORIZED,
 })
 @UseGuards(AccessTokenGuard)
 @Controller('dashboard')
@@ -43,14 +38,7 @@ export class DashboardController {
    *
    */
   @ApiOkResponse({
-    content: {
-      'application/json': {
-        example: BaseApiResponse.success({
-          message: 'Dashboard data retrieved successfully',
-          data: DashboardResponse.exampleData,
-        }),
-      },
-    },
+    content: DashboardContentDocs.SUCCESS_GET_DASHBOARD,
   })
   @Get()
   async getDashboardData(
@@ -59,7 +47,7 @@ export class DashboardController {
     const result = await this.dashboardService.getDashboardData(user.id);
 
     return BaseApiResponse.success({
-      message: 'Dashboard data retrieved successfully',
+      message: DashboardSuccessMessage.SUCCESS_GET_DASHBOARD,
       data: DashboardResponse.fromData(result),
     });
   }

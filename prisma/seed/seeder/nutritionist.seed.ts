@@ -47,24 +47,22 @@ async function seedNutritionist(prisma: PrismaClient): Promise<void> {
         },
       },
     });
-
-    await prisma.consultationMeta.deleteMany();
-    await prisma.registrationCertificate.deleteMany();
-    await prisma.occupation.deleteMany();
-    await prisma.scheduleTime.deleteMany();
-    await prisma.schedule.deleteMany();
-    await prisma.nutritionist.deleteMany();
-    await prisma.price.deleteMany();
     await prisma.account.deleteMany({
       where: {
         role: Role.NUTRITIONIST,
       },
     });
+    await prisma.nutritionist.deleteMany();
 
     console.log('------------- Deleted all nutritionist data -------------');
     console.log('------------- Seeding nutritionist accounts... -------------');
 
-    for await (const nutritionist of nutritionistData) {
+    for await (const [index, nutritionist] of nutritionistData.entries()) {
+      if (process.env.NODE_ENV === 'production' && index === 0) {
+        console.log('Skip seeding dummy nutritionist data for development');
+        continue;
+      }
+
       await prisma.account.create({
         data: {
           email: nutritionist.email,
@@ -132,7 +130,7 @@ async function seedNutritionist(prisma: PrismaClient): Promise<void> {
     console.log('------------- Seed nutritionist complete -------------');
   } catch (error) {
     console.error(
-      "------------- There's an error when seeding nutritionist accounts -------------",
+      "------------- There's an error when seeding nutritionist data -------------",
     );
     throw error;
   }
