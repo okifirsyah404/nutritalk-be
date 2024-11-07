@@ -1,5 +1,5 @@
 import * as awsS3 from '@aws-sdk/client-s3';
-import { Gender, PrismaClient } from '@prisma/client';
+import { Gender, Prisma, PrismaClient } from '@prisma/client';
 import fs from 'fs';
 import path from 'path';
 
@@ -120,19 +120,7 @@ async function seedRawImage(
   bucketName: string,
   nutritionist: {
     id: string;
-    profile: {
-      id: string;
-      name: string;
-      gender: Gender;
-      phoneNumber: string | null;
-      address: string | null;
-      placeOfBirth: string | null;
-      dateOfBirth: Date | null;
-      age: number | null;
-      imageKey: string | null;
-      createdAt: Date;
-      updatedAt: Date;
-    };
+    profile: Prisma.ProfileGetPayload<{}>;
   },
   prisma: PrismaClient,
   defaultKey?: string,
