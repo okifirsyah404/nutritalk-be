@@ -71,6 +71,7 @@ export class S3StorageService {
       this.s3Instance = new awsS3.S3Client({
         endpoint: this.options.s3Options.endPoint,
         region: this.options.s3Options.region,
+        forcePathStyle: true,
         credentials: {
           accessKeyId: this.options.s3Options.accessKeyId,
           secretAccessKey: this.options.s3Options.secretAccessKey,

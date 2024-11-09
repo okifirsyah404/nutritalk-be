@@ -10,6 +10,9 @@ RUN yarn install
 
 COPY . .
 
+RUN yarn remove bcrypt
+RUN yarn add bcrypt --unsafe-perm --allow-root 
+
 RUN yarn run db:generate
 
 RUN yarn run build
