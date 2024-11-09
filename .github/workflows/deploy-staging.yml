@@ -41,7 +41,7 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.ACTION_SECRET }}
+          key: ${{ secrets.PRIVATE_KEY }}
           port: 22
           script: |
             cd ~/nutritalk-be
