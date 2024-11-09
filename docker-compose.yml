@@ -1,9 +1,7 @@
-version: '3.2'
+version: '3.8'
 services:
   app-nutritionist:
     build:
-      tags:
-        - nutritalk-nutritionist:1.1.0-staging
       context: .
       dockerfile: Dockerfile
     env_file:
@@ -12,9 +10,10 @@ services:
       - ${APP_NUTRITIONIST_PORT:?}:43702
     depends_on:
       - db
+      - cache-redis
     volumes:
       - .:/app
-    command: sh -c "yarn run db:migrate:prod && yarn run db:seed && yarn run start:prod"
+    command: sh -c "yarn run db:migrate:prod && yarn run start:prod"
 
   db:
     image: postgres:alpine
@@ -22,12 +21,23 @@ services:
       - POSTGRES_USER=${DB_USERNAME:?}
       - POSTGRES_PASSWORD=${DB_PASSWORD:?}
       - POSTGRES_DB=${DB_NAME:?}
+    ports:
+      - 43711:${DB_PORT:?}
     env_file:
       - .env
-    ports:
-      - ${DB_PORT:?}:5432
     volumes:
       - nutritalk-postgres-data:/var/lib/postgresql/data
 
+  cache-redis:
+    image: redis:latest
+    ports:
+      - 43712:${REDIS_PORT:?}
+    env_file:
+      - .env
+    command: redis-server
+    volumes:
+      - cache-data:/data
+
 volumes:
   nutritalk-postgres-data:
+  cache-data:
