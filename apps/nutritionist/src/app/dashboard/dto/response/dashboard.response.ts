@@ -1,5 +1,10 @@
 import { INutritionistEntity, ITransactionEntity } from '@database/prisma';
-import { Gender, NutritionistType } from '@prisma/client';
+import {
+  ConsultationType,
+  Gender,
+  NutritionistType,
+  TransactionStatus,
+} from '@prisma/client';
 
 export class DashboardResponse {
   nutritionist: INutritionistEntity;
@@ -57,9 +62,33 @@ export class DashboardResponse {
         consultation: 110,
       },
     },
-    countScheduledConsultation: 0,
-    scheduledConsultations: [],
-    countPendingConsultation: 0,
-    pendingConsultations: [],
+    countScheduledConsultation: 1,
+    scheduledConsultations: [
+      {
+        id: 'cm36xgm8c009iati4e32pr56e',
+        status: TransactionStatus.SCHEDULED,
+        type: ConsultationType.ONLINE,
+        note: 'Tribuo accedo verus excepturi saepe labore.',
+        consultationTime: {
+          id: 'cm36xgm8c009jati469pp1axg',
+          start: new Date(),
+          end: new Date(),
+        },
+      },
+    ],
+    countPendingConsultation: 1,
+    pendingConsultations: [
+      {
+        id: 'cm36xgm8c009iati4e32pr56e',
+        status: TransactionStatus.WAITING_CONFIRMATION,
+        type: ConsultationType.ONLINE,
+        note: 'Tribuo accedo verus excepturi saepe labore.',
+        consultationTime: {
+          id: 'cm36xgm8c009jati469pp1axg',
+          start: new Date(),
+          end: new Date(),
+        },
+      },
+    ],
   };
 }
