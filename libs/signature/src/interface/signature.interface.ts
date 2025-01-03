@@ -1,3 +1,3 @@
 export interface ValdateSignatureOptions {
-  deleteAfterValidation?: boolean;
+	deleteAfterValidation?: boolean;
 }

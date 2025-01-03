@@ -1,4 +1,4 @@
-import { registerAs } from '@nestjs/config';
+import { registerAs } from "@nestjs/config";
 
 /**
  * Configuration settings for handling multipart form data.
@@ -10,10 +10,10 @@ import { registerAs } from '@nestjs/config';
  * @property {number} fileMaxSize - The maximum size (in bytes) allowed for each file.
  */
 export type MultipartConfig = {
-  fieldMaxCount: number;
-  fieldMaxSize: number;
-  fileMaxCount: number;
-  fileMaxSize: number;
+	fieldMaxCount: number;
+	fieldMaxSize: number;
+	fileMaxCount: number;
+	fileMaxSize: number;
 };
 
 /**
@@ -32,13 +32,13 @@ export type MultipartConfig = {
  * - `fileMaxSize` (number): The maximum size (in bytes) allowed for each file, sourced from the environment variable `MULTIPART_FILE_MAX_SIZE`.
  */
 export const multipartConfig = registerAs(
-  'multipartConfig',
-  (): MultipartConfig => ({
-    fieldMaxCount: parseInt(process.env.MULTIPART_FIELD_MAX_COUNT),
-    fieldMaxSize: parseInt(process.env.MULTIPART_FIELD_MAX_SIZE),
-    fileMaxCount: parseInt(process.env.MULTIPART_FILE_MAX_COUNT),
-    fileMaxSize: parseInt(process.env.MULTIPART_FILE_MAX_SIZE),
-  }),
+	"multipartConfig",
+	(): MultipartConfig => ({
+		fieldMaxCount: parseInt(process.env.MULTIPART_FIELD_MAX_COUNT),
+		fieldMaxSize: parseInt(process.env.MULTIPART_FIELD_MAX_SIZE),
+		fileMaxCount: parseInt(process.env.MULTIPART_FILE_MAX_COUNT),
+		fileMaxSize: parseInt(process.env.MULTIPART_FILE_MAX_SIZE),
+	}),
 );
 
 /**
@@ -49,39 +49,39 @@ export const multipartConfig = registerAs(
  * @class
  */
 export class MultipartEnvironmentVariables {
-  /**
-   * Maximum count of multipart fields.
-   *
-   * @type {string}
-   * @decorator `@IsDefined()`
-   * @decorator `@IsNumberString()`
-   */
-  MULTIPART_FIELD_MAX_COUNT!: string;
+	/**
+	 * Maximum count of multipart fields.
+	 *
+	 * @type {string}
+	 * @decorator `@IsDefined()`
+	 * @decorator `@IsNumberString()`
+	 */
+	MULTIPART_FIELD_MAX_COUNT!: string;
 
-  /**
-   * Maximum size of a multipart field.
-   *
-   * @type {string}
-   * @decorator `@IsDefined()`
-   * @decorator `@IsNumberString()`
-   */
-  MULTIPART_FIELD_MAX_SIZE!: string;
+	/**
+	 * Maximum size of a multipart field.
+	 *
+	 * @type {string}
+	 * @decorator `@IsDefined()`
+	 * @decorator `@IsNumberString()`
+	 */
+	MULTIPART_FIELD_MAX_SIZE!: string;
 
-  /**
-   * Maximum count of multipart files.
-   *
-   * @type {string}
-   * @decorator `@IsDefined()`
-   * @decorator `@IsNumberString()`
-   */
-  MULTIPART_FILE_MAX_COUNT!: string;
+	/**
+	 * Maximum count of multipart files.
+	 *
+	 * @type {string}
+	 * @decorator `@IsDefined()`
+	 * @decorator `@IsNumberString()`
+	 */
+	MULTIPART_FILE_MAX_COUNT!: string;
 
-  /**
-   * Maximum size of a multipart file.
-   *
-   * @type {string}
-   * @decorator `@IsDefined()`
-   * @decorator `@IsNumberString()`
-   */
-  MULTIPART_FILE_MAX_SIZE!: string;
+	/**
+	 * Maximum size of a multipart file.
+	 *
+	 * @type {string}
+	 * @decorator `@IsDefined()`
+	 * @decorator `@IsNumberString()`
+	 */
+	MULTIPART_FILE_MAX_SIZE!: string;
 }

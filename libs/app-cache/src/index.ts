@@ -1,2 +1,2 @@
-export * from './app-cache.module';
-export * from './provider/app-cache.service';
+export * from "./app-cache.module";
+export * from "./provider/app-cache.service";

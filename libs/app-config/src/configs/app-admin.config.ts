@@ -1,5 +1,5 @@
-import { registerAs } from '@nestjs/config';
-import { IsDefined, IsNumberString, MinLength } from 'class-validator';
+import { registerAs } from "@nestjs/config";
+import { IsDefined, IsNumberString, MinLength } from "class-validator";
 
 /**
  * Configuration settings for the App Admin module.
@@ -8,11 +8,11 @@ import { IsDefined, IsNumberString, MinLength } from 'class-validator';
  * @property {number} port - The port number on which the admin module will run.
  */
 export type AppAdminConfig = {
-  port: number;
+	port: number;
 };
 
 export const APP_ADMIN_CONFIG: AppAdminConfig = {
-  port: parseInt(process.env.APP_ADMIN_PORT!),
+	port: parseInt(process.env.APP_ADMIN_PORT!),
 };
 
 /**
@@ -27,8 +27,8 @@ export const APP_ADMIN_CONFIG: AppAdminConfig = {
  * - `port`: The port number on which the admin module will run.
  */
 export const appAdminConfig = registerAs(
-  'appAdminConfig',
-  (): AppAdminConfig => APP_ADMIN_CONFIG,
+	"appAdminConfig",
+	(): AppAdminConfig => APP_ADMIN_CONFIG,
 );
 
 /**
@@ -37,8 +37,8 @@ export const appAdminConfig = registerAs(
  *
  */
 export class AppAdminEnvironmentVariables {
-  @IsDefined()
-  @IsNumberString()
-  @MinLength(1)
-  APP_ADMIN_PORT!: string;
+	@IsDefined()
+	@IsNumberString()
+	@MinLength(1)
+	APP_ADMIN_PORT!: string;
 }

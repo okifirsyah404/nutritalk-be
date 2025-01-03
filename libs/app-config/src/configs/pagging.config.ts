@@ -1,5 +1,5 @@
-import { registerAs } from '@nestjs/config';
-import { IsDefined, IsNumberString } from 'class-validator';
+import { registerAs } from "@nestjs/config";
+import { IsDefined, IsNumberString } from "class-validator";
 
 /**
  * Configuration settings for pagination.
@@ -9,8 +9,8 @@ import { IsDefined, IsNumberString } from 'class-validator';
  * @property {number} defaultPageSize - The default number of items per page.
  */
 export type PaggingConfig = {
-  maxPageSize: number;
-  defaultPageSize: number;
+	maxPageSize: number;
+	defaultPageSize: number;
 };
 
 /**
@@ -27,11 +27,11 @@ export type PaggingConfig = {
  * - `defaultPageSize` (number): The default number of items per page, sourced from the environment variable `APP_PAGINATION_DEFAULT_PAGE_SIZE`.
  */
 export const paggingConfig = registerAs(
-  'paggingConfig',
-  (): PaggingConfig => ({
-    maxPageSize: parseInt(process.env.APP_PAGINATION_MAX_PAGE_SIZE),
-    defaultPageSize: parseInt(process.env.APP_PAGINATION_DEFAULT_PAGE_SIZE),
-  }),
+	"paggingConfig",
+	(): PaggingConfig => ({
+		maxPageSize: parseInt(process.env.APP_PAGINATION_MAX_PAGE_SIZE),
+		defaultPageSize: parseInt(process.env.APP_PAGINATION_DEFAULT_PAGE_SIZE),
+	}),
 );
 
 /**
@@ -46,11 +46,11 @@ export const paggingConfig = registerAs(
  * @property {string} APP_PAGINATION_DEFAULT_PAGE_SIZE - The default page size for pagination.
  */
 export class PaggingEnvironmentVariables {
-  @IsDefined()
-  @IsNumberString()
-  APP_PAGINATION_MAX_PAGE_SIZE!: string;
+	@IsDefined()
+	@IsNumberString()
+	APP_PAGINATION_MAX_PAGE_SIZE!: string;
 
-  @IsDefined()
-  @IsNumberString()
-  APP_PAGINATION_DEFAULT_PAGE_SIZE!: string;
+	@IsDefined()
+	@IsNumberString()
+	APP_PAGINATION_DEFAULT_PAGE_SIZE!: string;
 }

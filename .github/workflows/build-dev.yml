@@ -5,9 +5,12 @@ name: Node.js CI Build Development
 
 on:
   push:
-    branches: ['dev']
+    branches: ["dev"]
   pull_request:
-    branches: ['dev']
+    branches: ["dev"]
+
+env:
+  HUSKY: 0
 
 jobs:
   build:
@@ -25,7 +28,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
+          cache: "yarn"
       - run: |
           touch .env 
           echo "${{secrets.WORKFLOW_ENV}}" >> .env

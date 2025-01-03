@@ -1,3 +1,3 @@
 export interface ISignature {
-  signature: string;
+	signature: string;
 }

@@ -1,5 +1,5 @@
-import { registerAs } from '@nestjs/config';
-import { IsDefined, IsEmail, IsNumberString, IsString } from 'class-validator';
+import { registerAs } from "@nestjs/config";
+import { IsDefined, IsEmail, IsNumberString, IsString } from "class-validator";
 
 /**
  * Configuration settings for SMTP (Simple Mail Transfer Protocol).
@@ -11,17 +11,17 @@ import { IsDefined, IsEmail, IsNumberString, IsString } from 'class-validator';
  * @property {string} password - The password for authenticating with the SMTP server.
  */
 export type SmtpConfig = {
-  host: string;
-  port: number;
-  user: string;
-  password: string;
+	host: string;
+	port: number;
+	user: string;
+	password: string;
 };
 
 export const SMTP_CONFIG: SmtpConfig = {
-  host: process.env.SMTP_HOST,
-  port: parseInt(process.env.SMTP_PORT),
-  user: process.env.SMTP_USER,
-  password: process.env.SMTP_PASSWORD,
+	host: process.env.SMTP_HOST,
+	port: parseInt(process.env.SMTP_PORT),
+	user: process.env.SMTP_USER,
+	password: process.env.SMTP_PASSWORD,
 };
 
 /**
@@ -39,13 +39,13 @@ export const SMTP_CONFIG: SmtpConfig = {
  * - `password` {string} - The password for SMTP authentication, sourced from `process.env.SMTP_PASSWORD`.
  */
 export const smtpConfig = registerAs(
-  'smtpConfig',
-  (): SmtpConfig => ({
-    host: process.env.SMTP_HOST,
-    port: parseInt(process.env.SMTP_PORT),
-    user: process.env.SMTP_USER,
-    password: process.env.SMTP_PASSWORD,
-  }),
+	"smtpConfig",
+	(): SmtpConfig => ({
+		host: process.env.SMTP_HOST,
+		port: parseInt(process.env.SMTP_PORT),
+		user: process.env.SMTP_USER,
+		password: process.env.SMTP_PASSWORD,
+	}),
 );
 
 /**
@@ -60,20 +60,20 @@ export const smtpConfig = registerAs(
  *
  */
 export class SmtpEnvironmentVariables {
-  @IsDefined()
-  @IsString()
-  SMTP_HOST!: string;
+	@IsDefined()
+	@IsString()
+	SMTP_HOST!: string;
 
-  @IsDefined()
-  @IsNumberString()
-  SMTP_PORT!: string;
+	@IsDefined()
+	@IsNumberString()
+	SMTP_PORT!: string;
 
-  @IsDefined()
-  @IsString()
-  @IsEmail()
-  SMTP_USER!: string;
+	@IsDefined()
+	@IsString()
+	@IsEmail()
+	SMTP_USER!: string;
 
-  @IsDefined()
-  @IsString()
-  SMTP_PASSWORD!: string;
+	@IsDefined()
+	@IsString()
+	SMTP_PASSWORD!: string;
 }

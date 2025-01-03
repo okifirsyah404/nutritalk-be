@@ -1,5 +1,5 @@
-import { IJwtRefreshPayload } from '@jwt/app-jwt';
-import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import { IJwtRefreshPayload } from "@jwt/app-jwt";
+import { createParamDecorator, ExecutionContext } from "@nestjs/common";
 
 /**
  *
@@ -12,9 +12,9 @@ import { createParamDecorator, ExecutionContext } from '@nestjs/common';
  *
  */
 const GetSignaturePayload = createParamDecorator(
-  (data, ctx: ExecutionContext): Promise<IJwtRefreshPayload> => {
-    return ctx.switchToHttp().getRequest().signature;
-  },
+	(data, ctx: ExecutionContext): Promise<IJwtRefreshPayload> => {
+		return ctx.switchToHttp().getRequest().signature;
+	},
 );
 
 export default GetSignaturePayload;

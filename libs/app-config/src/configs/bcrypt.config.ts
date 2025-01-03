@@ -1,5 +1,5 @@
-import { registerAs } from '@nestjs/config';
-import { IsDefined, IsNumberString, MinLength } from 'class-validator';
+import { registerAs } from "@nestjs/config";
+import { IsDefined, IsNumberString, MinLength } from "class-validator";
 
 /**
  * Configuration settings for bcrypt hashing.
@@ -8,7 +8,7 @@ import { IsDefined, IsNumberString, MinLength } from 'class-validator';
  * @property {number} saltRounds - The number of salt rounds to use for hashing.
  */
 export type BcryptConfig = {
-  saltRounds: number;
+	saltRounds: number;
 };
 
 /**
@@ -23,18 +23,18 @@ export type BcryptConfig = {
  * - `saltRounds` {number} - The number of salt rounds to use for hashing passwords.
  */
 export const bcryptConfig = registerAs(
-  'bcryptConfig',
-  (): BcryptConfig => ({
-    saltRounds: parseInt(process.env.BCRYPT_SALT_ROUNDS),
-  }),
+	"bcryptConfig",
+	(): BcryptConfig => ({
+		saltRounds: parseInt(process.env.BCRYPT_SALT_ROUNDS),
+	}),
 );
 
 /**
  * Class representing the environment variables required for bcrypt configuration.
  */
 export class BcryptEnvironmentVariables {
-  @IsDefined()
-  @IsNumberString()
-  @MinLength(1)
-  BCRYPT_SALT_ROUNDS!: string;
+	@IsDefined()
+	@IsNumberString()
+	@MinLength(1)
+	BCRYPT_SALT_ROUNDS!: string;
 }

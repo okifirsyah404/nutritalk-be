@@ -1,5 +1,5 @@
-import { registerAs } from '@nestjs/config';
-import { IsDefined, IsEnum, IsString, MinLength } from 'class-validator';
+import { registerAs } from "@nestjs/config";
+import { IsDefined, IsEnum, IsString, MinLength } from "class-validator";
 
 /**
  * Enum representing different environments for the application.
@@ -11,11 +11,11 @@ import { IsDefined, IsEnum, IsString, MinLength } from 'class-validator';
  * @property {string} Test - Represents the test environment.
  */
 export enum Environment {
-  LOCAL = 'local',
-  DEV = 'dev',
-  STAGING = 'staging',
-  PROD = 'prod',
-  TEST = 'test',
+	LOCAL = "local",
+	DEV = "dev",
+	STAGING = "staging",
+	PROD = "prod",
+	TEST = "test",
 }
 
 /**
@@ -25,8 +25,8 @@ export enum Environment {
  * @property {string} host - The host address of the application.
  */
 export type AppConfig = {
-  env: Environment | string | undefined;
-  host: string;
+	env: Environment | string | undefined;
+	host: string;
 };
 
 /**
@@ -43,23 +43,23 @@ export type AppConfig = {
  * - `host`: The host address of the application, derived from the `APP_HOST` environment variable.
  */
 export const appConfig = registerAs(
-  'appConfig',
-  (): AppConfig => ({
-    env: Environment[process.env.NODE_ENV.toUpperCase()] || Environment.DEV,
-    host: process.env.APP_HOST!,
-  }),
+	"appConfig",
+	(): AppConfig => ({
+		env: Environment[process.env.NODE_ENV.toUpperCase()] || Environment.DEV,
+		host: process.env.APP_HOST!,
+	}),
 );
 
 /**
  * Class representing the environment variables for the application.
  */
 export class AppEnvironmentVariables {
-  @IsDefined()
-  @IsEnum(Environment)
-  NODE_ENV!: Environment;
+	@IsDefined()
+	@IsEnum(Environment)
+	NODE_ENV!: Environment;
 
-  @IsDefined()
-  @IsString()
-  @MinLength(1)
-  APP_HOST!: string;
+	@IsDefined()
+	@IsString()
+	@MinLength(1)
+	APP_HOST!: string;
 }

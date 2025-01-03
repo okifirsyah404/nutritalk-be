@@ -1,5 +1,5 @@
-import { BadRequestException } from '@nestjs/common';
-import { ValidationError } from 'class-validator';
+import { BadRequestException } from "@nestjs/common";
+import { ValidationError } from "class-validator";
 
 /**
  * Custom validation exception factory.
@@ -9,9 +9,9 @@ import { ValidationError } from 'class-validator';
  * @param errors
  */
 export function validationExceptionFactory(errors: ValidationError[]): void {
-  errors.map((error) => {
-    throw new BadRequestException(
-      `${error.constraints?.[Object.keys(error.constraints)[0]]}`,
-    );
-  });
+	errors.map((error) => {
+		throw new BadRequestException(
+			`${error.constraints?.[Object.keys(error.constraints)[0]]}`,
+		);
+	});
 }
