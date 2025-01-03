@@ -1,5 +1,5 @@
-import { registerAs } from '@nestjs/config';
-import { IsBooleanString, IsNumberString, IsOptional } from 'class-validator';
+import { registerAs } from "@nestjs/config";
+import { IsBooleanString, IsNumberString, IsOptional } from "class-validator";
 
 /**
  * Configuration settings for throttling.
@@ -10,9 +10,9 @@ import { IsBooleanString, IsNumberString, IsOptional } from 'class-validator';
  * @property {number} limit - Maximum number of requests allowed within the TTL.
  */
 export type ThrottleConfig = {
-  enable: boolean;
-  ttl: number;
-  limit: number;
+	enable: boolean;
+	ttl: number;
+	limit: number;
 };
 
 /**
@@ -30,12 +30,12 @@ export type ThrottleConfig = {
  * - `limit` (number): Maximum number of requests allowed within the TTL, sourced from the environment variable `APP_THROTTLE_LIMIT`.
  */
 export const throttleConfig = registerAs(
-  'throttleConfig',
-  (): ThrottleConfig => ({
-    enable: process.env.APP_ENABLE_THROTTLE === 'true',
-    ttl: parseInt(process.env.APP_THROTTLE_TTL),
-    limit: parseInt(process.env.APP_THROTTLE_LIMIT),
-  }),
+	"throttleConfig",
+	(): ThrottleConfig => ({
+		enable: process.env.APP_ENABLE_THROTTLE === "true",
+		ttl: parseInt(process.env.APP_THROTTLE_TTL),
+		limit: parseInt(process.env.APP_THROTTLE_LIMIT),
+	}),
 );
 
 /**
@@ -48,15 +48,15 @@ export const throttleConfig = registerAs(
  * @property {string} APP_THROTTLE_LIMIT - Optional number string representing the limit for throttling.
  */
 export class ThrottleEnvironmentVariables {
-  @IsOptional()
-  @IsBooleanString()
-  APP_ENABLE_THROTTLE!: string;
+	@IsOptional()
+	@IsBooleanString()
+	APP_ENABLE_THROTTLE!: string;
 
-  @IsOptional()
-  @IsNumberString()
-  APP_THROTTLE_TTL!: string;
+	@IsOptional()
+	@IsNumberString()
+	APP_THROTTLE_TTL!: string;
 
-  @IsOptional()
-  @IsNumberString()
-  APP_THROTTLE_LIMIT!: string;
+	@IsOptional()
+	@IsNumberString()
+	APP_THROTTLE_LIMIT!: string;
 }

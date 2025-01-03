@@ -2,7 +2,10 @@ name: Scheduled Pull Request from Dev to Staging
 
 on:
   schedule:
-    - cron: '0 17 * * 5'
+    - cron: "0 17 * * 5"
+
+env:
+  HUSKY: 0
 
 jobs:
   create-pr:
@@ -29,9 +32,9 @@ jobs:
         if: steps.check_diff.outcome == 'failure'
         uses: peter-evans/create-pull-request@v5
         with:
-          title: 'Automated PR: Merge dev into staging'
-          body: 'Scheduled weekly update from dev to staging.'
-          commit-message: 'Scheduled PR: Merge dev into staging'
-          branch: 'dev'
-          labels: 'automated pr'
-          base: 'staging'
+          title: "Automated PR: Merge dev into staging"
+          body: "Scheduled weekly update from dev to staging."
+          commit-message: "Scheduled PR: Merge dev into staging"
+          branch: "dev"
+          labels: "automated pr"
+          base: "staging"

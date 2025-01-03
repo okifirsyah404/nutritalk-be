@@ -1,11 +1,11 @@
-import { IScheduleEntity } from './schedule-entity.interface';
+import { IScheduleEntity } from "./schedule-entity.interface";
 
 export interface IScheduleTimeEntity {
-  start: Date;
-  end: Date;
-  active: boolean;
+	start: Date;
+	end: Date;
+	active: boolean;
 
-  scheduleId?: string | null;
+	scheduleId?: string | null;
 
-  schedule?: IScheduleEntity | null;
+	schedule?: IScheduleEntity | null;
 }

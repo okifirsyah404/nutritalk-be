@@ -1,4 +1,4 @@
-import { registerAs } from '@nestjs/config';
+import { registerAs } from "@nestjs/config";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 // const packageJson = require(join(process.cwd(), 'package.json'));
@@ -21,20 +21,20 @@ import { registerAs } from '@nestjs/config';
  * @property {string[]} [customCss] - Optional array of custom CSS file paths.
  */
 export type DocsConfig = {
-  endpoint: string;
-  title: string;
-  description: string;
-  version: string;
-  contact?: {
-    name?: string;
-    url?: string;
-    email?: string;
-  };
-  license?: {
-    name?: string;
-    url?: string;
-  };
-  customCss?: string[];
+	endpoint: string;
+	title: string;
+	description: string;
+	version: string;
+	contact?: {
+		name?: string;
+		url?: string;
+		email?: string;
+	};
+	license?: {
+		name?: string;
+		url?: string;
+	};
+	customCss?: string[];
 };
 
 /**
@@ -55,12 +55,12 @@ export type DocsConfig = {
  * - `customCss`: An array of custom CSS file paths.
  */
 export const docsConfig = registerAs(
-  'docsConfig',
-  (): DocsConfig => ({
-    endpoint: 'docs',
-    title: '',
-    description: '',
-    version: '',
-    customCss: process.env.DOCS_CUSTOM_CSS_URL?.split(',') || [],
-  }),
+	"docsConfig",
+	(): DocsConfig => ({
+		endpoint: "docs",
+		title: "",
+		description: "",
+		version: "",
+		customCss: process.env.DOCS_CUSTOM_CSS_URL?.split(",") || [],
+	}),
 );

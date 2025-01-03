@@ -1,5 +1,5 @@
-import { registerAs } from '@nestjs/config';
-import { IsDefined, IsString } from 'class-validator';
+import { registerAs } from "@nestjs/config";
+import { IsDefined, IsString } from "class-validator";
 
 /**
  * Represents the configuration for JWT settings.
@@ -13,12 +13,12 @@ import { IsDefined, IsString } from 'class-validator';
  * @property {string} signatureTokenExpiresIn - The expiration time for signature tokens.
  */
 export type JwtConfig = {
-  accessTokenSecret?: string;
-  accessTokenExpiresIn?: string;
-  refreshTokenSecret?: string;
-  refreshTokenExpiresIn?: string;
-  signatureTokenSecret?: string;
-  signatureTokenExpiresIn?: string;
+	accessTokenSecret?: string;
+	accessTokenExpiresIn?: string;
+	refreshTokenSecret?: string;
+	refreshTokenExpiresIn?: string;
+	signatureTokenSecret?: string;
+	signatureTokenExpiresIn?: string;
 };
 
 /**
@@ -39,15 +39,15 @@ export type JwtConfig = {
  * - `signatureTokenExpiresIn`: The expiration time for signature tokens.
  */
 export const jwtConfig = registerAs(
-  'jwtConfig',
-  (): JwtConfig => ({
-    accessTokenSecret: process.env.JWT_SECRET,
-    accessTokenExpiresIn: process.env.JWT_EXPIRES_IN,
-    refreshTokenSecret: process.env.JWT_REFRESH_SECRET,
-    refreshTokenExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN,
-    signatureTokenSecret: process.env.JWT_SIGNATURE_SECRET,
-    signatureTokenExpiresIn: process.env.JWT_SIGNATURE_EXPIRES_IN,
-  }),
+	"jwtConfig",
+	(): JwtConfig => ({
+		accessTokenSecret: process.env.JWT_SECRET,
+		accessTokenExpiresIn: process.env.JWT_EXPIRES_IN,
+		refreshTokenSecret: process.env.JWT_REFRESH_SECRET,
+		refreshTokenExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN,
+		signatureTokenSecret: process.env.JWT_SIGNATURE_SECRET,
+		signatureTokenExpiresIn: process.env.JWT_SIGNATURE_EXPIRES_IN,
+	}),
 );
 
 /**
@@ -56,27 +56,27 @@ export const jwtConfig = registerAs(
  *
  */
 export class JwtEnvironmentVariables {
-  @IsDefined()
-  @IsString()
-  JWT_SECRET!: string;
+	@IsDefined()
+	@IsString()
+	JWT_SECRET!: string;
 
-  @IsDefined()
-  @IsString()
-  JWT_EXPIRES_IN!: string;
+	@IsDefined()
+	@IsString()
+	JWT_EXPIRES_IN!: string;
 
-  @IsDefined()
-  @IsString()
-  JWT_REFRESH_SECRET!: string;
+	@IsDefined()
+	@IsString()
+	JWT_REFRESH_SECRET!: string;
 
-  @IsDefined()
-  @IsString()
-  JWT_REFRESH_EXPIRES_IN!: string;
+	@IsDefined()
+	@IsString()
+	JWT_REFRESH_EXPIRES_IN!: string;
 
-  @IsDefined()
-  @IsString()
-  JWT_SIGNATURE_SECRET!: string;
+	@IsDefined()
+	@IsString()
+	JWT_SIGNATURE_SECRET!: string;
 
-  @IsDefined()
-  @IsString()
-  JWT_SIGNATURE_EXPIRES_IN!: string;
+	@IsDefined()
+	@IsString()
+	JWT_SIGNATURE_EXPIRES_IN!: string;
 }

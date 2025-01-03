@@ -1,4 +1,4 @@
 export interface IPrivacyPolicy {
-  title: string;
-  content: string;
+	title: string;
+	content: string;
 }

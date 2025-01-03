@@ -1,6 +1,6 @@
-import { Prisma } from '@prisma/client';
-import { IMedicalRecordKeyEntity } from './medical-record-key-entity.interface';
+import { Prisma } from "@prisma/client";
+import { IMedicalRecordKeyEntity } from "./medical-record-key-entity.interface";
 
 export interface IMedicalRecord extends Prisma.MedicalRecordGetPayload<{}> {
-  medicalRecordKey?: IMedicalRecordKeyEntity | null;
+	medicalRecordKey?: IMedicalRecordKeyEntity | null;
 }

@@ -1,5 +1,5 @@
-import { registerAs } from '@nestjs/config';
-import { IsOptional, IsString } from 'class-validator';
+import { registerAs } from "@nestjs/config";
+import { IsOptional, IsString } from "class-validator";
 
 /**
  * Configuration settings for connecting to an S3-compatible storage service.
@@ -13,11 +13,11 @@ import { IsOptional, IsString } from 'class-validator';
  * @property {string} [region] - The optional region where the S3 bucket is located.
  */
 export type S3Config = {
-  accessKeyId: string;
-  secretAccessKey: string;
-  endPoint: string;
-  bucketName?: string;
-  region?: string;
+	accessKeyId: string;
+	secretAccessKey: string;
+	endPoint: string;
+	bucketName?: string;
+	region?: string;
 };
 
 /**
@@ -37,14 +37,14 @@ export type S3Config = {
  *
  */
 export const s3Config = registerAs(
-  's3Config',
-  (): S3Config => ({
-    accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
-    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
-    endPoint: process.env.S3_ENDPOINT || '',
-    bucketName: process.env.S3_BUCKET_NAME || '',
-    region: process.env.S3_REGION || '',
-  }),
+	"s3Config",
+	(): S3Config => ({
+		accessKeyId: process.env.S3_ACCESS_KEY_ID || "",
+		secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || "",
+		endPoint: process.env.S3_ENDPOINT || "",
+		bucketName: process.env.S3_BUCKET_NAME || "",
+		region: process.env.S3_REGION || "",
+	}),
 );
 
 /**
@@ -57,23 +57,23 @@ export const s3Config = registerAs(
  * @property {string} [S3_REGION] - The region where the S3 bucket is located. Optional.
  */
 export class S3EnvironmentVariables {
-  @IsOptional()
-  @IsString()
-  S3_ACCESS_KEY_ID?: string;
+	@IsOptional()
+	@IsString()
+	S3_ACCESS_KEY_ID?: string;
 
-  @IsOptional()
-  @IsString()
-  S3_SECRET_ACCESS_KEY?: string;
+	@IsOptional()
+	@IsString()
+	S3_SECRET_ACCESS_KEY?: string;
 
-  @IsOptional()
-  @IsString()
-  S3_ENDPOINT?: string;
+	@IsOptional()
+	@IsString()
+	S3_ENDPOINT?: string;
 
-  @IsOptional()
-  @IsString()
-  S3_BUCKET_NAME?: string;
+	@IsOptional()
+	@IsString()
+	S3_BUCKET_NAME?: string;
 
-  @IsOptional()
-  @IsString()
-  S3_REGION?: string;
+	@IsOptional()
+	@IsString()
+	S3_REGION?: string;
 }

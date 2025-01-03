@@ -1,6 +1,6 @@
-import { registerAs } from '@nestjs/config';
-import { Type } from 'class-transformer';
-import { IsDefined, IsNumber, IsNumberString, IsString } from 'class-validator';
+import { registerAs } from "@nestjs/config";
+import { Type } from "class-transformer";
+import { IsDefined, IsNumber, IsNumberString, IsString } from "class-validator";
 
 /**
  * Represents the configuration settings for a Redis instance.
@@ -13,11 +13,11 @@ import { IsDefined, IsNumber, IsNumberString, IsString } from 'class-validator';
  * @property {number} ttl - The time-to-live (TTL) value for Redis keys.
  */
 export type RedisConfig = {
-  host: string;
-  port: number;
-  database: number;
-  url: string;
-  ttl: number;
+	host: string;
+	port: number;
+	database: number;
+	url: string;
+	ttl: number;
 };
 
 /**
@@ -35,14 +35,14 @@ export type RedisConfig = {
  * - `ttl` (number): The time-to-live (TTL) value for Redis keys, sourced from the environment variable `REDIS_TTL`.
  */
 export const redisConfig = registerAs(
-  'redisConfig',
-  (): RedisConfig => ({
-    host: process.env.REDIS_HOST,
-    port: parseInt(process.env.REDIS_PORT),
-    database: parseInt(process.env.REDIS_DB),
-    url: process.env.REDIS_URL,
-    ttl: parseInt(process.env.REDIS_TTL),
-  }),
+	"redisConfig",
+	(): RedisConfig => ({
+		host: process.env.REDIS_HOST,
+		port: parseInt(process.env.REDIS_PORT),
+		database: parseInt(process.env.REDIS_DB),
+		url: process.env.REDIS_URL,
+		ttl: parseInt(process.env.REDIS_TTL),
+	}),
 );
 
 /**
@@ -56,24 +56,24 @@ export const redisConfig = registerAs(
  * @property {string} REDIS_TTL - The time-to-live (TTL) value for Redis keys.
  */
 export class RedisEnvironmentVariables {
-  @IsDefined()
-  @IsString()
-  REDIS_HOST!: string;
+	@IsDefined()
+	@IsString()
+	REDIS_HOST!: string;
 
-  @IsDefined()
-  @IsNumberString()
-  REDIS_PORT!: string;
+	@IsDefined()
+	@IsNumberString()
+	REDIS_PORT!: string;
 
-  @Type(() => Number)
-  @IsDefined()
-  @IsNumber()
-  REDIS_DB!: number;
+	@Type(() => Number)
+	@IsDefined()
+	@IsNumber()
+	REDIS_DB!: number;
 
-  @IsDefined()
-  @IsString()
-  REDIS_URL!: string;
+	@IsDefined()
+	@IsString()
+	REDIS_URL!: string;
 
-  @IsDefined()
-  @IsNumberString()
-  REDIS_TTL!: string;
+	@IsDefined()
+	@IsNumberString()
+	REDIS_TTL!: string;
 }

@@ -1,16 +1,16 @@
-import { IOtpRequest } from '@contract/otp/otp-result.interface';
+import { IOtpRequest } from "@contract/otp/otp-result.interface";
 
 export class AuthForgetPasswordResponse implements IOtpRequest {
-  private constructor(email: string) {
-    this.email = email;
-  }
+	private constructor(email: string) {
+		this.email = email;
+	}
 
-  email: string;
+	email: string;
 
-  static fromEntity(entity: IOtpRequest): AuthForgetPasswordResponse {
-    return new AuthForgetPasswordResponse(entity.email);
-  }
+	static fromEntity(entity: IOtpRequest): AuthForgetPasswordResponse {
+		return new AuthForgetPasswordResponse(entity.email);
+	}
 
-  static readonly exampleData: AuthForgetPasswordResponse =
-    new AuthForgetPasswordResponse('johndoe@example.com');
+	static readonly exampleData: AuthForgetPasswordResponse =
+		new AuthForgetPasswordResponse("johndoe@example.com");
 }

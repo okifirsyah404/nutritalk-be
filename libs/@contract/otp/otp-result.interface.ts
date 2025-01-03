@@ -1,7 +1,7 @@
 export interface IOtpRequest {
-  email: string;
+	email: string;
 }
 
 export interface IOtpVerify extends IOtpRequest {
-  signature: string;
+	signature: string;
 }
