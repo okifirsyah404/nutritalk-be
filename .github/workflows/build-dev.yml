@@ -43,4 +43,4 @@ jobs:
           context: .
           push: true
           file: ./Dockerfile
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nutritalk-be:dev
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nutritalk-base:dev

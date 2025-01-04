@@ -25,5 +25,5 @@ jobs:
             cd ~/nutritalk-be
             git checkout dev
             git pull
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nutritalk-be:dev
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nutritalk-base:dev
             docker-compose up -d --build --force-recreate
