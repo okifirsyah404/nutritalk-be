@@ -1,0 +1,29 @@
+name: Node.js Deploy Staging
+
+on:
+  pull_request:
+    types: [closed]
+    branches: ["dev"]
+
+env:
+  HUSKY: 0
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    environment: CD
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to staging server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.ACTION_SECRET }}
+          port: 22
+          script: |
+            cd ~/nutritalk-be
+            git checkout dev
+            git pull
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nutritalk-base:dev
+            docker-compose up -d --build --force-recreate
