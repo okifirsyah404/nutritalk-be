@@ -1,4 +1,4 @@
-import { CacheResult } from "@cache/app-cache/decorator/cache-result.decorator";
+import { SetCache } from "@cache/app-cache/decorator/cache-result.decorator";
 import { AuthErrorMessage } from "@common/constant/message/error/auth-error.message";
 import { IAccountEntity } from "@database/prisma";
 import { Injectable, NotFoundException } from "@nestjs/common";
@@ -14,7 +14,7 @@ export class AccountService {
 	 * @param nutritionistId - The unique identifier of the nutritionist.
 	 * @returns A promise that resolves to the account entity associated with the given nutritionist ID.
 	 */
-	@CacheResult((nutritionistId: string) => `account:${nutritionistId}`)
+	@SetCache((nutritionistId: string) => `account:${nutritionistId}`)
 	async getAccountByNutritionistId(
 		nutritionistId: string,
 	): Promise<IAccountEntity> {

@@ -4,7 +4,7 @@ import { Inject } from "@nestjs/common";
 import { Cache } from "cache-manager";
 import moment from "moment";
 
-export const CacheResult = <T>(
+export const SetCache = <T>(
 	cacheKey: ((...args: any[]) => string) | string,
 	options?: { ttl?: number; unit?: moment.DurationInputArg2 },
 ): any => {

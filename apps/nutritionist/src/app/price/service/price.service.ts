@@ -1,4 +1,4 @@
-import { CacheResult } from "@cache/app-cache/decorator/cache-result.decorator";
+import { SetCache } from "@cache/app-cache/decorator/cache-result.decorator";
 import { ClearCache } from "@cache/app-cache/decorator/clear-cache.decorator";
 import { IPriceEntity } from "@database/prisma";
 import { Injectable, NotFoundException } from "@nestjs/common";
@@ -17,9 +17,7 @@ export class PriceService {
 	 * @returns A promise that resolves to the price entity associated with the given nutritionist ID.
 	 * @throws NotFoundException if no price entity is found for the given nutritionist ID.
 	 */
-	@CacheResult<IPriceEntity>(
-		(nutritionistId: string) => `price:${nutritionistId}`,
-	)
+	@SetCache<IPriceEntity>((nutritionistId: string) => `price:${nutritionistId}`)
 	async getPriceByNutritionistId(
 		nutritionistId: string,
 	): Promise<IPriceEntity> {

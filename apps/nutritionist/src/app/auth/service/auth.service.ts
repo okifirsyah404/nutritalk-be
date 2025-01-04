@@ -1,5 +1,6 @@
 import { AppConfigService } from "@config/app-config";
 
+import { SetCache } from "@cache/app-cache/decorator/cache-result.decorator";
 import { AuthErrorMessage } from "@common/constant/message/error/auth-error.message";
 import { createDatabaseErrorHandler } from "@infrastructure/err_handler/database.error-handler";
 import { AppJwtService, IJwtRefresh, IJwtToken } from "@jwt/app-jwt";
@@ -30,6 +31,13 @@ export class AuthService {
 	 * @throws {NotFoundException} If the account is not found.
 	 * @throws {UnauthorizedException} If the account is not a nutritionist or if the password does not match.
 	 */
+	@SetCache<IJwtToken>(
+		(reqData: AuthSignInRequest) => `auth:signin:${reqData.email}`,
+		{
+			ttl: 1,
+			unit: "minutes",
+		},
+	)
 	async signIn(reqData: AuthSignInRequest): Promise<IJwtToken> {
 		const result = await this.repository
 			.findAccountByEmail(reqData.email)
@@ -127,7 +135,5 @@ export class AuthService {
 		await this.repository
 			.updateFcmToken(id, null)
 			.catch(createDatabaseErrorHandler);
-
-		return;
 	}
 }

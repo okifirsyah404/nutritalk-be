@@ -41,6 +41,8 @@ export class AuthRepository {
 			select: {
 				...PrismaSelector.ACCOUNT,
 				password: true,
+				fcmToken: true,
+				refreshToken: true,
 				nutritionist: {
 					select: PrismaSelector.NUTRITIONIST_WITH_PROFILE,
 				},
