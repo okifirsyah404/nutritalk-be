@@ -1,4 +1,4 @@
-FROM nutritalk/base:dev AS base
+FROM okifirsyah404/nutritalk-base:dev AS base
 
 FROM node:lts-alpine
 
