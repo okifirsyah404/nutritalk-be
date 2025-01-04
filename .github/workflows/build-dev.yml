@@ -19,21 +19,28 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.x, 22.x]
+        node-version: [22.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: "yarn"
-      - run: |
-          touch .env 
-          echo "${{secrets.WORKFLOW_ENV}}" >> .env
-          cat .env
-      - run: yarn install --immutable --frozen-lockfile
-      - run: yarn run db:generate
-      - run: yarn run lint
-      - run: yarn run build
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          file: ./Dockerfile
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nutritalk-be:dev
