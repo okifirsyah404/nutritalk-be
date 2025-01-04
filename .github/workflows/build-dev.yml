@@ -31,6 +31,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - run: |
+          touch .env 
+          echo "${{secrets.WORKFLOW_ENV}}" >> .env
+          cat .env
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
