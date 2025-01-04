@@ -1,14 +1,15 @@
-name: Node.js Deploy Staging
+name: Node.js Deploy Production
 
 on:
   pull_request:
     types: [closed]
-    branches: ["staging"]
+    branches: ["prod"]
 
 env:
   HUSKY: 0
 
 jobs:
+
   build:
     if: github.event.pull_request.merged == true
     environment: CI
@@ -45,7 +46,7 @@ jobs:
           context: .
           push: true
           file: ./Dockerfile
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nutritalk-base:staging
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nutritalk-base:prod
 
   deploy:
     if: github.event.pull_request.merged == true
@@ -53,7 +54,7 @@ jobs:
     environment: CD
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to staging remote server
+      - name: Deploy to prod remote server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -62,8 +63,8 @@ jobs:
           port: 22
           script: |
             cd ~/nutritalk-be
-            git checkout staging
+            git checkout prod
             git pull
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nutritalk-base:staging
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nutritalk-base:prod
             docker-compose down -v 
             docker-compose up -d --build --force-recreate
