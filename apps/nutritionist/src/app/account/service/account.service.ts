@@ -1,4 +1,4 @@
-import { SetCache } from "@cache/app-cache/decorator/cache-result.decorator";
+import { SetCache } from "@cache/app-cache/decorator/set-cache.decorator";
 import { AuthErrorMessage } from "@common/constant/message/error/auth-error.message";
 import { IAccountEntity } from "@database/prisma";
 import { Injectable, NotFoundException } from "@nestjs/common";

@@ -1,0 +1,32 @@
+model SingleSignOn {
+  id String @id @default(cuid())
+
+  // Relations
+  googleSSO GoogleSSO?
+  account   Account?   @relation(fields: [accountId], references: [id])
+
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Foreign Keys
+  accountId String? @unique
+}
+
+model GoogleSSO {
+  id String @id @default(cuid())
+
+  // Main Fields
+  googleId String @unique
+  email    String @unique
+
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Foreign Keys
+  ssoId String? @unique
+
+  // Relations
+  sso SingleSignOn? @relation(fields: [ssoId], references: [id])
+}

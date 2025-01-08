@@ -1,5 +1,4 @@
-import { SetCache } from "@cache/app-cache/decorator/cache-result.decorator";
-import { RefreshCache } from "@cache/app-cache/decorator/refresh-cache.decorator";
+import { RefreshCache, SetCache } from "@cache/app-cache";
 import { INutritionistEntity } from "@database/prisma";
 import { Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { ProfileErrorMessage } from "@nutritionist/common/constant/message/error/profile-error.message";

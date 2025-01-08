@@ -1,0 +1,138 @@
+{
+	"nutritionist": [
+		{
+			"key": "NUTRITIONIST_SELF_CREATE_ACCOUNT",
+			"description": "Nutritionist can create account for themselves"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_READ_ACCOUNT",
+			"description": "Nutritionist can read their own account"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_UPDATE_ACCOUNT",
+			"description": "Nutritionist can update their own account"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_DELETE_ACCOUNT",
+			"description": "Nutritionist can delete their own account"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_CREATE_PROFILE",
+			"description": "Nutritionist can create profile for themselves"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_READ_PROFILE",
+			"description": "Nutritionist can read their own profile"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_UPDATE_PROFILE",
+			"description": "Nutritionist can update their own profile"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_DELETE_PROFILE",
+			"description": "Nutritionist can delete their own profile"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_CREATE_SCHEDULE",
+			"description": "Nutritionist can create schedule for themselves"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_READ_SCHEDULE",
+			"description": "Nutritionist can read their own schedule"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_UPDATE_SCHEDULE",
+			"description": "Nutritionist can update their own schedule"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_DELETE_SCHEDULE",
+			"description": "Nutritionist can delete their own schedule"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_READ_LIST_PATIENT",
+			"description": "Nutritionist can read list of patient"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_READ_PATIENT",
+			"description": "Nutritionist can read patient"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_CONFIRM_APPOINTMENT",
+			"description": "Nutritionist can confirm appointment"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_RESCHEDULE_APPOINTMENT",
+			"description": "Nutritionist can reschedule appointment"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_CONFIRM_RESCHEDULE_APPOINTMENT",
+			"description": "Nutritionist can confirm reschedule appointment"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_CANCEL_APPOINTMENT",
+			"description": "Nutritionist can cancel appointment"
+		}
+	],
+	"patient": [
+		{
+			"key": "PATIENT_SELF_CREATE_ACCOUNT",
+			"description": "Patient can create account for themselves"
+		},
+		{
+			"key": "PATIENT_SELF_READ_ACCOUNT",
+			"description": "Patient can read their own account"
+		},
+		{
+			"key": "PATIENT_SELF_UPDATE_ACCOUNT",
+			"description": "Patient can update their own account"
+		},
+		{
+			"key": "PATIENT_SELF_DELETE_ACCOUNT",
+			"description": "Patient can delete their own account"
+		},
+		{
+			"key": "PATIENT_SELF_CREATE_PROFILE",
+			"description": "Patient can create profile for themselves"
+		},
+		{
+			"key": "PATIENT_SELF_READ_PROFILE",
+			"description": "Patient can read their own profile"
+		},
+		{
+			"key": "PATIENT_SELF_UPDATE_PROFILE",
+			"description": "Patient can update their own profile"
+		},
+		{
+			"key": "PATIENT_SELF_DELETE_PROFILE",
+			"description": "Patient can delete their own profile"
+		},
+		{
+			"key": "PATIENT_SELF_READ_LIST_NUTRITIONIST",
+			"description": "Patient can read list of nutritionist"
+		},
+		{
+			"key": "PATIENT_SELF_READ_NUTRITIONIST",
+			"description": "Patient can read nutritionist"
+		},
+		{
+			"key": "PATIENT_SELF_CREATE_APPOINTMENT",
+			"description": "Patient can create appointment for themselves"
+		},
+		{
+			"key": "PATIENT_SELF_READ_APPOINTMENT",
+			"description": "Patient can read their own appointment"
+		},
+		{
+			"key": "PATIENT_SELF_RESCHEDULE_APPOINTMENT",
+			"description": "Patient can reschedule appointment"
+		},
+		{
+			"key": "PATIENT_SELF_CONFIRM_RESCHEDULE_APPOINTMENT",
+			"description": "Patient can confirm reschedule appointment"
+		},
+		{
+			"key": "PATIENT_SELF_CANCEL_APPOINTMENT",
+			"description": "Patient can cancel appointment"
+		}
+	]
+}

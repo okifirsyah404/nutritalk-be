@@ -1,4 +1,4 @@
-import { SetCache } from "@cache/app-cache/decorator/cache-result.decorator";
+import { SetCache } from "@cache/app-cache/decorator/set-cache.decorator";
 import { AppConfigService } from "@config/app-config";
 import { INutritionistEntity, IPatientEntity } from "@database/prisma";
 import { createDatabaseErrorHandler } from "@infrastructure/err_handler/database.error-handler";

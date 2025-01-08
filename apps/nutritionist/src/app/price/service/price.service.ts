@@ -1,5 +1,5 @@
-import { SetCache } from "@cache/app-cache/decorator/cache-result.decorator";
 import { ClearCache } from "@cache/app-cache/decorator/clear-cache.decorator";
+import { SetCache } from "@cache/app-cache/decorator/set-cache.decorator";
 import { IPriceEntity } from "@database/prisma";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { PriceErrorMessage } from "@nutritionist/common/constant/message/error/price-error.message";

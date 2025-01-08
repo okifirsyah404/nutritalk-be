@@ -5,7 +5,6 @@ export default abstract class PrismaSelector {
 		id: true,
 		email: true,
 		role: true,
-		googleId: true,
 	} satisfies Prisma.AccountSelect;
 
 	static readonly PROFILE = {

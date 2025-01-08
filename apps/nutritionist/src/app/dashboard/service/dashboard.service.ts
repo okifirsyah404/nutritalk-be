@@ -1,4 +1,4 @@
-import { SetCache } from "@cache/app-cache/decorator/cache-result.decorator";
+import { SetCache } from "@cache/app-cache/decorator/set-cache.decorator";
 import { INutritionistEntity, ITransactionEntity } from "@database/prisma";
 import { Injectable } from "@nestjs/common";
 import { S3StorageService } from "@s3storage/s3storage";

@@ -1,6 +1,6 @@
 import { AppConfigService } from "@config/app-config";
 
-import { SetCache } from "@cache/app-cache/decorator/cache-result.decorator";
+import { SetCache } from "@cache/app-cache/decorator/set-cache.decorator";
 import { AuthErrorMessage } from "@common/constant/message/error/auth-error.message";
 import { createDatabaseErrorHandler } from "@infrastructure/err_handler/database.error-handler";
 import { AppJwtService, IJwtRefresh, IJwtToken } from "@jwt/app-jwt";
