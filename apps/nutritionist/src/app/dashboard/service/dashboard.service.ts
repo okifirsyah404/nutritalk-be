@@ -1,4 +1,4 @@
-import { CacheResult } from "@cache/app-cache/decorator/cache-result.decorator";
+import { SetCache } from "@cache/app-cache/decorator/set-cache.decorator";
 import { INutritionistEntity, ITransactionEntity } from "@database/prisma";
 import { Injectable } from "@nestjs/common";
 import { S3StorageService } from "@s3storage/s3storage";
@@ -41,7 +41,7 @@ export class DashboardService {
 		};
 	}
 
-	@CacheResult<INutritionistEntity>((id: string) => `profile:${id}`)
+	@SetCache<INutritionistEntity>((id: string) => `profile:${id}`)
 	private async _getProfile(id: string): Promise<INutritionistEntity> {
 		const result = await this.repository.getProfile(id);
 
@@ -52,12 +52,12 @@ export class DashboardService {
 		return result;
 	}
 
-	@CacheResult<number>((id: string) => `countScheduledConsultation:${id}`)
+	@SetCache<number>((id: string) => `countScheduledConsultation:${id}`)
 	private async _getCountScheduledConsultations(id: string): Promise<number> {
 		return this.repository.countNearbyScheduledConsultations(id);
 	}
 
-	@CacheResult<ITransactionEntity[]>(
+	@SetCache<ITransactionEntity[]>(
 		(id: string) => `scheduledConsultations:${id}`,
 	)
 	private async _getScheduledConsultations(
@@ -66,14 +66,12 @@ export class DashboardService {
 		return this.repository.getNearbyScheduledConsultations(id);
 	}
 
-	@CacheResult<number>((id: string) => `countPendingConsultation:${id}`)
+	@SetCache<number>((id: string) => `countPendingConsultation:${id}`)
 	private async _getCountPendingConsultations(id: string): Promise<number> {
 		return this.repository.countPendingConsultations(id);
 	}
 
-	@CacheResult<ITransactionEntity[]>(
-		(id: string) => `pendingConsultations:${id}`,
-	)
+	@SetCache<ITransactionEntity[]>((id: string) => `pendingConsultations:${id}`)
 	private async _getPendingConsultations(
 		id: string,
 	): Promise<ITransactionEntity[]> {

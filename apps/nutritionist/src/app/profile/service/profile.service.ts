@@ -1,5 +1,4 @@
-import { CacheResult } from "@cache/app-cache/decorator/cache-result.decorator";
-import { RefreshCache } from "@cache/app-cache/decorator/refresh-cache.decorator";
+import { RefreshCache, SetCache } from "@cache/app-cache";
 import { INutritionistEntity } from "@database/prisma";
 import { Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { ProfileErrorMessage } from "@nutritionist/common/constant/message/error/profile-error.message";
@@ -24,7 +23,7 @@ export class ProfileService {
 	 * @returns {Promise<INutritionistEntity>} A promise that resolves to the nutritionist profile.
 	 * @throws {NotFoundException} If the profile is not found.
 	 */
-	@CacheResult<INutritionistEntity>((id: string) => `profile:${id}`, {
+	@SetCache<INutritionistEntity>((id: string) => `profile:${id}`, {
 		ttl: 10,
 		unit: "minutes",
 	})
