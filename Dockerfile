@@ -11,4 +11,4 @@ COPY . .
 
 RUN yarn remove bcrypt \
 	&& yarn add bcrypt --unsafe-perm --allow-root \
-	&& yarn run db:migrate && yarn run build
+	&& yarn run db:migrate:prod && yarn run build
