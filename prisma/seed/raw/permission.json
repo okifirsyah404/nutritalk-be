@@ -49,6 +49,22 @@
 			"description": "Nutritionist can delete their own schedule"
 		},
 		{
+			"key": "NUTRITIONIST_SELF_CREATE_SCHEDULE_TIME",
+			"description": "Nutritionist can create schedule time for themselves"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_READ_SCHEDULE_TIME",
+			"description": "Nutritionist can read their own schedule time"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_UPDATE_SCHEDULE_TIME",
+			"description": "Nutritionist can update their own schedule time"
+		},
+		{
+			"key": "NUTRITIONIST_SELF_DELETE_SCHEDULE_TIME",
+			"description": "Nutritionist can delete their own schedule time"
+		},
+		{
 			"key": "NUTRITIONIST_SELF_READ_LIST_PATIENT",
 			"description": "Nutritionist can read list of patient"
 		},
