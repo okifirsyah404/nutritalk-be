@@ -1,4 +1,5 @@
 import * as awsS3 from "@aws-sdk/client-s3";
+import { Logger } from "@nestjs/common";
 import { Gender, Prisma, PrismaClient } from "@prisma/client";
 import fs from "fs";
 import path from "path";
@@ -11,6 +12,8 @@ export async function seedNutritionistImage(
 	prisma: PrismaClient,
 	s3: awsS3.S3Client,
 ): Promise<void> {
+	const logger = new Logger("NutritionistImageSeeder");
+
 	try {
 		const bucketName = process.env.S3_BUCKET_NAME;
 
@@ -37,13 +40,9 @@ export async function seedNutritionistImage(
 			await new Promise((resolve) => setTimeout(resolve, 1000));
 		}
 
-		console.log(
-			"------------- Nutritionist images seeded successfully -------------",
-		);
+		logger.log("Nutritionist images seeded successfully");
 	} catch (error) {
-		console.error(
-			"------------- There's an error when seeding nutritionist images -------------",
-		);
+		logger.error("There's an error when seeding nutritionist images");
 
 		throw error;
 	}

@@ -1,3 +1,4 @@
+import { Logger } from "@nestjs/common";
 import { PrismaClient } from "@prisma/client";
 import { seedImage } from "./seeder/image.seed";
 import seedNutritionist from "./seeder/nutritionist.seed";
@@ -6,9 +7,10 @@ import seedPermission from "./seeder/permission.seed";
 import seedTransaction from "./seeder/transaction.seed";
 
 const prisma = new PrismaClient();
+const logger = new Logger("Seeder");
 
 async function main(): Promise<void> {
-	console.log(`Seeding data in ${process.env.NODE_ENV} environment...`);
+	logger.log(`Seeding data in ${process.env.NODE_ENV} environment...`);
 	await seedPermission(prisma);
 	await seedNutritionist(prisma);
 	await seedPatient(prisma);
@@ -18,12 +20,12 @@ async function main(): Promise<void> {
 
 main()
 	.then(async () => {
-		console.log("Seed data complete");
+		logger.log("Seed data complete");
 		await prisma.$disconnect();
 		process.exit(0);
 	})
 	.catch(async (e) => {
-		console.error(e);
+		logger.error(e);
 		await prisma.$disconnect();
 		process.exit(1);
 	});

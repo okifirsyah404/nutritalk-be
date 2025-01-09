@@ -8,11 +8,14 @@ import {
 } from "@prisma/client";
 import { hashPassword } from "../helper/crypto-helper";
 
+import { Logger } from "@nestjs/common";
 import * as nutritionistRawData from "../raw/nutritionist.json";
 import * as priceRawData from "../raw/price.json";
 import * as scheduleHoursRawData from "../raw/schedule-hour.json";
 
 async function seedNutritionist(prisma: PrismaClient): Promise<void> {
+	const logger = new Logger("NutritionistSeeder");
+
 	const nutritionistPrice: Prisma.PriceCreateInput = {
 		online: priceRawData.online,
 		offline: priceRawData.offline,
@@ -34,9 +37,7 @@ async function seedNutritionist(prisma: PrismaClient): Promise<void> {
 	const nutritionistData = nutritionistRawData.data;
 
 	try {
-		console.log(
-			"------------- Deleting all nutritionist data... -------------",
-		);
+		logger.log("Deleting all nutritionist data...");
 
 		await prisma.profile.deleteMany({
 			where: {
@@ -60,8 +61,8 @@ async function seedNutritionist(prisma: PrismaClient): Promise<void> {
 
 		await prisma.nutritionist.deleteMany();
 
-		console.log("------------- Deleted all nutritionist data -------------");
-		console.log("------------- Seeding nutritionist accounts... -------------");
+		logger.log("Deleted all nutritionist data");
+		logger.log("Seeding nutritionist accounts...");
 
 		const permission = await prisma.basePermission.findMany({
 			where: {
@@ -73,7 +74,7 @@ async function seedNutritionist(prisma: PrismaClient): Promise<void> {
 
 		for await (const [index, nutritionist] of nutritionistData.entries()) {
 			if (process.env.NODE_ENV === "production" && index === 0) {
-				console.log("Skip seeding dummy nutritionist data for development");
+				logger.log("Skip seeding dummy nutritionist data for development");
 				continue;
 			}
 
@@ -154,11 +155,9 @@ async function seedNutritionist(prisma: PrismaClient): Promise<void> {
 			});
 		}
 
-		console.log("------------- Seed nutritionist complete -------------");
+		logger.log("Seed nutritionist complete");
 	} catch (error) {
-		console.error(
-			"------------- There's an error when seeding nutritionist data -------------",
-		);
+		logger.error("There's an error when seeding nutritionist data");
 		throw error;
 	}
 }
