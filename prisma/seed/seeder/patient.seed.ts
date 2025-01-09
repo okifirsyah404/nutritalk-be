@@ -1,17 +1,18 @@
 import { faker } from "@faker-js/faker";
+import { Logger } from "@nestjs/common";
 import { Gender, PrismaClient, Role } from "@prisma/client";
 import { hashPassword } from "../helper/crypto-helper";
 
 async function seedPatient(prisma: PrismaClient): Promise<void> {
+	const logger = new Logger("PatientSeeder");
+
 	if (process.env.NODE_ENV === "production") {
-		console.log(
-			"------------- Skipping patient seed in production... -------------",
-		);
+		logger.log("Skipping patient seed in production...");
 		return;
 	}
 
 	try {
-		console.log("------------- Deleting all patient data... -------------");
+		logger.log("Deleting all patient data...");
 
 		await prisma.profile.deleteMany({
 			where: {
@@ -32,7 +33,7 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 			},
 		});
 		await prisma.patient.deleteMany();
-		console.log("------------- Deleted all patient data -------------");
+		logger.log("Deleted all patient data");
 
 		const permission = await prisma.basePermission.findMany({
 			where: {
@@ -99,11 +100,9 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 			});
 		}
 
-		console.log("------------- Seed patient complete -------------");
+		logger.log("Seed patient complete");
 	} catch (error) {
-		console.error(
-			"------------- There's an error when seeding patient data -------------",
-		);
+		logger.error("There's an error when seeding patient data");
 		throw error;
 	}
 }

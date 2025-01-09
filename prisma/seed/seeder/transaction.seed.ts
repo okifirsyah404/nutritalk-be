@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+import { Logger } from "@nestjs/common";
 import {
 	ConsultationType,
 	PrismaClient,
@@ -6,20 +7,20 @@ import {
 } from "@prisma/client";
 
 async function seedTransaction(prisma: PrismaClient): Promise<void> {
+	const logger = new Logger("TransactionSeeder");
+
 	if (process.env.NODE_ENV === "production") {
-		console.log(
-			"------------- Skipping transaction seed in production... -------------",
-		);
+		logger.log("Skipping transaction seed in production...");
 		return;
 	}
 
 	try {
-		console.log("------------- Deleting all transaction data... -------------");
+		logger.log("Deleting all transaction data...");
 
 		await prisma.transaction.deleteMany();
 
-		console.log("------------- Deleted all transaction data -------------");
-		console.log("------------- Seeding transaction data... -------------");
+		logger.log("Deleted all transaction data");
+		logger.log("Seeding transaction data...");
 
 		const patient = await prisma.patient.findFirst({
 			where: {
@@ -142,11 +143,9 @@ async function seedTransaction(prisma: PrismaClient): Promise<void> {
 			},
 		});
 
-		console.log("------------- Seed transaction complete -------------");
+		logger.log("Seed transaction complete");
 	} catch (error) {
-		console.error(
-			"------------- There's an error when seeding transaction -------------",
-		);
+		logger.error("There's an error when seeding transaction");
 
 		throw error;
 	}

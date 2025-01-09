@@ -1,17 +1,20 @@
+import { Logger } from "@nestjs/common";
 import { PrismaClient } from "@prisma/client";
 import * as permissionRawData from "../raw/permission.json";
 
 async function seedPermission(prisma: PrismaClient): Promise<void> {
+	const logger = new Logger("Permission Seeder");
+
 	const nutritionistPermissionData = permissionRawData.nutritionist;
 	const patientPermissionData = permissionRawData.patient;
 
 	try {
-		console.log("------------- Deleting all permission data... -------------");
+		logger.log("Deleting all permission data...");
 
 		await prisma.basePermission.deleteMany();
 
-		console.log("------------- Deleted all permission data -------------");
-		console.log("------------- Seeding permission data... -------------");
+		logger.log("Deleted all permission data");
+		logger.log("Seeding permission data...");
 
 		for (const permission of nutritionistPermissionData) {
 			await prisma.basePermission.create({
@@ -31,9 +34,9 @@ async function seedPermission(prisma: PrismaClient): Promise<void> {
 			});
 		}
 
-		console.log("------------- Seeded permission data -------------");
+		logger.log("Seeded permission data");
 	} catch (error) {
-		console.error("Error seeding permission data", error);
+		logger.error("Error seeding permission data", error);
 	}
 }
 
