@@ -7,126 +7,126 @@
 // ------------------------------------------------------------------
 //  ROLE ENUM
 // ------------------------------------------------------------------
-enum Role {
-    ADMIN
-    PATIENT
-    NUTRITIONIST
+enum AccountRole {
+  ADMIN
+  PATIENT
+  NUTRITIONIST
 }
 
 // ------------------------------------------------------------------
 // GENDER ENUM
 // ------------------------------------------------------------------
 enum Gender {
-    MALE
-    FEMALE
+  MALE
+  FEMALE
 }
 
 // ------------------------------------------------------------------
 //  CONSULTATION TYPE ENUM
 // ------------------------------------------------------------------
 enum ConsultationType {
-    ONLINE
-    OFFLINE
+  ONLINE
+  OFFLINE
 }
 
 // ------------------------------------------------------------------
 //  TRANSACTION STATUS ENUM
 // ------------------------------------------------------------------
 enum TransactionStatus {
-    WAITING_PAYMENT
-    WAITING_CONFIRMATION
-    SCHEDULED
-    ON_PROCESS
-    FINISHED
-    RE_SCHEDULED
-    CANCELED
+  WAITING_PAYMENT
+  WAITING_CONFIRMATION
+  SCHEDULED
+  ON_PROCESS
+  FINISHED
+  RE_SCHEDULED
+  CANCELED
 }
 
 // ------------------------------------------------------------------
 //  OTP PURPOSE ENUM
 // ------------------------------------------------------------------
 enum OtpPurpose {
-    AUTH
-    AUTH_FORGOT_PASSWORD
-    ACCOUNT
-    ACCOUNT_CHANGE_PASSWORD
+  AUTH
+  AUTH_FORGOT_PASSWORD
+  ACCOUNT
+  ACCOUNT_CHANGE_PASSWORD
 }
 
 // ------------------------------------------------------------------
 //  DAY OF WEEK ENUM
 // ------------------------------------------------------------------
 enum DayOfWeek {
-    MONDAY
-    TUESDAY
-    WEDNESDAY
-    THURSDAY
-    FRIDAY
-    SATURDAY
-    SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
 }
 
 // ------------------------------------------------------------------
 //  CREDIT ACTION ENUM
 // ------------------------------------------------------------------
 enum CreditAction {
-    TOPUP
-    PAY_CONSULTATION
-    REFUND
+  TOPUP
+  PAY_CONSULTATION
+  REFUND
 }
 
 // ------------------------------------------------------------------
 //  PATIENT ACTIVITY ENUM
 // ------------------------------------------------------------------
 enum PatientActivity {
-    SEDENTARY
-    LIGHTLY_ACTIVE
-    MODERATELY_ACTIVE
-    VERY_ACTIVE
-    SUPER_ACTIVE
+  SEDENTARY
+  LIGHTLY_ACTIVE
+  MODERATELY_ACTIVE
+  VERY_ACTIVE
+  SUPER_ACTIVE
 }
 
 // ------------------------------------------------------------------
 //  DIET PLAN ENUM
 // ------------------------------------------------------------------
 enum DietPlan {
-    WEIGHT_LOSS
-    WEIGHT_GAIN
-    MAINTAIN
+  WEIGHT_LOSS
+  WEIGHT_GAIN
+  MAINTAIN
 }
 
 // ------------------------------------------------------------------
 //  DIET GOAL ENUM
 // ------------------------------------------------------------------
 enum DietGoal {
-    FAT_LOSS
-    MUSCLE_GAIN
-    MAINTAIN
+  FAT_LOSS
+  MUSCLE_GAIN
+  MAINTAIN
 }
 
 // ------------------------------------------------------------------
 //  BMI STATUS ENUM
 // ------------------------------------------------------------------
 enum BmiStatus {
-    UNDERWEIGHT
-    NORMAL
-    OVERWEIGHT
-    OBESE
-    OBESE_II
-    OBESE_III
+  UNDERWEIGHT
+  NORMAL
+  OVERWEIGHT
+  OBESE
+  OBESE_II
+  OBESE_III
 }
 
 // ------------------------------------------------------------------
 //  NUTRITIONIST TYPE ENUM
 // ------------------------------------------------------------------
 enum NutritionistType {
-    COUNSELOR
-    EXPERT
+  COUNSELOR
+  EXPERT
 }
 
 // ------------------------------------------------------------------
 //  PAYMENT SOURCE ENUM
 // ------------------------------------------------------------------
 enum PaymentSource {
-    CREDIT
-    MIDTRANS
+  CREDIT
+  MIDTRANS
 }

@@ -65,6 +65,12 @@ export class AuthRepository {
 			data: {
 				fcmToken,
 			},
+			select: {
+				...PrismaSelector.ACCOUNT,
+				nutritionist: {
+					select: PrismaSelector.NUTRITIONIST_WITH_PROFILE,
+				},
+			},
 		});
 	}
 

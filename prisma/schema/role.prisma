@@ -1,52 +1,52 @@
 model BasePermission {
-    id String @id @default(cuid())
+  id String @id @default(cuid())
 
-    // Main Fields
-    key         String  @unique
-    description String?
+  // Main Fields
+  key         String  @unique
+  description String?
 
-    // Date Metadata
-    createdAt DateTime? @default(now())
-    updatedAt DateTime? @updatedAt
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 
-    // Relations
-    RolePermission RolePermission[]
+  // Relations
+  rolePermissions RolePermission[]
 }
 
-model Roles {
-    id String @id @default(cuid())
+model Role {
+  id String @id @default(cuid())
 
-    // Main Fields
-    role Role
+  // Main Fields
+  accoutRole AccountRole
 
-    // Date Metadata
-    createdAt DateTime? @default(now())
-    updatedAt DateTime? @updatedAt
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 
-    // Foreign Keys
-    accountId String? @unique
+  // Foreign Keys
+  accountId String? @unique
 
-    // Relations
-    permissions RolePermission[]
-    account     Account?         @relation(fields: [accountId], references: [id])
+  // Relations
+  permissions RolePermission[]
+  account     Account?         @relation(fields: [accountId], references: [id])
 }
 
 model RolePermission {
-    id String @id @default(cuid())
+  id String @id @default(cuid())
 
-    // Main Fields
-    isPermitted Boolean
+  // Main Fields
+  isPermitted Boolean
 
-    // Date Metadata
-    createdAt DateTime? @default(now())
-    updatedAt DateTime? @updatedAt
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 
-    // Foreign Keys
-    roleId String?
+  // Foreign Keys
+  roleId String?
 
-    // Relations
-    role       Roles?          @relation(fields: [roleId], references: [id])
-    permission BasePermission? @relation(fields: [basePermissionId], references: [id])
+  // Relations
+  role       Role?           @relation(fields: [roleId], references: [id])
+  permission BasePermission? @relation(fields: [basePermissionId], references: [id])
 
-    basePermissionId String?
+  basePermissionId String?
 }

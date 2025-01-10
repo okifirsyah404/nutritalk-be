@@ -1,4 +1,4 @@
-import { Role } from "@prisma/client";
+import { AccountRole } from "@prisma/client";
 
 export interface IJwtPayload {
 	sub: string;
@@ -25,7 +25,7 @@ export interface IJwtRefresh {
 
 export interface JwtGenerateTokensParam extends IJwtPayload {
 	userId: string;
-	role: Role;
+	role: AccountRole;
 }
 
 export interface JwtGenerateTokensOptionsParam {

@@ -10,5 +10,6 @@
 		"*/libs/@infrastructure/**/*.ts": "Infra - ${filename}.${extname}",
 		"*/libs/@util/**/*.ts": "Util - ${filename}.${extname}"
 	},
-	"prisma.fileWatcher": true
+	"prisma.fileWatcher": true,
+	"files.autoSave": "onFocusChange"
 }

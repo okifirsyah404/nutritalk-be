@@ -4,7 +4,7 @@ import { INutritionistEntity, IPatientEntity } from "@database/prisma";
 import { createDatabaseErrorHandler } from "@infrastructure/err_handler/database.error-handler";
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { Role } from "@prisma/client";
+import { AccountRole } from "@prisma/client";
 import { CryptoUtils } from "@util";
 import {
 	IJwtAccessPayload,
@@ -133,9 +133,9 @@ export class AppJwtService {
 		payload: IJwtAccessPayload,
 	): Promise<INutritionistEntity | IPatientEntity | null> {
 		switch (payload.role) {
-			case Role.NUTRITIONIST:
+			case AccountRole.NUTRITIONIST:
 				return await this.repository.findNutritionistById(payload.sub);
-			case Role.PATIENT:
+			case AccountRole.PATIENT:
 				return await this.repository.findPatientById(payload.sub);
 			default:
 				return null;

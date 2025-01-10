@@ -4,7 +4,7 @@ import { IJwtAccessPayload } from "@jwt/app-jwt";
 import { AppJwtService } from "@jwt/app-jwt/provider/app-jwt.service";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
-import { Role } from "@prisma/client";
+import { AccountRole } from "@prisma/client";
 import { ExtractJwt, Strategy } from "passport-jwt";
 
 @Injectable()
@@ -35,10 +35,10 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy) {
 		let user: INutritionistEntity | IPatientEntity;
 
 		switch (payload.role) {
-			case Role.NUTRITIONIST:
+			case AccountRole.NUTRITIONIST:
 				user = await this._validateNutritionist(payload.sub);
 				break;
-			case Role.PATIENT:
+			case AccountRole.PATIENT:
 				user = await this._validatePatient(payload.sub);
 				break;
 			default:

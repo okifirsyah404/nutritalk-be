@@ -20,18 +20,6 @@ services:
           cpus: "0.2"
           memory: 100M
 
-  start:
-    build:
-      context: .
-      dockerfile: Dockerfile.start
-    env_file:
-      - .env
-    deploy:
-      resources:
-        limits:
-          cpus: "1"
-          memory: 1000M
-
   nutritionist-api:
     build:
       context: .

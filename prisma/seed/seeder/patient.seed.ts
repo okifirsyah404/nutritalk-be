@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { Logger } from "@nestjs/common";
-import { Gender, PrismaClient, Role } from "@prisma/client";
+import { AccountRole, Gender, PrismaClient } from "@prisma/client";
 import { hashPassword } from "../helper/crypto-helper";
 
 async function seedPatient(prisma: PrismaClient): Promise<void> {
@@ -18,8 +18,8 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 			where: {
 				nutritionist: {
 					account: {
-						roles: {
-							role: Role.PATIENT,
+						role: {
+							accoutRole: AccountRole.PATIENT,
 						},
 					},
 				},
@@ -27,8 +27,8 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 		});
 		await prisma.account.deleteMany({
 			where: {
-				roles: {
-					role: Role.PATIENT,
+				role: {
+					accoutRole: AccountRole.PATIENT,
 				},
 			},
 		});
@@ -49,9 +49,9 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 					create: {
 						email: "johndoe@example.com",
 						password: await hashPassword("johndoe@example.com"),
-						roles: {
+						role: {
 							create: {
-								role: Role.PATIENT,
+								accoutRole: AccountRole.PATIENT,
 								permissions: {
 									createMany: {
 										data: permission.map((p) => ({
