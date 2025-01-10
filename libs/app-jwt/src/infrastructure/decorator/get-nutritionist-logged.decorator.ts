@@ -1,6 +1,6 @@
 import { INutritionistEntity, IPatientEntity } from "@database/prisma";
 import { createParamDecorator, ExecutionContext } from "@nestjs/common";
-import { Role } from "@prisma/client";
+import { AccountRole } from "@prisma/client";
 
 const GetNutritionistLogged = createParamDecorator(
 	(data, ctx: ExecutionContext): INutritionistEntity => {
@@ -19,7 +19,10 @@ const GetNutritionistLogged = createParamDecorator(
 function isNutritionist(
 	user: INutritionistEntity | IPatientEntity,
 ): user is INutritionistEntity {
-	return (user as INutritionistEntity).account.role === Role.NUTRITIONIST;
+	return (
+		(user as INutritionistEntity).account.role.accoutRole ===
+		AccountRole.NUTRITIONIST
+	);
 }
 
 export default GetNutritionistLogged;

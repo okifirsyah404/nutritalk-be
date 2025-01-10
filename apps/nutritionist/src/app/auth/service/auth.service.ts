@@ -9,7 +9,7 @@ import {
 	NotFoundException,
 	UnauthorizedException,
 } from "@nestjs/common";
-import { Role } from "@prisma/client";
+import { AccountRole } from "@prisma/client";
 import * as bcrypt from "bcrypt";
 import { AuthRefreshTokenRequest } from "../dto/request/auth-refresh-token.request";
 import { AuthSignInRequest } from "../dto/request/auth-sign-in.request";
@@ -47,7 +47,7 @@ export class AuthService {
 			throw new NotFoundException(AuthErrorMessage.ERR_ACCOUNT_NOT_FOUND);
 		}
 
-		if (result.role !== Role.NUTRITIONIST) {
+		if (result.role.accoutRole !== AccountRole.NUTRITIONIST) {
 			throw new UnauthorizedException(
 				AuthErrorMessage.ERR_ACCOUNT_NOT_NUTRITIONIST,
 			);
@@ -70,7 +70,7 @@ export class AuthService {
 			await this.appJwtService.generateAuthTokens({
 				sub: result.id,
 				userId: result.nutritionist.id,
-				role: Role.NUTRITIONIST,
+				role: AccountRole.NUTRITIONIST,
 				email: result.email,
 			});
 
@@ -101,7 +101,7 @@ export class AuthService {
 			await this.appJwtService.generateAuthTokens({
 				sub: token.payload.sub,
 				userId: nutritionistAccount.nutritionist.id,
-				role: Role.NUTRITIONIST,
+				role: AccountRole.NUTRITIONIST,
 				email: token.payload.email,
 			});
 

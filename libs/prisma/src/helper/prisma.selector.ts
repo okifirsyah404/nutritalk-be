@@ -1,10 +1,44 @@
 import { Prisma } from "@prisma/client";
 
 export default abstract class PrismaSelector {
+	static readonly BASE_PERMISSION = {
+		id: true,
+		key: true,
+		description: true,
+	} satisfies Prisma.BasePermissionSelect;
+
+	static readonly ROLE_PERMISSION = {
+		id: true,
+		isPermitted: true,
+		permission: {
+			select: PrismaSelector.BASE_PERMISSION,
+		},
+	} satisfies Prisma.RolePermissionSelect;
+
+	static readonly ROLE = {
+		id: true,
+		accoutRole: true,
+	} satisfies Prisma.RoleSelect;
+
+	static readonly GOOGLE_SSO = {
+		id: true,
+		googleId: true,
+		email: true,
+	} satisfies Prisma.GoogleSSOSelect;
+
+	static readonly SINGLE_SIGN_ON = {
+		id: true,
+		googleSSO: {
+			select: PrismaSelector.GOOGLE_SSO,
+		},
+	} satisfies Prisma.SingleSignOnSelect;
+
 	static readonly ACCOUNT = {
 		id: true,
 		email: true,
-		role: true,
+		role: {
+			select: PrismaSelector.ROLE,
+		},
 	} satisfies Prisma.AccountSelect;
 
 	static readonly PROFILE = {

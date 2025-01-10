@@ -1,19 +1,17 @@
-import { IAccountEntity } from "@database/prisma";
-import { Role } from "@prisma/client";
+import { IAccountEntity, IRoleEntity } from "@database/prisma";
+import { AccountRole } from "@prisma/client";
 
 export class AccountResponse implements IAccountEntity {
 	private constructor(account: IAccountEntity) {
 		this.id = account.id;
 		this.email = account.email;
 		this.role = account.role;
-		this.googleId = account.googleId;
 		this.createdAt = account.createdAt;
 		this.updatedAt = account.updatedAt;
 	}
 	id: string;
 	email: string;
-	role: Role;
-	googleId: string;
+	role: IRoleEntity;
 	createdAt?: Date;
 	updatedAt?: Date;
 
@@ -24,8 +22,10 @@ export class AccountResponse implements IAccountEntity {
 	static readonly exampleData: AccountResponse = {
 		id: "cm32r86wi000b3vptrq0792sp",
 		email: "johndoe@example.com",
-		role: Role.NUTRITIONIST,
-		googleId: "1234567890",
+		role: {
+			id: "cm32r86wi000b3vptrq0792sp",
+			accoutRole: AccountRole.NUTRITIONIST,
+		},
 		createdAt: new Date(),
 		updatedAt: new Date(),
 	};

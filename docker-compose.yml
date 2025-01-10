@@ -20,18 +20,6 @@ services:
           cpus: "0.2"
           memory: 100M
 
-  start:
-    build:
-      context: .
-      dockerfile: Dockerfile.start
-    env_file:
-      - .env
-    deploy:
-      resources:
-        limits:
-          cpus: "1"
-          memory: 1000M
-
   nutritionist-api:
     build:
       context: .
@@ -49,8 +37,8 @@ services:
         condition: on-failure
       resources:
         limits:
-          cpus: "1"
-          memory: 1000M
+          cpus: "0.5"
+          memory: 500M
 
   patient-api:
     build:
@@ -69,8 +57,8 @@ services:
         condition: on-failure
       resources:
         limits:
-          cpus: "1"
-          memory: 1000M
+          cpus: "0.5"
+          memory: 500M
 
   admin-api:
     build:
@@ -89,8 +77,8 @@ services:
         condition: on-failure
       resources:
         limits:
-          cpus: "1"
-          memory: 1000M
+          cpus: "0.5"
+          memory: 500M
 
   cron:
     build:
@@ -107,8 +95,8 @@ services:
         condition: on-failure
       resources:
         limits:
-          cpus: "1"
-          memory: 1000M
+          cpus: "0.5"
+          memory: 500M
 
 volumes:
   cache-data:

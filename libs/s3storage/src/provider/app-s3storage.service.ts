@@ -2,7 +2,7 @@ import * as awsS3 from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { IProfileEntity } from "@database/prisma";
 import { Injectable } from "@nestjs/common";
-import { Role } from "@prisma/client";
+import { AccountRole } from "@prisma/client";
 import FileUtils from "@util/utilities/file.util";
 import { S3StorageService } from "./s3storage.service";
 
@@ -65,7 +65,7 @@ export class AppS3StorageService {
 		file,
 	}: {
 		seed: string;
-		role: Role;
+		role: AccountRole;
 		file: Express.Multer.File;
 	}): Promise<string> {
 		const key = `${role.toLowerCase()}/${seed}/${seed}.${FileUtils.getExtension(file)}`;

@@ -1,10 +1,10 @@
 import {
 	IAccountEntity,
+	IConsultationMetaEntity,
 	INutritionistEntity,
 	IProfileEntity,
 } from "@database/prisma";
-import { IConsultationMetaEntity } from "@database/prisma/interface/entities/consultation-meta-entity.interface";
-import { Gender, NutritionistType, Role } from "@prisma/client";
+import { AccountRole, Gender, NutritionistType } from "@prisma/client";
 
 export class ProfileResponse implements INutritionistEntity {
 	id: string;
@@ -39,8 +39,10 @@ export class ProfileResponse implements INutritionistEntity {
 		account: {
 			id: "cm32r86wi000b3vptrq0792sp",
 			email: "johndoe@example.com",
-			role: Role.NUTRITIONIST,
-			googleId: "1234567890",
+			role: {
+				id: "cm32r86wi000b3vptrq0792sp",
+				accoutRole: AccountRole.NUTRITIONIST,
+			},
 		},
 		profile: {
 			id: "cm32r86wi000b3vptrq0792sp",

@@ -21,7 +21,7 @@ model Account {
   patient      Patient?
   nutritionist Nutritionist?
   sso          SingleSignOn?
-  roles        Roles?
+  role        Role?
 }
 
 // ------------------------------------------------------------------

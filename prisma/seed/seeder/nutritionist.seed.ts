@@ -1,10 +1,10 @@
 import {
+	AccountRole,
 	DayOfWeek,
 	Gender,
 	NutritionistType,
 	Prisma,
 	PrismaClient,
-	Role,
 } from "@prisma/client";
 import { hashPassword } from "../helper/crypto-helper";
 
@@ -43,8 +43,8 @@ async function seedNutritionist(prisma: PrismaClient): Promise<void> {
 			where: {
 				nutritionist: {
 					account: {
-						roles: {
-							role: Role.NUTRITIONIST,
+						role: {
+							accoutRole: AccountRole.NUTRITIONIST,
 						},
 					},
 				},
@@ -53,8 +53,8 @@ async function seedNutritionist(prisma: PrismaClient): Promise<void> {
 
 		await prisma.account.deleteMany({
 			where: {
-				roles: {
-					role: Role.NUTRITIONIST,
+				role: {
+					accoutRole: AccountRole.NUTRITIONIST,
 				},
 			},
 		});
@@ -82,9 +82,9 @@ async function seedNutritionist(prisma: PrismaClient): Promise<void> {
 				data: {
 					email: nutritionist.email,
 					password: await hashPassword(nutritionist.email),
-					roles: {
+					role: {
 						create: {
-							role: Role.NUTRITIONIST,
+							accoutRole: AccountRole.NUTRITIONIST,
 							permissions: {
 								createMany: {
 									skipDuplicates: true,
