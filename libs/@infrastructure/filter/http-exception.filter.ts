@@ -26,7 +26,9 @@ export default class HttpExceptionFilter implements ExceptionFilter {
 
 		let baseResponse: IApiResponse<never>;
 
-		const message = (exception.getResponse() as { message: string }).message;
+		const message =
+			(exception.getResponse() as { message: string }).message ||
+			exception.name;
 
 		if (exception.message.includes("ENOENT")) {
 			baseResponse = {

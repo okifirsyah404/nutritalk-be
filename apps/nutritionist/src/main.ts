@@ -1,5 +1,5 @@
 import swaggerDocumentBuilder from "@common/docs/swagger-document.builder";
-import { AppConfigService } from "@config/app-config";
+import { AppConfigService, Environment } from "@config/app-config";
 import HttpExceptionFilter from "@infrastructure/filter/http-exception.filter";
 import CreateLogLevel from "@infrastructure/logger/create-log-level";
 import { Logger, VersioningType } from "@nestjs/common";
@@ -55,13 +55,15 @@ async function bootstrap(): Promise<void> {
 		prefix: "api/v",
 	});
 
-	await swaggerDocumentBuilder(app, {
-		title: "Nutritionist App",
-		description: "Nutritionist App API Documentation",
-		version: config.version,
-		tags: DocsTag.tags,
-		metadata: metadata,
-	});
+	if (appConfig.env === Environment.DEV) {
+		await swaggerDocumentBuilder(app, {
+			title: "Nutritionist App",
+			description: "Nutritionist App API Documentation",
+			version: config.version,
+			tags: DocsTag.tags,
+			metadata: metadata,
+		});
+	}
 
 	await app.listen(config.port, appConfig.host);
 

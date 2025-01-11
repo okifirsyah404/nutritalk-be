@@ -1,10 +1,12 @@
 import { AppCacheModule } from "@cache/app-cache";
+import { HttpThrottleGuard } from "@common/guards/http-throttle.guard";
 import { AppConfigModule, AppConfigService } from "@config/app-config";
 import { PrismaModule } from "@database/prisma";
 import { MailerModule } from "@mail/mailer";
 import { HttpModule } from "@nestjs/axios";
 import { BullModule } from "@nestjs/bull";
 import { Module } from "@nestjs/common";
+import { APP_GUARD } from "@nestjs/core";
 import { seconds, ThrottlerModule } from "@nestjs/throttler";
 import { S3StorageModule } from "@s3storage/s3storage";
 import { AccountModule } from "./app/account/account.module";
@@ -94,6 +96,12 @@ import { QueueModule } from "./module/queue/queue.module";
 		PriceModule,
 		ScheduleModule,
 		HealthCheckModule,
+	],
+	providers: [
+		{
+			provide: APP_GUARD,
+			useClass: HttpThrottleGuard,
+		},
 	],
 })
 export class NutritionistModule {}
