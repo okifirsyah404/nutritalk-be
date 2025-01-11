@@ -374,7 +374,7 @@ CREATE TABLE "BasePermission" (
 -- CreateTable
 CREATE TABLE "Role" (
     "id" TEXT NOT NULL,
-    "accoutRole" "AccountRole" NOT NULL,
+    "accountRole" "AccountRole" NOT NULL,
     "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "accountId" TEXT,

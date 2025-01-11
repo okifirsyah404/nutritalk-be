@@ -99,7 +99,7 @@ export class ProfileService {
 	): Promise<INutritionistEntity> {
 		const key = await this.s3Service.uploadProfileImage({
 			seed: nutritionist.id,
-			role: nutritionist.account.role.accoutRole,
+			role: nutritionist.account.role.accountRole,
 			file: file,
 		});
 

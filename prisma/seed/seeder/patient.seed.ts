@@ -19,7 +19,7 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 				nutritionist: {
 					account: {
 						role: {
-							accoutRole: AccountRole.PATIENT,
+							accountRole: AccountRole.PATIENT,
 						},
 					},
 				},
@@ -28,7 +28,7 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 		await prisma.account.deleteMany({
 			where: {
 				role: {
-					accoutRole: AccountRole.PATIENT,
+					accountRole: AccountRole.PATIENT,
 				},
 			},
 		});
@@ -51,7 +51,7 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 						password: await hashPassword("johndoe@example.com"),
 						role: {
 							create: {
-								accoutRole: AccountRole.PATIENT,
+								accountRole: AccountRole.PATIENT,
 								permissions: {
 									createMany: {
 										data: permission.map((p) => ({

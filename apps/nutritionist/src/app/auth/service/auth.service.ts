@@ -47,7 +47,7 @@ export class AuthService {
 			throw new NotFoundException(AuthErrorMessage.ERR_ACCOUNT_NOT_FOUND);
 		}
 
-		if (result.role.accoutRole !== AccountRole.NUTRITIONIST) {
+		if (result.role.accountRole !== AccountRole.NUTRITIONIST) {
 			throw new UnauthorizedException(
 				AuthErrorMessage.ERR_ACCOUNT_NOT_NUTRITIONIST,
 			);

@@ -20,7 +20,7 @@ function isNutritionist(
 	user: INutritionistEntity | IPatientEntity,
 ): user is INutritionistEntity {
 	return (
-		(user as INutritionistEntity).account.role.accoutRole ===
+		(user as INutritionistEntity).account.role.accountRole ===
 		AccountRole.NUTRITIONIST
 	);
 }

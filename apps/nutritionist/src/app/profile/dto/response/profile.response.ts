@@ -41,7 +41,7 @@ export class ProfileResponse implements INutritionistEntity {
 			email: "johndoe@example.com",
 			role: {
 				id: "cm32r86wi000b3vptrq0792sp",
-				accoutRole: AccountRole.NUTRITIONIST,
+				accountRole: AccountRole.NUTRITIONIST,
 			},
 		},
 		profile: {
