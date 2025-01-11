@@ -24,7 +24,7 @@ export class AccountResponse implements IAccountEntity {
 		email: "johndoe@example.com",
 		role: {
 			id: "cm32r86wi000b3vptrq0792sp",
-			accoutRole: AccountRole.NUTRITIONIST,
+			accountRole: AccountRole.NUTRITIONIST,
 		},
 		createdAt: new Date(),
 		updatedAt: new Date(),

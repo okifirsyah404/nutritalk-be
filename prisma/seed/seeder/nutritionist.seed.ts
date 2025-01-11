@@ -44,7 +44,7 @@ async function seedNutritionist(prisma: PrismaClient): Promise<void> {
 				nutritionist: {
 					account: {
 						role: {
-							accoutRole: AccountRole.NUTRITIONIST,
+							accountRole: AccountRole.NUTRITIONIST,
 						},
 					},
 				},
@@ -54,7 +54,7 @@ async function seedNutritionist(prisma: PrismaClient): Promise<void> {
 		await prisma.account.deleteMany({
 			where: {
 				role: {
-					accoutRole: AccountRole.NUTRITIONIST,
+					accountRole: AccountRole.NUTRITIONIST,
 				},
 			},
 		});
@@ -84,7 +84,7 @@ async function seedNutritionist(prisma: PrismaClient): Promise<void> {
 					password: await hashPassword(nutritionist.email),
 					role: {
 						create: {
-							accoutRole: AccountRole.NUTRITIONIST,
+							accountRole: AccountRole.NUTRITIONIST,
 							permissions: {
 								createMany: {
 									skipDuplicates: true,

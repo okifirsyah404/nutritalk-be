@@ -2,10 +2,10 @@ import swaggerDocumentBuilder from "@common/docs/swagger-document.builder";
 import { AppConfigService } from "@config/app-config";
 import HttpExceptionFilter from "@infrastructure/filter/http-exception.filter";
 import CreateLogLevel from "@infrastructure/logger/create-log-level";
-import { validationExceptionFactory } from "@infrastructure/validation/validation.factory";
-import { Logger, ValidationPipe, VersioningType } from "@nestjs/common";
+import { Logger, VersioningType } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
+import cookieParser from "cookie-parser";
 import { NutritionistModule } from "./app.module";
 import { DocsTag } from "./common/docs/docs";
 import metadata from "./metadata";
@@ -18,15 +18,29 @@ async function bootstrap(): Promise<void> {
 		},
 	);
 
-	app.useGlobalPipes(
-		new ValidationPipe({
-			transform: true,
-			whitelist: true,
-			forbidNonWhitelisted: true,
-			forbidUnknownValues: true,
-			exceptionFactory: (errors): any => validationExceptionFactory(errors),
-		}),
-	);
+	app.use(cookieParser());
+
+	// const doubleCsrfResult = doubleCsrf({
+	// 	getSecret: () => "TestToken",
+	// 	cookieName: "XSRF-TOKEN",
+	// 	cookieOptions: {
+	// 		httpOnly: true,
+	// 		secure: process.env.NODE_ENV === "production",
+	// 		sameSite: "strict",
+	// 	},
+	// });
+
+	// app.use(doubleCsrfResult.doubleCsrfProtection);
+
+	// app.useGlobalPipes(
+	// 	new ValidationPipe({
+	// 		transform: true,
+	// 		whitelist: true,
+	// 		forbidNonWhitelisted: true,
+	// 		forbidUnknownValues: true,
+	// 		exceptionFactory: (errors): any => validationExceptionFactory(errors),
+	// 	}),
+	// );
 
 	app.useGlobalFilters(new HttpExceptionFilter());
 

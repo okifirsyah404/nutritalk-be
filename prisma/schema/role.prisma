@@ -17,7 +17,7 @@ model Role {
   id String @id @default(cuid())
 
   // Main Fields
-  accoutRole AccountRole
+  accountRole AccountRole
 
   // Date Metadata
   createdAt DateTime? @default(now())

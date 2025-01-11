@@ -17,7 +17,7 @@ export default abstract class PrismaSelector {
 
 	static readonly ROLE = {
 		id: true,
-		accoutRole: true,
+		accountRole: true,
 	} satisfies Prisma.RoleSelect;
 
 	static readonly GOOGLE_SSO = {
