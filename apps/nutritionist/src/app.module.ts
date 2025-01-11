@@ -2,6 +2,7 @@ import { AppCacheModule } from "@cache/app-cache";
 import { AppConfigModule, AppConfigService } from "@config/app-config";
 import { PrismaModule } from "@database/prisma";
 import { MailerModule } from "@mail/mailer";
+import { HttpModule } from "@nestjs/axios";
 import { BullModule } from "@nestjs/bull";
 import { Module } from "@nestjs/common";
 import { seconds, ThrottlerModule } from "@nestjs/throttler";
@@ -9,6 +10,7 @@ import { S3StorageModule } from "@s3storage/s3storage";
 import { AccountModule } from "./app/account/account.module";
 import { AuthModule } from "./app/auth/auth.module";
 import { DashboardModule } from "./app/dashboard/dashboard.module";
+import { HealthCheckModule } from "./app/health-check/health-check.module";
 import { PriceModule } from "./app/price/price.module";
 import { ProfileModule } from "./app/profile/profile.module";
 import { ScheduleModule } from "./app/schedule/schedule.module";
@@ -80,6 +82,9 @@ import { QueueModule } from "./module/queue/queue.module";
 			}),
 		}),
 		QueueModule,
+		HttpModule.register({
+			global: true,
+		}),
 
 		// Routes
 		AuthModule,
@@ -88,6 +93,7 @@ import { QueueModule } from "./module/queue/queue.module";
 		AccountModule,
 		PriceModule,
 		ScheduleModule,
+		HealthCheckModule,
 	],
 })
 export class NutritionistModule {}
