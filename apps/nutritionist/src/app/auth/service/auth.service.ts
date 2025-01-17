@@ -38,7 +38,9 @@ export class AuthService {
 			unit: "minutes",
 		},
 	)
-	async signIn(reqData: AuthSignInRequest): Promise<IJwtToken> {
+	async signIn(
+		reqData: AuthSignInRequest,
+	): Promise<IJwtToken & { accountRole: AccountRole }> {
 		const result = await this.repository
 			.findAccountByEmail(reqData.email)
 			.catch(createDatabaseErrorHandler);
@@ -77,6 +79,7 @@ export class AuthService {
 		return {
 			accessToken,
 			refreshToken,
+			accountRole: result.role.accountRole,
 		};
 	}
 
@@ -92,7 +95,7 @@ export class AuthService {
 	async refreshToken(
 		token: IJwtRefresh,
 		reqData: AuthRefreshTokenRequest,
-	): Promise<IJwtToken> {
+	): Promise<IJwtToken & { accountRole: AccountRole }> {
 		const nutritionistAccount = await this.repository.findAccountByEmail(
 			token.payload.email,
 		);
@@ -112,6 +115,7 @@ export class AuthService {
 		return {
 			accessToken,
 			refreshToken,
+			accountRole: nutritionistAccount.role.accountRole,
 		};
 	}
 
