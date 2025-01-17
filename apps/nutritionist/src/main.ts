@@ -2,7 +2,8 @@ import swaggerDocumentBuilder from "@common/docs/swagger-document.builder";
 import { AppConfigService, Environment } from "@config/app-config";
 import HttpExceptionFilter from "@infrastructure/filter/http-exception.filter";
 import CreateLogLevel from "@infrastructure/logger/create-log-level";
-import { Logger, VersioningType } from "@nestjs/common";
+import { validationExceptionFactory } from "@infrastructure/validation/validation.factory";
+import { Logger, ValidationPipe, VersioningType } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import cookieParser from "cookie-parser";
@@ -32,15 +33,13 @@ async function bootstrap(): Promise<void> {
 
 	// app.use(doubleCsrfResult.doubleCsrfProtection);
 
-	// app.useGlobalPipes(
-	// 	new ValidationPipe({
-	// 		transform: true,
-	// 		whitelist: true,
-	// 		forbidNonWhitelisted: true,
-	// 		forbidUnknownValues: true,
-	// 		exceptionFactory: (errors): any => validationExceptionFactory(errors),
-	// 	}),
-	// );
+	app.useGlobalPipes(
+		new ValidationPipe({
+			transform: true,
+			whitelist: true,
+			exceptionFactory: (errors): any => validationExceptionFactory(errors),
+		}),
+	);
 
 	app.useGlobalFilters(new HttpExceptionFilter());
 
