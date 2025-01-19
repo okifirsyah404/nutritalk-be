@@ -22,7 +22,7 @@ import { AuthOperationDocs } from "../docs/auth.operation";
 import { AuthContentDocs } from "../docs/content/auth.content";
 import { AuthRefreshTokenRequest } from "../dto/request/auth-refresh-token.request";
 import { AuthSignInRequest } from "../dto/request/auth-sign-in.request";
-import { AuthSignInResponse } from "../dto/response/auth-sign-in.response";
+import { AuthResponse } from "../dto/response/auth.response";
 import { AuthService } from "../service/auth.service";
 
 @ApiTags(DocsTag.AUTH)
@@ -61,12 +61,12 @@ export class AuthController {
 	@Post("sign-in")
 	async signIn(
 		@Body() reqBody: AuthSignInRequest,
-	): Promise<IApiResponse<AuthSignInResponse>> {
+	): Promise<IApiResponse<AuthResponse>> {
 		const result = await this.service.signIn(reqBody);
 
 		return BaseApiResponse.created({
 			message: AuthSuccessMessage.SUCCESS_AUTH_SIGN_IN,
-			data: AuthSignInResponse.fromEntity(result),
+			data: AuthResponse.fromEntity(result),
 		});
 	}
 
@@ -102,12 +102,12 @@ export class AuthController {
 	async getRefreshToken(
 		@RefreshToken() refreshToken: IJwtRefresh,
 		@Body() reqBody: AuthRefreshTokenRequest,
-	): Promise<IApiResponse<AuthSignInResponse>> {
+	): Promise<IApiResponse<AuthResponse>> {
 		const result = await this.service.refreshToken(refreshToken, reqBody);
 
 		return BaseApiResponse.success({
 			message: AuthSuccessMessage.SUCCESS_AUTH_REFRESH_TOKEN,
-			data: AuthSignInResponse.fromEntity(result),
+			data: AuthResponse.fromEntity(result),
 		});
 	}
 

@@ -102,7 +102,7 @@ export default async () => {
 					},
 				],
 				[
-					import("./app/auth/dto/response/auth-sign-in.response"),
+					import("./app/auth/dto/response/auth.response"),
 					{
 						AuthSignInResponse: {
 							accessToken: { required: true, type: () => String },
