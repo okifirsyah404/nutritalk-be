@@ -12,7 +12,6 @@ import {
 } from "@nestjs/swagger";
 import { SignatureTokenGuard } from "@sign/signature";
 import GetSignaturePayload from "@sign/signature/infrastructure/decorator/get-signature-payload.decorator";
-import { AuthForgetPasswordSuccessMessage } from "apps/nutritionist/src/common/constant/message/success/auth-forget-password-success.message";
 import { DocsTag } from "apps/nutritionist/src/common/docs/docs";
 import { AuthOperationDocs } from "../docs/auth.operation";
 import { AuthForgetPasswordContent } from "../docs/content/auth-forget-password.content";
@@ -22,6 +21,7 @@ import { AuthOtpVerifyRequest } from "../dto/request/auth-otp-verify.request";
 import { AuthForgetPasswordResponse } from "../dto/response/auth-forget-password.response";
 import { AuthOtpVerifyForgetPasswordResponse } from "../dto/response/auth-otp-forget-password.response";
 import { AuthForgetPasswordService } from "../service/auth-forget-password.service";
+import { AuthSuccessMessage, OtpSuccessMessage } from "@constant/constant";
 
 @ApiTags(DocsTag.FORGET_PASSWORD)
 @Controller("auth/forget-password")
@@ -60,7 +60,7 @@ export class AuthForgetPasswordController {
 		const result = await this.service.checkAccount(reqBody);
 
 		return BaseApiResponse.created({
-			message: AuthForgetPasswordSuccessMessage.SUCCESS_SEND_OTP_TO_EMAIL,
+			message: OtpSuccessMessage.SUCCESS_SEND_OTP,
 			data: AuthForgetPasswordResponse.fromEntity(result),
 		});
 	}
@@ -95,7 +95,7 @@ export class AuthForgetPasswordController {
 		const result = await this.service.verifyOtp(reqBody);
 
 		return BaseApiResponse.created({
-			message: AuthForgetPasswordSuccessMessage.SUCCESS_VERIFY_OTP,
+			message: OtpSuccessMessage.SUCCESS_VERIFY_OTP,
 			data: AuthOtpVerifyForgetPasswordResponse.fromEntity(result),
 		});
 	}
@@ -139,7 +139,7 @@ export class AuthForgetPasswordController {
 		});
 
 		return BaseApiResponse.created({
-			message: AuthForgetPasswordSuccessMessage.SUCCESS_RESET_PASSWORD,
+			message: AuthSuccessMessage.SUCCESS_RESET_PASSWORD,
 			data: AuthForgetPasswordResponse.fromEntity(result),
 		});
 	}

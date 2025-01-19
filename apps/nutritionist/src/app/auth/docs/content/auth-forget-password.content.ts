@@ -1,12 +1,17 @@
-import { AuthErrorMessage } from "@common/constant/message/error/auth-error.message";
-import { JwtTokenError } from "@common/constant/message/error/jwt-token-error.message";
-import { EmailValidationMessage } from "@common/constant/message/validation/email-validation.message";
-import { OtpValidationMessage } from "@common/constant/message/validation/otp-validation.message";
-import { PasswordValidationMessage } from "@common/constant/message/validation/password-validation.message";
-import { SignatureValidationMessage } from "@common/constant/message/validation/signature-validation.message";
 import { BaseApiResponse } from "@common/response/base-api.response";
+import {
+	AccountErrorMessage,
+	AuthErrorMessage,
+	AuthSuccessMessage,
+	EmailValidationMessage,
+	JwtTokenError,
+	OtpErrorMessage,
+	OtpSuccessMessage,
+	OtpValidationMessage,
+	PasswordValidationMessage,
+	SignatureValidationMessage,
+} from "@constant/constant";
 import { ContentObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
-import { AuthForgetPasswordSuccessMessage } from "apps/nutritionist/src/common/constant/message/success/auth-forget-password-success.message";
 import { AuthForgetPasswordResponse } from "../../dto/response/auth-forget-password.response";
 import { AuthOtpVerifyForgetPasswordResponse } from "../../dto/response/auth-otp-forget-password.response";
 
@@ -15,7 +20,7 @@ export abstract class AuthForgetPasswordContent {
 		"application/json": {
 			example: {
 				message: BaseApiResponse.created({
-					message: AuthForgetPasswordSuccessMessage.SUCCESS_SEND_OTP_TO_EMAIL,
+					message: OtpSuccessMessage.SUCCESS_SEND_OTP,
 					data: AuthForgetPasswordResponse.exampleData,
 				}),
 			},
@@ -49,7 +54,7 @@ export abstract class AuthForgetPasswordContent {
 		"application/json": {
 			example: {
 				message: BaseApiResponse.created({
-					message: AuthForgetPasswordSuccessMessage.SUCCESS_VERIFY_OTP,
+					message: OtpSuccessMessage.SUCCESS_VERIFY_OTP,
 					data: AuthOtpVerifyForgetPasswordResponse.exampleData,
 				}),
 			},
@@ -86,7 +91,7 @@ export abstract class AuthForgetPasswordContent {
 				},
 				"OTP Invalid": {
 					value: BaseApiResponse.badRequest({
-						message: AuthErrorMessage.ERR_OTP_INVALID,
+						message: OtpErrorMessage.ERR_OTP_INVALID,
 					}),
 				},
 			},
@@ -97,7 +102,7 @@ export abstract class AuthForgetPasswordContent {
 		"application/json": {
 			example: {
 				message: BaseApiResponse.created({
-					message: AuthForgetPasswordSuccessMessage.SUCCESS_RESET_PASSWORD,
+					message: AuthSuccessMessage.SUCCESS_RESET_PASSWORD,
 					data: AuthForgetPasswordResponse.exampleData,
 				}),
 			},
@@ -182,7 +187,7 @@ export abstract class AuthForgetPasswordContent {
 		"application/json": {
 			example: {
 				message: BaseApiResponse.notFound({
-					message: AuthErrorMessage.ERR_ACCOUNT_NOT_FOUND,
+					message: AccountErrorMessage.ERR_ACCOUNT_NOT_FOUND,
 				}),
 			},
 		},

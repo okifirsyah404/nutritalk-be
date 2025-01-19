@@ -1,9 +1,11 @@
 import { BaseApiResponse } from "@common/response/base-api.response";
+import {
+	INVALID_TOKEN_CONTENT,
+	PriceErrorMessage,
+	PriceSuccessMessage,
+} from "@constant/constant";
 import { ContentObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
-import { PriceErrorMessage } from "@nutritionist/common/constant/message/error/price-error.message";
-import { PriceSuccessMessage } from "@nutritionist/common/constant/message/success/price-success.message";
 import { PriceResponse } from "../../dto/response/price.response";
-import { INVALID_TOKEN_CONTENT } from "@common/constant/docs/content/invalid-token.content";
 
 export abstract class PriceContentDocs {
 	static readonly SUCCESS_GET_PRICE: ContentObject = {

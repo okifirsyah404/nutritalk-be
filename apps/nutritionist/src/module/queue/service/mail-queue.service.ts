@@ -1,8 +1,8 @@
+import { MailQueueConstant } from "@constant/constant";
 import { IMailOtpOptions } from "@mail/mailer";
 import { InjectQueue } from "@nestjs/bull";
 import { Injectable, Logger } from "@nestjs/common";
 import { Queue } from "bull";
-import { MailQueueConstant } from "../../../common/constant/queue/mail-queue.constant";
 
 @Injectable()
 export class MailQueueService {

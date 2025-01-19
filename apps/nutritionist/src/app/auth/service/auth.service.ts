@@ -1,7 +1,6 @@
 import { AppConfigService } from "@config/app-config";
 
 import { SetCache } from "@cache/app-cache/decorator/set-cache.decorator";
-import { AuthErrorMessage } from "@common/constant/message/error/auth-error.message";
 import { IAuthResponse } from "@contract/response/auth/auth-response.interface";
 import { createDatabaseErrorHandler } from "@infrastructure/err_handler/database.error-handler";
 import { AppJwtService, IJwtRefresh, IJwtToken } from "@jwt/app-jwt";
@@ -15,6 +14,7 @@ import * as bcrypt from "bcrypt";
 import { AuthRefreshTokenRequest } from "../dto/request/auth-refresh-token.request";
 import { AuthSignInRequest } from "../dto/request/auth-sign-in.request";
 import { AuthRepository } from "../repository/auth.repository";
+import { AccountErrorMessage, AuthErrorMessage } from "@constant/constant";
 
 @Injectable()
 export class AuthService {
@@ -45,12 +45,12 @@ export class AuthService {
 			.catch(createDatabaseErrorHandler);
 
 		if (!result) {
-			throw new NotFoundException(AuthErrorMessage.ERR_ACCOUNT_NOT_FOUND);
+			throw new NotFoundException(AccountErrorMessage.ERR_ACCOUNT_NOT_FOUND);
 		}
 
 		if (result.role.accountRole !== AccountRole.NUTRITIONIST) {
 			throw new UnauthorizedException(
-				AuthErrorMessage.ERR_ACCOUNT_NOT_NUTRITIONIST,
+				AccountErrorMessage.ERR_ACCOUNT_NOT_NUTRITIONIST,
 			);
 		}
 
@@ -129,7 +129,7 @@ export class AuthService {
 
 		if (!account.fcmToken && !account.refreshToken) {
 			throw new UnauthorizedException(
-				AuthErrorMessage.ERR_ACCOUNT_ALREADY_SIGN_OUT,
+				AccountErrorMessage.ERR_ACCOUNT_ALREADY_SIGN_OUT,
 			);
 		}
 

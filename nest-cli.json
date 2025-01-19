@@ -157,6 +157,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/notification/tsconfig.app.json"
       }
+    },
+    "@constant": {
+      "type": "library",
+      "root": "libs/@constant",
+      "entryFile": "index",
+      "sourceRoot": "libs/@constant/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/@constant/tsconfig.lib.json"
+      }
     }
   }
 }

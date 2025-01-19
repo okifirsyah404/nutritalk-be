@@ -1,7 +1,7 @@
-import { OtpValidationMessage } from "@common/constant/message/validation/otp-validation.message";
 import { ApiProperty, PickType } from "@nestjs/swagger";
 import { IsNotEmpty, IsString } from "class-validator";
 import { AuthSignInRequest } from "./auth-sign-in.request";
+import { OtpValidationMessage } from "@constant/constant";
 
 export class AuthOtpVerifyRequest extends PickType(AuthSignInRequest, [
 	"email",

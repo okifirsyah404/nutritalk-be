@@ -1,6 +1,8 @@
-import { EmailValidationMessage } from "@common/constant/message/validation/email-validation.message";
-import { FcmTokenValidationMessage } from "@common/constant/message/validation/fcm-token-validation.message";
-import { PasswordValidationMessage } from "@common/constant/message/validation/password-validation.message";
+import {
+	EmailValidationMessage,
+	FcmTokenValidationMessage,
+	PasswordValidationMessage,
+} from "@constant/constant";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 

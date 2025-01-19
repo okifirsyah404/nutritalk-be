@@ -10,11 +10,11 @@ import {
 	ApiTags,
 	ApiUnauthorizedResponse,
 } from "@nestjs/swagger";
-import { DashboardSuccessMessage } from "@nutritionist/common/constant/message/success/dashboard-success.message";
 import { DocsTag } from "@nutritionist/common/docs/docs";
 import { DashboardContentDocs } from "../docs/dashboard.content";
 import { DashboardResponse } from "../dto/response/dashboard.response";
 import { DashboardService } from "../service/dashboard.service";
+import { DashboardSuccessMessage } from "@constant/constant";
 
 @ApiTags(DocsTag.DASHBOARD)
 @ApiBearerAuth()

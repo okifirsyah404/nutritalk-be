@@ -1,4 +1,5 @@
 import { BaseApiResponse } from "@common/response/base-api.response";
+import { AccountSuccessMessage } from "@constant/constant";
 import { IApiResponse } from "@contract/response/api-response.interface";
 import { INutritionistEntity } from "@database/prisma";
 import { AccessTokenGuard } from "@jwt/app-jwt";
@@ -12,7 +13,6 @@ import {
 	ApiTags,
 	ApiUnauthorizedResponse,
 } from "@nestjs/swagger";
-import { AccountSuccessMessage } from "@nutritionist/common/constant/message/success/account-success.message";
 import { DocsTag } from "@nutritionist/common/docs/docs";
 import { AccountOperation } from "../docs/account.operation";
 import { AccountContentDocs } from "../docs/content/account.content";

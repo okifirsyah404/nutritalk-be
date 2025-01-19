@@ -1,5 +1,5 @@
 import { SetCache } from "@cache/app-cache/decorator/set-cache.decorator";
-import { AuthErrorMessage } from "@common/constant/message/error/auth-error.message";
+import { AccountErrorMessage } from "@constant/constant";
 import { IAccountEntity } from "@database/prisma";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { AccountRepository } from "../repository/account.repository";
@@ -22,7 +22,7 @@ export class AccountService {
 			await this.repository.getAccountByNutritionistId(nutritionistId);
 
 		if (!result) {
-			throw new NotFoundException(AuthErrorMessage.ERR_ACCOUNT_NOT_FOUND);
+			throw new NotFoundException(AccountErrorMessage.ERR_ACCOUNT_NOT_FOUND);
 		}
 
 		return result;

@@ -22,13 +22,13 @@ import {
 	ApiTags,
 	ApiUnauthorizedResponse,
 } from "@nestjs/swagger";
-import { ProfileSuccessMessage } from "@nutritionist/common/constant/message/success/profile-success.message";
 import { DocsTag } from "@nutritionist/common/docs/docs";
 import multer from "multer";
 import { ProfileContentDocs } from "../docs/content/profile.content";
 import { UpdateProfileRequest } from "../dto/request/update-profile.request";
 import { ProfileResponse } from "../dto/response/profile.response";
 import { ProfileService } from "../service/profile.service";
+import { ProfileSuccessMessage } from "@constant/constant";
 
 @ApiTags(DocsTag.PROFILE)
 @ApiBearerAuth()
@@ -100,7 +100,7 @@ export class ProfileController {
 		const result = await this.service.updateProfile(nutritionist, reqBody);
 
 		return BaseApiResponse.success({
-			message: ProfileSuccessMessage.SUCCESS_UPDATE_PROFILE,
+			message: ProfileSuccessMessage.SUCCESS_SET_AVAILABILITY,
 			data: ProfileResponse.fromEntity(result),
 		});
 	}

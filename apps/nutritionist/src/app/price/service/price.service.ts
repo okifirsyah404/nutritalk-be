@@ -2,9 +2,9 @@ import { ClearCache } from "@cache/app-cache/decorator/clear-cache.decorator";
 import { SetCache } from "@cache/app-cache/decorator/set-cache.decorator";
 import { IPriceEntity } from "@database/prisma";
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { PriceErrorMessage } from "@nutritionist/common/constant/message/error/price-error.message";
 import { UpdatePriceRequest } from "../dto/request/update-price.request";
 import { PriceRepository } from "../repository/price.repository";
+import { PriceErrorMessage } from "@constant/constant";
 
 @Injectable()
 export class PriceService {

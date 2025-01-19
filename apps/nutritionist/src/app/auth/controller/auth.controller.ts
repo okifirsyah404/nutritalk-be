@@ -16,7 +16,6 @@ import {
 	ApiTags,
 	ApiUnauthorizedResponse,
 } from "@nestjs/swagger";
-import { AuthSuccessMessage } from "../../../common/constant/message/success/auth-success.message";
 import { DocsTag } from "../../../common/docs/docs";
 import { AuthOperationDocs } from "../docs/auth.operation";
 import { AuthContentDocs } from "../docs/content/auth.content";
@@ -24,6 +23,7 @@ import { AuthRefreshTokenRequest } from "../dto/request/auth-refresh-token.reque
 import { AuthSignInRequest } from "../dto/request/auth-sign-in.request";
 import { AuthResponse } from "../dto/response/auth-sign-in.response";
 import { AuthService } from "../service/auth.service";
+import { AuthSuccessMessage } from "@constant/constant";
 
 @ApiTags(DocsTag.AUTH)
 @Controller("auth")
