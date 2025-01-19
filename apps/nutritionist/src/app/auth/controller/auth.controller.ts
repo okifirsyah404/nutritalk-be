@@ -22,7 +22,7 @@ import { AuthOperationDocs } from "../docs/auth.operation";
 import { AuthContentDocs } from "../docs/content/auth.content";
 import { AuthRefreshTokenRequest } from "../dto/request/auth-refresh-token.request";
 import { AuthSignInRequest } from "../dto/request/auth-sign-in.request";
-import { AuthResponse } from "../dto/response/auth.response";
+import { AuthResponse } from "../dto/response/auth-sign-in.response";
 import { AuthService } from "../service/auth.service";
 
 @ApiTags(DocsTag.AUTH)

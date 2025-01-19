@@ -93,8 +93,8 @@ export class AppJwtRepository {
 	async updateRefreshToken(
 		accountId: string,
 		refreshToken: string,
-	): Promise<IAccountEntity> {
-		return this.prisma.account.update({
+	): Promise<void> {
+		await this.prisma.account.update({
 			where: {
 				id: accountId,
 			},

@@ -6,7 +6,7 @@ import { PasswordValidationMessage } from "@common/constant/message/validation/p
 import { BaseApiResponse } from "@common/response/base-api.response";
 import { ContentObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 import { AuthSuccessMessage } from "apps/nutritionist/src/common/constant/message/success/auth-success.message";
-import { AuthResponse } from "../../dto/response/auth.response";
+import { AuthResponse } from "../../dto/response/auth-sign-in.response";
 
 export abstract class AuthContentDocs {
 	static readonly AUTH_SIGN_IN_SUCCESS: ContentObject = {
