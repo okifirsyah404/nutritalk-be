@@ -1,1 +1,1 @@
-yarn lint && yarn meta:nutritionist && yarn build
+yarn lint && yarn build
