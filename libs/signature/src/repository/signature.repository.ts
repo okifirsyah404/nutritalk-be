@@ -1,4 +1,4 @@
-import { ISignature, PrismaService } from "@database/prisma";
+import { ISignatureEntity, PrismaService } from "@database/prisma";
 import { Injectable } from "@nestjs/common";
 
 /**
@@ -22,7 +22,7 @@ export class SignatureRepository {
 	 * @returns { ISignature } A promise that resolves to the signature record if found, or null if not found.
 	 *
 	 */
-	async getSignature(signture: string): Promise<ISignature> {
+	async getSignature(signture: string): Promise<ISignatureEntity> {
 		return this.prisma.signature.findUnique({
 			where: {
 				signature: signture,
@@ -39,7 +39,7 @@ export class SignatureRepository {
 	 * @returns { ISignature } A promise that resolves to the created signature object.
 	 *
 	 */
-	async createSignature(signature: string): Promise<ISignature> {
+	async createSignature(signature: string): Promise<ISignatureEntity> {
 		return this.prisma.signature.create({
 			data: {
 				signature,
