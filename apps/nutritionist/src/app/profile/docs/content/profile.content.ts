@@ -1,8 +1,10 @@
-import { INVALID_TOKEN_CONTENT } from "@common/constant/docs/content/invalid-token.content";
 import { BaseApiResponse } from "@common/response/base-api.response";
+import {
+	INVALID_TOKEN_CONTENT,
+	ProfileErrorMessage,
+	ProfileSuccessMessage,
+} from "@constant/constant";
 import { ContentObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
-import { ProfileErrorMessage } from "@nutritionist/common/constant/message/error/profile-error.message";
-import { ProfileSuccessMessage } from "@nutritionist/common/constant/message/success/profile-success.message";
 import { ProfileResponse } from "../../dto/response/profile.response";
 
 export abstract class ProfileContentDocs {

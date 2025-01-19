@@ -1,3 +1,4 @@
+import { MailQueueConstant } from "@constant/constant";
 import { IMailOtpOptions, MailService } from "@mail/mailer";
 import {
 	OnQueueCompleted,
@@ -7,7 +8,6 @@ import {
 } from "@nestjs/bull";
 import { Logger } from "@nestjs/common";
 import { Job } from "bull";
-import { MailQueueConstant } from "../../../common/constant/queue/mail-queue.constant";
 
 @Processor(MailQueueConstant.MAIL_QUEUE_PROCESSOR)
 export class MailQueueProcessor {

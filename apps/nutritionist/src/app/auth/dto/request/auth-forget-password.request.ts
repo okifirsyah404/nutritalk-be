@@ -1,8 +1,8 @@
 import {
 	ConfirmPasswordValidationMessage,
 	PasswordValidationMessage,
-} from "@common/constant/message/validation/password-validation.message";
-import { SignatureValidationMessage } from "@common/constant/message/validation/signature-validation.message";
+	SignatureValidationMessage,
+} from "@constant/constant";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString, IsStrongPassword } from "class-validator";
 

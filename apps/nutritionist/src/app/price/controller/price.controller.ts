@@ -1,4 +1,5 @@
 import { BaseApiResponse } from "@common/response/base-api.response";
+import { PriceSuccessMessage } from "@constant/constant";
 import { IApiResponse } from "@contract/response/api-response.interface";
 import { INutritionistEntity } from "@database/prisma";
 import { AccessTokenGuard } from "@jwt/app-jwt";
@@ -12,7 +13,6 @@ import {
 	ApiTags,
 	ApiUnauthorizedResponse,
 } from "@nestjs/swagger";
-import { PriceSuccessMessage } from "@nutritionist/common/constant/message/success/price-success.message";
 import { DocsTag } from "@nutritionist/common/docs/docs";
 import { PriceContentDocs } from "../docs/content/price.content";
 import { PriceOperationDocs } from "../docs/price.operation";

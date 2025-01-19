@@ -1,11 +1,14 @@
-import { INVALID_TOKEN_CONTENT } from "@common/constant/docs/content/invalid-token.content";
-import { AuthErrorMessage } from "@common/constant/message/error/auth-error.message";
-import { EmailValidationMessage } from "@common/constant/message/validation/email-validation.message";
-import { FcmTokenValidationMessage } from "@common/constant/message/validation/fcm-token-validation.message";
-import { PasswordValidationMessage } from "@common/constant/message/validation/password-validation.message";
 import { BaseApiResponse } from "@common/response/base-api.response";
+import {
+	AccountErrorMessage,
+	AuthErrorMessage,
+	AuthSuccessMessage,
+	EmailValidationMessage,
+	FcmTokenValidationMessage,
+	INVALID_TOKEN_CONTENT,
+	PasswordValidationMessage,
+} from "@constant/constant";
 import { ContentObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
-import { AuthSuccessMessage } from "apps/nutritionist/src/common/constant/message/success/auth-success.message";
 import { AuthResponse } from "../../dto/response/auth-sign-in.response";
 
 export abstract class AuthContentDocs {
@@ -65,7 +68,7 @@ export abstract class AuthContentDocs {
 			examples: {
 				"Account Not Nutritionist": {
 					value: BaseApiResponse.unauthorized({
-						message: AuthErrorMessage.ERR_ACCOUNT_NOT_NUTRITIONIST,
+						message: AccountErrorMessage.ERR_ACCOUNT_NOT_NUTRITIONIST,
 					}),
 				},
 				"Password Not Match": {
@@ -91,7 +94,7 @@ export abstract class AuthContentDocs {
 			examples: {
 				"Already Signed Out": {
 					value: BaseApiResponse.unauthorized({
-						message: AuthErrorMessage.ERR_ACCOUNT_ALREADY_SIGN_OUT,
+						message: AccountErrorMessage.ERR_ACCOUNT_ALREADY_SIGN_OUT,
 					}),
 				},
 				...INVALID_TOKEN_CONTENT,
@@ -119,7 +122,7 @@ export abstract class AuthContentDocs {
 	static readonly AUTH_NOT_FOUND: ContentObject = {
 		"application/json": {
 			example: BaseApiResponse.notFound({
-				message: AuthErrorMessage.ERR_ACCOUNT_NOT_FOUND,
+				message: AccountErrorMessage.ERR_ACCOUNT_NOT_FOUND,
 			}),
 		},
 	};

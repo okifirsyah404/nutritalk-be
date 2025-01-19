@@ -1,6 +1,9 @@
 import { AppConfigService } from "@config/app-config";
-
-import { AuthErrorMessage } from "@common/constant/message/error/auth-error.message";
+import {
+	AccountErrorMessage,
+	AuthErrorMessage,
+	OtpErrorMessage,
+} from "@constant/constant";
 import { IOtpRequest, IOtpVerify } from "@contract/otp/otp-result.interface";
 import { IAccountEntity } from "@database/prisma";
 import {
@@ -39,7 +42,7 @@ export class AuthForgetPasswordService {
 		const result = await this.repository.findAccountByEmail(reqData.email);
 
 		if (!result) {
-			throw new NotFoundException(AuthErrorMessage.ERR_ACCOUNT_NOT_FOUND);
+			throw new NotFoundException(AccountErrorMessage.ERR_ACCOUNT_NOT_FOUND);
 		}
 
 		const otpResult = await this.otpService.generateOtp({
@@ -80,7 +83,7 @@ export class AuthForgetPasswordService {
 		});
 
 		if (!validateResult) {
-			throw new BadRequestException(AuthErrorMessage.ERR_OTP_INVALID);
+			throw new BadRequestException(OtpErrorMessage.ERR_OTP_INVALID);
 		}
 
 		const signature = await this.signatureService.generateSignature({
@@ -119,7 +122,7 @@ export class AuthForgetPasswordService {
 			await this.repository.findAccountByEmail(email);
 
 		if (!account) {
-			throw new NotFoundException(AuthErrorMessage.ERR_ACCOUNT_NOT_FOUND);
+			throw new NotFoundException(AccountErrorMessage.ERR_ACCOUNT_NOT_FOUND);
 		}
 
 		await this.repository.updatePassword(account.id, reqData.password);

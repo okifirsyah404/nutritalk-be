@@ -1,8 +1,10 @@
 import { BaseApiResponse } from "@common/response/base-api.response";
+import {
+	DashboardSuccessMessage,
+	INVALID_TOKEN_CONTENT,
+} from "@constant/constant";
 import { ContentObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 import { DashboardResponse } from "../dto/response/dashboard.response";
-import { INVALID_TOKEN_CONTENT } from "@common/constant/docs/content/invalid-token.content";
-import { DashboardSuccessMessage } from "@nutritionist/common/constant/message/success/dashboard-success.message";
 
 export abstract class DashboardContentDocs {
 	static readonly SUCCESS_GET_DASHBOARD: ContentObject = {
