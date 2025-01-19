@@ -100,7 +100,7 @@ export class ProfileController {
 		const result = await this.service.updateProfile(nutritionist, reqBody);
 
 		return BaseApiResponse.success({
-			message: "Profile updated",
+			message: ProfileSuccessMessage.SUCCESS_UPDATE_PROFILE,
 			data: ProfileResponse.fromEntity(result),
 		});
 	}
@@ -135,7 +135,7 @@ export class ProfileController {
 		const result = await this.service.uploadProfile(nutritionist, file);
 
 		return BaseApiResponse.success({
-			message: "Profile updated",
+			message: ProfileSuccessMessage.SUCCESS_UPLOAD_IMAGE_PROFILE,
 			data: ProfileResponse.fromEntity(result),
 		});
 	}
@@ -163,7 +163,7 @@ export class ProfileController {
 		);
 
 		return BaseApiResponse.success({
-			message: "Profile updated",
+			message: ProfileSuccessMessage.SUCCESS_SET_AVAILABILITY,
 			data: ProfileResponse.fromEntity(result),
 		});
 	}
