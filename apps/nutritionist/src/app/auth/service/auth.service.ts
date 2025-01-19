@@ -2,6 +2,7 @@ import { AppConfigService } from "@config/app-config";
 
 import { SetCache } from "@cache/app-cache/decorator/set-cache.decorator";
 import { AuthErrorMessage } from "@common/constant/message/error/auth-error.message";
+import { IAuthResponse } from "@contract/response/auth/auth-response.interface";
 import { createDatabaseErrorHandler } from "@infrastructure/err_handler/database.error-handler";
 import { AppJwtService, IJwtRefresh, IJwtToken } from "@jwt/app-jwt";
 import {
@@ -38,9 +39,7 @@ export class AuthService {
 			unit: "minutes",
 		},
 	)
-	async signIn(
-		reqData: AuthSignInRequest,
-	): Promise<IJwtToken & { accountRole: AccountRole }> {
+	async signIn(reqData: AuthSignInRequest): Promise<IAuthResponse> {
 		const result = await this.repository
 			.findAccountByEmail(reqData.email)
 			.catch(createDatabaseErrorHandler);
@@ -95,7 +94,7 @@ export class AuthService {
 	async refreshToken(
 		token: IJwtRefresh,
 		reqData: AuthRefreshTokenRequest,
-	): Promise<IJwtToken & { accountRole: AccountRole }> {
+	): Promise<IAuthResponse> {
 		const nutritionistAccount = await this.repository.findAccountByEmail(
 			token.payload.email,
 		);

@@ -6,14 +6,14 @@ import { PasswordValidationMessage } from "@common/constant/message/validation/p
 import { BaseApiResponse } from "@common/response/base-api.response";
 import { ContentObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 import { AuthSuccessMessage } from "apps/nutritionist/src/common/constant/message/success/auth-success.message";
-import { AuthSignInResponse } from "../../dto/response/auth-sign-in.response";
+import { AuthResponse } from "../../dto/response/auth.response";
 
 export abstract class AuthContentDocs {
 	static readonly AUTH_SIGN_IN_SUCCESS: ContentObject = {
 		"application/json": {
 			example: BaseApiResponse.created({
 				message: AuthSuccessMessage.SUCCESS_AUTH_SIGN_IN,
-				data: AuthSignInResponse.exampleData,
+				data: AuthResponse.exampleData,
 			}),
 		},
 	};
@@ -103,7 +103,7 @@ export abstract class AuthContentDocs {
 		"application/json": {
 			example: BaseApiResponse.success({
 				message: AuthSuccessMessage.SUCCESS_AUTH_REFRESH_TOKEN,
-				data: AuthSignInResponse.exampleData,
+				data: AuthResponse.exampleData,
 			}),
 		},
 	};
