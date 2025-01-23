@@ -9,7 +9,7 @@ import { ValidationError } from "class-validator";
  * @param errors
  */
 export function validationExceptionFactory(errors: ValidationError[]): void {
-	errors.map((error) => {
+	errors.forEach((error) => {
 		throw new BadRequestException(
 			`${error.constraints?.[Object.keys(error.constraints)[0]]}`,
 		);

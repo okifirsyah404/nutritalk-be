@@ -1,4 +1,8 @@
-import { IApiResponse } from "@contract/response/api-response.interface";
+import { IPaginationMeta } from "@contract/pagination/pagination.interface";
+import {
+	IApiPaginationResponse,
+	IApiResponse,
+} from "@contract/response/api-response.interface";
 
 export class BaseApiResponse<T> implements IApiResponse<T> {
 	constructor({
@@ -140,6 +144,59 @@ export class BaseApiResponse<T> implements IApiResponse<T> {
 			timestamp: Date.now(),
 			message,
 			data: undefined,
+		});
+	}
+}
+
+export class BaseApiPaginationResponse<T> implements IApiPaginationResponse<T> {
+	status: string;
+	statusCode: number;
+	timestamp: number;
+	message: string;
+	pagination: IPaginationMeta;
+	data: T[];
+
+	constructor({
+		status,
+		statusCode,
+		timestamp,
+		message,
+		pagination,
+		data,
+	}: {
+		status: string;
+		statusCode: number;
+		timestamp: number;
+		message: string;
+		pagination: IPaginationMeta;
+		data: T[];
+	}) {
+		this.status = status;
+		this.statusCode = statusCode;
+		this.timestamp = timestamp;
+		this.message = message;
+		this.pagination = pagination;
+		this.data = data;
+	}
+
+	static success<R>({
+		statusCode = 200,
+		message,
+		pagination,
+		data,
+	}: {
+		statusCode?: number;
+		message: string;
+		pagination: IPaginationMeta;
+		data: R[];
+	}): BaseApiPaginationResponse<R> {
+		return new BaseApiPaginationResponse<R>({
+			status: "Success",
+			statusCode,
+			timestamp: Date.now(),
+			message,
+			pagination,
+			data,
 		});
 	}
 }
