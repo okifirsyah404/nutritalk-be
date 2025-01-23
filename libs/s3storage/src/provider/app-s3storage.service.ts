@@ -3,7 +3,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { IProfileEntity } from "@database/prisma";
 import { Injectable } from "@nestjs/common";
 import { AccountRole } from "@prisma/client";
-import FileUtils from "@util/utilities/file.util";
+import FileUtils from "@util/src/utilities/file.util";
 import { S3StorageService } from "./s3storage.service";
 
 @Injectable()

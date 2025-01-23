@@ -1,10 +1,12 @@
 import { TempUploadPath } from "@constant/constant";
+import { Injectable } from "@nestjs/common";
 import * as fs from "fs";
 import * as path from "path";
 
 /**
  * A utility class for handling file operations such as copying, deleting, and extracting file information.
  */
+@Injectable()
 class FileUtils {
 	/**
 	 * Copies a temporary file to a specified directory.
@@ -15,10 +17,7 @@ class FileUtils {
 	 *
 	 * @throws Will throw an error if the file cannot be written.
 	 */
-	static async copyTempFile(
-		file: Express.Multer.File,
-		seed: string,
-	): Promise<string> {
+	async copyTempFile(file: Express.Multer.File, seed: string): Promise<string> {
 		const dir = TempUploadPath.TEMP_UPLOAD_PATH;
 
 		if (!fs.existsSync(dir)) {
@@ -41,7 +40,7 @@ class FileUtils {
 	 * @param filePath - The path to the file to be deleted.
 	 * @returns A promise that resolves when the file has been deleted.
 	 */
-	static async deleteTempFile(filePath: string): Promise<void> {
+	async deleteTempFile(filePath: string): Promise<void> {
 		await fs.promises.unlink(filePath);
 	}
 
@@ -51,7 +50,7 @@ class FileUtils {
 	 * @param file - The uploaded file object provided by Multer.
 	 * @returns The file extension as a string.
 	 */
-	static getExtension(file: Express.Multer.File): string {
+	getExtension(file: Express.Multer.File): string {
 		return file.originalname.split(".").pop();
 	}
 
@@ -61,8 +60,27 @@ class FileUtils {
 	 * @param file - The file object provided by Multer middleware.
 	 * @returns The original name of the file.
 	 */
-	static getFileName(file: Express.Multer.File): string {
+	getFileName(file: Express.Multer.File): string {
 		return file.originalname;
+	}
+
+	static copyTempFile(
+		file: Express.Multer.File,
+		seed: string,
+	): Promise<string> {
+		return new FileUtils().copyTempFile(file, seed);
+	}
+
+	static deleteTempFile(filePath: string): Promise<void> {
+		return new FileUtils().deleteTempFile(filePath);
+	}
+
+	static getExtension(file: Express.Multer.File): string {
+		return new FileUtils().getExtension(file);
+	}
+
+	static getFileName(file: Express.Multer.File): string {
+		return new FileUtils().getFileName(file);
 	}
 }
 
