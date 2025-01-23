@@ -1,4 +1,5 @@
 import { BaseApiResponse } from "@common/response/base-api.response";
+import { AuthSuccessMessage } from "@constant/constant";
 import { IApiResponse } from "@contract/response/api-response.interface";
 import { INutritionistEntity } from "@database/prisma";
 import { AccessTokenGuard, IJwtRefresh, RefreshTokenGuard } from "@jwt/app-jwt";
@@ -21,9 +22,8 @@ import { AuthOperationDocs } from "../docs/auth.operation";
 import { AuthContentDocs } from "../docs/content/auth.content";
 import { AuthRefreshTokenRequest } from "../dto/request/auth-refresh-token.request";
 import { AuthSignInRequest } from "../dto/request/auth-sign-in.request";
-import { AuthResponse } from "../dto/response/auth-sign-in.response";
+import { AuthResponse } from "../dto/response/auth.response";
 import { AuthService } from "../service/auth.service";
-import { AuthSuccessMessage } from "@constant/constant";
 
 @ApiTags(DocsTag.AUTH)
 @Controller("auth")

@@ -1,0 +1,6 @@
+export abstract class ScheduleSuccessMessage {
+	static readonly SUCCESS_GET_SCHEDULE = "SUCCESS_GET_SCHEDULE";
+	static readonly SUCCESS_TOGGLE_SCHEDULE_ACTIVE =
+		"SUCCESS_TOGGLE_SCHEDULE_ACTIVE";
+	static readonly SUCCESS_GET_SCHEDULE_TIME = "SUCCESS_GET_SCHEDULE_TIME";
+}

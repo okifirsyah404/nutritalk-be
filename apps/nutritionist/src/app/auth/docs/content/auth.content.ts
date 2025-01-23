@@ -9,7 +9,7 @@ import {
 	PasswordValidationMessage,
 } from "@constant/constant";
 import { ContentObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
-import { AuthResponse } from "../../dto/response/auth-sign-in.response";
+import { AuthResponse } from "../../dto/response/auth.response";
 
 export abstract class AuthContentDocs {
 	static readonly AUTH_SIGN_IN_SUCCESS: ContentObject = {
