@@ -1,6 +1,9 @@
+import { Injectable } from "@nestjs/common";
+
 /**
  * A utility class for date-related operations.
  */
+@Injectable()
 class DateUtils {
 	/**
 	 * Calculates the age difference between the current date and the provided date.
@@ -15,7 +18,7 @@ class DateUtils {
 	 * console.log(age); // { year: 23, month: 9, day: 15, hour: 10, minute: 30, second: 45 }
 	 * ```
 	 */
-	static countAge(date: Date): Promise<{
+	countAge(date: Date): Promise<{
 		year: number;
 		month: number;
 		day: number;
@@ -63,6 +66,17 @@ class DateUtils {
 				second,
 			});
 		});
+	}
+
+	static countAge(date: Date): Promise<{
+		year: number;
+		month: number;
+		day: number;
+		hour: number;
+		minute: number;
+		second: number;
+	}> {
+		return new DateUtils().countAge(date);
 	}
 }
 

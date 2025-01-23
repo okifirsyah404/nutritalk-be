@@ -3,7 +3,7 @@ import { ProfileErrorMessage } from "@constant/constant";
 import { INutritionistEntity } from "@database/prisma";
 import { Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { AppS3StorageService } from "@s3storage/s3storage/provider/app-s3storage.service";
-import DateUtils from "@util/utilities/date.util";
+import DateUtils from "@util/src/utilities/date.util";
 import { UpdateProfileRequest } from "../dto/request/update-profile.request";
 import { ProfileRepository } from "../repository/profile.repository";
 
@@ -12,6 +12,7 @@ export class ProfileService {
 	constructor(
 		private readonly s3Service: AppS3StorageService,
 		private readonly repository: ProfileRepository,
+		private readonly dateUtils: DateUtils,
 	) {}
 
 	private readonly logger = new Logger(ProfileService.name);
@@ -65,7 +66,7 @@ export class ProfileService {
 			phoneNumber: reqData.phoneNumber,
 			dateOfBirth: reqData.dateOfBirth,
 			placeOfBirth: reqData.placeOfBirth,
-			age: (await DateUtils.countAge(reqData.dateOfBirth)).year,
+			age: (await this.dateUtils.countAge(reqData.dateOfBirth)).year,
 		});
 
 		if (!result) {

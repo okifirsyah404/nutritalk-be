@@ -17,6 +17,7 @@ import { PriceModule } from "./app/price/price.module";
 import { ProfileModule } from "./app/profile/profile.module";
 import { ScheduleModule } from "./app/schedule/schedule.module";
 import { QueueModule } from "./module/queue/queue.module";
+import { UtilityModule } from "@util";
 
 @Module({
 	imports: [
@@ -84,6 +85,7 @@ import { QueueModule } from "./module/queue/queue.module";
 			}),
 		}),
 		QueueModule,
+		UtilityModule,
 		HttpModule.register({
 			global: true,
 		}),
