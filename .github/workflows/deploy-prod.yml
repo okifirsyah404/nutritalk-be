@@ -9,7 +9,6 @@ env:
   HUSKY: 0
 
 jobs:
-
   build:
     if: github.event.pull_request.merged == true
     environment: CI
@@ -68,3 +67,20 @@ jobs:
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nutritalk-base:prod
             docker-compose down -v 
             docker-compose up -d --build --force-recreate
+
+  post-deploy:
+    if: github.event.pull_request.merged == true
+    needs: deploy
+    environment: CD
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          script: |
+            docker image prune -a -f
+            docker builder prune -a -f
