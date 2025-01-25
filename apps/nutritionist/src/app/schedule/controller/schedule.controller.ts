@@ -9,10 +9,19 @@ import {
 	IApiResponse,
 	INutritionistEntity,
 	IScheduleEntity,
-	IScheduleTimeEntity,
 } from "@contract";
 import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
-import { Controller, Get, Param, Query, UseGuards } from "@nestjs/common";
+import {
+	Body,
+	Controller,
+	Get,
+	Param,
+	Post,
+	Query,
+	UseGuards,
+} from "@nestjs/common";
+import { TimeRange } from "@util";
+import { CreateScheduleTimeRequest } from "../dto/request/create-schedule-time.request";
 import { ScheduleTimeResponse } from "../dto/response/schedule-time.response";
 import { ScheduleResponse } from "../dto/response/schedule.response";
 import { ScheduleService } from "../service/schedule.service";
@@ -42,7 +51,7 @@ export class ScheduleController {
 	@Get(":scheduleId/toggle-active")
 	async toggleScheduleActive(
 		@Param("scheduleId") scheduleId: string,
-	): Promise<IApiResponse<IScheduleEntity>> {
+	): Promise<IApiResponse<ScheduleResponse>> {
 		const result = await this.service.toggleScheduleActive(scheduleId);
 
 		return BaseApiResponse.success({
@@ -56,7 +65,7 @@ export class ScheduleController {
 		@GetNutritionistLogged() nutritionist: INutritionistEntity,
 		@Param("scheduleId") scheduleId: string,
 		@Query() indexQuery: IndexPaginationRequest,
-	): Promise<IApiPaginationResponse<IScheduleTimeEntity>> {
+	): Promise<IApiPaginationResponse<ScheduleTimeResponse>> {
 		const result = await this.service.paginateScheduleTime(
 			nutritionist.id,
 			scheduleId,
@@ -67,6 +76,21 @@ export class ScheduleController {
 			message: ScheduleSuccessMessage.SUCCESS_GET_SCHEDULE_TIME,
 			pagination: result.pagination,
 			data: ScheduleTimeResponse.fromEntities(result.items),
+		});
+	}
+
+	@Post(":scheduleId/times")
+	async createScheduleTime(
+		@Param("scheduleId") scheduleId: string,
+		@Body() reqBody: CreateScheduleTimeRequest,
+	): Promise<IApiResponse<ScheduleTimeResponse>> {
+		const timeRange = TimeRange.fromDates(reqBody.start, reqBody.end);
+
+		const result = await this.service.createScheduleTime(scheduleId, timeRange);
+
+		return BaseApiResponse.success({
+			message: ScheduleSuccessMessage.SUCCESS_CREATE_SCHEDULE_TIME,
+			data: ScheduleTimeResponse.fromEntity(result),
 		});
 	}
 }
