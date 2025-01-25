@@ -1,4 +1,4 @@
-import { INutritionistEntity, ITransactionEntity } from "@database/prisma";
+import { INutritionistEntity, ITransactionEntity } from "@contract";
 import {
 	ConsultationType,
 	Gender,

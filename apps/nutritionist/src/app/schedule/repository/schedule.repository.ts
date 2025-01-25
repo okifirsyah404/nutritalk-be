@@ -1,11 +1,10 @@
-import { IPaginationResult } from "@contract/pagination/pagination.interface";
-import { IIndexPaginationOption } from "@contract/request/index-pagination-option.interface";
+import { PrismaSelector, PrismaService } from "@config/prisma";
 import {
+	IIndexPaginationOption,
+	IPaginationResult,
 	IScheduleEntity,
 	IScheduleTimeEntity,
-	PrismaService,
-} from "@database/prisma";
-import PrismaSelector from "@database/prisma/helper/prisma.selector";
+} from "@contract";
 import { Injectable, Logger } from "@nestjs/common";
 import { PaginationUtil } from "@util";
 

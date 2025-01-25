@@ -1,6 +1,7 @@
-import { BaseApiResponse } from "@common/response/base-api.response";
-import { IApiResponse } from "@contract/response/api-response.interface";
-import { IJwtSignaturePayload } from "@jwt/app-jwt";
+import { BaseApiResponse } from "@common";
+import { AuthSuccessMessage, OtpSuccessMessage } from "@constant/message";
+import { IApiResponse, IJwtSignaturePayload } from "@contract";
+import { GetSignaturePayload, SignatureTokenGuard } from "@module/signature";
 import { Body, Controller, Post, UseGuards } from "@nestjs/common";
 import {
 	ApiBadRequestResponse,
@@ -10,9 +11,7 @@ import {
 	ApiTags,
 	ApiUnauthorizedResponse,
 } from "@nestjs/swagger";
-import { SignatureTokenGuard } from "@sign/signature";
-import GetSignaturePayload from "@sign/signature/infrastructure/decorator/get-signature-payload.decorator";
-import { DocsTag } from "apps/nutritionist/src/common/docs/docs";
+import { DocsTag } from "@nutritionist/common/docs/docs";
 import { AuthOperationDocs } from "../docs/auth.operation";
 import { AuthForgetPasswordContent } from "../docs/content/auth-forget-password.content";
 import { AuthCheckAccountRequest } from "../dto/request/auth-chcek-account.request";
@@ -21,7 +20,6 @@ import { AuthOtpVerifyRequest } from "../dto/request/auth-otp-verify.request";
 import { AuthForgetPasswordResponse } from "../dto/response/auth-forget-password.response";
 import { AuthOtpVerifyForgetPasswordResponse } from "../dto/response/auth-otp-forget-password.response";
 import { AuthForgetPasswordService } from "../service/auth-forget-password.service";
-import { AuthSuccessMessage, OtpSuccessMessage } from "@constant/constant";
 
 @ApiTags(DocsTag.FORGET_PASSWORD)
 @Controller("auth/forget-password")

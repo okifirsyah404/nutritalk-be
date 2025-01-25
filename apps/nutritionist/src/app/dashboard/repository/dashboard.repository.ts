@@ -1,9 +1,5 @@
-import {
-	INutritionistEntity,
-	ITransactionEntity,
-	PrismaService,
-} from "@database/prisma";
-import PrismaSelector from "@database/prisma/helper/prisma.selector";
+import { PrismaSelector, PrismaService } from "@config/prisma";
+import { INutritionistEntity, ITransactionEntity } from "@contract";
 import { Injectable } from "@nestjs/common";
 import { TransactionStatus } from "@prisma/client";
 

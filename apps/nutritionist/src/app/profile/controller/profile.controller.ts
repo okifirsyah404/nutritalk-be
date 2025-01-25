@@ -1,8 +1,7 @@
-import { BaseApiResponse } from "@common/response/base-api.response";
-import { IApiResponse } from "@contract/response/api-response.interface";
-import { INutritionistEntity } from "@database/prisma";
-import { AccessTokenGuard } from "@jwt/app-jwt";
-import GetNutritionistLogged from "@jwt/app-jwt/infrastructure/decorator/get-nutritionist-logged.decorator";
+import { BaseApiResponse } from "@common";
+import { ProfileSuccessMessage } from "@constant/message";
+import { IApiResponse, INutritionistEntity } from "@contract";
+import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
 import {
 	Body,
 	Controller,
@@ -28,7 +27,6 @@ import { ProfileContentDocs } from "../docs/content/profile.content";
 import { UpdateProfileRequest } from "../dto/request/update-profile.request";
 import { ProfileResponse } from "../dto/response/profile.response";
 import { ProfileService } from "../service/profile.service";
-import { ProfileSuccessMessage } from "@constant/constant";
 
 @ApiTags(DocsTag.PROFILE)
 @ApiBearerAuth()

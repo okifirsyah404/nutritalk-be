@@ -1,4 +1,4 @@
-import { IPriceEntity } from "@database/prisma";
+import { IPriceEntity } from "@contract";
 
 export class PriceResponse implements IPriceEntity {
 	id: string;

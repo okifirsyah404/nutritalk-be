@@ -1,5 +1,4 @@
-import { IAuthResponse } from "@contract/response/auth/auth-response.interface";
-import { IJwtToken } from "@jwt/app-jwt";
+import { IAuthResponse, IJwtToken } from "@contract";
 import { AccountRole } from "@prisma/client";
 
 export class AuthResponse implements IAuthResponse {

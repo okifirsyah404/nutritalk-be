@@ -1,5 +1,5 @@
-import { IAccountEntity, PrismaService } from "@database/prisma";
-import PrismaSelector from "@database/prisma/helper/prisma.selector";
+import { PrismaSelector, PrismaService } from "@config/prisma";
+import { IAccountEntity } from "@contract";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()

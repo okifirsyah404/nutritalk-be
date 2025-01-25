@@ -1,4 +1,4 @@
-import { IAccountEntity, IRoleEntity } from "@database/prisma";
+import { IAccountEntity, IRoleEntity } from "@contract";
 import { AccountRole } from "@prisma/client";
 
 export class AccountResponse implements IAccountEntity {

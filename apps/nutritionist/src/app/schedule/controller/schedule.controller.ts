@@ -1,20 +1,17 @@
-import { IndexPaginationRequest } from "@common/request/index-pagination.request";
 import {
 	BaseApiPaginationResponse,
 	BaseApiResponse,
-} from "@common/response/base-api.response";
-import { ScheduleSuccessMessage } from "@constant/constant";
+	IndexPaginationRequest,
+} from "@common";
+import { ScheduleSuccessMessage } from "@constant/message";
 import {
 	IApiPaginationResponse,
 	IApiResponse,
-} from "@contract/response/api-response.interface";
-import {
 	INutritionistEntity,
 	IScheduleEntity,
 	IScheduleTimeEntity,
-} from "@database/prisma";
-import { AccessTokenGuard } from "@jwt/app-jwt";
-import GetNutritionistLogged from "@jwt/app-jwt/infrastructure/decorator/get-nutritionist-logged.decorator";
+} from "@contract";
+import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
 import { Controller, Get, Param, Query, UseGuards } from "@nestjs/common";
 import { ScheduleTimeResponse } from "../dto/response/schedule-time.response";
 import { ScheduleResponse } from "../dto/response/schedule.response";

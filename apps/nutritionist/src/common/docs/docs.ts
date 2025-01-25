@@ -1,4 +1,4 @@
-import { TagObject } from "@common/docs/tag";
+import { TagObject } from "@common";
 
 /**
  * Represents a documentation tag.

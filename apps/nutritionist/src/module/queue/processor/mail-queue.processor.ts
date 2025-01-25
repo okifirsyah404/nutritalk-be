@@ -1,5 +1,6 @@
-import { MailQueueConstant } from "@constant/constant";
-import { IMailOtpOptions, MailService } from "@mail/mailer";
+import { MailQueueKeyConstant } from "@constant/key";
+import { IMailOtpOptions } from "@contract";
+import { MailService } from "@module/mailer";
 import {
 	OnQueueCompleted,
 	OnQueueError,
@@ -9,13 +10,13 @@ import {
 import { Logger } from "@nestjs/common";
 import { Job } from "bull";
 
-@Processor(MailQueueConstant.MAIL_QUEUE_PROCESSOR)
+@Processor(MailQueueKeyConstant.MAIL_QUEUE_PROCESSOR)
 export class MailQueueProcessor {
 	constructor(private readonly mailService: MailService) {}
 
 	private readonly logger = new Logger(MailQueueProcessor.name);
 
-	@Process(MailQueueConstant.MAIL_OTP_QUEUE_PROCESS)
+	@Process(MailQueueKeyConstant.MAIL_OTP_QUEUE_PROCESS)
 	async sendOtpMail(job: Job<IMailOtpOptions>): Promise<void> {
 		const data = job.data;
 

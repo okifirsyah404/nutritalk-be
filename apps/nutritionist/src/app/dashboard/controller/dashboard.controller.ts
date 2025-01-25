@@ -1,8 +1,7 @@
-import { BaseApiResponse } from "@common/response/base-api.response";
-import { IApiResponse } from "@contract/response/api-response.interface";
-import { INutritionistEntity } from "@database/prisma";
-import { AccessTokenGuard } from "@jwt/app-jwt";
-import GetNutritionistLogged from "@jwt/app-jwt/infrastructure/decorator/get-nutritionist-logged.decorator";
+import { BaseApiResponse } from "@common";
+import { DashboardSuccessMessage } from "@constant/message";
+import { IApiResponse, INutritionistEntity } from "@contract";
+import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
 import { Controller, Get, UseGuards } from "@nestjs/common";
 import {
 	ApiBearerAuth,
@@ -14,7 +13,6 @@ import { DocsTag } from "@nutritionist/common/docs/docs";
 import { DashboardContentDocs } from "../docs/dashboard.content";
 import { DashboardResponse } from "../dto/response/dashboard.response";
 import { DashboardService } from "../service/dashboard.service";
-import { DashboardSuccessMessage } from "@constant/constant";
 
 @ApiTags(DocsTag.DASHBOARD)
 @ApiBearerAuth()

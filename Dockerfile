@@ -11,4 +11,4 @@ COPY . .
 
 RUN yarn remove bcrypt \
 	&& yarn add bcrypt --unsafe-perm --allow-root \
-	&& yarn run db:generate && yarn run build
+	&& yarn run db:generate && yarn run build:all

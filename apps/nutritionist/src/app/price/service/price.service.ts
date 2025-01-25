@@ -1,11 +1,9 @@
-import { ClearCache } from "@cache/app-cache/decorator/clear-cache.decorator";
-import { SetCache } from "@cache/app-cache/decorator/set-cache.decorator";
-import { IPriceEntity } from "@database/prisma";
+import { ClearCache, SetCache } from "@config/app-cache";
+import { PriceErrorMessage } from "@constant/message";
+import { IPriceEntity } from "@contract";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { UpdatePriceRequest } from "../dto/request/update-price.request";
 import { PriceRepository } from "../repository/price.repository";
-import { PriceErrorMessage } from "@constant/constant";
-
 @Injectable()
 export class PriceService {
 	constructor(private readonly repository: PriceRepository) {}

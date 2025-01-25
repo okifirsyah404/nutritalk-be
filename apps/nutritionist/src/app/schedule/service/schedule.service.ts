@@ -1,10 +1,12 @@
-import { ScheduleErrorMessage } from "@constant/constant";
-import { IPaginationResult } from "@contract/pagination/pagination.interface";
-import { IIndexPaginationOption } from "@contract/request/index-pagination-option.interface";
-import { IScheduleEntity, IScheduleTimeEntity } from "@database/prisma";
+import { ScheduleErrorMessage } from "@constant/message";
+import {
+	IIndexPaginationOption,
+	IPaginationResult,
+	IScheduleEntity,
+	IScheduleTimeEntity,
+} from "@contract";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { ScheduleRepository } from "../repository/schedule.repository";
-
 @Injectable()
 export class ScheduleService {
 	constructor(private readonly repository: ScheduleRepository) {}
