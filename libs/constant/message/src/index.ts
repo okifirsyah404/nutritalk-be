@@ -18,4 +18,5 @@ export * from "./validation/email-validation.message";
 export * from "./validation/fcm-token-validation.message";
 export * from "./validation/otp-validation.message";
 export * from "./validation/password-validation.message";
+export * from "./validation/price-validation.message";
 export * from "./validation/signature-validation.message";
