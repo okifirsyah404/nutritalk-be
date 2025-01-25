@@ -12,6 +12,7 @@ import { seconds, ThrottlerModule } from "@nestjs/throttler";
 import { UtilityModule } from "@util";
 import { AccountModule } from "./app/account/account.module";
 import { AuthModule } from "./app/auth/auth.module";
+import { CertificateModule } from "./app/certificate/certificate.module";
 import { DashboardModule } from "./app/dashboard/dashboard.module";
 import { HealthCheckModule } from "./app/health-check/health-check.module";
 import { PriceModule } from "./app/price/price.module";
@@ -98,6 +99,7 @@ import { QueueModule } from "./module/queue/queue.module";
 		PriceModule,
 		ScheduleModule,
 		HealthCheckModule,
+		CertificateModule,
 	],
 	providers: [
 		{
