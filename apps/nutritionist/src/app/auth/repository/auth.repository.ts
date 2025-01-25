@@ -1,5 +1,6 @@
 import { PrismaSelector, PrismaService } from "@config/prisma";
 import { IAccountEntity } from "@contract";
+import { createDatabaseErrorHandler } from "@infrastructure";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
@@ -13,18 +14,20 @@ export class AuthRepository {
 	 * @returns A promise that resolves to the found account, including the password and associated nutritionist.
 	 */
 	async findAccountByEmail(email: string): Promise<IAccountEntity> {
-		return this.prisma.account.findUnique({
-			where: {
-				email: email,
-			},
-			select: {
-				...PrismaSelector.ACCOUNT,
-				password: true,
-				nutritionist: {
-					select: PrismaSelector.NUTRITIONIST_WITH_PROFILE,
+		return this.prisma.account
+			.findUnique({
+				where: {
+					email: email,
 				},
-			},
-		});
+				select: {
+					...PrismaSelector.ACCOUNT,
+					password: true,
+					nutritionist: {
+						select: PrismaSelector.NUTRITIONIST_WITH_PROFILE,
+					},
+				},
+			})
+			.catch(createDatabaseErrorHandler);
 	}
 
 	/**
@@ -34,20 +37,22 @@ export class AuthRepository {
 	 * @returns A promise that resolves to the found account, including the password and associated nutritionist.
 	 */
 	async findAccountById(id: string): Promise<IAccountEntity> {
-		return this.prisma.account.findUnique({
-			where: {
-				id,
-			},
-			select: {
-				...PrismaSelector.ACCOUNT,
-				password: true,
-				fcmToken: true,
-				refreshToken: true,
-				nutritionist: {
-					select: PrismaSelector.NUTRITIONIST_WITH_PROFILE,
+		return this.prisma.account
+			.findUnique({
+				where: {
+					id,
 				},
-			},
-		});
+				select: {
+					...PrismaSelector.ACCOUNT,
+					password: true,
+					fcmToken: true,
+					refreshToken: true,
+					nutritionist: {
+						select: PrismaSelector.NUTRITIONIST_WITH_PROFILE,
+					},
+				},
+			})
+			.catch(createDatabaseErrorHandler);
 	}
 
 	/**
@@ -58,20 +63,22 @@ export class AuthRepository {
 	 * @returns A promise that resolves to the updated account.
 	 */
 	async updateFcmToken(id: string, fcmToken: string): Promise<IAccountEntity> {
-		return this.prisma.account.update({
-			where: {
-				id,
-			},
-			data: {
-				fcmToken,
-			},
-			select: {
-				...PrismaSelector.ACCOUNT,
-				nutritionist: {
-					select: PrismaSelector.NUTRITIONIST_WITH_PROFILE,
+		return this.prisma.account
+			.update({
+				where: {
+					id,
 				},
-			},
-		});
+				data: {
+					fcmToken,
+				},
+				select: {
+					...PrismaSelector.ACCOUNT,
+					nutritionist: {
+						select: PrismaSelector.NUTRITIONIST_WITH_PROFILE,
+					},
+				},
+			})
+			.catch(createDatabaseErrorHandler);
 	}
 
 	/**
@@ -82,19 +89,21 @@ export class AuthRepository {
 	 * @returns A promise that resolves to the updated account object.
 	 */
 	async updatePassword(id: string, password: string): Promise<IAccountEntity> {
-		return this.prisma.account.update({
-			where: {
-				id,
-			},
-			data: {
-				password,
-			},
-			select: {
-				...PrismaSelector.ACCOUNT,
-				nutritionist: {
-					select: PrismaSelector.NUTRITIONIST_WITH_PROFILE,
+		return this.prisma.account
+			.update({
+				where: {
+					id,
 				},
-			},
-		});
+				data: {
+					password,
+				},
+				select: {
+					...PrismaSelector.ACCOUNT,
+					nutritionist: {
+						select: PrismaSelector.NUTRITIONIST_WITH_PROFILE,
+					},
+				},
+			})
+			.catch(createDatabaseErrorHandler);
 	}
 }

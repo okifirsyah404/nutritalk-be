@@ -1,5 +1,6 @@
 import { PrismaSelector, PrismaService } from "@config/prisma";
 import { IPriceEntity } from "@contract";
+import { createDatabaseErrorHandler } from "@infrastructure";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
@@ -15,16 +16,18 @@ export class PriceRepository {
 	async getPriceByNutritionistId(
 		nutritionistId: string,
 	): Promise<IPriceEntity> {
-		return this.prisma.price.findFirst({
-			where: {
-				nutritionist: {
-					id: nutritionistId,
+		return this.prisma.price
+			.findFirst({
+				where: {
+					nutritionist: {
+						id: nutritionistId,
+					},
 				},
-			},
-			select: {
-				...PrismaSelector.PRICE,
-			},
-		});
+				select: {
+					...PrismaSelector.PRICE,
+				},
+			})
+			.catch(createDatabaseErrorHandler);
 	}
 
 	/**
@@ -45,17 +48,19 @@ export class PriceRepository {
 		online: number;
 		offline: number;
 	}): Promise<IPriceEntity> {
-		return this.prisma.price.update({
-			where: {
-				id: priceId,
-			},
-			data: {
-				online,
-				offline,
-			},
-			select: {
-				...PrismaSelector.PRICE,
-			},
-		});
+		return this.prisma.price
+			.update({
+				where: {
+					id: priceId,
+				},
+				data: {
+					online,
+					offline,
+				},
+				select: {
+					...PrismaSelector.PRICE,
+				},
+			})
+			.catch(createDatabaseErrorHandler);
 	}
 }

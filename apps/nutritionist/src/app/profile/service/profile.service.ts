@@ -3,15 +3,16 @@ import { AppS3StorageService } from "@config/s3storage/provider/app-s3storage.se
 import { ProfileErrorMessage } from "@constant/message";
 import { INutritionistEntity } from "@contract";
 import { Injectable, Logger, NotFoundException } from "@nestjs/common";
+import { DateUtil, PhoneNumberUtil } from "@util";
 import { UpdateProfileRequest } from "../dto/request/update-profile.request";
 import { ProfileRepository } from "../repository/profile.repository";
-import { DateUtils } from "@util";
 @Injectable()
 export class ProfileService {
 	constructor(
 		private readonly s3Service: AppS3StorageService,
 		private readonly repository: ProfileRepository,
-		private readonly dateUtils: DateUtils,
+		private readonly dateUtil: DateUtil,
+		private readonly phoneNumberUtil: PhoneNumberUtil,
 	) {}
 
 	private readonly logger = new Logger(ProfileService.name);
@@ -62,10 +63,12 @@ export class ProfileService {
 			id: nutritionist.id,
 			name: reqData.name,
 			address: reqData.address,
-			phoneNumber: reqData.phoneNumber,
+			phoneNumber: this.phoneNumberUtil.transformToLocalePhoneNumber(
+				reqData.phoneNumber,
+			),
 			dateOfBirth: reqData.dateOfBirth,
 			placeOfBirth: reqData.placeOfBirth,
-			age: (await this.dateUtils.countAge(reqData.dateOfBirth)).year,
+			age: (await this.dateUtil.countAge(reqData.dateOfBirth)).year,
 		});
 
 		if (!result) {

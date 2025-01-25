@@ -3,7 +3,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { IProfileEntity } from "@contract";
 import { Injectable } from "@nestjs/common";
 import { AccountRole } from "@prisma/client";
-import { FileUtils } from "@util";
+import { FileUtil } from "@util";
 import { S3StorageService } from "./s3storage.service";
 
 @Injectable()
@@ -68,9 +68,9 @@ export class AppS3StorageService {
 		role: AccountRole;
 		file: Express.Multer.File;
 	}): Promise<string> {
-		const key = `${role.toLowerCase()}/${seed}/${seed}.${FileUtils.getExtension(file)}`;
+		const key = `${role.toLowerCase()}/${seed}/${seed}.${FileUtil.getExtension(file)}`;
 
-		const tempFilePath = await FileUtils.copyTempFile(file, seed);
+		const tempFilePath = await FileUtil.copyTempFile(file, seed);
 
 		await this.service.uploadObject({
 			key,
@@ -78,7 +78,7 @@ export class AppS3StorageService {
 			contentType: file.mimetype,
 		});
 
-		FileUtils.deleteTempFile(tempFilePath);
+		FileUtil.deleteTempFile(tempFilePath);
 
 		return key;
 	}

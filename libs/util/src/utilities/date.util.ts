@@ -4,7 +4,7 @@ import { Injectable } from "@nestjs/common";
  * A utility class for date-related operations.
  */
 @Injectable()
-export class DateUtils {
+export class DateUtil {
 	/**
 	 * Calculates the age difference between the current date and the provided date.
 	 *
@@ -76,6 +76,6 @@ export class DateUtils {
 		minute: number;
 		second: number;
 	}> {
-		return new DateUtils().countAge(date);
+		return new DateUtil().countAge(date);
 	}
 }

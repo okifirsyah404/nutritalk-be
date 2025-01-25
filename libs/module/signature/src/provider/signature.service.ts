@@ -1,7 +1,7 @@
 import { IJwtSignaturePayload, ValidateSignatureOptions } from "@contract";
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { CryptoUtils } from "@util";
+import { CryptoUtil } from "@util";
 import { SignatureRepository } from "../repository/signature.repository";
 
 @Injectable()
@@ -24,7 +24,7 @@ export class SignatureService {
 	async generateSignature(payload: IJwtSignaturePayload): Promise<string> {
 		const token = this.jwtService.sign(payload);
 
-		await this.repository.createSignature(CryptoUtils.encodeBase64(token));
+		await this.repository.createSignature(CryptoUtil.encodeBase64(token));
 
 		return token;
 	}
@@ -47,7 +47,7 @@ export class SignatureService {
 			deleteAfterValidation: true,
 		},
 	): Promise<boolean> {
-		const encodedSignature = CryptoUtils.encodeBase64(signature);
+		const encodedSignature = CryptoUtil.encodeBase64(signature);
 
 		const result = await this.repository.getSignature(encodedSignature);
 

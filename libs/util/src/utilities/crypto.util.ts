@@ -4,7 +4,7 @@ import { Injectable } from "@nestjs/common";
  * A utility class for encoding and decoding strings using Base64 format.
  */
 @Injectable()
-export class CryptoUtils {
+export class CryptoUtil {
 	/**
 	 * Encodes a given string into Base64 format.
 	 *
@@ -26,10 +26,10 @@ export class CryptoUtils {
 	}
 
 	static encodeBase64(data: string): string {
-		return new CryptoUtils().encodeBase64(data);
+		return new CryptoUtil().encodeBase64(data);
 	}
 
 	static decodeBase64(data: string): string {
-		return new CryptoUtils().decodeBase64(data);
+		return new CryptoUtil().decodeBase64(data);
 	}
 }

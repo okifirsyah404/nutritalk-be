@@ -8,6 +8,7 @@ import {
 	OtpValidateParam,
 	SaveOtpParam,
 } from "@contract";
+import { createDatabaseErrorHandler } from "@infrastructure";
 import { Injectable } from "@nestjs/common";
 import * as randString from "randomstring";
 
@@ -115,20 +116,22 @@ export class OtpService {
 		expiration,
 		expiry,
 	}: SaveOtpParam): Promise<OtpGeneratedResult> {
-		const result = await this.prisma.otp.create({
-			data: {
-				email,
-				code: code,
-				purpose: purpose,
-				expired: expiration,
-			},
-			select: {
-				email: true,
-				code: true,
-				expired: true,
-				purpose: true,
-			},
-		});
+		const result = await this.prisma.otp
+			.create({
+				data: {
+					email,
+					code: code,
+					purpose: purpose,
+					expired: expiration,
+				},
+				select: {
+					email: true,
+					code: true,
+					expired: true,
+					purpose: true,
+				},
+			})
+			.catch(createDatabaseErrorHandler);
 
 		return {
 			email: result.email,
@@ -156,22 +159,24 @@ export class OtpService {
 		purpose,
 		code,
 	}: GetOtpParam): Promise<OtpGeneratedResult | null> {
-		const result = await this.prisma.otp.findFirst({
-			where: {
-				email,
-				purpose,
-				code,
-				expired: {
-					gte: new Date(),
+		const result = await this.prisma.otp
+			.findFirst({
+				where: {
+					email,
+					purpose,
+					code,
+					expired: {
+						gte: new Date(),
+					},
 				},
-			},
-			select: {
-				id: true,
-				email: true,
-				code: true,
-				expired: true,
-			},
-		});
+				select: {
+					id: true,
+					email: true,
+					code: true,
+					expired: true,
+				},
+			})
+			.catch(createDatabaseErrorHandler);
 
 		if (!result) {
 			return null;
@@ -195,12 +200,14 @@ export class OtpService {
 	 * @private
 	 */
 	private async _deleteOtp({ email, code }: DeleteOtpParam): Promise<void> {
-		await this.prisma.otp.deleteMany({
-			where: {
-				email,
-				code,
-			},
-		});
+		await this.prisma.otp
+			.deleteMany({
+				where: {
+					email,
+					code,
+				},
+			})
+			.catch(createDatabaseErrorHandler);
 	}
 
 	/**
