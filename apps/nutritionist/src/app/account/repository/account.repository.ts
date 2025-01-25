@@ -1,5 +1,6 @@
 import { PrismaSelector, PrismaService } from "@config/prisma";
 import { IAccountEntity } from "@contract";
+import { createDatabaseErrorHandler } from "@infrastructure";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
@@ -15,17 +16,19 @@ export class AccountRepository {
 	async getAccountByNutritionistId(
 		nutritionistId: string,
 	): Promise<IAccountEntity> {
-		return this.prisma.account.findFirst({
-			where: {
-				nutritionist: {
-					id: nutritionistId,
+		return this.prisma.account
+			.findFirst({
+				where: {
+					nutritionist: {
+						id: nutritionistId,
+					},
 				},
-			},
-			select: {
-				...PrismaSelector.ACCOUNT,
-				createdAt: true,
-				updatedAt: true,
-			},
-		});
+				select: {
+					...PrismaSelector.ACCOUNT,
+					createdAt: true,
+					updatedAt: true,
+				},
+			})
+			.catch(createDatabaseErrorHandler);
 	}
 }

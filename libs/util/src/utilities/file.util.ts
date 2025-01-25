@@ -7,7 +7,7 @@ import * as path from "path";
  * A utility class for handling file operations such as copying, deleting, and extracting file information.
  */
 @Injectable()
-export class FileUtils {
+export class FileUtil {
 	/**
 	 * Copies a temporary file to a specified directory.
 	 *
@@ -68,18 +68,18 @@ export class FileUtils {
 		file: Express.Multer.File,
 		seed: string,
 	): Promise<string> {
-		return new FileUtils().copyTempFile(file, seed);
+		return new FileUtil().copyTempFile(file, seed);
 	}
 
 	static deleteTempFile(filePath: string): Promise<void> {
-		return new FileUtils().deleteTempFile(filePath);
+		return new FileUtil().deleteTempFile(filePath);
 	}
 
 	static getExtension(file: Express.Multer.File): string {
-		return new FileUtils().getExtension(file);
+		return new FileUtil().getExtension(file);
 	}
 
 	static getFileName(file: Express.Multer.File): string {
-		return new FileUtils().getFileName(file);
+		return new FileUtil().getFileName(file);
 	}
 }

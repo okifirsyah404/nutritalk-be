@@ -1,5 +1,6 @@
 import { PrismaSelector, PrismaService } from "@config/prisma";
 import { INutritionistEntity } from "@contract";
+import { createDatabaseErrorHandler } from "@infrastructure";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
@@ -13,20 +14,22 @@ export class ProfileRepository {
 	 * @returns A promise that resolves to the nutritionist profile object.
 	 */
 	async getProfileById(id: string): Promise<INutritionistEntity> {
-		return this.prisma.nutritionist.findUnique({
-			where: {
-				id: id,
-			},
-			select: {
-				...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
-				account: {
-					select: PrismaSelector.ACCOUNT,
+		return this.prisma.nutritionist
+			.findUnique({
+				where: {
+					id: id,
 				},
-				consultationMeta: {
-					select: PrismaSelector.CONSULTATION_META,
+				select: {
+					...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
+					account: {
+						select: PrismaSelector.ACCOUNT,
+					},
+					consultationMeta: {
+						select: PrismaSelector.CONSULTATION_META,
+					},
 				},
-			},
-		});
+			})
+			.catch(createDatabaseErrorHandler);
 	}
 
 	/**
@@ -59,32 +62,34 @@ export class ProfileRepository {
 		dateOfBirth: Date;
 		age: number;
 	}): Promise<INutritionistEntity> {
-		return this.prisma.nutritionist.update({
-			where: {
-				id,
-			},
-			data: {
-				profile: {
-					update: {
-						name,
-						phoneNumber,
-						address,
-						placeOfBirth,
-						dateOfBirth,
-						age,
+		return this.prisma.nutritionist
+			.update({
+				where: {
+					id,
+				},
+				data: {
+					profile: {
+						update: {
+							name,
+							phoneNumber,
+							address,
+							placeOfBirth,
+							dateOfBirth,
+							age,
+						},
 					},
 				},
-			},
-			select: {
-				...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
-				account: {
-					select: PrismaSelector.ACCOUNT,
+				select: {
+					...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
+					account: {
+						select: PrismaSelector.ACCOUNT,
+					},
+					consultationMeta: {
+						select: PrismaSelector.CONSULTATION_META,
+					},
 				},
-				consultationMeta: {
-					select: PrismaSelector.CONSULTATION_META,
-				},
-			},
-		});
+			})
+			.catch(createDatabaseErrorHandler);
 	}
 
 	/**
@@ -95,27 +100,29 @@ export class ProfileRepository {
 	 * @returns A promise that resolves to the updated nutritionist object.
 	 */
 	async updateImageKey(id: string, key: string): Promise<INutritionistEntity> {
-		return this.prisma.nutritionist.update({
-			where: {
-				id,
-			},
-			data: {
-				profile: {
-					update: {
-						imageKey: key,
+		return this.prisma.nutritionist
+			.update({
+				where: {
+					id,
+				},
+				data: {
+					profile: {
+						update: {
+							imageKey: key,
+						},
 					},
 				},
-			},
-			select: {
-				...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
-				account: {
-					select: PrismaSelector.ACCOUNT,
+				select: {
+					...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
+					account: {
+						select: PrismaSelector.ACCOUNT,
+					},
+					consultationMeta: {
+						select: PrismaSelector.CONSULTATION_META,
+					},
 				},
-				consultationMeta: {
-					select: PrismaSelector.CONSULTATION_META,
-				},
-			},
-		});
+			})
+			.catch(createDatabaseErrorHandler);
 	}
 
 	/**
@@ -129,22 +136,24 @@ export class ProfileRepository {
 		id: string,
 		isAvailable: boolean,
 	): Promise<INutritionistEntity> {
-		return this.prisma.nutritionist.update({
-			where: {
-				id,
-			},
-			data: {
-				isAvailable,
-			},
-			select: {
-				...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
-				account: {
-					select: PrismaSelector.ACCOUNT,
+		return this.prisma.nutritionist
+			.update({
+				where: {
+					id,
 				},
-				consultationMeta: {
-					select: PrismaSelector.CONSULTATION_META,
+				data: {
+					isAvailable,
 				},
-			},
-		});
+				select: {
+					...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
+					account: {
+						select: PrismaSelector.ACCOUNT,
+					},
+					consultationMeta: {
+						select: PrismaSelector.CONSULTATION_META,
+					},
+				},
+			})
+			.catch(createDatabaseErrorHandler);
 	}
 }

@@ -62,9 +62,7 @@ export class AuthService {
 			throw new UnauthorizedException(AuthErrorMessage.ERR_PASSWORD_NOT_MATCH);
 		}
 
-		this.repository
-			.updateFcmToken(result.id, reqData.fcmToken)
-			.catch(createDatabaseErrorHandler);
+		this.repository.updateFcmToken(result.id, reqData.fcmToken);
 
 		const { accessToken, refreshToken } =
 			await this.appJwtService.generateAuthTokens({
@@ -106,9 +104,7 @@ export class AuthService {
 				email: token.payload.email,
 			});
 
-		this.repository
-			.updateFcmToken(nutritionistAccount.id, reqData.fcmToken)
-			.catch(createDatabaseErrorHandler);
+		this.repository.updateFcmToken(nutritionistAccount.id, reqData.fcmToken);
 
 		return {
 			accessToken,
@@ -134,8 +130,6 @@ export class AuthService {
 
 		await this.appJwtService.deleteRefreshToken(id);
 
-		await this.repository
-			.updateFcmToken(id, null)
-			.catch(createDatabaseErrorHandler);
+		await this.repository.updateFcmToken(id, null);
 	}
 }

@@ -13,7 +13,7 @@ import { createDatabaseErrorHandler } from "@infrastructure";
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { AccountRole } from "@prisma/client";
-import { CryptoUtils } from "@util";
+import { CryptoUtil } from "@util";
 import { AppJwtRepository } from "../repository/app-jwt.repository";
 
 @Injectable()
@@ -112,7 +112,7 @@ export class AppJwtService {
 		accountId: string,
 		refreshToken: string,
 	): Promise<boolean> {
-		const encoded = CryptoUtils.encodeBase64(refreshToken);
+		const encoded = CryptoUtil.encodeBase64(refreshToken);
 
 		const result = await this.repository
 			.findAccountByIdAndRefreshToken(accountId, encoded)
@@ -240,7 +240,7 @@ export class AppJwtService {
 		accountId: string,
 		refreshToken: string,
 	): Promise<void> {
-		const encoded = CryptoUtils.encodeBase64(refreshToken);
+		const encoded = CryptoUtil.encodeBase64(refreshToken);
 
 		await this.repository
 			.updateRefreshToken(accountId, encoded)

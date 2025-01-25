@@ -1,5 +1,6 @@
 import { PrismaService } from "@config/prisma";
 import { ISignatureEntity } from "@contract";
+import { createDatabaseErrorHandler } from "@infrastructure";
 import { Injectable } from "@nestjs/common";
 
 /**
@@ -24,11 +25,13 @@ export class SignatureRepository {
 	 *
 	 */
 	async getSignature(signature: string): Promise<ISignatureEntity> {
-		return this.prisma.signature.findUnique({
-			where: {
-				signature: signature,
-			},
-		});
+		return this.prisma.signature
+			.findUnique({
+				where: {
+					signature: signature,
+				},
+			})
+			.catch(createDatabaseErrorHandler);
 	}
 
 	/**
@@ -41,11 +44,13 @@ export class SignatureRepository {
 	 *
 	 */
 	async createSignature(signature: string): Promise<ISignatureEntity> {
-		return this.prisma.signature.create({
-			data: {
-				signature,
-			},
-		});
+		return this.prisma.signature
+			.create({
+				data: {
+					signature,
+				},
+			})
+			.catch(createDatabaseErrorHandler);
 	}
 
 	/**
@@ -57,10 +62,12 @@ export class SignatureRepository {
 	 *
 	 */
 	async deleteSignature(signature: string): Promise<void> {
-		await this.prisma.signature.delete({
-			where: {
-				signature: signature,
-			},
-		});
+		await this.prisma.signature
+			.delete({
+				where: {
+					signature: signature,
+				},
+			})
+			.catch(createDatabaseErrorHandler);
 	}
 }

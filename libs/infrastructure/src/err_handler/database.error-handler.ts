@@ -15,7 +15,7 @@ export function createDatabaseErrorHandler(err: any): PromiseLike<never> {
 					DatabaseErrorMessage.ERR_DATABASE_UNIQUE_CONSTRAINT,
 				);
 			default:
-				throw new UnprocessableEntityException(
+				throw new InternalServerErrorException(
 					DatabaseErrorMessage.ERR_DATABASE,
 				);
 		}
