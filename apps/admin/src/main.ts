@@ -31,6 +31,10 @@ async function bootstrap(): Promise<void> {
 	const appConfig = app.get(AppConfigService).appConfig;
 	const config = app.get(AppConfigService).appAdminConfig;
 
+	new Logger("Admin App will run on").log(
+		`http://localhost:${config.port}/api/v${config.version} with ${appConfig.env} environment`,
+	);
+
 	app.enableVersioning({
 		type: VersioningType.URI,
 		defaultVersion: config.version,

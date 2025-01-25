@@ -4,6 +4,7 @@ import { validateSync } from "class-validator";
 import { AmpqConfigEnvironmentVariables } from "../configs/amqp.config";
 import { AppAdminEnvironmentVariables } from "../configs/app-admin.config";
 import { AppNutritionistEnvironmentVariables } from "../configs/app-nutritionist.config";
+import { AppPatientEnvironmentVariables } from "../configs/app-patient.config";
 import { AppEnvironmentVariables } from "../configs/app.config";
 import { BcryptEnvironmentVariables } from "../configs/bcrypt.config";
 import { DatabaseEnvironmentVariables } from "../configs/database.config";
@@ -18,6 +19,7 @@ class EnvironmentVariables extends IntersectionType(
 	AppEnvironmentVariables,
 	AppAdminEnvironmentVariables,
 	AppNutritionistEnvironmentVariables,
+	AppPatientEnvironmentVariables,
 	JwtEnvironmentVariables,
 	RedisEnvironmentVariables,
 	SmtpEnvironmentVariables,

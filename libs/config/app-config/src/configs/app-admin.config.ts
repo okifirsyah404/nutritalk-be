@@ -13,12 +13,6 @@ export type AppAdminConfig = {
 	url: string;
 };
 
-export const APP_ADMIN_CONFIG: AppAdminConfig = {
-	port: parseInt(process.env.APP_ADMIN_PORT!),
-	version: process.env.APP_ADMIN_VERSION!,
-	url: process.env.APP_ADMIN_URL!,
-};
-
 /**
  * Configuration for the admin application.
  *
@@ -32,7 +26,11 @@ export const APP_ADMIN_CONFIG: AppAdminConfig = {
  */
 export const appAdminConfig = registerAs(
 	"appAdminConfig",
-	(): AppAdminConfig => APP_ADMIN_CONFIG,
+	(): AppAdminConfig => ({
+		port: parseInt(process.env.APP_ADMIN_PORT),
+		version: process.env.APP_ADMIN_VERSION,
+		url: process.env.APP_ADMIN_URL,
+	}),
 );
 
 /**
