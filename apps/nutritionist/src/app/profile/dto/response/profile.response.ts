@@ -3,9 +3,8 @@ import {
 	IConsultationMetaEntity,
 	INutritionistEntity,
 	IProfileEntity,
-} from "@database/prisma";
+} from "@contract";
 import { AccountRole, Gender, NutritionistType } from "@prisma/client";
-
 export class ProfileResponse implements INutritionistEntity {
 	id: string;
 	type: NutritionistType;

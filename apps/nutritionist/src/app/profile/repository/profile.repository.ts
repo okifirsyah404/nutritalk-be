@@ -1,5 +1,5 @@
-import { INutritionistEntity, PrismaService } from "@database/prisma";
-import PrismaSelector from "@database/prisma/helper/prisma.selector";
+import { PrismaSelector, PrismaService } from "@config/prisma";
+import { INutritionistEntity } from "@contract";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()

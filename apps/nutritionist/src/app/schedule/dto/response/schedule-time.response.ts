@@ -1,4 +1,4 @@
-import { IScheduleTimeEntity } from "@database/prisma";
+import { IScheduleTimeEntity } from "@contract";
 
 export class ScheduleTimeResponse implements IScheduleTimeEntity {
 	constructor({ id, active, start, end }: IScheduleTimeEntity) {

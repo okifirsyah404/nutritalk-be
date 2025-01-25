@@ -1,9 +1,6 @@
-import { BaseApiResponse } from "@common/response/base-api.response";
-import {
-	AccountErrorMessage,
-	AccountSuccessMessage,
-	INVALID_TOKEN_CONTENT,
-} from "@constant/constant";
+import { BaseApiResponse } from "@common";
+import { INVALID_TOKEN_CONTENT } from "@constant/content";
+import { AccountErrorMessage, AccountSuccessMessage } from "@constant/message";
 import { ContentObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 import { AccountResponse } from "../../dto/response/account.response";
 

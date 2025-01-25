@@ -1,23 +1,20 @@
 import swaggerDocumentBuilder from "@common/docs/swagger-document.builder";
 import { AppConfigService, Environment } from "@config/app-config";
+import { validationExceptionFactory } from "@infrastructure";
 import HttpExceptionFilter from "@infrastructure/filter/http-exception.filter";
 import CreateLogLevel from "@infrastructure/logger/create-log-level";
-import { validationExceptionFactory } from "@infrastructure/validation/validation.factory";
 import { Logger, ValidationPipe, VersioningType } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import cookieParser from "cookie-parser";
-import { NutritionistModule } from "./app.module";
+import { AppModule } from "./app.module";
 import { DocsTag } from "./common/docs/docs";
 import metadata from "./metadata";
 
 async function bootstrap(): Promise<void> {
-	const app = await NestFactory.create<NestExpressApplication>(
-		NutritionistModule,
-		{
-			logger: CreateLogLevel(process.env.NODE_ENV),
-		},
-	);
+	const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+		logger: CreateLogLevel(process.env.NODE_ENV),
+	});
 
 	app.use(cookieParser());
 

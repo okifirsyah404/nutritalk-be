@@ -3,23 +3,21 @@ import {
 	AccountErrorMessage,
 	AuthErrorMessage,
 	OtpErrorMessage,
-} from "@constant/constant";
-import { IOtpRequest, IOtpVerify } from "@contract/otp/otp-result.interface";
-import { IAccountEntity } from "@database/prisma";
+} from "@constant/message";
+import { IAccountEntity, IOtpRequest, IOtpVerify } from "@contract";
+import { OtpService } from "@module/otp";
+import { SignatureService } from "@module/signature";
 import {
 	BadRequestException,
 	Injectable,
 	NotFoundException,
 } from "@nestjs/common";
-import { OtpService } from "@otp/otp";
+import { MailQueueService } from "@nutritionist/module/queue/service/mail-queue.service";
 import { OtpPurpose } from "@prisma/client";
-import { SignatureService } from "@sign/signature";
-import { MailQueueService } from "../../../module/queue/service/mail-queue.service";
 import { AuthCheckAccountRequest } from "../dto/request/auth-chcek-account.request";
 import { AuthForgetPasswordRequest } from "../dto/request/auth-forget-password.request";
 import { AuthOtpVerifyRequest } from "../dto/request/auth-otp-verify.request";
 import { AuthRepository } from "../repository/auth.repository";
-
 @Injectable()
 export class AuthForgetPasswordService {
 	constructor(

@@ -1,4 +1,4 @@
-import { BaseApiResponse } from "@common/response/base-api.response";
+import { BaseApiResponse } from "@common";
 import {
 	AccountErrorMessage,
 	AuthErrorMessage,
@@ -10,11 +10,10 @@ import {
 	OtpValidationMessage,
 	PasswordValidationMessage,
 	SignatureValidationMessage,
-} from "@constant/constant";
+} from "@constant/message";
 import { ContentObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 import { AuthForgetPasswordResponse } from "../../dto/response/auth-forget-password.response";
 import { AuthOtpVerifyForgetPasswordResponse } from "../../dto/response/auth-otp-forget-password.response";
-
 export abstract class AuthForgetPasswordContent {
 	static readonly AUTH_REQUEST_OTP_FORGET_PASSWORD_SUCCESS: ContentObject = {
 		"application/json": {

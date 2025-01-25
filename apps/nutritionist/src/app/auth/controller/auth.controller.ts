@@ -1,10 +1,12 @@
-import { BaseApiResponse } from "@common/response/base-api.response";
-import { AuthSuccessMessage } from "@constant/constant";
-import { IApiResponse } from "@contract/response/api-response.interface";
-import { INutritionistEntity } from "@database/prisma";
-import { AccessTokenGuard, IJwtRefresh, RefreshTokenGuard } from "@jwt/app-jwt";
-import GetNutritionistLogged from "@jwt/app-jwt/infrastructure/decorator/get-nutritionist-logged.decorator";
-import RefreshToken from "@jwt/app-jwt/infrastructure/decorator/refresh-token.decorator";
+import { BaseApiResponse } from "@common";
+import { AuthSuccessMessage } from "@constant/message";
+import { IApiResponse, IJwtRefresh, INutritionistEntity } from "@contract";
+import {
+	AccessTokenGuard,
+	GetNutritionistLogged,
+	RefreshToken,
+	RefreshTokenGuard,
+} from "@module/app-jwt";
 import { Body, Controller, Delete, Post, UseGuards } from "@nestjs/common";
 import {
 	ApiBadRequestResponse,
@@ -17,7 +19,7 @@ import {
 	ApiTags,
 	ApiUnauthorizedResponse,
 } from "@nestjs/swagger";
-import { DocsTag } from "../../../common/docs/docs";
+import { DocsTag } from "@nutritionist/common/docs/docs";
 import { AuthOperationDocs } from "../docs/auth.operation";
 import { AuthContentDocs } from "../docs/content/auth.content";
 import { AuthRefreshTokenRequest } from "../dto/request/auth-refresh-token.request";

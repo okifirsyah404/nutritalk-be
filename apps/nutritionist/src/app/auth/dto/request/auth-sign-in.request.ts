@@ -2,7 +2,7 @@ import {
 	EmailValidationMessage,
 	FcmTokenValidationMessage,
 	PasswordValidationMessage,
-} from "@constant/constant";
+} from "@constant/message";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 

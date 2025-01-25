@@ -1,4 +1,4 @@
-import { IScheduleEntity, IScheduleTimeEntity } from "@database/prisma";
+import { IScheduleEntity, IScheduleTimeEntity } from "@contract";
 import { DayOfWeek } from "@prisma/client";
 import { ScheduleTimeResponse } from "./schedule-time.response";
 

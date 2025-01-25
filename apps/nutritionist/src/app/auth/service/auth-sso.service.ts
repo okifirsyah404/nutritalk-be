@@ -1,6 +1,6 @@
-import { AppConfigService } from "@config/app-config";
 import { Injectable } from "@nestjs/common";
 import { AuthRepository } from "../repository/auth.repository";
+import { AppConfigService } from "@config/app-config";
 
 @Injectable()
 export class AuthSsoService {

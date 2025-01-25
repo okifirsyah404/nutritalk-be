@@ -1,13 +1,13 @@
-import { BaseApiResponse } from "@common/response/base-api.response";
+import { BaseApiResponse } from "@common";
+import { INVALID_TOKEN_CONTENT } from "@constant/content";
 import {
 	AccountErrorMessage,
 	AuthErrorMessage,
 	AuthSuccessMessage,
 	EmailValidationMessage,
 	FcmTokenValidationMessage,
-	INVALID_TOKEN_CONTENT,
 	PasswordValidationMessage,
-} from "@constant/constant";
+} from "@constant/message";
 import { ContentObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 import { AuthResponse } from "../../dto/response/auth.response";
 

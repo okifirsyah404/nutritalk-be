@@ -1,9 +1,7 @@
-import { BaseApiResponse } from "@common/response/base-api.response";
-import { AccountSuccessMessage } from "@constant/constant";
-import { IApiResponse } from "@contract/response/api-response.interface";
-import { INutritionistEntity } from "@database/prisma";
-import { AccessTokenGuard } from "@jwt/app-jwt";
-import GetNutritionistLogged from "@jwt/app-jwt/infrastructure/decorator/get-nutritionist-logged.decorator";
+import { BaseApiResponse } from "@common";
+import { AccountSuccessMessage } from "@constant/message";
+import { IApiResponse, INutritionistEntity } from "@contract";
+import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
 import { Controller, Get, UseGuards } from "@nestjs/common";
 import {
 	ApiBearerAuth,
@@ -18,7 +16,6 @@ import { AccountOperation } from "../docs/account.operation";
 import { AccountContentDocs } from "../docs/content/account.content";
 import { AccountResponse } from "../dto/response/account.response";
 import { AccountService } from "../service/account.service";
-
 @ApiTags(DocsTag.ACCOUNT)
 @ApiBearerAuth()
 @ApiUnauthorizedResponse({

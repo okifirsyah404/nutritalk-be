@@ -1,8 +1,8 @@
-import { AppConfigLoaded } from "@config/app-config";
 import { Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { MicroserviceOptions, Transport } from "@nestjs/microservices";
 import { NotificationModule } from "./notification.module";
+import { AppConfigLoaded } from "@config/app-config";
 
 async function bootstrap(): Promise<void> {
 	const amqpConfig = await AppConfigLoaded.amqpConfig();

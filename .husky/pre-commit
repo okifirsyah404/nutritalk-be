@@ -1,1 +1,1 @@
-yarn lint && yarn build
+yarn run lint && yarn run build:all

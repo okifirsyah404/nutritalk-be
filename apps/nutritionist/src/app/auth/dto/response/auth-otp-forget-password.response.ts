@@ -1,4 +1,4 @@
-import { IOtpVerify } from "@contract/otp/otp-result.interface";
+import { IOtpVerify } from "@contract";
 
 export class AuthOtpVerifyForgetPasswordResponse implements IOtpVerify {
 	private constructor({ signature, email }: IOtpVerify) {

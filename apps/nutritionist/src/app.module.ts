@@ -1,14 +1,15 @@
-import { AppCacheModule } from "@cache/app-cache";
-import { HttpThrottleGuard } from "@common/guards/http-throttle.guard";
+import { HttpThrottleGuard } from "@common";
+import { AppCacheModule } from "@config/app-cache";
 import { AppConfigModule, AppConfigService } from "@config/app-config";
-import { PrismaModule } from "@database/prisma";
-import { MailerModule } from "@mail/mailer";
+import { PrismaModule } from "@config/prisma";
+import { S3StorageModule } from "@config/s3storage";
+import { MailerModule } from "@module/mailer";
 import { HttpModule } from "@nestjs/axios";
 import { BullModule } from "@nestjs/bull";
 import { Module } from "@nestjs/common";
 import { APP_GUARD } from "@nestjs/core";
 import { seconds, ThrottlerModule } from "@nestjs/throttler";
-import { S3StorageModule } from "@s3storage/s3storage";
+import { UtilityModule } from "@util";
 import { AccountModule } from "./app/account/account.module";
 import { AuthModule } from "./app/auth/auth.module";
 import { DashboardModule } from "./app/dashboard/dashboard.module";
@@ -17,7 +18,6 @@ import { PriceModule } from "./app/price/price.module";
 import { ProfileModule } from "./app/profile/profile.module";
 import { ScheduleModule } from "./app/schedule/schedule.module";
 import { QueueModule } from "./module/queue/queue.module";
-import { UtilityModule } from "@util";
 
 @Module({
 	imports: [
@@ -106,4 +106,4 @@ import { UtilityModule } from "@util";
 		},
 	],
 })
-export class NutritionistModule {}
+export class AppModule {}

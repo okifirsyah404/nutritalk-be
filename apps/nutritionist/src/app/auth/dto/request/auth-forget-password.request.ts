@@ -2,7 +2,7 @@ import {
 	ConfirmPasswordValidationMessage,
 	PasswordValidationMessage,
 	SignatureValidationMessage,
-} from "@constant/constant";
+} from "@constant/message";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString, IsStrongPassword } from "class-validator";
 

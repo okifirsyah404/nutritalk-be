@@ -1,13 +1,42 @@
 /* eslint-disable */
 export default async () => {
-	const t = {};
+	const t = {
+		["./libs/contract/src"]: await import("../../../libs/contract/src"),
+	};
 	return {
 		"@nestjs/swagger": {
 			models: [
 				[
-					import("../../../libs/@common/response/base-api.response"),
+					import("../../../libs/common/src/request/index-pagination.request"),
+					{
+						IndexPaginationRequest: {
+							search: { required: false, type: () => String },
+							sort: { required: false, type: () => String },
+							order: {
+								required: false,
+								enum: t["./libs/contract/src"].SortOrderEnum,
+							},
+							page: { required: true, type: () => Number, default: 1 },
+							limit: {
+								required: true,
+								type: () => Number,
+								default: 10,
+								maximum: 100,
+							},
+						},
+					},
+				],
+				[
+					import("../../../libs/common/src/response/base-api.response"),
 					{
 						BaseApiResponse: {
+							status: { required: true, type: () => String },
+							statusCode: { required: true, type: () => Number },
+							timestamp: { required: true, type: () => Number },
+							message: { required: true, type: () => String },
+							data: { required: true },
+						},
+						BaseApiPaginationResponse: {
 							status: { required: true, type: () => String },
 							statusCode: { required: true, type: () => Number },
 							timestamp: { required: true, type: () => Number },
@@ -188,6 +217,29 @@ export default async () => {
 						},
 					},
 				],
+				[
+					import("./app/schedule/dto/response/schedule-time.response"),
+					{
+						ScheduleTimeResponse: {
+							id: { required: true, type: () => String },
+							active: { required: true, type: () => Boolean },
+							start: { required: true, type: () => Date },
+							end: { required: true, type: () => Date },
+						},
+					},
+				],
+				[
+					import("./app/schedule/dto/response/schedule.response"),
+					{
+						ScheduleResponse: {
+							id: { required: true, type: () => String },
+							active: { required: true, type: () => Boolean },
+							dayOfWeek: { required: true, type: () => Object },
+							dayOfWeekIndex: { required: true, type: () => Number },
+							scheduleTimes: { required: false, type: () => [Object] },
+						},
+					},
+				],
 			],
 			controllers: [
 				[
@@ -289,6 +341,16 @@ export default async () => {
 								description:
 									"Http endpoint for setting the availability of a nutritionist.\n\nResponse:\n- status: string\n- statusCode: number\n- message: string\n- data: object of updated profile information",
 							},
+						},
+					},
+				],
+				[
+					import("./app/schedule/controller/schedule.controller"),
+					{
+						ScheduleController: {
+							paginateSchedule: {},
+							toggleScheduleActive: {},
+							paginateScheduleTime: {},
 						},
 					},
 				],

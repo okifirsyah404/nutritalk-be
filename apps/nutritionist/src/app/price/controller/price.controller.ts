@@ -1,9 +1,7 @@
-import { BaseApiResponse } from "@common/response/base-api.response";
-import { PriceSuccessMessage } from "@constant/constant";
-import { IApiResponse } from "@contract/response/api-response.interface";
-import { INutritionistEntity } from "@database/prisma";
-import { AccessTokenGuard } from "@jwt/app-jwt";
-import GetNutritionistLogged from "@jwt/app-jwt/infrastructure/decorator/get-nutritionist-logged.decorator";
+import { BaseApiResponse } from "@common";
+import { PriceSuccessMessage } from "@constant/message";
+import { IApiResponse, INutritionistEntity } from "@contract";
+import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
 import { Body, Controller, Get, Put, UseGuards } from "@nestjs/common";
 import {
 	ApiBearerAuth,

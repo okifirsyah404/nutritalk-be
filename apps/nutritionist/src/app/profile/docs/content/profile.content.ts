@@ -1,9 +1,6 @@
-import { BaseApiResponse } from "@common/response/base-api.response";
-import {
-	INVALID_TOKEN_CONTENT,
-	ProfileErrorMessage,
-	ProfileSuccessMessage,
-} from "@constant/constant";
+import { BaseApiResponse } from "@common";
+import { INVALID_TOKEN_CONTENT } from "@constant/content";
+import { ProfileErrorMessage, ProfileSuccessMessage } from "@constant/message";
 import { ContentObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 import { ProfileResponse } from "../../dto/response/profile.response";
 
