@@ -1,5 +1,11 @@
+import { RegistrationCertificateErrorMessage } from "@constant/message";
 import { IRegistrationCertificateEntity } from "@contract";
-import { Injectable } from "@nestjs/common";
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException,
+} from "@nestjs/common";
+import { DateRange } from "@util";
 import { CertificateRepository } from "../repository/certificate.repository";
 
 @Injectable()
@@ -13,7 +19,9 @@ export class CertificateService {
 			await this.repository.getCertificateByNutritionistId(nutritionistId);
 
 		if (!result) {
-			throw new Error("Certificate not found");
+			throw new NotFoundException(
+				RegistrationCertificateErrorMessage.ERR_CERTIFICATE_NOT_FOUND,
+			);
 		}
 
 		return result;
@@ -21,16 +29,35 @@ export class CertificateService {
 
 	async createCertificate(
 		nutritionistId: string,
-		certificate: IRegistrationCertificateEntity,
+		certificateNumber: string,
+		certificateDates: DateRange,
 	): Promise<IRegistrationCertificateEntity> {
-		return await this.repository.createCertificate(nutritionistId, certificate);
+		const existingCertificate =
+			await this.repository.getCertificateByNutritionistId(nutritionistId);
+
+		if (existingCertificate) {
+			throw new BadRequestException(
+				RegistrationCertificateErrorMessage.ERR_CERTIFICATE_ALREADY_EXISTS,
+			);
+		}
+
+		return await this.repository.insertCertificate(nutritionistId, {
+			registrationNumber: certificateNumber,
+			issueDate: certificateDates.start.toDate(),
+			validUntil: certificateDates.end.toDate(),
+		});
 	}
 
 	async updateCertificate(
 		nutritionistId: string,
-		certificate: Partial<IRegistrationCertificateEntity>,
+		certificateNumber: string,
+		certificateDates: DateRange,
 	): Promise<IRegistrationCertificateEntity> {
-		return await this.repository.updateCertificate(nutritionistId, certificate);
+		return await this.repository.updateCertificate(nutritionistId, {
+			registrationNumber: certificateNumber,
+			issueDate: certificateDates.start.toDate(),
+			validUntil: certificateDates.end.toDate(),
+		});
 	}
 
 	async deleteCertificate(nutritionistId: string): Promise<void> {

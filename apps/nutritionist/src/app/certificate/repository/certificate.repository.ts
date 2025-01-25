@@ -7,13 +7,13 @@ import { Injectable } from "@nestjs/common";
 export class CertificateRepository {
 	constructor(private readonly prisma: PrismaService) {}
 
-	async createCertificate(
+	async insertCertificate(
 		nutritionistId: string,
 		{
 			registrationNumber,
 			issueDate,
 			validUntil,
-		}: IRegistrationCertificateEntity,
+		}: Partial<IRegistrationCertificateEntity>,
 	): Promise<IRegistrationCertificateEntity> {
 		return await this.prisma.registrationCertificate
 			.create({
