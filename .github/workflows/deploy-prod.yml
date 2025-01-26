@@ -29,9 +29,12 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - run: |
+          touch ./.credentials/${{secrets.FIREBASE_JSON_NAME}}.json
+          echo "${{secrets.FIREBASE_JSON}}" | base64 --decode >> ./.credentials/${{secrets.FIREBASE_JSON_NAME}}.json
+
+      - run: |
           touch .env 
           echo "${{secrets.WORKFLOW_ENV}}" >> .env
-          cat .env
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
