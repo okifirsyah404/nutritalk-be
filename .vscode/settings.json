@@ -5,10 +5,12 @@
 		"*/apps/admin/**/*.ts": "Admin - ${filename}.${extname}",
 		"*/apps/cron/**/*.ts": "Cron - ${filename}.${extname}",
 		"*/apps/notification/**/*.ts": "Notification - ${filename}.${extname}",
-		"*/libs/@common/**/*.ts": "Common - ${filename}.${extname}",
-		"*/libs/@contract/**/*.ts": "Contract - ${filename}.${extname}",
-		"*/libs/@infrastructure/**/*.ts": "Infra - ${filename}.${extname}",
-		"*/libs/@util/**/*.ts": "Util - ${filename}.${extname}"
+		"*/libs/common/**/*.ts": "Common - ${filename}.${extname}",
+		"*/libs/contract/**/*.ts": "Contract - ${filename}.${extname}",
+		"*/libs/infrastructure/**/*.ts": "Infra - ${filename}.${extname}",
+		"*/libs/util/**/*.ts": "Util - ${filename}.${extname}",
+		"*/libs/constant/**/*.ts": "Constant - ${filename}.${extname}",
+		"*/libs/module/**/*.ts": "Lib Module - ${filename}.${extname}"
 	},
 	"prisma.fileWatcher": true,
 	"files.autoSave": "onFocusChange"
