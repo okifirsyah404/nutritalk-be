@@ -35,8 +35,7 @@ jobs:
           cat ./.credentials/${{secrets.FIREBASE_JSON_NAME}}.json
       - run: |
           touch .env 
-          echo "${{secrets.WORKFLOW_ENV}}" >> .env
-          cat .env
+          echo "${{secrets.WORKFLOW_ENV}}" | base64 --decode >> .env
       - run: yarn install --immutable --frozen-lockfile
       - run: yarn run db:generate
       - run: yarn run lint
