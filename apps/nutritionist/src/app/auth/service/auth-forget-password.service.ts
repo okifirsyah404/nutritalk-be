@@ -14,7 +14,7 @@ import {
 } from "@nestjs/common";
 import { MailQueueService } from "@nutritionist/module/queue/service/mail-queue.service";
 import { OtpPurpose } from "@prisma/client";
-import { AuthCheckAccountRequest } from "../dto/request/auth-chcek-account.request";
+import { AuthCheckAccountRequest } from "../dto/request/auth-check-account.request";
 import { AuthForgetPasswordRequest } from "../dto/request/auth-forget-password.request";
 import { AuthOtpVerifyRequest } from "../dto/request/auth-otp-verify.request";
 import { AuthRepository } from "../repository/auth.repository";
