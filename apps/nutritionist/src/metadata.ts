@@ -101,7 +101,7 @@ export default async () => {
 					},
 				],
 				[
-					import("./app/auth/dto/request/auth-chcek-account.request"),
+					import("./app/auth/dto/request/auth-check-account.request"),
 					{ AuthCheckAccountRequest: {} },
 				],
 				[
