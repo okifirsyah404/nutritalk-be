@@ -24,19 +24,26 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
+
       - run: |
           touch ./.credentials/${{secrets.FIREBASE_JSON_NAME}}.json
           echo "${{secrets.FIREBASE_JSON}}" | base64 --decode >> ./.credentials/${{secrets.FIREBASE_JSON_NAME}}.json
           cat ./.credentials/${{secrets.FIREBASE_JSON_NAME}}.json
+
       - run: |
           touch .env 
           echo "${{secrets.WORKFLOW_ENV}}" >> .env
+
       - run: yarn install --immutable --frozen-lockfile
+
       - run: yarn run db:generate
+
       - run: yarn run lint
+
       - run: yarn run build:all
