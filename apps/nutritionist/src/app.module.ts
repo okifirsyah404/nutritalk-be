@@ -1,8 +1,10 @@
 import { HttpThrottleGuard } from "@common";
 import { AppCacheModule } from "@config/app-cache";
 import { AppConfigModule, AppConfigService } from "@config/app-config";
+import { FirebaseModule } from "@config/firebase";
 import { PrismaModule } from "@config/prisma";
 import { S3StorageModule } from "@config/s3storage";
+import { FirebaseServicePath } from "@constant/path/main/firebase-service-path";
 import { MailerModule } from "@module/mailer";
 import { HttpModule } from "@nestjs/axios";
 import { BullModule } from "@nestjs/bull";
@@ -73,6 +75,9 @@ import { QueueModule } from "./module/queue/queue.module";
 					maxRetryAttempts: 3,
 				};
 			},
+		}),
+		FirebaseModule.forRoot({
+			credential: FirebaseServicePath.FIREBASE_SERVICE_FILE_PATH,
 		}),
 		BullModule.forRootAsync({
 			imports: [AppConfigModule],
