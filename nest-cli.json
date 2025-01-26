@@ -97,11 +97,11 @@
 		},
 		"app-cache": {
 			"type": "library",
-			"root": "libs/app-cache",
+			"root": "libs/config/app-cache",
 			"entryFile": "index",
-			"sourceRoot": "libs/app-cache/src",
+			"sourceRoot": "libs/config/app-cache/src",
 			"compilerOptions": {
-				"tsConfigPath": "libs/app-cache/tsconfig.lib.json"
+				"tsConfigPath": "libs/config/app-cache/tsconfig.lib.json"
 			}
 		},
 		"s3storage": {
@@ -120,6 +120,15 @@
 			"sourceRoot": "libs/config/prisma/src",
 			"compilerOptions": {
 				"tsConfigPath": "libs/config/prisma/tsconfig.lib.json"
+			}
+		},
+		"firebase": {
+			"type": "library",
+			"root": "libs/config/firebase",
+			"entryFile": "index",
+			"sourceRoot": "libs/config/firebase/src",
+			"compilerOptions": {
+				"tsConfigPath": "libs/config/firebase/tsconfig.lib.json"
 			}
 		},
 		"otp": {

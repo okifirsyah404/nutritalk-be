@@ -55,7 +55,9 @@
 			"@module/signature": ["libs/module/signature/src"],
 			"@module/signature/*": ["libs/module/signature/src/*"],
 			"@module/app-jwt": ["libs/module/app-jwt/src"],
-			"@module/app-jwt/*": ["libs/module/app-jwt/src/*"]
+			"@module/app-jwt/*": ["libs/module/app-jwt/src/*"],
+			"@config/firebase": ["libs/config/firebase/src"],
+			"@config/firebase/*": ["libs/config/firebase/src/*"]
 		}
 	}
 }
