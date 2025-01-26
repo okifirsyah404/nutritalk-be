@@ -5,7 +5,6 @@ import {
 	Injectable,
 	NotFoundException,
 } from "@nestjs/common";
-import { DateRange } from "@util";
 import { CertificateRepository } from "../repository/certificate.repository";
 
 @Injectable()
@@ -29,8 +28,7 @@ export class CertificateService {
 
 	async createCertificate(
 		nutritionistId: string,
-		certificateNumber: string,
-		certificateDates: DateRange,
+		certificate: Partial<IRegistrationCertificateEntity>,
 	): Promise<IRegistrationCertificateEntity> {
 		const existingCertificate =
 			await this.repository.getCertificateByNutritionistId(nutritionistId);
@@ -41,26 +39,26 @@ export class CertificateService {
 			);
 		}
 
-		return await this.repository.insertCertificate(nutritionistId, {
-			registrationNumber: certificateNumber,
-			issueDate: certificateDates.start.toDate(),
-			validUntil: certificateDates.end.toDate(),
-		});
+		return await this.repository.insertCertificate(nutritionistId, certificate);
 	}
 
 	async updateCertificate(
 		nutritionistId: string,
-		certificateNumber: string,
-		certificateDates: DateRange,
+		certificate: Partial<IRegistrationCertificateEntity>,
 	): Promise<IRegistrationCertificateEntity> {
-		return await this.repository.updateCertificate(nutritionistId, {
-			registrationNumber: certificateNumber,
-			issueDate: certificateDates.start.toDate(),
-			validUntil: certificateDates.end.toDate(),
-		});
+		return await this.repository.updateCertificate(nutritionistId, certificate);
 	}
 
 	async deleteCertificate(nutritionistId: string): Promise<void> {
+		const existingCertificate =
+			await this.repository.getCertificateByNutritionistId(nutritionistId);
+
+		if (!existingCertificate) {
+			throw new NotFoundException(
+				RegistrationCertificateErrorMessage.ERR_CERTIFICATE_NOT_FOUND,
+			);
+		}
+
 		await this.repository.deleteCertificate(nutritionistId);
 	}
 }

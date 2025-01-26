@@ -46,6 +46,8 @@
 			"@constant/content/*": ["libs/constant/content/src/*"],
 			"@constant/key": ["libs/constant/key/src"],
 			"@constant/key/*": ["libs/constant/key/src/*"],
+			"@constant/regex": ["libs/constant/regex/src"],
+			"@constant/regex/*": ["libs/constant/regex/src/*"],
 			"@module/otp": ["libs/module/otp/src"],
 			"@module/otp/*": ["libs/module/otp/src/*"],
 			"@module/mailer": ["libs/module/mailer/src"],
@@ -57,4 +59,3 @@
 		}
 	}
 }
-
