@@ -1,6 +1,5 @@
 import { registerAs } from "@nestjs/config";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 // const packageJson = require(join(process.cwd(), 'package.json'));
 
 /**

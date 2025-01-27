@@ -1,7 +1,8 @@
 import { AppConfigModule, AppConfigService } from "@config/app-config";
-import { CacheModule, CacheStore } from "@nestjs/cache-manager";
+import KeyvRedis from "@keyv/redis";
+import { CacheModule } from "@nestjs/cache-manager";
 import { Global, Module } from "@nestjs/common";
-import { redisStore } from "cache-manager-ioredis-yet";
+import Keyv from "keyv";
 import moment from "moment";
 import { AppCacheService } from "./provider/app-cache.service";
 
@@ -13,20 +14,22 @@ import { AppCacheService } from "./provider/app-cache.service";
 			isGlobal: true,
 			imports: [AppConfigModule],
 			inject: [AppConfigService],
-			useFactory: async (appConfig: AppConfigService) => {
+			useFactory: (appConfig: AppConfigService) => {
 				const ttl = moment
 					.duration(appConfig.redisConfig.ttl, "seconds")
 					.asMilliseconds();
 
-				const store = await redisStore({
-					host: appConfig.redisConfig.host,
-					port: appConfig.redisConfig.port,
-					db: appConfig.redisConfig.database,
-					ttl,
-				});
-
 				return {
-					store: store as unknown as CacheStore,
+					stores: [
+						new Keyv({
+							store: new KeyvRedis({
+								socket: {
+									host: appConfig.redisConfig.host,
+									port: appConfig.redisConfig.port,
+								},
+							}),
+						}),
+					],
 					ttl,
 				};
 			},
