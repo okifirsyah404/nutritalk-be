@@ -7,7 +7,7 @@ import { IChangePasswordRequest } from "@contract";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString, IsStrongPassword } from "class-validator";
 
-export class AuthForgetPasswordRequest implements IChangePasswordRequest {
+export class AccountChangePasswordRequest implements IChangePasswordRequest {
 	/**
 	 *
 	 * Password api property.

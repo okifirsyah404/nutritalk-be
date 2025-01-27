@@ -1,10 +1,18 @@
 import { OtpPurpose } from "@prisma/client";
 
-export interface IOtpRequest {
+export interface IOtpEmail {
 	email: string;
 }
 
-export interface IOtpVerify extends IOtpRequest {
+export interface IOtpVerifyRequest extends IOtpEmail {
+	otp: string;
+}
+
+export interface IOtpResponse extends IOtpEmail {
+	expiryAt: Date;
+}
+
+export interface IOtpVerifyResponse extends IOtpEmail {
 	signature: string;
 }
 
@@ -26,7 +34,7 @@ export interface OtpValidateParam extends OtpParam {
 
 export interface SaveOtpParam extends OtpParam {
 	purpose: OtpPurpose;
-	expiration: Date;
+	expiryAt: Date;
 	expiry: OtpExpiryDuration;
 }
 
@@ -45,6 +53,6 @@ export interface OtpExpiryDuration {
 
 export interface OtpGeneratedResult extends OtpParam {
 	purpose: OtpPurpose;
-	expiration: Date;
+	expiryAt: Date;
 	expiry?: OtpExpiryDuration;
 }

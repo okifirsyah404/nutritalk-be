@@ -1,10 +1,15 @@
-import { AppConfigService } from "@config/app-config";
 import {
 	AccountErrorMessage,
 	AuthErrorMessage,
 	OtpErrorMessage,
+	SignatureErrorMessage,
 } from "@constant/message";
-import { IAccountEntity, IOtpRequest, IOtpVerify } from "@contract";
+import {
+	IAccountEntity,
+	IChangePasswordRequest,
+	IOtpEmail,
+	IOtpVerifyResponse,
+} from "@contract";
 import { OtpService } from "@module/otp";
 import { SignatureService } from "@module/signature";
 import {
@@ -15,13 +20,11 @@ import {
 import { MailQueueService } from "@nutritionist/module/queue/service/mail-queue.service";
 import { OtpPurpose } from "@prisma/client";
 import { AuthCheckAccountRequest } from "../dto/request/auth-check-account.request";
-import { AuthForgetPasswordRequest } from "../dto/request/auth-forget-password.request";
 import { AuthOtpVerifyRequest } from "../dto/request/auth-otp-verify.request";
 import { AuthRepository } from "../repository/auth.repository";
 @Injectable()
 export class AuthForgetPasswordService {
 	constructor(
-		private readonly config: AppConfigService,
 		private readonly repository: AuthRepository,
 		private readonly otpService: OtpService,
 		private readonly mailQueueService: MailQueueService,
@@ -32,11 +35,11 @@ export class AuthForgetPasswordService {
 	 * Checks if an account exists for the given email and generates an OTP for password recovery.
 	 *
 	 * @param {AuthCheckAccountRequest} reqData - The request data containing the email to check.
-	 * @returns {Promise<IOtpRequest>} - A promise that resolves to an object containing the email.
+	 * @returns {Promise<IOtpEmail>} - A promise that resolves to an object containing the email.
 	 *
 	 * @throws {NotFoundException} - If no account is found for the given email.
 	 */
-	async checkAccount(reqData: AuthCheckAccountRequest): Promise<IOtpRequest> {
+	async checkAccount(reqData: AuthCheckAccountRequest): Promise<IOtpEmail> {
 		const result = await this.repository.findAccountByEmail(reqData.email);
 
 		if (!result) {
@@ -50,7 +53,7 @@ export class AuthForgetPasswordService {
 		});
 
 		this.mailQueueService.sendOtpMail({
-			to: this.config.smtpConfig.user,
+			to: result.email,
 			subject: "Forget Password OTP",
 			body: {
 				recipientName: result.email,
@@ -72,7 +75,7 @@ export class AuthForgetPasswordService {
 	 * @returns A promise that resolves to an object containing the email and a generated signature.
 	 * @throws {BadRequestException} If the OTP validation fails.
 	 */
-	async verifyOtp(reqData: AuthOtpVerifyRequest): Promise<IOtpVerify> {
+	async verifyOtp(reqData: AuthOtpVerifyRequest): Promise<IOtpVerifyResponse> {
 		const validateResult = await this.otpService.validateOtp({
 			email: reqData.email,
 			purpose: OtpPurpose.AUTH_FORGOT_PASSWORD,
@@ -101,7 +104,7 @@ export class AuthForgetPasswordService {
 	 * @param {Object} params - The parameters for resetting the password.
 	 * @param {string} params.email - The email of the account to reset the password for.
 	 * @param {AuthForgetPasswordRequest} params.reqData - The request data containing the new password and confirmation.
-	 * @returns {Promise<IOtpRequest>} - A promise that resolves to an object containing the email of the account.
+	 * @returns {Promise<IOtpEmail>} - A promise that resolves to an object containing the email of the account.
 	 * @throws {BadRequestException} - If the new password and confirmation password do not match.
 	 * @throws {NotFoundException} - If no account is found with the given email.
 	 */
@@ -110,10 +113,23 @@ export class AuthForgetPasswordService {
 		reqData,
 	}: {
 		email: string;
-		reqData: AuthForgetPasswordRequest;
-	}): Promise<IOtpRequest> {
+		reqData: IChangePasswordRequest;
+	}): Promise<IOtpEmail> {
 		if (reqData.password !== reqData.confirmPassword) {
 			throw new BadRequestException(AuthErrorMessage.ERR_PASSWORD_NOT_MATCH);
+		}
+
+		const isSignatureValid = await this.signatureService.validateSignature(
+			reqData.signature,
+			{
+				deleteAfterValidation: true,
+			},
+		);
+
+		if (!isSignatureValid) {
+			throw new BadRequestException(
+				SignatureErrorMessage.ERR_SIGNATURE_INVALID,
+			);
 		}
 
 		const account: IAccountEntity =

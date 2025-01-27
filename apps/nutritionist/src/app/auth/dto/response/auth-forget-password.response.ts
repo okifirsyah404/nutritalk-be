@@ -1,13 +1,13 @@
-import { IOtpRequest } from "@contract";
+import { IOtpEmail } from "@contract";
 
-export class AuthForgetPasswordResponse implements IOtpRequest {
+export class AuthForgetPasswordResponse implements IOtpEmail {
 	private constructor(email: string) {
 		this.email = email;
 	}
 
 	email: string;
 
-	static fromEntity(entity: IOtpRequest): AuthForgetPasswordResponse {
+	static fromEntity(entity: IOtpEmail): AuthForgetPasswordResponse {
 		return new AuthForgetPasswordResponse(entity.email);
 	}
 
