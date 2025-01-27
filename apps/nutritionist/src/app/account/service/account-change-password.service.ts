@@ -1,5 +1,5 @@
 import {
-	AuthErrorMessage,
+	ConfirmPasswordValidationMessage,
 	OtpErrorMessage,
 	SignatureErrorMessage,
 } from "@constant/message";
@@ -27,6 +27,12 @@ export class AccountChangePasswordService {
 		private readonly signatureService: SignatureService,
 	) {}
 
+	/**
+	 * Sends an OTP (One-Time Password) to the given nutritionist's email for the purpose of changing the account password.
+	 *
+	 * @param {INutritionistEntity} nutritionist - The nutritionist entity containing account and profile information.
+	 * @returns {Promise<IOtpResponse>} - A promise that resolves to an object containing the email and OTP expiry information.
+	 */
 	async sendOtp(nutritionist: INutritionistEntity): Promise<IOtpResponse> {
 		const otpResult = await this.otpService.generateOtp({
 			email: nutritionist.account.email,
@@ -51,6 +57,13 @@ export class AccountChangePasswordService {
 		};
 	}
 
+	/**
+	 * Verifies the OTP (One-Time Password) for changing the account password.
+	 *
+	 * @param reqData - The request data containing the OTP and email.
+	 * @returns A promise that resolves to an object containing the email and a generated signature.
+	 * @throws {BadRequestException} If the OTP validation fails.
+	 */
 	async verifyOtp(reqData: IOtpVerifyRequest): Promise<IOtpVerifyResponse> {
 		const validateResult = await this.otpService.validateOtp({
 			email: reqData.email,
@@ -74,12 +87,22 @@ export class AccountChangePasswordService {
 		};
 	}
 
+	/**
+	 * Changes the password of an account.
+	 *
+	 * @param {IAccountEntity} account - The account entity for which the password is to be changed.
+	 * @param {IChangePasswordRequest} reqData - The request data containing the new password, confirmation password, and signature.
+	 * @returns {Promise<IAccountEntity>} - A promise that resolves to the updated account entity.
+	 * @throws {BadRequestException} - Throws an exception if the confirmation password does not match the new password or if the signature is invalid.
+	 */
 	async changePassword(
 		account: IAccountEntity,
 		reqData: IChangePasswordRequest,
 	): Promise<IAccountEntity> {
 		if (reqData.password !== reqData.confirmPassword) {
-			throw new BadRequestException(AuthErrorMessage.ERR_PASSWORD_NOT_MATCH);
+			throw new BadRequestException(
+				ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_NOT_MATCH,
+			);
 		}
 
 		const isSignatureValid = await this.signatureService.validateSignature(

@@ -1,5 +1,5 @@
 import { BaseApiResponse } from "@common";
-import { OtpSuccessMessage } from "@constant/message";
+import { AccountSuccessMessage, OtpSuccessMessage } from "@constant/message";
 import { IApiResponse, INutritionistEntity } from "@contract";
 import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
 import { Body, Controller, Get, Post, Put, UseGuards } from "@nestjs/common";
@@ -15,6 +15,20 @@ import { AccountChangePasswordService } from "../service/account-change-password
 export class AccountChangePasswordController {
 	constructor(private readonly service: AccountChangePasswordService) {}
 
+	/**
+	 *
+	 * Http endpoint for requesting an OTP to change the password.
+	 *
+	 * Request body:
+	 * - email: (required) string
+	 *
+	 * Response:
+	 * - status: string
+	 * - statusCode: number
+	 * - message: string
+	 * - data: object of otp request
+	 *
+	 */
 	@Get("otp")
 	async requestChangePasswordOtp(
 		@GetNutritionistLogged() nutritionist: INutritionistEntity,
@@ -27,18 +41,48 @@ export class AccountChangePasswordController {
 		});
 	}
 
+	/**
+	 *
+	 * Http endpoint for verifying an OTP to change the password.
+	 *
+	 * Request body:
+	 * - email: (required) string
+	 * - otp: (required) string
+	 *
+	 * Response:
+	 * - status: string
+	 * - statusCode: number
+	 * - message: string
+	 * - data: object of otp verify response
+	 *
+	 */
 	@Post("otp/verify")
 	async verifyChangePasswordOtp(
 		@Body() reqBody: AccountOtpVerifyRequest,
 	): Promise<IApiResponse<AccountOtpVerifyChangePasswordResponse>> {
 		const result = await this.service.verifyOtp(reqBody);
 
-		return BaseApiResponse.success({
+		return BaseApiResponse.created({
 			message: OtpSuccessMessage.SUCCESS_VERIFY_OTP,
 			data: AccountOtpVerifyChangePasswordResponse.fromEntity(result),
 		});
 	}
 
+	/**
+	 *
+	 * Http endpoint for changing the password.
+	 *
+	 * Request body:
+	 * - oldPassword: (required) string
+	 * - newPassword: (required) string
+	 *
+	 * Response:
+	 * - status: string
+	 * - statusCode: number
+	 * - message: string
+	 * - data: object of account change password response
+	 *
+	 */
 	@Put()
 	async changePassword(
 		@GetNutritionistLogged() nutritionist: INutritionistEntity,
@@ -50,7 +94,7 @@ export class AccountChangePasswordController {
 		);
 
 		return BaseApiResponse.success({
-			message: "Password changed successfully",
+			message: AccountSuccessMessage.SUCCESS_CHANGE_ACCOUNT_PASSWORD,
 			data: AccountChangePasswordResponse.fromEntity(result),
 		});
 	}

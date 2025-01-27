@@ -21,22 +21,22 @@ export class AccountChangePasswordRequest implements IChangePasswordRequest {
 	@ApiProperty({
 		example: "Secret Password",
 	})
-	@IsString({
-		message: PasswordValidationMessage.ERR_PASSWORD_MUST_BE_STRING,
-	})
-	@IsNotEmpty({
-		message: PasswordValidationMessage.ERR_PASSWORD_REQUIRED,
-	})
 	@IsStrongPassword(
 		{
-			minLength: 12,
-			minNumbers: 4,
+			minLength: 8,
+			minNumbers: 2,
 			minUppercase: 1,
 		},
 		{
 			message: PasswordValidationMessage.ERR_PASSWORD_PATTERN,
 		},
 	)
+	@IsString({
+		message: PasswordValidationMessage.ERR_PASSWORD_MUST_BE_STRING,
+	})
+	@IsNotEmpty({
+		message: PasswordValidationMessage.ERR_PASSWORD_REQUIRED,
+	})
 	password: string;
 
 	/**
@@ -52,6 +52,16 @@ export class AccountChangePasswordRequest implements IChangePasswordRequest {
 	@ApiProperty({
 		example: "Secret Password",
 	})
+	@IsStrongPassword(
+		{
+			minLength: 8,
+			minNumbers: 2,
+			minUppercase: 1,
+		},
+		{
+			message: ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_PATTERN,
+		},
+	)
 	@IsString({
 		message:
 			ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_MUST_BE_STRING,
@@ -59,16 +69,6 @@ export class AccountChangePasswordRequest implements IChangePasswordRequest {
 	@IsNotEmpty({
 		message: ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_REQUIRED,
 	})
-	@IsStrongPassword(
-		{
-			minLength: 12,
-			minNumbers: 4,
-			minUppercase: 1,
-		},
-		{
-			message: ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_PATTERN,
-		},
-	)
 	confirmPassword: string;
 
 	/**

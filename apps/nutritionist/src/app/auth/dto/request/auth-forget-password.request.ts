@@ -29,8 +29,8 @@ export class AuthForgetPasswordRequest implements IChangePasswordRequest {
 	})
 	@IsStrongPassword(
 		{
-			minLength: 12,
-			minNumbers: 4,
+			minLength: 8,
+			minNumbers: 2,
 			minUppercase: 1,
 		},
 		{
@@ -61,8 +61,8 @@ export class AuthForgetPasswordRequest implements IChangePasswordRequest {
 	})
 	@IsStrongPassword(
 		{
-			minLength: 12,
-			minNumbers: 4,
+			minLength: 8,
+			minNumbers: 2,
 			minUppercase: 1,
 		},
 		{
