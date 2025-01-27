@@ -83,6 +83,12 @@ jobs:
     environment: CD
     runs-on: ubuntu-latest
     steps:
+      - name: Initialize ZeroTier
+        uses: zerotier/github-action@v1.0.1
+        with:
+          network_id: ${{ secrets.ZEROTIER_NETWORK_ID }}
+          auth_token: ${{ secrets.ZEROTIER_API_TOKEN }}
+
       - name: Post deploy
         uses: appleboy/ssh-action@master
         with:
