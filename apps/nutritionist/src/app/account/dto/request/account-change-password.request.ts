@@ -7,7 +7,7 @@ import { IChangePasswordRequest } from "@contract";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString, IsStrongPassword } from "class-validator";
 
-export class AuthForgetPasswordRequest implements IChangePasswordRequest {
+export class AccountChangePasswordRequest implements IChangePasswordRequest {
 	/**
 	 *
 	 * Password api property.
@@ -21,12 +21,6 @@ export class AuthForgetPasswordRequest implements IChangePasswordRequest {
 	@ApiProperty({
 		example: "Secret Password",
 	})
-	@IsString({
-		message: PasswordValidationMessage.ERR_PASSWORD_MUST_BE_STRING,
-	})
-	@IsNotEmpty({
-		message: PasswordValidationMessage.ERR_PASSWORD_REQUIRED,
-	})
 	@IsStrongPassword(
 		{
 			minLength: 8,
@@ -37,6 +31,12 @@ export class AuthForgetPasswordRequest implements IChangePasswordRequest {
 			message: PasswordValidationMessage.ERR_PASSWORD_PATTERN,
 		},
 	)
+	@IsString({
+		message: PasswordValidationMessage.ERR_PASSWORD_MUST_BE_STRING,
+	})
+	@IsNotEmpty({
+		message: PasswordValidationMessage.ERR_PASSWORD_REQUIRED,
+	})
 	password: string;
 
 	/**
@@ -52,13 +52,6 @@ export class AuthForgetPasswordRequest implements IChangePasswordRequest {
 	@ApiProperty({
 		example: "Secret Password",
 	})
-	@IsString({
-		message:
-			ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_MUST_BE_STRING,
-	})
-	@IsNotEmpty({
-		message: ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_REQUIRED,
-	})
 	@IsStrongPassword(
 		{
 			minLength: 8,
@@ -69,6 +62,13 @@ export class AuthForgetPasswordRequest implements IChangePasswordRequest {
 			message: ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_PATTERN,
 		},
 	)
+	@IsString({
+		message:
+			ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_MUST_BE_STRING,
+	})
+	@IsNotEmpty({
+		message: ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_REQUIRED,
+	})
 	confirmPassword: string;
 
 	/**

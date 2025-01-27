@@ -1,7 +1,7 @@
-import { IOtpVerify } from "@contract";
+import { IOtpVerifyResponse } from "@contract";
 
-export class AuthOtpVerifyForgetPasswordResponse implements IOtpVerify {
-	private constructor({ signature, email }: IOtpVerify) {
+export class AuthOtpVerifyForgetPasswordResponse implements IOtpVerifyResponse {
+	private constructor({ signature, email }: IOtpVerifyResponse) {
 		this.signature = signature;
 		this.email = email;
 	}
@@ -9,7 +9,9 @@ export class AuthOtpVerifyForgetPasswordResponse implements IOtpVerify {
 	signature: string;
 	email: string;
 
-	static fromEntity(entity: IOtpVerify): AuthOtpVerifyForgetPasswordResponse {
+	static fromEntity(
+		entity: IOtpVerifyResponse,
+	): AuthOtpVerifyForgetPasswordResponse {
 		return new AuthOtpVerifyForgetPasswordResponse(entity);
 	}
 

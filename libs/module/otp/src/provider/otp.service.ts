@@ -49,7 +49,7 @@ export class OtpService {
 			email,
 			code,
 			purpose,
-			expiration,
+			expiryAt: expiration,
 			expiry,
 		});
 
@@ -113,7 +113,7 @@ export class OtpService {
 		email,
 		code,
 		purpose,
-		expiration,
+		expiryAt: expiration,
 		expiry,
 	}: SaveOtpParam): Promise<OtpGeneratedResult> {
 		const result = await this.prisma.otp
@@ -137,7 +137,7 @@ export class OtpService {
 			email: result.email,
 			code: result.code,
 			purpose: result.purpose,
-			expiration: result.expired,
+			expiryAt: result.expired,
 			expiry: expiry,
 		};
 	}
@@ -186,7 +186,7 @@ export class OtpService {
 			email: result.email,
 			code: result.code,
 			purpose,
-			expiration: result.expired,
+			expiryAt: result.expired,
 		};
 	}
 
