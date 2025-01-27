@@ -177,24 +177,25 @@
 			"<rootDir>/libs/"
 		],
 		"moduleNameMapper": {
-			"^@contract(|/.*)$": "<rootDir>/libs/contract/src/$1",
-			"^@infrastructure(|/.*)$": "<rootDir>/libs/@infrastructure/$1",
 			"^@common(|/.*)$": "<rootDir>/libs/common/$1",
-			"^@util(|/.*)$": "<rootDir>/libs/util/$1",
-			"^@config/app-config(|/.*)$": "<rootDir>/libs/config/app-config/src/$1",
 			"^@config/app-cache(|/.*)$": "<rootDir>/libs/config/app-cache/src/$1",
-			"^@config/s3storage(|/.*)$": "<rootDir>/libs/config/s3storage/src/$1",
-			"^@config/prisma(|/.*)$": "<rootDir>/libs/config/prisma/src/$1",
+			"^@config/app-config(|/.*)$": "<rootDir>/libs/config/app-config/src/$1",
 			"^@config/firebase(|/.*)$": "<rootDir>/libs/config/firebase/src/$1",
-			"^@constant/message(|/.*)$": "<rootDir>/libs/constant/message/src/$1",
-			"^@constant/regex(|/.*)$": "<rootDir>/libs/constant/regex/src/$1",
-			"^@constant/path(|/.*)$": "<rootDir>/libs/constant/path/src/$1",
+			"^@config/prisma(|/.*)$": "<rootDir>/libs/config/prisma/src/$1",
+			"^@config/s3storage(|/.*)$": "<rootDir>/libs/config/s3storage/src/$1",
 			"^@constant/content(|/.*)$": "<rootDir>/libs/constant/content/src/$1",
 			"^@constant/key(|/.*)$": "<rootDir>/libs/constant/key/src/$1",
-			"^@module/otp(|/.*)$": "<rootDir>/libs/otp/module/src/$1",
+			"^@constant/message(|/.*)$": "<rootDir>/libs/constant/message/src/$1",
+			"^@constant/option(|/.*)$": "<rootDir>/libs/constant/option/src/$1",
+			"^@constant/path(|/.*)$": "<rootDir>/libs/constant/path/src/$1",
+			"^@constant/regex(|/.*)$": "<rootDir>/libs/constant/regex/src/$1",
+			"^@contract(|/.*)$": "<rootDir>/libs/contract/src/$1",
+			"^@infrastructure(|/.*)$": "<rootDir>/libs/@infrastructure/$1",
+			"^@module/app-jwt(|/.*)$": "<rootDir>/libs/module/app-jwt/src/$1",
 			"^@module/mailer(|/.*)$": "<rootDir>/libs/module/mailer/src/$1",
+			"^@module/otp(|/.*)$": "<rootDir>/libs/otp/module/src/$1",
 			"^@module/signature(|/.*)$": "<rootDir>/libs/module/signature/src/$1",
-			"^@module/app-jwt(|/.*)$": "<rootDir>/libs/module/app-jwt/src/$1"
+			"^@util(|/.*)$": "<rootDir>/libs/util/$1"
 		}
 	}
 }
