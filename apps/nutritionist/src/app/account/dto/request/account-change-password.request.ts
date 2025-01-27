@@ -3,6 +3,7 @@ import {
 	PasswordValidationMessage,
 	SignatureValidationMessage,
 } from "@constant/message";
+import { IsStrongPasswordConstant } from "@constant/option";
 import { IChangePasswordRequest } from "@contract";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString, IsStrongPassword } from "class-validator";
@@ -21,16 +22,9 @@ export class AccountChangePasswordRequest implements IChangePasswordRequest {
 	@ApiProperty({
 		example: "Secret Password",
 	})
-	@IsStrongPassword(
-		{
-			minLength: 8,
-			minNumbers: 2,
-			minUppercase: 1,
-		},
-		{
-			message: PasswordValidationMessage.ERR_PASSWORD_PATTERN,
-		},
-	)
+	@IsStrongPassword(IsStrongPasswordConstant.STRONG_PASSWORD, {
+		message: PasswordValidationMessage.ERR_PASSWORD_PATTERN,
+	})
 	@IsString({
 		message: PasswordValidationMessage.ERR_PASSWORD_MUST_BE_STRING,
 	})
@@ -52,16 +46,9 @@ export class AccountChangePasswordRequest implements IChangePasswordRequest {
 	@ApiProperty({
 		example: "Secret Password",
 	})
-	@IsStrongPassword(
-		{
-			minLength: 8,
-			minNumbers: 2,
-			minUppercase: 1,
-		},
-		{
-			message: ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_PATTERN,
-		},
-	)
+	@IsStrongPassword(IsStrongPasswordConstant.STRONG_PASSWORD, {
+		message: ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_PATTERN,
+	})
 	@IsString({
 		message:
 			ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_MUST_BE_STRING,

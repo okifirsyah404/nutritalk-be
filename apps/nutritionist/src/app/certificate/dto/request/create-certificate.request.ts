@@ -12,29 +12,28 @@ import {
 export class CreateCertificateRequest {
 	@Matches(RegexConstant.REGISTRATION_CERTIFICATE, {
 		message:
-			RegistrationCertificateValidationMessage.REGISTRATION_NUMBER_MUST_BE_VALID,
+			RegistrationCertificateValidationMessage.REGISTRATION_NUMBER_INVALID,
 	})
 	@IsString({
 		message:
-			RegistrationCertificateValidationMessage.REGISTRATION_NUMBER_MUST_BE_A_STRING,
+			RegistrationCertificateValidationMessage.REGISTRATION_NUMBER_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
 		message:
-			RegistrationCertificateValidationMessage.REGISTRATION_NUMBER_NOT_BE_EMPTY,
+			RegistrationCertificateValidationMessage.REGISTRATION_NUMBER_REQUIRED,
 	})
 	registrationNumber: string;
 
 	@Type(() => Date)
 	@IsDate({
-		message: RegistrationCertificateValidationMessage.ISSUE_DATE_MUST_BE_A_DATE,
+		message: RegistrationCertificateValidationMessage.ISSUE_DATE_MUST_BE_DATE,
 	})
 	@IsOptional({})
 	issueDate: Date;
 
 	@Type(() => Date)
 	@IsDate({
-		message:
-			RegistrationCertificateValidationMessage.VALID_UNTIL_MUST_BE_A_DATE,
+		message: RegistrationCertificateValidationMessage.VALID_UNTIL_MUST_BE_DATE,
 	})
 	@IsOptional()
 	validUntil: Date;

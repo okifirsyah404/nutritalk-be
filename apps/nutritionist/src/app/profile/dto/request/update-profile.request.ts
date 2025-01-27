@@ -14,10 +14,10 @@ export class UpdateProfileRequest {
 		example: "John Doe",
 	})
 	@IsString({
-		message: NameValidationMessage.NAME_MUST_BE_A_STRING,
+		message: NameValidationMessage.NAME_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
-		message: NameValidationMessage.NAME_MUST_NOT_BE_EMPTY,
+		message: NameValidationMessage.NAME_REQUIRED,
 	})
 	readonly name: string;
 
@@ -25,14 +25,13 @@ export class UpdateProfileRequest {
 		example: "081234567890",
 	})
 	@IsPhoneNumber("ID", {
-		message:
-			PhoneNumberValidationMessage.PHONE_NUMBER_MUST_BE_A_VALID_PHONE_NUMBER,
+		message: PhoneNumberValidationMessage.PHONE_NUMBER_INVALID,
 	})
 	@IsString({
-		message: PhoneNumberValidationMessage.PHONE_NUMBER_MUST_BE_A_STRING,
+		message: PhoneNumberValidationMessage.PHONE_NUMBER_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
-		message: PhoneNumberValidationMessage.PHONE_NUMBER_MUST_NOT_BE_EMPTY,
+		message: PhoneNumberValidationMessage.PHONE_NUMBER_REQUIRED,
 	})
 	readonly phoneNumber: string;
 
@@ -40,10 +39,10 @@ export class UpdateProfileRequest {
 		example: "Jl. Mastrip",
 	})
 	@IsString({
-		message: AddressValidationMessage.ADDRESS_MUST_BE_A_STRING,
+		message: AddressValidationMessage.ADDRESS_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
-		message: AddressValidationMessage.ADDRESS_MUST_NOT_BE_EMPTY,
+		message: AddressValidationMessage.ADDRESS_REQUIRED,
 	})
 	readonly address: string;
 
@@ -51,10 +50,10 @@ export class UpdateProfileRequest {
 		example: "Jember",
 	})
 	@IsString({
-		message: PlaceOfBirthValidationMessage.PLACE_OF_BIRTH_MUST_BE_A_STRING,
+		message: PlaceOfBirthValidationMessage.PLACE_OF_BIRTH_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
-		message: PlaceOfBirthValidationMessage.PLACE_OF_BIRTH_MUST_NOT_BE_EMPTY,
+		message: PlaceOfBirthValidationMessage.PLACE_OF_BIRTH_REQUIRED,
 	})
 	readonly placeOfBirth: string;
 
@@ -63,10 +62,10 @@ export class UpdateProfileRequest {
 	})
 	@Type(() => Date)
 	@IsDate({
-		message: DateOfBirthValidationMessage.DATE_OF_BIRTH_MUST_BE_A_DATE,
+		message: DateOfBirthValidationMessage.DATE_OF_BIRTH_MUST_BE_DATE,
 	})
 	@IsNotEmpty({
-		message: DateOfBirthValidationMessage.DATE_OF_BIRTH_MUST_NOT_BE_EMPTY,
+		message: DateOfBirthValidationMessage.DATE_OF_BIRTH_REQUIRED,
 	})
 	readonly dateOfBirth: Date;
 }
