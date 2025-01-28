@@ -2,7 +2,6 @@ import { ClearCache, SetCache } from "@config/app-cache";
 import { PriceErrorMessage } from "@constant/message";
 import { IPriceEntity } from "@contract";
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { UpdatePriceRequest } from "../dto/request/update-price.request";
 import { PriceRepository } from "../repository/price.repository";
 @Injectable()
 export class PriceService {
@@ -40,7 +39,7 @@ export class PriceService {
 	@ClearCache((nutritionistId: string) => `price:${nutritionistId}`)
 	async updatePrice(
 		nutritionistId: string,
-		reqData: UpdatePriceRequest,
+		reqData: Partial<IPriceEntity>,
 	): Promise<IPriceEntity> {
 		const price =
 			await this.repository.getPriceByNutritionistId(nutritionistId);
