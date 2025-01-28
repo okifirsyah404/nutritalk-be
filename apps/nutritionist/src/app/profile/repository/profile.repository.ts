@@ -1,5 +1,5 @@
 import { PrismaSelector, PrismaService } from "@config/prisma";
-import { INutritionistEntity } from "@contract";
+import { INutritionistEntity, IProfileEntity } from "@contract";
 import { createDatabaseErrorHandler } from "@infrastructure";
 import { Injectable } from "@nestjs/common";
 
@@ -53,15 +53,7 @@ export class ProfileRepository {
 		placeOfBirth,
 		dateOfBirth,
 		age,
-	}: {
-		id: string;
-		name: string;
-		phoneNumber: string;
-		address: string;
-		placeOfBirth: string;
-		dateOfBirth: Date;
-		age: number;
-	}): Promise<INutritionistEntity> {
+	}: Partial<IProfileEntity>): Promise<INutritionistEntity> {
 		return this.prisma.nutritionist
 			.update({
 				where: {

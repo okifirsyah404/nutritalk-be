@@ -1,10 +1,9 @@
 import { RefreshCache, SetCache } from "@config/app-cache";
 import { AppS3StorageService } from "@config/s3storage/provider/app-s3storage.service";
 import { ProfileErrorMessage } from "@constant/message";
-import { INutritionistEntity } from "@contract";
+import { INutritionistEntity, IProfileEntity } from "@contract";
 import { Injectable, Logger, NotFoundException } from "@nestjs/common";
-import { DateUtil, PhoneNumberUtil } from "@util";
-import { UpdateProfileRequest } from "../dto/request/update-profile.request";
+import { DateUtil, GeneralUtil, PhoneNumberUtil } from "@util";
 import { ProfileRepository } from "../repository/profile.repository";
 @Injectable()
 export class ProfileService {
@@ -13,6 +12,7 @@ export class ProfileService {
 		private readonly repository: ProfileRepository,
 		private readonly dateUtil: DateUtil,
 		private readonly phoneNumberUtil: PhoneNumberUtil,
+		private readonly generalUtil: GeneralUtil,
 	) {}
 
 	private readonly logger = new Logger(ProfileService.name);
@@ -57,18 +57,37 @@ export class ProfileService {
 	)
 	async updateProfile(
 		nutritionist: INutritionistEntity,
-		reqData: UpdateProfileRequest,
+		reqData: Partial<IProfileEntity>,
 	): Promise<INutritionistEntity> {
+		this.logger.log(
+			`Updating profile for nutritionist ${this.generalUtil.simpleTernaryTransform(
+				reqData.dateOfBirth,
+				async (value) => (await this.dateUtil.countAge(value)).year,
+			)}`,
+		);
+		this.logger.log(
+			`Updating profile for nutritionist ${JSON.stringify(
+				this.generalUtil.simpleTernaryTransform(
+					reqData.dateOfBirth,
+					async (value) => (await this.dateUtil.countAge(value)).year,
+				),
+			)}`,
+		);
+
 		const result = await this.repository.updateProfile({
 			id: nutritionist.id,
 			name: reqData.name,
 			address: reqData.address,
-			phoneNumber: this.phoneNumberUtil.transformToLocalePhoneNumber(
+			phoneNumber: this.generalUtil.simpleTernaryTransform(
 				reqData.phoneNumber,
+				(value) => this.phoneNumberUtil.transformToLocalePhoneNumber(value),
 			),
 			dateOfBirth: reqData.dateOfBirth,
 			placeOfBirth: reqData.placeOfBirth,
-			age: (await this.dateUtil.countAge(reqData.dateOfBirth)).year,
+			age: await this.generalUtil.simpleTernaryTransformAsync(
+				reqData.dateOfBirth,
+				async (value) => (await this.dateUtil.countAge(value)).year,
+			),
 		});
 
 		if (!result) {

@@ -6,11 +6,13 @@ import { DateUtil } from "./utilities/date.util";
 import { FileUtil } from "./utilities/file.util";
 import { PaginationUtil } from "./utilities/pagination.util";
 import { PhoneNumberUtil } from "./utilities/phone-number.util";
+import { GeneralUtil } from "./utilities/general.util";
 
 @Global()
 @Module({
 	imports: [AppConfigModule],
 	providers: [
+		GeneralUtil,
 		CryptoUtil,
 		DateUtil,
 		FileUtil,
@@ -19,6 +21,7 @@ import { PhoneNumberUtil } from "./utilities/phone-number.util";
 		DatabaseUtil,
 	],
 	exports: [
+		GeneralUtil,
 		CryptoUtil,
 		DateUtil,
 		FileUtil,
