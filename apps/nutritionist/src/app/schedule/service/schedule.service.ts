@@ -72,7 +72,7 @@ export class ScheduleService {
 
 	async createScheduleTime(
 		scheduleId: string,
-		time: TimeRange,
+		scheduleTime: Pick<IScheduleTimeEntity, "start" | "end">,
 	): Promise<IScheduleTimeEntity> {
 		const countEntries = await this.repository.countScheduleTimes(scheduleId);
 
@@ -80,11 +80,13 @@ export class ScheduleService {
 			throw new BadRequestException(ScheduleErrorMessage.ERR_MAX_SCHEDULE_TIME);
 		}
 
+		const timeRange = TimeRange.fromDates(scheduleTime.start, scheduleTime.end);
+
 		const existingEntries = (
 			await this.repository.getManyScheduleTimes(scheduleId)
 		).map((entry) => TimeRange.fromDates(entry.start, entry.end));
 
-		if (time.overlapsOthers(existingEntries)) {
+		if (timeRange.overlapsOthers(existingEntries)) {
 			throw new BadRequestException(
 				ScheduleErrorMessage.ERR_SCHEDULE_TIME_OVERLAP,
 			);
@@ -92,8 +94,8 @@ export class ScheduleService {
 
 		return await this.repository.insertScheduleTime({
 			scheduleId,
-			start: time.start.toDate(),
-			end: time.end.toDate(),
+			start: timeRange.start.toDate(),
+			end: timeRange.end.toDate(),
 		});
 	}
 }

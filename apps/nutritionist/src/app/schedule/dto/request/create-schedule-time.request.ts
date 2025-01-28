@@ -1,7 +1,10 @@
+import { IScheduleTimeEntity } from "@contract";
 import { Type } from "class-transformer";
 import { IsDate, IsNotEmpty } from "class-validator";
 
-export class CreateScheduleTimeRequest {
+export class CreateScheduleTimeRequest
+	implements Pick<IScheduleTimeEntity, "start" | "end">
+{
 	@Type(() => Date)
 	@IsDate()
 	@IsNotEmpty()

@@ -1,5 +1,6 @@
 import { RegistrationCertificateValidationMessage } from "@constant/message";
 import { RegexConstant } from "@constant/regex";
+import { IRegistrationCertificateEntity } from "@contract";
 import { Type } from "class-transformer";
 import {
 	IsDate,
@@ -9,7 +10,13 @@ import {
 	Matches,
 } from "class-validator";
 
-export class CreateCertificateRequest {
+export class CreateCertificateRequest
+	implements
+		Pick<
+			IRegistrationCertificateEntity,
+			"registrationNumber" | "issueDate" | "validUntil"
+		>
+{
 	@Matches(RegexConstant.REGISTRATION_CERTIFICATE, {
 		message:
 			RegistrationCertificateValidationMessage.REGISTRATION_NUMBER_INVALID,

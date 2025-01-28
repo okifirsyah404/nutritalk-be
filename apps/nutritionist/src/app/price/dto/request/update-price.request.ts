@@ -1,11 +1,29 @@
+import { nullToUndefined } from "@common";
 import { PriceValidationMessage } from "@constant/message";
+import { IPriceEntity } from "@contract";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsNotEmpty, Max, Min } from "class-validator";
+import { Transform } from "class-transformer";
+import { IsInt, IsOptional, Max, Min } from "class-validator";
 
-export class UpdatePriceRequest {
+export class UpdatePriceRequest
+	implements Partial<Pick<IPriceEntity, "online" | "offline">>
+{
+	/**
+	 *
+	 * Online price property.
+	 *
+	 * Decorators:
+	 * - IsOptional
+	 * - Min: 50_000
+	 * - Max: 10_000_000
+	 * - IsInt
+	 *
+	 */
+
 	@ApiProperty({
 		example: 50_000,
 	})
+	@Transform(nullToUndefined)
 	@Min(50_000, {
 		message: PriceValidationMessage.ERR_ONLINE_PRICE_MIN,
 	})
@@ -15,14 +33,24 @@ export class UpdatePriceRequest {
 	@IsInt({
 		message: PriceValidationMessage.ERR_ONLINE_PRICE_MUST_BE_NUMBER,
 	})
-	@IsNotEmpty({
-		message: PriceValidationMessage.ERR_ONLINE_PRICE_REQUIRED,
-	})
-	online: number;
+	@IsOptional()
+	online?: number;
 
+	/**
+	 *
+	 * Offline price property.
+	 *
+	 * Decorators:
+	 * - IsOptional
+	 * - Min: 50_000
+	 * - Max: 10_000_000
+	 * - IsInt
+	 *
+	 */
 	@ApiProperty({
 		example: 50_000,
 	})
+	@Transform(nullToUndefined)
 	@Min(50_000, {
 		message: PriceValidationMessage.ERR_OFFLINE_PRICE_MIN,
 	})
@@ -32,8 +60,6 @@ export class UpdatePriceRequest {
 	@IsInt({
 		message: PriceValidationMessage.ERR_OFFLINE_PRICE_MUST_BE_NUMBER,
 	})
-	@IsNotEmpty({
-		message: PriceValidationMessage.ERR_OFFLINE_PRICE_REQUIRED,
-	})
-	offline: number;
+	@IsOptional()
+	offline?: number;
 }

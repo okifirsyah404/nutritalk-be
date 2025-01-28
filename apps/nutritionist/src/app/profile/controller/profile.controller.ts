@@ -1,4 +1,4 @@
-import { BaseApiResponse } from "@common";
+import { BaseApiResponse, ImageFileValidationPipe } from "@common";
 import { ProfileSuccessMessage } from "@constant/message";
 import { IApiResponse, INutritionistEntity } from "@contract";
 import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
@@ -22,7 +22,6 @@ import {
 	ApiUnauthorizedResponse,
 } from "@nestjs/swagger";
 import { DocsTag } from "@nutritionist/common/docs/docs";
-import multer from "multer";
 import { ProfileContentDocs } from "../docs/content/profile.content";
 import { UpdateProfileRequest } from "../dto/request/update-profile.request";
 import { ProfileResponse } from "../dto/response/profile.response";
@@ -98,7 +97,7 @@ export class ProfileController {
 		const result = await this.service.updateProfile(nutritionist, reqBody);
 
 		return BaseApiResponse.success({
-			message: ProfileSuccessMessage.SUCCESS_SET_AVAILABILITY,
+			message: ProfileSuccessMessage.SUCCESS_UPDATE_PROFILE,
 			data: ProfileResponse.fromEntity(result),
 		});
 	}
@@ -121,14 +120,10 @@ export class ProfileController {
 		content: ProfileContentDocs.PROFILE_UPLOAD_IMAGE_SUCCESS,
 	})
 	@Post("upload")
-	@UseInterceptors(
-		FileInterceptor("image", {
-			storage: multer.memoryStorage(),
-		}),
-	)
+	@UseInterceptors(FileInterceptor("image"))
 	async uploadProfile(
 		@GetNutritionistLogged() nutritionist: INutritionistEntity,
-		@UploadedFile() file: Express.Multer.File,
+		@UploadedFile(new ImageFileValidationPipe()) file: Express.Multer.File,
 	): Promise<IApiResponse<ProfileResponse>> {
 		const result = await this.service.uploadProfile(nutritionist, file);
 

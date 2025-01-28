@@ -28,7 +28,10 @@ export class CertificateService {
 
 	async createCertificate(
 		nutritionistId: string,
-		certificate: Partial<IRegistrationCertificateEntity>,
+		certificate: Pick<
+			IRegistrationCertificateEntity,
+			"registrationNumber" | "issueDate" | "validUntil"
+		>,
 	): Promise<IRegistrationCertificateEntity> {
 		const existingCertificate =
 			await this.repository.getCertificateByNutritionistId(nutritionistId);

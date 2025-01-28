@@ -25,6 +25,7 @@ export * from "./validation/date-of-birth-validation.message";
 export * from "./validation/email-validation.message";
 export * from "./validation/experience-validation.message";
 export * from "./validation/fcm-token-validation.message";
+export * from "./validation/file-validation.message";
 export * from "./validation/name-validation.message";
 export * from "./validation/otp-validation.message";
 export * from "./validation/password-validation.message";
