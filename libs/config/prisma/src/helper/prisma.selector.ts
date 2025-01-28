@@ -161,6 +161,13 @@ export abstract class PrismaSelector {
 		active: true,
 	} satisfies Prisma.ScheduleTimeSelect;
 
+	static readonly SCHEDULE_WITH_TIMES = {
+		...PrismaSelector.SCHEDULE,
+		scheduleTimes: {
+			select: PrismaSelector.SCHEDULE_TIME,
+		},
+	} satisfies Prisma.ScheduleSelect;
+
 	static readonly TRANSACTION = {
 		id: true,
 		status: true,
