@@ -1,9 +1,10 @@
 import { Module } from "@nestjs/common";
-import { OccupationService } from "./occupation.service";
-import { OccupationController } from "./occupation.controller";
+import { OccupationController } from "./controller/occupation.controller";
+import { OccupationRepository } from "./repository/occupation.repository";
+import { OccupationService } from "./service/occupation.service";
 
 @Module({
 	controllers: [OccupationController],
-	providers: [OccupationService],
+	providers: [OccupationService, OccupationRepository],
 })
 export class OccupationModule {}
