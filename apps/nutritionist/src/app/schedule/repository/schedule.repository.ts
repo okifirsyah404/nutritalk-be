@@ -7,12 +7,13 @@ import {
 } from "@contract";
 import { createDatabaseErrorHandler } from "@infrastructure";
 import { Injectable, Logger } from "@nestjs/common";
-import { PaginationUtil } from "@util";
+import { DatabaseUtil, PaginationUtil } from "@util";
 
 @Injectable()
 export class ScheduleRepository {
 	constructor(
 		private readonly prisma: PrismaService,
+		private readonly databaseUtil: DatabaseUtil,
 		private readonly paginationUtil: PaginationUtil,
 	) {}
 
@@ -35,12 +36,11 @@ export class ScheduleRepository {
 	): Promise<IPaginationResult<IScheduleEntity>> {
 		const allowToSort = ["dayOfWeekIndex", "active", "createdAt", "updatedAt"];
 
-		const sortKey =
-			allowToSort.find((key) => key === paginationOptions.sort) ||
-			allowToSort[0];
-
-		this.logger.log(`Sorting by ${sortKey} ${paginationOptions.order}`);
-
+		const order = this.databaseUtil.getOrderBy(
+			paginationOptions.sort,
+			allowToSort,
+			paginationOptions.order,
+		);
 		const totalItems = await this.prisma.schedule
 			.count({
 				where: {
@@ -53,9 +53,7 @@ export class ScheduleRepository {
 			.findMany({
 				skip: this.paginationUtil.countOffset(paginationOptions),
 				take: paginationOptions.limit,
-				orderBy: {
-					[sortKey]: paginationOptions.order,
-				},
+				orderBy: order,
 				where: {
 					nutritionistId: nutritionistId,
 				},

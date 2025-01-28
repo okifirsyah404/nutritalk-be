@@ -21,6 +21,9 @@ import { PriceModule } from "./app/price/price.module";
 import { ProfileModule } from "./app/profile/profile.module";
 import { ScheduleModule } from "./app/schedule/schedule.module";
 import { QueueModule } from "./module/queue/queue.module";
+import { NutritionistModule } from "./app/nutritionist/nutritionist.module";
+import { OccupationModule } from "./app/occupation/occupation.module";
+import { PatientModule } from "./app/patient/patient.module";
 
 @Module({
 	imports: [
@@ -105,6 +108,9 @@ import { QueueModule } from "./module/queue/queue.module";
 		ScheduleModule,
 		HealthCheckModule,
 		CertificateModule,
+		NutritionistModule,
+		OccupationModule,
+		PatientModule,
 	],
 	providers: [
 		{
