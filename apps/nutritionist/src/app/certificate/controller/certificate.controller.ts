@@ -12,6 +12,7 @@ import {
 	UseGuards,
 } from "@nestjs/common";
 import { CreateCertificateRequest } from "../dto/request/create-certificate.request";
+import { UpdateCertificateRequest } from "../dto/request/update-certificate.request";
 import { CertificateResponse } from "../dto/response/certificate.response";
 import { CertificateService } from "../service/certificate.service";
 
@@ -59,7 +60,7 @@ export class CertificateController {
 	@Put()
 	async updateCertificate(
 		@GetNutritionistLogged() nutritionist: INutritionistEntity,
-		@Body() reqBody: CreateCertificateRequest,
+		@Body() reqBody: UpdateCertificateRequest,
 	): Promise<IApiResponse<CertificateResponse>> {
 		const result = await this.certificateService.updateCertificate(
 			nutritionist.id,

@@ -13,7 +13,10 @@ export class CertificateRepository {
 			registrationNumber,
 			issueDate,
 			validUntil,
-		}: Partial<IRegistrationCertificateEntity>,
+		}: Pick<
+			IRegistrationCertificateEntity,
+			"registrationNumber" | "issueDate" | "validUntil"
+		>,
 	): Promise<IRegistrationCertificateEntity> {
 		return await this.prisma.registrationCertificate
 			.create({
