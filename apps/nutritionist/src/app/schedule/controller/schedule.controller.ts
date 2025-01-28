@@ -20,7 +20,6 @@ import {
 	Query,
 	UseGuards,
 } from "@nestjs/common";
-import { TimeRange } from "@util";
 import { CreateScheduleTimeRequest } from "../dto/request/create-schedule-time.request";
 import { ScheduleTimeResponse } from "../dto/response/schedule-time.response";
 import { ScheduleResponse } from "../dto/response/schedule.response";
@@ -84,9 +83,7 @@ export class ScheduleController {
 		@Param("scheduleId") scheduleId: string,
 		@Body() reqBody: CreateScheduleTimeRequest,
 	): Promise<IApiResponse<ScheduleTimeResponse>> {
-		const timeRange = TimeRange.fromDates(reqBody.start, reqBody.end);
-
-		const result = await this.service.createScheduleTime(scheduleId, timeRange);
+		const result = await this.service.createScheduleTime(scheduleId, reqBody);
 
 		return BaseApiResponse.success({
 			message: ScheduleSuccessMessage.SUCCESS_CREATE_SCHEDULE_TIME,
