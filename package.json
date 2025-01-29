@@ -188,12 +188,14 @@
 			"^@constant/message(|/.*)$": "<rootDir>/libs/constant/message/src/$1",
 			"^@constant/option(|/.*)$": "<rootDir>/libs/constant/option/src/$1",
 			"^@constant/path(|/.*)$": "<rootDir>/libs/constant/path/src/$1",
+			"^@constant/permission(|/.*)$": "<rootDir>/libs/constant/permission/src/$1",
 			"^@constant/regex(|/.*)$": "<rootDir>/libs/constant/regex/src/$1",
 			"^@contract(|/.*)$": "<rootDir>/libs/contract/src/$1",
 			"^@infrastructure(|/.*)$": "<rootDir>/libs/@infrastructure/$1",
 			"^@module/app-jwt(|/.*)$": "<rootDir>/libs/module/app-jwt/src/$1",
 			"^@module/mailer(|/.*)$": "<rootDir>/libs/module/mailer/src/$1",
 			"^@module/otp(|/.*)$": "<rootDir>/libs/otp/module/src/$1",
+			"^@module/permission(|/.*)$": "<rootDir>/libs/module/permission/src/$1",
 			"^@module/signature(|/.*)$": "<rootDir>/libs/module/signature/src/$1",
 			"^@util(|/.*)$": "<rootDir>/libs/util/$1"
 		}
