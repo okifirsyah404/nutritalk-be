@@ -37,7 +37,7 @@ jobs:
 
       - run: |
           touch .env 
-          echo "${{secrets.WORKFLOW_ENV}}" >> .env
+          echo "${{secrets.WORKFLOW_ENV}}" | base64 --decode >> .env
 
       - run: yarn install --immutable --frozen-lockfile
 
@@ -45,4 +45,4 @@ jobs:
 
       - run: yarn run lint
 
-      - run: yarn run build:all
+      - run: yarn run build main

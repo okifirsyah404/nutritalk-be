@@ -2,7 +2,7 @@ import swaggerDocumentBuilder from "@common/docs/swagger-document.builder";
 import { AppConfigService, Environment } from "@config/app-config";
 import { validationExceptionFactory } from "@infrastructure";
 import HttpExceptionFilter from "@infrastructure/filter/http-exception.filter";
-import CreateLogLevel from "@infrastructure/logger/create-log-level";
+import createLogLevel from "@infrastructure/logger/create-log-level";
 import { Logger, ValidationPipe, VersioningType } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
@@ -13,7 +13,7 @@ import metadata from "./metadata";
 
 async function bootstrap(): Promise<void> {
 	const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-		logger: CreateLogLevel(process.env.NODE_ENV),
+		logger: createLogLevel(process.env.NODE_ENV),
 	});
 
 	app.use(cookieParser());

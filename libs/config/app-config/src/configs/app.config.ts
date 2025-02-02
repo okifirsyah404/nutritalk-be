@@ -1,5 +1,12 @@
 import { registerAs } from "@nestjs/config";
-import { IsDefined, IsEnum, IsString, MinLength } from "class-validator";
+import { Type } from "class-transformer";
+import {
+	IsDefined,
+	IsEnum,
+	IsNumber,
+	IsString,
+	MinLength,
+} from "class-validator";
 
 /**
  * Enum representing different environments for the application.
@@ -25,8 +32,10 @@ export enum Environment {
  * @property {string} host - The host address of the application.
  */
 export type AppConfig = {
-	env: Environment | string | undefined;
+	env: Environment;
 	host: string;
+	port: number;
+	version: number;
 };
 
 /**
@@ -45,8 +54,15 @@ export type AppConfig = {
 export const appConfig = registerAs(
 	"appConfig",
 	(): AppConfig => ({
-		env: Environment[process.env.NODE_ENV.toUpperCase()] || Environment.DEV,
-		host: process.env.APP_HOST!,
+		env:
+			(process.env.NODE_ENV &&
+				Environment[
+					process.env.NODE_ENV.toUpperCase() as keyof typeof Environment
+				]) ||
+			Environment.DEV,
+		host: process.env.APP_HOST,
+		port: parseInt(process.env.APP_PORT, 10),
+		version: parseInt(process.env.APP_VERSION, 10),
 	}),
 );
 
@@ -62,4 +78,14 @@ export class AppEnvironmentVariables {
 	@IsString()
 	@MinLength(1)
 	APP_HOST!: string;
+
+	@Type(() => Number)
+	@IsDefined()
+	@IsNumber()
+	APP_PORT!: string;
+
+	@Type(() => Number)
+	@IsDefined()
+	@IsNumber()
+	APP_VERSION!: string;
 }

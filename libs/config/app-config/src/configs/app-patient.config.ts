@@ -28,7 +28,7 @@ export type AppPatientConfig = {
 export const appPatientConfig = registerAs(
 	"appPatientConfig",
 	(): AppPatientConfig => ({
-		port: parseInt(process.env.APP_PATIENT_PORT!),
+		port: parseInt(process.env.APP_PATIENT_PORT),
 		version: process.env.APP_PATIENT_VERSION,
 		url: process.env.APP_PATIENT_URL,
 	}),

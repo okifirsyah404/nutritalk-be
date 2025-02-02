@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
 import { MailerOptions } from "@contract";
 import { Inject, Injectable, Logger } from "@nestjs/common";
 import * as nodemailer from "nodemailer";
