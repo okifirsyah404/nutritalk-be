@@ -1,16 +1,26 @@
-import CreateLogLevel from "@infrastructure/logger/create-log-level";
+import { AppConfigService } from "@config/app-config";
+import { validationExceptionFactory } from "@infrastructure";
+import HttpExceptionFilter from "@infrastructure/filter/http-exception.filter";
+import createLogLevel from "@infrastructure/logger/create-log-level";
+import {
+	ConsoleLogger,
+	Logger,
+	ValidationPipe,
+	VersioningType,
+} from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import cookieParser from "cookie-parser";
 import { AppModule } from "./app.module";
-import { Logger, ValidationPipe, VersioningType } from "@nestjs/common";
-import { validationExceptionFactory } from "@infrastructure";
-import HttpExceptionFilter from "@infrastructure/filter/http-exception.filter";
-import { AppConfigService } from "@config/app-config";
 
 async function bootstrap(): Promise<void> {
 	const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-		logger: CreateLogLevel(process.env.NODE_ENV),
+		logger: new ConsoleLogger({
+			timestamp: true,
+			logLevels: createLogLevel(process.env.NODE_ENV),
+			json: true,
+			colors: true,
+		}),
 	});
 
 	app.use(cookieParser());
@@ -34,20 +44,11 @@ async function bootstrap(): Promise<void> {
 		prefix: "api/v",
 	});
 
-	// if (appConfig.env === Environment.DEV) {
-	// 	await swaggerDocumentBuilder(app, {
-	// 		title: "Nutritionist App",
-	// 		description: "Nutritionist App API Documentation",
-	// 		version: config.version,
-	// 		tags: DocsTag.tags,
-	// 		metadata: metadata,
-	// 	});
-	// }
-
 	await app.listen(config.port, appConfig.host);
 
 	new Logger("Nutritionist App").log(
 		`Nutritionist App v${config.version} is running on: ${await app.getUrl()} with ${appConfig.env} environment`,
 	);
 }
+
 bootstrap();

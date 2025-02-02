@@ -28,7 +28,7 @@ export type AppNutritionistConfig = {
 export const appNutritionistConfig = registerAs(
 	"appNutritionistConfig",
 	(): AppNutritionistConfig => ({
-		port: parseInt(process.env.APP_NUTRITIONIST_PORT!),
+		port: parseInt(process.env.APP_NUTRITIONIST_PORT),
 		version: process.env.APP_NUTRITIONIST_VERSION,
 		url: process.env.APP_NUTRITIONIST_URL,
 	}),

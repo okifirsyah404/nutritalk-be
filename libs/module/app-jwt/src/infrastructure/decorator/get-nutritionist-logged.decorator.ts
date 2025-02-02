@@ -12,7 +12,7 @@ export const GetNutritionistLogged = createParamDecorator(
 			throw new Error("User is not a nutritionist");
 		}
 
-		return user as INutritionistEntity;
+		return user;
 	},
 );
 

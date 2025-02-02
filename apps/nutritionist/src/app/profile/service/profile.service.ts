@@ -59,21 +59,6 @@ export class ProfileService {
 		nutritionist: INutritionistEntity,
 		reqData: Partial<IProfileEntity>,
 	): Promise<INutritionistEntity> {
-		this.logger.log(
-			`Updating profile for nutritionist ${this.generalUtil.simpleTernaryTransform(
-				reqData.dateOfBirth,
-				async (value) => (await this.dateUtil.countAge(value)).year,
-			)}`,
-		);
-		this.logger.log(
-			`Updating profile for nutritionist ${JSON.stringify(
-				this.generalUtil.simpleTernaryTransform(
-					reqData.dateOfBirth,
-					async (value) => (await this.dateUtil.countAge(value)).year,
-				),
-			)}`,
-		);
-
 		const result = await this.repository.updateProfile({
 			id: nutritionist.id,
 			name: reqData.name,

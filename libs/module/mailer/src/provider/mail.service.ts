@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { AppConfigService } from "@config/app-config";
+import { IMailOtpOptions } from "@contract";
 import { Injectable, Logger } from "@nestjs/common";
 import { OtpPurpose } from "@prisma/client";
 import * as ejs from "ejs";
 import path from "path";
 import { MailerService } from "./mailer.service";
-import { IMailOtpOptions } from "@contract";
 
 @Injectable()
 export class MailService {

@@ -53,9 +53,15 @@ export function validateConfig(
 	});
 
 	if (errors.length > 0) {
-		throw new Error(`Some Env was missing or didn't match \n ${errors}`, {
-			cause: errors.toString(),
-		});
+		const errorMessages = errors
+			.map((error) => JSON.stringify(error))
+			.join("\n");
+		throw new Error(
+			`Some Env was missing or didn't match \n ${errorMessages}`,
+			{
+				cause: errorMessages,
+			},
+		);
 	}
 	return validatedConfig;
 }

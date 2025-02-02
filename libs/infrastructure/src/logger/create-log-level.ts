@@ -1,7 +1,7 @@
 import { Environment } from "@config/app-config";
 import { LogLevel } from "@nestjs/common";
 
-const CreateLogLevel = (env: Environment | string): LogLevel[] => {
+const createLogLevel = (env: Environment | string): LogLevel[] => {
 	const environment: Environment =
 		typeof env === "string" ? Environment[env.toUpperCase()] : env;
 
@@ -23,4 +23,4 @@ const CreateLogLevel = (env: Environment | string): LogLevel[] => {
 	}
 };
 
-export default CreateLogLevel;
+export default createLogLevel;

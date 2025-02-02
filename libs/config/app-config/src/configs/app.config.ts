@@ -25,7 +25,7 @@ export enum Environment {
  * @property {string} host - The host address of the application.
  */
 export type AppConfig = {
-	env: Environment | string | undefined;
+	env: Environment;
 	host: string;
 };
 
@@ -45,8 +45,13 @@ export type AppConfig = {
 export const appConfig = registerAs(
 	"appConfig",
 	(): AppConfig => ({
-		env: Environment[process.env.NODE_ENV.toUpperCase()] || Environment.DEV,
-		host: process.env.APP_HOST!,
+		env:
+			(process.env.NODE_ENV &&
+				Environment[
+					process.env.NODE_ENV.toUpperCase() as keyof typeof Environment
+				]) ||
+			Environment.DEV,
+		host: process.env.APP_HOST,
 	}),
 );
 

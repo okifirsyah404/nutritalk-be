@@ -1,41 +1,46 @@
-import tseslint from "@typescript-eslint/eslint-plugin";
-import tsparser from "@typescript-eslint/parser";
-import eslintConfigPrettier from "eslint-config-prettier";
-import prettier from "eslint-plugin-prettier";
+import eslint from "@eslint/js";
+import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
+import globals from "globals";
+import tseslint from "typescript-eslint";
 
-export default [
+export default tseslint.config(
 	{
-		files: ["**/*.ts", "**/*.tsx"],
-		ignores: ["eslint.config.js", "node_modules/*", "dist/*"],
+		ignores: ["eslint.config.mjs"],
+	},
+	eslint.configs.recommended,
+	...tseslint.configs.recommendedTypeChecked,
+	eslintPluginPrettierRecommended,
+	{
 		languageOptions: {
-			parser: tsparser,
+			globals: {
+				...globals.node,
+				...globals.jest,
+			},
+			ecmaVersion: 5,
+			sourceType: "module",
 			parserOptions: {
-				project: "./tsconfig.json",
+				projectService: true,
 				tsconfigRootDir: import.meta.dirname,
-				sourceType: "module",
 			},
 		},
-		plugins: {
-			"@typescript-eslint": tseslint,
-			prettier: prettier,
-		},
+	},
+	{
 		rules: {
-			// Use recommended rules from the plugin directly
-			...tseslint.configs.recommended.rules,
-			...eslintConfigPrettier.rules,
-
-			// Custom rules
+			"@typescript-eslint/no-explicit-any": "off",
+			"@typescript-eslint/no-floating-promises": "warn",
+			"@typescript-eslint/no-unsafe-argument": "warn",
 			"@typescript-eslint/interface-name-prefix": "off",
 			"@typescript-eslint/explicit-function-return-type": ["error"],
 			"@typescript-eslint/explicit-module-boundary-types": ["warn"],
 			"@typescript-eslint/no-unused-vars": ["error"],
-			"@typescript-eslint/no-explicit-any": "off",
 			"@typescript-eslint/no-empty-interface": "off",
 			"@typescript-eslint/no-unused-expressions": ["error"],
 			"@typescript-eslint/require-await": ["error"],
 			"@typescript-eslint/prefer-readonly": ["warn"],
 			"@typescript-eslint/no-restricted-types": ["warn"],
 			"@typescript-eslint/no-empty-object-type": ["warn"],
+			"@typescript-eslint/no-unsafe-assignment": ["warn"],
+			"@typescript-eslint/no-unsafe-member-access": ["warn"],
 			camelcase: "warn",
 			"default-case": "error",
 			"no-shadow": "warn",
@@ -57,4 +62,4 @@ export default [
 			],
 		},
 	},
-];
+);

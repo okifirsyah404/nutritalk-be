@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { IJwtRefresh } from "@contract";
 import { createParamDecorator, ExecutionContext } from "@nestjs/common";
 
