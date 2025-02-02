@@ -20,6 +20,8 @@
 		"noFallthroughCasesInSwitch": false,
 		"resolveJsonModule": true,
 		"paths": {
+			"@app": ["apps/main/src"],
+			"@app/*": ["apps/main/src/*"],
 			"@common": ["libs/common/src"],
 			"@common/*": ["libs/common/src/*"],
 			"@config/app-cache": ["libs/config/app-cache/src"],
