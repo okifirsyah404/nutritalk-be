@@ -27,7 +27,7 @@ services:
     env_file:
       - .env
     ports:
-      - ${APP_NUTRITIONIST_PORT:?}:${APP_NUTRITIONIST_PORT:?}
+      - ${APP_PORT:?}:${APP_PORT:?}
     depends_on:
       - cache-redis
     networks:

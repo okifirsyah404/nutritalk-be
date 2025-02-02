@@ -39,10 +39,16 @@ jobs:
           touch .env 
           echo "${{secrets.WORKFLOW_ENV}}" | base64 --decode >> .env
 
-      - run: yarn install --immutable --frozen-lockfile
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
-      - run: yarn run db:generate
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - run: yarn run lint
-
-      - run: yarn run build main
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          file: ./Dockerfile
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nutritalk-base:dev
