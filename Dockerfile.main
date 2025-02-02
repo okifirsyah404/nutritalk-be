@@ -17,6 +17,6 @@ COPY --from=base /usr/src/app/.env ./
 COPY --from=base /usr/src/app/public ./public
 COPY --from=base /usr/src/app/views ./views
 
-EXPOSE 43312
+EXPOSE 43700
 
 CMD ["node", "dist/apps/main/main.js"]

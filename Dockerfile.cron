@@ -15,6 +15,6 @@ COPY --from=base /usr/src/app/.credentials ./.credentials
 COPY --from=base /usr/src/app/tsconfig.* ./
 COPY --from=base /usr/src/app/.env ./
 
-EXPOSE 43312
+EXPOSE 43711
 
 CMD ["node", "dist/apps/cron/main.js"]

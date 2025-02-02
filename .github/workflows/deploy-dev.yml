@@ -35,7 +35,6 @@ jobs:
       - run: |
           touch .env 
           echo "${{secrets.WORKFLOW_ENV}}" | base64 --decode >> .env
-          cat .env
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -76,6 +75,7 @@ jobs:
             git pull
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nutritalk-base:dev
             docker-compose down -v 
+            echo "${{secrets.DEPLOY_ENV}}" | base64 --decode > .env
             docker-compose up -d --build --force-recreate
 
   post-deploy:
