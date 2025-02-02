@@ -35,19 +35,18 @@ async function bootstrap(): Promise<void> {
 
 	app.useGlobalFilters(new HttpExceptionFilter());
 
-	const appConfig = app.get(AppConfigService).appConfig;
-	const config = app.get(AppConfigService).appNutritionistConfig;
+	const config = app.get(AppConfigService).appConfig;
 
 	app.enableVersioning({
 		type: VersioningType.URI,
-		defaultVersion: config.version,
+		defaultVersion: config.version.toString(),
 		prefix: "api/v",
 	});
 
-	await app.listen(config.port, appConfig.host);
+	await app.listen(config.port, config.host);
 
-	new Logger("Nutritionist App").log(
-		`Nutritionist App v${config.version} is running on: ${await app.getUrl()} with ${appConfig.env} environment`,
+	new Logger("Main Api").log(
+		`Main App v${config.version} is running on: ${await app.getUrl()} with ${config.env} environment`,
 	);
 }
 

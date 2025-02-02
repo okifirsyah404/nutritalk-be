@@ -20,10 +20,10 @@ services:
           cpus: "0.2"
           memory: 100M
 
-  api:
+  nutritionist-api:
     build:
       context: .
-      dockerfile: Dockerfile.main
+      dockerfile: Dockerfile.nutritionist
     env_file:
       - .env
     ports:
@@ -37,7 +37,47 @@ services:
         condition: on-failure
       resources:
         limits:
-          cpus: "1"
+          cpus: "0.5"
+          memory: 500M
+
+  patient-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.patient
+    env_file:
+      - .env
+    ports:
+      - ${APP_PATIENT_PORT:?}:${APP_PATIENT_PORT:?}
+    depends_on:
+      - cache-redis
+    networks:
+      - nutritalk-be
+    deploy:
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 500M
+
+  admin-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.admin
+    env_file:
+      - .env
+    ports:
+      - ${APP_ADMIN_PORT:?}:${APP_ADMIN_PORT:?}
+    depends_on:
+      - cache-redis
+    networks:
+      - nutritalk-be
+    deploy:
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.5"
           memory: 500M
 
   cron:

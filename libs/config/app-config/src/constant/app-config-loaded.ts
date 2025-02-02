@@ -20,6 +20,8 @@ export class AppConfigLoaded {
 		return {
 			env: Environment[process.env.NODE_ENV.toUpperCase()] || Environment.DEV,
 			host: process.env.APP_HOST,
+			port: parseInt(process.env.APP_PORT, 10),
+			version: parseInt(process.env.APP_VERSION, 10),
 		};
 	}
 
