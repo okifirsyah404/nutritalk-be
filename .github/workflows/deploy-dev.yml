@@ -35,6 +35,7 @@ jobs:
       - run: |
           touch .env 
           echo "${{secrets.WORKFLOW_ENV}}" | base64 --decode >> .env
+          cat .env
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
