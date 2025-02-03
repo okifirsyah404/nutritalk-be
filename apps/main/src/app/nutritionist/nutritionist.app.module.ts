@@ -3,7 +3,7 @@ import { NutritionistAccountModule } from "./account/nutritionist-account.module
 import { NutritionistAuthModule } from "./auth/nutritionist-auth.module";
 
 @Module({
-	imports: [NutritionistAccountModule, NutritionistAuthModule],
+	imports: [NutritionistAuthModule, NutritionistAccountModule],
 	controllers: [],
 	providers: [],
 })
