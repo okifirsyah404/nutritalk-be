@@ -1,0 +1,35 @@
+import { nullToUndefined } from "@common";
+import {
+	ExperienceValidationMessage,
+	NameValidationMessage,
+	WorkPlaceValidationMessage,
+} from "@constant/message";
+import { IOccupationEntity } from "@contract";
+import { Transform } from "class-transformer";
+import { IsInt, IsOptional, IsString } from "class-validator";
+
+export class NutritionistUpdateOccupationRequest
+	implements
+		Partial<Pick<IOccupationEntity, "name" | "workPlace" | "experience">>
+{
+	@Transform(nullToUndefined)
+	@IsString({
+		message: NameValidationMessage.NAME_MUST_BE_STRING,
+	})
+	@IsOptional()
+	readonly name?: string;
+
+	@Transform(nullToUndefined)
+	@IsString({
+		message: WorkPlaceValidationMessage.WORK_PLACE_MUST_BE_STRING,
+	})
+	@IsOptional()
+	readonly workPlace?: string;
+
+	@Transform(nullToUndefined)
+	@IsInt({
+		message: ExperienceValidationMessage.EXPERIENCE_MUST_BE_INT,
+	})
+	@IsOptional()
+	readonly experience?: number;
+}
