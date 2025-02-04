@@ -5,6 +5,7 @@ import { NutritionistCertificateModule } from "./certificate/nutritionist-certif
 import { NutritionistOccupationModule } from "./occupation/nutritionist-occupation.module";
 import { NutritionistPriceModule } from "./price/nutritionist-price.module";
 import { NutritionistProfileModule } from "./profile/nutritionist-profile.module";
+import { NutritionistScheduleModule } from "./schedule/nutritionist-schedule.module";
 
 @Module({
 	imports: [
@@ -14,6 +15,7 @@ import { NutritionistProfileModule } from "./profile/nutritionist-profile.module
 		NutritionistPriceModule,
 		NutritionistCertificateModule,
 		NutritionistOccupationModule,
+		NutritionistScheduleModule,
 	],
 	controllers: [],
 	providers: [],

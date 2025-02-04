@@ -1,9 +1,10 @@
 import { Module } from "@nestjs/common";
-import { NutritionistScheduleService } from "./nutritionist-schedule.service";
-import { NutritionistScheduleController } from "./nutritionist-schedule.controller";
+import { NutritionistScheduleController } from "./controller/nutritionist-schedule.controller";
+import { NutritionistScheduleRepository } from "./repository/nutritionist-schedule.repository";
+import { NutritionistScheduleService } from "./service/nutritionist-schedule.service";
 
 @Module({
 	controllers: [NutritionistScheduleController],
-	providers: [NutritionistScheduleService],
+	providers: [NutritionistScheduleService, NutritionistScheduleRepository],
 })
 export class NutritionistScheduleModule {}
