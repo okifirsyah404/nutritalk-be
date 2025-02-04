@@ -28,7 +28,7 @@ export class NutritionistCertificateController {
 	 * - status: string
 	 * - statusCode: number
 	 * - message: string
-	 * - data: object of price information
+	 * - data: object of certificate information
 	 *
 	 */
 	@Get()
