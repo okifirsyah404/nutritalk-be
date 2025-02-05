@@ -1,7 +1,7 @@
 import { PrismaSelector } from "@config/prisma";
 import { Prisma } from "@prisma/client";
 import { IBaseEntity } from "./base/base.entity.interface";
-import { IConsultationEntity } from "./transaction.entity.interface";
+import { IConsultationEntity } from "./consultation.entity.interface";
 
 export interface IConsultationReviewEntity
 	extends IBaseEntity,
