@@ -35,7 +35,7 @@ export default tseslint.config(
 			"@typescript-eslint/no-unused-vars": ["error"],
 			"@typescript-eslint/no-empty-interface": "off",
 			"@typescript-eslint/no-unused-expressions": ["error"],
-			"@typescript-eslint/require-await": ["error"],
+			"@typescript-eslint/require-await": ["warn"],
 			"@typescript-eslint/prefer-readonly": ["warn"],
 			"@typescript-eslint/no-restricted-types": ["warn"],
 			"@typescript-eslint/no-empty-object-type": ["warn"],

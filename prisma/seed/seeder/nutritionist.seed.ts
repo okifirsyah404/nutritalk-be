@@ -72,7 +72,7 @@ async function seedNutritionist(prisma: PrismaClient): Promise<void> {
 			},
 		});
 
-		for await (const [index, nutritionist] of nutritionistData.entries()) {
+		for (const [index, nutritionist] of nutritionistData.entries()) {
 			if (process.env.NODE_ENV === "production" && index === 0) {
 				logger.log("Skip seeding dummy nutritionist data for development");
 				continue;

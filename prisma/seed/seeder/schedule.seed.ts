@@ -19,10 +19,10 @@ export async function seedSchedule(prisma: PrismaClient): Promise<void> {
 
 		const nutritionists = await prisma.nutritionist.findMany();
 
-		for await (const nutritionist of nutritionists) {
+		for (const nutritionist of nutritionists) {
 			const nutritionistId = nutritionist.id;
 
-			for await (const dayOfWeek of daysOfWeekArr) {
+			for (const dayOfWeek of daysOfWeekArr) {
 				await prisma.schedule.upsert({
 					where: {
 						nutritionistId_dayOfWeek: {

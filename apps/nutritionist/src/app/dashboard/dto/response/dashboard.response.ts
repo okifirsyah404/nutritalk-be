@@ -1,4 +1,4 @@
-import { INutritionistEntity, ITransactionEntity } from "@contract";
+import { IConsultationEntity, INutritionistEntity } from "@contract";
 import {
 	ConsultationType,
 	Gender,
@@ -9,16 +9,16 @@ import {
 export class DashboardResponse {
 	nutritionist: INutritionistEntity;
 	countScheduledConsultation: number;
-	scheduledConsultations: ITransactionEntity[];
+	scheduledConsultations: IConsultationEntity[];
 	countPendingConsultation: number;
-	pendingConsultations: ITransactionEntity[];
+	pendingConsultations: IConsultationEntity[];
 
 	private constructor(data: {
 		nutritionist: INutritionistEntity;
 		countScheduledConsultation: number;
-		scheduledConsultations: ITransactionEntity[];
+		scheduledConsultations: IConsultationEntity[];
 		countPendingConsultation: number;
-		pendingConsultations: ITransactionEntity[];
+		pendingConsultations: IConsultationEntity[];
 	}) {
 		this.nutritionist = data.nutritionist;
 		this.countScheduledConsultation = data.countScheduledConsultation;
@@ -30,9 +30,9 @@ export class DashboardResponse {
 	static fromData(data: {
 		nutritionist: INutritionistEntity;
 		countScheduledConsultation: number;
-		scheduledConsultations: ITransactionEntity[];
+		scheduledConsultations: IConsultationEntity[];
 		countPendingConsultation: number;
-		pendingConsultations: ITransactionEntity[];
+		pendingConsultations: IConsultationEntity[];
 	}): DashboardResponse {
 		return new DashboardResponse(data);
 	}

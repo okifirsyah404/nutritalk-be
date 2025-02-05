@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { faker } from "@faker-js/faker";
 import { Logger } from "@nestjs/common";
 import {
@@ -6,7 +8,7 @@ import {
 	TransactionStatus,
 } from "@prisma/client";
 
-async function seedTransaction(prisma: PrismaClient): Promise<void> {
+async function seedConsultation(prisma: PrismaClient): Promise<void> {
 	const logger = new Logger("TransactionSeeder");
 
 	if (process.env.NODE_ENV === "production") {
@@ -17,7 +19,7 @@ async function seedTransaction(prisma: PrismaClient): Promise<void> {
 	try {
 		logger.log("Deleting all transaction data...");
 
-		await prisma.transaction.deleteMany();
+		await prisma.consultation.deleteMany();
 
 		logger.log("Deleted all transaction data");
 		logger.log("Seeding transaction data...");
@@ -52,7 +54,7 @@ async function seedTransaction(prisma: PrismaClient): Promise<void> {
 				id: string;
 				createdAt: Date | null;
 				updatedAt: Date | null;
-				transactionId: string | null;
+				consultationId: string | null;
 				rating: number;
 				description: string | null;
 			};
@@ -63,7 +65,7 @@ async function seedTransaction(prisma: PrismaClient): Promise<void> {
 
 			const status: TransactionStatus = randomEnum(TransactionStatus);
 
-			const tr = await prisma.transaction.create({
+			const tr = await prisma.consultation.create({
 				data: {
 					patient: {
 						connect: {
@@ -165,4 +167,4 @@ function randomEnum<T>(enumObj: T): T[keyof T] {
 	return enumValues[index];
 }
 
-export default seedTransaction;
+export default seedConsultation;

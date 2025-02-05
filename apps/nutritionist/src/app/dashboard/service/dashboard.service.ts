@@ -1,6 +1,6 @@
 import { SetCache } from "@config/app-cache";
 import { S3StorageService } from "@config/s3storage";
-import { INutritionistEntity, ITransactionEntity } from "@contract";
+import { IConsultationEntity, INutritionistEntity } from "@contract";
 import { Injectable } from "@nestjs/common";
 import { DashboardRepository } from "../repository/dashboard.repository";
 
@@ -14,9 +14,9 @@ export class DashboardService {
 	async getDashboardData(nutritionistId: string): Promise<{
 		nutritionist: INutritionistEntity;
 		countScheduledConsultation: number;
-		scheduledConsultations: ITransactionEntity[];
+		scheduledConsultations: IConsultationEntity[];
 		countPendingConsultation: number;
-		pendingConsultations: ITransactionEntity[];
+		pendingConsultations: IConsultationEntity[];
 	}> {
 		const [
 			nutritionist,
@@ -57,12 +57,12 @@ export class DashboardService {
 		return this.repository.countNearbyScheduledConsultations(id);
 	}
 
-	@SetCache<ITransactionEntity[]>(
+	@SetCache<IConsultationEntity[]>(
 		(id: string) => `scheduledConsultations:${id}`,
 	)
 	private async _getScheduledConsultations(
 		id: string,
-	): Promise<ITransactionEntity[]> {
+	): Promise<IConsultationEntity[]> {
 		return this.repository.getNearbyScheduledConsultations(id);
 	}
 
@@ -71,10 +71,10 @@ export class DashboardService {
 		return this.repository.countPendingConsultations(id);
 	}
 
-	@SetCache<ITransactionEntity[]>((id: string) => `pendingConsultations:${id}`)
+	@SetCache<IConsultationEntity[]>((id: string) => `pendingConsultations:${id}`)
 	private async _getPendingConsultations(
 		id: string,
-	): Promise<ITransactionEntity[]> {
+	): Promise<IConsultationEntity[]> {
 		return this.repository.getPendingConsultations(id);
 	}
 }

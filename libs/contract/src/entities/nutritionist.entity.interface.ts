@@ -8,7 +8,7 @@ import { IPriceEntity } from "./price.entity.interface";
 import { IProfileEntity } from "./profile.entity.interface";
 import { IRegistrationCertificateEntity } from "./registration-certificate.entity.interface";
 import { IScheduleEntity } from "./schedule.entity.interface";
-import { ITransactionEntity } from "./transaction.entity.interface";
+import { IConsultationEntity } from "./transaction.entity.interface";
 
 export interface INutritionistEntity
 	extends IBaseEntity,
@@ -24,5 +24,5 @@ export interface INutritionistEntity
 	price?: IPriceEntity;
 	registrationCertificate?: IRegistrationCertificateEntity;
 	schedules?: IScheduleEntity[];
-	transactions?: ITransactionEntity[];
+	transactions?: IConsultationEntity[];
 }

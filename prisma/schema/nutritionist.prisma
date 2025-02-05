@@ -22,7 +22,7 @@ model Nutritionist {
   price                   Price?
   registrationCertificate RegistrationCertificate?
   schedules               Schedule[]
-  transactions            Transaction[]
+  consultations           Consultation[]
 
   // Foreign Keys
   accountId String? @unique

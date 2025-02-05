@@ -1,5 +1,5 @@
 import { PrismaSelector, PrismaService } from "@config/prisma";
-import { INutritionistEntity, ITransactionEntity } from "@contract";
+import { IConsultationEntity, INutritionistEntity } from "@contract";
 import { createDatabaseErrorHandler } from "@infrastructure";
 import { Injectable } from "@nestjs/common";
 import { TransactionStatus } from "@prisma/client";
@@ -26,8 +26,8 @@ export class DashboardRepository {
 
 	async getNearbyScheduledConsultations(
 		id: string,
-	): Promise<ITransactionEntity[]> {
-		return this.prisma.transaction
+	): Promise<IConsultationEntity[]> {
+		return this.prisma.consultation
 			.findMany({
 				where: {
 					AND: [
@@ -46,7 +46,7 @@ export class DashboardRepository {
 				},
 				take: 4,
 				select: {
-					...PrismaSelector.TRANSACTION,
+					...PrismaSelector.CONSULTATION,
 					consultationTime: {
 						select: PrismaSelector.CONSULTATION_TIME,
 					},
@@ -56,7 +56,7 @@ export class DashboardRepository {
 	}
 
 	async countNearbyScheduledConsultations(id: string): Promise<number> {
-		return this.prisma.transaction
+		return this.prisma.consultation
 			.count({
 				where: {
 					AND: [
@@ -72,8 +72,8 @@ export class DashboardRepository {
 			.catch(createDatabaseErrorHandler);
 	}
 
-	async getPendingConsultations(id: string): Promise<ITransactionEntity[]> {
-		return this.prisma.transaction
+	async getPendingConsultations(id: string): Promise<IConsultationEntity[]> {
+		return this.prisma.consultation
 			.findMany({
 				where: {
 					AND: [
@@ -90,7 +90,7 @@ export class DashboardRepository {
 				},
 				take: 4,
 				select: {
-					...PrismaSelector.TRANSACTION,
+					...PrismaSelector.CONSULTATION,
 					consultationTime: {
 						select: PrismaSelector.CONSULTATION_TIME,
 					},
@@ -100,7 +100,7 @@ export class DashboardRepository {
 	}
 
 	async countPendingConsultations(id: string): Promise<number> {
-		return this.prisma.transaction
+		return this.prisma.consultation
 			.count({
 				where: {
 					AND: [

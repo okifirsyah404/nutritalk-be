@@ -1,11 +1,11 @@
 import { Logger } from "@nestjs/common";
 import { PrismaClient } from "@prisma/client";
+import seedConsultation from "./seeder/consultation.seed";
 import { seedImage } from "./seeder/image.seed";
 import seedNutritionist from "./seeder/nutritionist.seed";
 import seedPatient from "./seeder/patient.seed";
 import seedPermission from "./seeder/permission.seed";
 import { seedSchedule } from "./seeder/schedule.seed";
-import seedTransaction from "./seeder/transaction.seed";
 
 const prisma = new PrismaClient();
 const logger = new Logger("Seeder");
@@ -17,7 +17,7 @@ async function main(): Promise<void> {
 	await seedSchedule(prisma);
 	await seedPatient(prisma);
 	await seedImage(prisma);
-	await seedTransaction(prisma);
+	await seedConsultation(prisma);
 }
 
 main()
