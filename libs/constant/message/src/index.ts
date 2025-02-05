@@ -1,5 +1,6 @@
 export * from "./error/account-error.message";
 export * from "./error/auth-error.message";
+export * from "./error/consultation-meta-error.message";
 export * from "./error/database-error.message";
 export * from "./error/jwt-token-error.message";
 export * from "./error/nutritionist-error.message";
@@ -12,6 +13,7 @@ export * from "./error/schedule-error.message";
 export * from "./error/signature-error.message";
 export * from "./success/account-success.message";
 export * from "./success/auth-success.message";
+export * from "./success/consultation-meta-success.message";
 export * from "./success/dashboard-success.message";
 export * from "./success/nutritionist-success.message";
 export * from "./success/occupation-success.message";

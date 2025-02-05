@@ -22,13 +22,15 @@ import {
 	Query,
 	UseGuards,
 } from "@nestjs/common";
+import { AccountRole } from "@prisma/client";
+import { UriUtil } from "@util";
 import { NutritionistCreateScheduleTimeRequest } from "../dto/request/nutritionist-create-schedule-time.request";
 import { NutritionistScheduleTimeResponse } from "../dto/response/nutritionist-schedule-time.response";
 import { NutritionistScheduleResponse } from "../dto/response/nutritionist-schedule.response";
 import { NutritionistScheduleService } from "../service/nutritionist-schedule.service";
 
 @UseGuards(AccessTokenGuard)
-@Controller("nutritionist/schedule")
+@Controller(UriUtil.uriFromRoleBase(AccountRole.NUTRITIONIST, "schedule"))
 export class NutritionistScheduleController {
 	constructor(private readonly service: NutritionistScheduleService) {}
 

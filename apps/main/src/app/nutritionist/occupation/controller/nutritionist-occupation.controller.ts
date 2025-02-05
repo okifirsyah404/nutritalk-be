@@ -3,12 +3,14 @@ import { OccupationSuccessMessage } from "@constant/message";
 import { IApiResponse, INutritionistEntity } from "@contract";
 import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
 import { Body, Controller, Get, Put, UseGuards } from "@nestjs/common";
+import { AccountRole } from "@prisma/client";
+import { UriUtil } from "@util";
 import { NutritionistUpdateOccupationRequest } from "../dto/request/nutritionist-update-occupation.request";
 import { NutritionistOccupationResponse } from "../dto/response/nutritionist-occupation.response";
 import { NutritionistOccupationService } from "../service/nutritionist-occupation.service";
 
 @UseGuards(AccessTokenGuard)
-@Controller("nutritionist/occupation")
+@Controller(UriUtil.uriFromRoleBase(AccountRole.NUTRITIONIST, "occupation"))
 export class NutritionistOccupationController {
 	constructor(private readonly service: NutritionistOccupationService) {}
 

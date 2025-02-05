@@ -3,6 +3,8 @@ import { AccountSuccessMessage, OtpSuccessMessage } from "@constant/message";
 import { IApiResponse, INutritionistEntity } from "@contract";
 import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
 import { Body, Controller, Get, Post, Put, UseGuards } from "@nestjs/common";
+import { AccountRole } from "@prisma/client";
+import { UriUtil } from "@util";
 import { NutritionistChangePasswordVerifyOtpRequest } from "../dto/request/nutritionist-change-password-verify-otp.request";
 import { NutritionistChangePasswordRequest } from "../dto/request/nutritionist-change-password.request";
 import { NutritionistChangePasswordSendOtpResponse } from "../dto/response/nutritionist-change-password-send-otp.response";
@@ -11,7 +13,9 @@ import { NutritionistChangePasswordResponse } from "../dto/response/nutritionist
 import { NutritionistChangePasswordService } from "../service/nutritionist-change-password.service";
 
 @UseGuards(AccessTokenGuard)
-@Controller("nutritionist/account/change-password")
+@Controller(
+	UriUtil.uriFromRoleBase(AccountRole.NUTRITIONIST, "account/change-password"),
+)
 export class NutritionistChangePasswordController {
 	constructor(private readonly service: NutritionistChangePasswordService) {}
 

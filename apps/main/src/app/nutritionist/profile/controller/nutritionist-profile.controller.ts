@@ -14,12 +14,14 @@ import {
 	UseInterceptors,
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { AccountRole } from "@prisma/client";
+import { UriUtil } from "@util";
 import { NutritionistUpdateProfileRequest } from "../dto/request/nutritionist-update-profile.request";
 import { NutritionistProfileResponse } from "../dto/response/nutritionist-profile.response";
 import { NutritionistProfileService } from "../service/nutritionist-profile.service";
 
 @UseGuards(AccessTokenGuard)
-@Controller("nutritionist/profile")
+@Controller(UriUtil.uriFromRoleBase(AccountRole.NUTRITIONIST, "profile"))
 export class NutritionistProfileController {
 	constructor(private readonly service: NutritionistProfileService) {}
 

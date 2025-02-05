@@ -11,13 +11,15 @@ import {
 	Put,
 	UseGuards,
 } from "@nestjs/common";
+import { AccountRole } from "@prisma/client";
+import { UriUtil } from "@util";
 import { NutritionistCreateCertificateRequest } from "../dto/request/nutritionist-create-certificate.request";
 import { NutritionistUpdateCertificateRequest } from "../dto/request/nutritionist-update-certificate.request";
 import { NutritionistCertificateResponse } from "../dto/response/nutritionist-certificate.response";
 import { NutritionistCertificateService } from "../service/nutritionist-certificate.service";
 
 @UseGuards(AccessTokenGuard)
-@Controller("nutritionist/certificate")
+@Controller(UriUtil.uriFromRoleBase(AccountRole.NUTRITIONIST, "certificate"))
 export class NutritionistCertificateController {
 	constructor(private readonly service: NutritionistCertificateService) {}
 

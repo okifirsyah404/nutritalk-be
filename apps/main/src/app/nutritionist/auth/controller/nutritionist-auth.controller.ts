@@ -8,12 +8,14 @@ import {
 	RefreshTokenGuard,
 } from "@module/app-jwt";
 import { Body, Controller, Delete, Post, UseGuards } from "@nestjs/common";
+import { AccountRole } from "@prisma/client";
+import { UriUtil } from "@util";
 import { NutritionistAuthRefreshTokenRequest } from "../dto/request/nutritionist-auth-refresh-token.request";
 import { NutritionistAuthSignInRequest } from "../dto/request/nutritionist-auth-sign-in.request";
 import { NutritionistAuthResponse } from "../dto/response/nutritionist-auth.response";
 import { NutritionistAuthService } from "../service/nutritionist-auth.service";
 
-@Controller("nutritionist/auth")
+@Controller(UriUtil.uriFromRoleBase(AccountRole.NUTRITIONIST, "auth"))
 export class NutritionistAuthController {
 	constructor(private readonly service: NutritionistAuthService) {}
 
