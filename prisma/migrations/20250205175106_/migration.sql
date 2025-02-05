@@ -10,7 +10,7 @@ BEGIN
         MAX(CAST(SPLIT_PART("trId", '/', 3) AS int)),
         0
     ) INTO new_value
-    FROM public."Transaction"  -- Explicitly specify the schema and table name
+    FROM public."Consultation"  -- Explicitly specify the schema and table name
     WHERE "trId" LIKE prefix || '/' || date_part || '/%';
 
     -- Increment sequence or start at 1 if no records found
@@ -170,6 +170,74 @@ CREATE TABLE "Signature" (
     "updatedAt" TIMESTAMP(3),
 
     CONSTRAINT "Signature_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Consultation" (
+    "id" TEXT NOT NULL,
+    "trId" TEXT NOT NULL DEFAULT generate_custom_id('TR'),
+    "status" "TransactionStatus" NOT NULL,
+    "type" "ConsultationType" NOT NULL,
+    "note" TEXT,
+    "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3),
+    "patientId" TEXT,
+    "nutritionistId" TEXT,
+
+    CONSTRAINT "Consultation_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "ConsultationTime" (
+    "id" TEXT NOT NULL,
+    "start" TIMESTAMP(3),
+    "end" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3),
+    "consultationId" TEXT,
+
+    CONSTRAINT "ConsultationTime_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "TransactionPrice" (
+    "id" TEXT NOT NULL,
+    "sources" "PaymentSource"[],
+    "price" INTEGER NOT NULL,
+    "subTotal" INTEGER NOT NULL,
+    "credit" INTEGER NOT NULL DEFAULT 0,
+    "total" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3),
+    "consultationId" TEXT,
+
+    CONSTRAINT "TransactionPrice_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "TransactionPayment" (
+    "id" TEXT NOT NULL,
+    "method" TEXT,
+    "code" TEXT,
+    "status" TEXT,
+    "date" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3),
+    "consultationId" TEXT,
+
+    CONSTRAINT "TransactionPayment_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "ConsultationReview" (
+    "id" TEXT NOT NULL,
+    "rating" DOUBLE PRECISION NOT NULL,
+    "description" TEXT,
+    "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3),
+    "consultationId" TEXT,
+
+    CONSTRAINT "ConsultationReview_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -416,74 +484,6 @@ CREATE TABLE "GoogleSSO" (
     CONSTRAINT "GoogleSSO_pkey" PRIMARY KEY ("id")
 );
 
--- CreateTable
-CREATE TABLE "Transaction" (
-    "id" TEXT NOT NULL,
-    "trId" TEXT NOT NULL DEFAULT generate_custom_id('TR'),
-    "status" "TransactionStatus" NOT NULL,
-    "type" "ConsultationType" NOT NULL,
-    "note" TEXT,
-    "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3),
-    "patientId" TEXT,
-    "nutritionistId" TEXT,
-
-    CONSTRAINT "Transaction_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "ConsultationTime" (
-    "id" TEXT NOT NULL,
-    "start" TIMESTAMP(3),
-    "end" TIMESTAMP(3),
-    "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3),
-    "transactionId" TEXT,
-
-    CONSTRAINT "ConsultationTime_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "TransactionPrice" (
-    "id" TEXT NOT NULL,
-    "sources" "PaymentSource"[],
-    "price" INTEGER NOT NULL,
-    "subTotal" INTEGER NOT NULL,
-    "credit" INTEGER NOT NULL DEFAULT 0,
-    "total" INTEGER NOT NULL,
-    "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3),
-    "transactionId" TEXT,
-
-    CONSTRAINT "TransactionPrice_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "TransactionPayment" (
-    "id" TEXT NOT NULL,
-    "method" TEXT,
-    "code" TEXT,
-    "status" TEXT,
-    "date" TIMESTAMP(3),
-    "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3),
-    "transactionId" TEXT,
-
-    CONSTRAINT "TransactionPayment_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "ConsultationReview" (
-    "id" TEXT NOT NULL,
-    "rating" DOUBLE PRECISION NOT NULL,
-    "description" TEXT,
-    "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3),
-    "transactionId" TEXT,
-
-    CONSTRAINT "ConsultationReview_pkey" PRIMARY KEY ("id")
-);
-
 -- CreateIndex
 CREATE UNIQUE INDEX "Account_email_key" ON "Account"("email");
 
@@ -498,6 +498,21 @@ CREATE UNIQUE INDEX "Signature_signature_key" ON "Signature"("signature");
 
 -- CreateIndex
 CREATE INDEX "Signature_signature_idx" ON "Signature"("signature");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Consultation_trId_key" ON "Consultation"("trId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "ConsultationTime_consultationId_key" ON "ConsultationTime"("consultationId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "TransactionPrice_consultationId_key" ON "TransactionPrice"("consultationId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "TransactionPayment_consultationId_key" ON "TransactionPayment"("consultationId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "ConsultationReview_consultationId_key" ON "ConsultationReview"("consultationId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Credit_patientId_key" ON "Credit"("patientId");
@@ -522,6 +537,9 @@ CREATE UNIQUE INDEX "Occupation_nutritionistId_key" ON "Occupation"("nutritionis
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Price_nutritionistId_key" ON "Price"("nutritionistId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Schedule_nutritionistId_dayOfWeek_key" ON "Schedule"("nutritionistId", "dayOfWeek");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Patient_accountId_key" ON "Patient"("accountId");
@@ -556,20 +574,23 @@ CREATE UNIQUE INDEX "GoogleSSO_email_key" ON "GoogleSSO"("email");
 -- CreateIndex
 CREATE UNIQUE INDEX "GoogleSSO_ssoId_key" ON "GoogleSSO"("ssoId");
 
--- CreateIndex
-CREATE UNIQUE INDEX "Transaction_trId_key" ON "Transaction"("trId");
+-- AddForeignKey
+ALTER TABLE "Consultation" ADD CONSTRAINT "Consultation_patientId_fkey" FOREIGN KEY ("patientId") REFERENCES "Patient"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
--- CreateIndex
-CREATE UNIQUE INDEX "ConsultationTime_transactionId_key" ON "ConsultationTime"("transactionId");
+-- AddForeignKey
+ALTER TABLE "Consultation" ADD CONSTRAINT "Consultation_nutritionistId_fkey" FOREIGN KEY ("nutritionistId") REFERENCES "Nutritionist"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
--- CreateIndex
-CREATE UNIQUE INDEX "TransactionPrice_transactionId_key" ON "TransactionPrice"("transactionId");
+-- AddForeignKey
+ALTER TABLE "ConsultationTime" ADD CONSTRAINT "ConsultationTime_consultationId_fkey" FOREIGN KEY ("consultationId") REFERENCES "Consultation"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
--- CreateIndex
-CREATE UNIQUE INDEX "TransactionPayment_transactionId_key" ON "TransactionPayment"("transactionId");
+-- AddForeignKey
+ALTER TABLE "TransactionPrice" ADD CONSTRAINT "TransactionPrice_consultationId_fkey" FOREIGN KEY ("consultationId") REFERENCES "Consultation"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
--- CreateIndex
-CREATE UNIQUE INDEX "ConsultationReview_transactionId_key" ON "ConsultationReview"("transactionId");
+-- AddForeignKey
+ALTER TABLE "TransactionPayment" ADD CONSTRAINT "TransactionPayment_consultationId_fkey" FOREIGN KEY ("consultationId") REFERENCES "Consultation"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ConsultationReview" ADD CONSTRAINT "ConsultationReview_consultationId_fkey" FOREIGN KEY ("consultationId") REFERENCES "Consultation"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Credit" ADD CONSTRAINT "Credit_patientId_fkey" FOREIGN KEY ("patientId") REFERENCES "Patient"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -630,21 +651,3 @@ ALTER TABLE "SingleSignOn" ADD CONSTRAINT "SingleSignOn_accountId_fkey" FOREIGN 
 
 -- AddForeignKey
 ALTER TABLE "GoogleSSO" ADD CONSTRAINT "GoogleSSO_ssoId_fkey" FOREIGN KEY ("ssoId") REFERENCES "SingleSignOn"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_patientId_fkey" FOREIGN KEY ("patientId") REFERENCES "Patient"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_nutritionistId_fkey" FOREIGN KEY ("nutritionistId") REFERENCES "Nutritionist"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ConsultationTime" ADD CONSTRAINT "ConsultationTime_transactionId_fkey" FOREIGN KEY ("transactionId") REFERENCES "Transaction"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "TransactionPrice" ADD CONSTRAINT "TransactionPrice_transactionId_fkey" FOREIGN KEY ("transactionId") REFERENCES "Transaction"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "TransactionPayment" ADD CONSTRAINT "TransactionPayment_transactionId_fkey" FOREIGN KEY ("transactionId") REFERENCES "Transaction"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ConsultationReview" ADD CONSTRAINT "ConsultationReview_transactionId_fkey" FOREIGN KEY ("transactionId") REFERENCES "Transaction"("id") ON DELETE CASCADE ON UPDATE CASCADE;

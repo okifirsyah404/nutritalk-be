@@ -26,7 +26,7 @@ export async function seedNutritionistImage(
 			},
 		});
 
-		for await (const nutritionist of nutritionists) {
+		for (const nutritionist of nutritionists) {
 			const defaultKey = await seedDefaultImage(
 				s3,
 				bucketName,
@@ -59,7 +59,7 @@ async function deleteObjectsAndDir(
 	);
 
 	if (objects.Contents) {
-		for await (const object of objects.Contents) {
+		for (const object of objects.Contents) {
 			await s3.send(
 				new awsS3.DeleteObjectCommand({
 					Bucket: bucketName,
@@ -136,7 +136,7 @@ async function seedRawImage(
 		return path.extname(fileName);
 	});
 
-	for await (const fileName of imageFilesName) {
+	for (const fileName of imageFilesName) {
 		if (nutritionist.profile?.name.includes(fileName)) {
 			if (defaultKey) {
 				await deleteImage(s3, bucketName, defaultKey);

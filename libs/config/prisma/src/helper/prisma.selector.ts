@@ -168,12 +168,13 @@ export abstract class PrismaSelector {
 		},
 	} satisfies Prisma.ScheduleSelect;
 
-	static readonly TRANSACTION = {
+	static readonly CONSULTATION = {
 		id: true,
+		trId: true,
 		status: true,
 		type: true,
 		note: true,
-	} satisfies Prisma.TransactionSelect;
+	} satisfies Prisma.ConsultationSelect;
 
 	static readonly CONSULTATION_TIME = {
 		id: true,
