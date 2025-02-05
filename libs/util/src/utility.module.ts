@@ -7,6 +7,7 @@ import { FileUtil } from "./utilities/file.util";
 import { PaginationUtil } from "./utilities/pagination.util";
 import { PhoneNumberUtil } from "./utilities/phone-number.util";
 import { GeneralUtil } from "./utilities/general.util";
+import { UriUtil } from "./utilities/uri.util";
 
 @Global()
 @Module({
@@ -19,6 +20,7 @@ import { GeneralUtil } from "./utilities/general.util";
 		PaginationUtil,
 		PhoneNumberUtil,
 		DatabaseUtil,
+		UriUtil,
 	],
 	exports: [
 		GeneralUtil,
@@ -28,6 +30,7 @@ import { GeneralUtil } from "./utilities/general.util";
 		PaginationUtil,
 		PhoneNumberUtil,
 		DatabaseUtil,
+		UriUtil,
 	],
 })
 export class UtilityModule {}

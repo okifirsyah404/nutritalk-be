@@ -3,12 +3,14 @@ import { PriceSuccessMessage } from "@constant/message";
 import { IApiResponse, INutritionistEntity } from "@contract";
 import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
 import { Body, Controller, Get, Put, UseGuards } from "@nestjs/common";
+import { AccountRole } from "@prisma/client";
+import { UriUtil } from "@util";
 import { NutritionistUpdatePriceRequest } from "../dto/request/nutritionist-update-price.request";
 import { NutritionistPriceResponse } from "../dto/response/nutritionist-price.response";
 import { NutritionistPriceService } from "../service/nutritionist-price.service";
 
 @UseGuards(AccessTokenGuard)
-@Controller("nutritionist/price")
+@Controller(UriUtil.uriFromRoleBase(AccountRole.NUTRITIONIST, "price"))
 export class NutritionistPriceController {
 	constructor(private readonly service: NutritionistPriceService) {}
 

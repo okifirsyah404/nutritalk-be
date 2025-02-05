@@ -3,6 +3,8 @@ import { AuthSuccessMessage, OtpSuccessMessage } from "@constant/message";
 import { IApiResponse, IJwtSignaturePayload } from "@contract";
 import { GetSignaturePayload, SignatureTokenGuard } from "@module/signature";
 import { Body, Controller, Post, UseGuards } from "@nestjs/common";
+import { AccountRole } from "@prisma/client";
+import { UriUtil } from "@util";
 import { NutritionistForgetPasswordSendOtpRequest } from "../dto/request/nutritionist-forget-password-send-otp.request";
 import { NutritionistForgetPasswordVerifyOtpRequest } from "../dto/request/nutritionist-forget-password-verify-otp.request";
 import { NutritionistForgetPasswordRequest } from "../dto/request/nutritionist-forget-password.request";
@@ -10,7 +12,9 @@ import { NutritionistForgetPasswordSendOtpResponse } from "../dto/response/nutri
 import { NutritionistForgetPasswordVerifyOtpResponse } from "../dto/response/nutritionist-forget-password-verify-otp.response";
 import { NutritionistForgetPasswordResponse } from "../dto/response/nutritionist-forget-password.response";
 import { NutritionistForgetPasswordService } from "../service/nutritionist-forget-password.service";
-@Controller("nutritionist/auth/forget-password")
+@Controller(
+	UriUtil.uriFromRoleBase(AccountRole.NUTRITIONIST, "auth/forget-password"),
+)
 export class NutritionistForgetPasswordController {
 	constructor(private readonly service: NutritionistForgetPasswordService) {}
 
