@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { IApiResponse } from "@contract";
 import {
 	ArgumentsHost,
@@ -40,32 +38,6 @@ export default class HttpExceptionFilter implements ExceptionFilter {
 
 			return response.status(404).send(baseResponse);
 		}
-
-		process.on("uncaughtException", (error) => {
-			console.error("Uncaught Exception:", error);
-
-			baseResponse = {
-				status: "Internal Server Error",
-				statusCode: 500,
-				timestamp: Date.now(),
-				message: "ERR_UNCAUGHT_EXCEPTION",
-			} as IApiResponse<never>;
-
-			return response.status(500).send(baseResponse);
-		});
-
-		process.on("unhandledRejection", (reason, promise) => {
-			console.error("Unhandled Rejection at:", promise, "reason:", reason);
-
-			baseResponse = {
-				status: "Internal Server Error",
-				statusCode: 500,
-				timestamp: Date.now(),
-				message: "ERR_UNHANDLED_REJECTION",
-			} as IApiResponse<never>;
-
-			return response.status(500).send(baseResponse);
-		});
 
 		baseResponse = {
 			status: this._toFriendlyErrorStatus(exception.name),
