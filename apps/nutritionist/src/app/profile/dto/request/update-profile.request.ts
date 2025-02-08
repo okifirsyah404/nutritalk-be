@@ -25,7 +25,7 @@ export class UpdateProfileRequest
 	})
 	@Transform(nullToUndefined)
 	@IsString({
-		message: NameValidationMessage.NAME_MUST_BE_STRING,
+		message: NameValidationMessage.ERR_NAME_MUST_BE_STRING,
 	})
 	@IsOptional()
 	readonly name?: string;
@@ -35,10 +35,10 @@ export class UpdateProfileRequest
 	})
 	@Transform(nullToUndefined)
 	@IsPhoneNumber("ID", {
-		message: PhoneNumberValidationMessage.PHONE_NUMBER_INVALID,
+		message: PhoneNumberValidationMessage.ERR_PHONE_NUMBER_INVALID,
 	})
 	@IsString({
-		message: PhoneNumberValidationMessage.PHONE_NUMBER_MUST_BE_STRING,
+		message: PhoneNumberValidationMessage.ERR_PHONE_NUMBER_MUST_BE_STRING,
 	})
 	@IsOptional()
 	readonly phoneNumber?: string;
@@ -48,7 +48,7 @@ export class UpdateProfileRequest
 	})
 	@Transform(nullToUndefined)
 	@IsString({
-		message: AddressValidationMessage.ADDRESS_MUST_BE_STRING,
+		message: AddressValidationMessage.ERR_ADDRESS_MUST_BE_STRING,
 	})
 	@IsOptional()
 	readonly address?: string;
@@ -58,7 +58,7 @@ export class UpdateProfileRequest
 	})
 	@Transform(nullToUndefined)
 	@IsString({
-		message: PlaceOfBirthValidationMessage.PLACE_OF_BIRTH_MUST_BE_STRING,
+		message: PlaceOfBirthValidationMessage.ERR_PLACE_OF_BIRTH_MUST_BE_STRING,
 	})
 	@IsOptional()
 	readonly placeOfBirth?: string;
@@ -68,7 +68,7 @@ export class UpdateProfileRequest
 	})
 	@Transform(({ value }) => (value ? new Date(value) : undefined))
 	@IsDate({
-		message: DateOfBirthValidationMessage.DATE_OF_BIRTH_MUST_BE_DATE,
+		message: DateOfBirthValidationMessage.ERR_DATE_OF_BIRTH_MUST_BE_DATE,
 	})
 	@IsOptional()
 	readonly dateOfBirth?: Date;

@@ -1,4 +1,5 @@
 import { nullToUndefined } from "@common";
+import { IsNotEmptyString } from "@common/validator/is-not-empty-string.validator";
 import {
 	AddressValidationMessage,
 	DateOfBirthValidationMessage,
@@ -24,8 +25,11 @@ export class NutritionistUpdateProfileRequest
 		example: "John Doe",
 	})
 	@Transform(nullToUndefined)
+	@IsNotEmptyString({
+		message: NameValidationMessage.ERR_NAME_REQUIRED,
+	})
 	@IsString({
-		message: NameValidationMessage.NAME_MUST_BE_STRING,
+		message: NameValidationMessage.ERR_NAME_MUST_BE_STRING,
 	})
 	@IsOptional()
 	readonly name?: string;
@@ -35,10 +39,13 @@ export class NutritionistUpdateProfileRequest
 	})
 	@Transform(nullToUndefined)
 	@IsPhoneNumber("ID", {
-		message: PhoneNumberValidationMessage.PHONE_NUMBER_INVALID,
+		message: PhoneNumberValidationMessage.ERR_PHONE_NUMBER_INVALID,
+	})
+	@IsNotEmptyString({
+		message: PhoneNumberValidationMessage.ERR_PHONE_NUMBER_REQUIRED,
 	})
 	@IsString({
-		message: PhoneNumberValidationMessage.PHONE_NUMBER_MUST_BE_STRING,
+		message: PhoneNumberValidationMessage.ERR_PHONE_NUMBER_MUST_BE_STRING,
 	})
 	@IsOptional()
 	readonly phoneNumber?: string;
@@ -48,7 +55,7 @@ export class NutritionistUpdateProfileRequest
 	})
 	@Transform(nullToUndefined)
 	@IsString({
-		message: AddressValidationMessage.ADDRESS_MUST_BE_STRING,
+		message: AddressValidationMessage.ERR_ADDRESS_MUST_BE_STRING,
 	})
 	@IsOptional()
 	readonly address?: string;
@@ -58,7 +65,7 @@ export class NutritionistUpdateProfileRequest
 	})
 	@Transform(nullToUndefined)
 	@IsString({
-		message: PlaceOfBirthValidationMessage.PLACE_OF_BIRTH_MUST_BE_STRING,
+		message: PlaceOfBirthValidationMessage.ERR_PLACE_OF_BIRTH_MUST_BE_STRING,
 	})
 	@IsOptional()
 	readonly placeOfBirth?: string;
@@ -68,7 +75,7 @@ export class NutritionistUpdateProfileRequest
 	})
 	@Transform(({ value }) => (value ? new Date(value) : undefined))
 	@IsDate({
-		message: DateOfBirthValidationMessage.DATE_OF_BIRTH_MUST_BE_DATE,
+		message: DateOfBirthValidationMessage.ERR_DATE_OF_BIRTH_MUST_BE_DATE,
 	})
 	@IsOptional()
 	readonly dateOfBirth?: Date;

@@ -1,4 +1,4 @@
 export abstract class AddressValidationMessage {
-	static readonly ADDRESS_MUST_BE_STRING = "ADDRESS_MUST_BE_STRING";
-	static readonly ADDRESS_REQUIRED = "ADDRESS_REQUIRED";
+	static readonly ERR_ADDRESS_MUST_BE_STRING = "ERR_ADDRESS_MUST_BE_STRING";
+	static readonly ERR_ADDRESS_REQUIRED = "ERR_ADDRESS_REQUIRED";
 }
