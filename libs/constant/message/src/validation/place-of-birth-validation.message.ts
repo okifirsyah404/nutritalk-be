@@ -1,5 +1,5 @@
 export abstract class PlaceOfBirthValidationMessage {
-	static readonly PLACE_OF_BIRTH_MUST_BE_STRING =
-		"PLACE_OF_BIRTH_MUST_BE_STRING";
-	static readonly PLACE_OF_BIRTH_REQUIRED = "PLACE_OF_BIRTH_REQUIRED";
+	static readonly ERR_PLACE_OF_BIRTH_MUST_BE_STRING =
+		"ERR_PLACE_OF_BIRTH_MUST_BE_STRING";
+	static readonly ERR_PLACE_OF_BIRTH_REQUIRED = "ERR_PLACE_OF_BIRTH_REQUIRED";
 }

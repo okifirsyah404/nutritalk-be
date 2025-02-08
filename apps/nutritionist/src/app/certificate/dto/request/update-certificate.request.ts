@@ -12,11 +12,11 @@ export class UpdateCertificateRequest extends PartialType(
 	@Transform(nullToUndefined)
 	@Matches(RegexConstant.REGISTRATION_CERTIFICATE, {
 		message:
-			RegistrationCertificateValidationMessage.REGISTRATION_NUMBER_INVALID,
+			RegistrationCertificateValidationMessage.ERR_REGISTRATION_NUMBER_INVALID,
 	})
 	@IsString({
 		message:
-			RegistrationCertificateValidationMessage.REGISTRATION_NUMBER_MUST_BE_STRING,
+			RegistrationCertificateValidationMessage.ERR_REGISTRATION_NUMBER_MUST_BE_STRING,
 	})
 	@IsOptional()
 	registrationNumber?: string;

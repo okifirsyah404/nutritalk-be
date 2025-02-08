@@ -19,28 +19,30 @@ export class NutritionistCreateCertificateRequest
 {
 	@Matches(RegexConstant.REGISTRATION_CERTIFICATE, {
 		message:
-			RegistrationCertificateValidationMessage.REGISTRATION_NUMBER_INVALID,
+			RegistrationCertificateValidationMessage.ERR_REGISTRATION_NUMBER_INVALID,
 	})
 	@IsString({
 		message:
-			RegistrationCertificateValidationMessage.REGISTRATION_NUMBER_MUST_BE_STRING,
+			RegistrationCertificateValidationMessage.ERR_REGISTRATION_NUMBER_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
 		message:
-			RegistrationCertificateValidationMessage.REGISTRATION_NUMBER_REQUIRED,
+			RegistrationCertificateValidationMessage.ERR_REGISTRATION_NUMBER_REQUIRED,
 	})
 	registrationNumber: string;
 
 	@Type(() => Date)
 	@IsDate({
-		message: RegistrationCertificateValidationMessage.ISSUE_DATE_MUST_BE_DATE,
+		message:
+			RegistrationCertificateValidationMessage.ERR_ISSUE_DATE_MUST_BE_DATE,
 	})
 	@IsOptional({})
 	issueDate: Date;
 
 	@Type(() => Date)
 	@IsDate({
-		message: RegistrationCertificateValidationMessage.VALID_UNTIL_MUST_BE_DATE,
+		message:
+			RegistrationCertificateValidationMessage.ERR_VALID_UNTIL_MUST_BE_DATE,
 	})
 	@IsOptional()
 	validUntil: Date;
