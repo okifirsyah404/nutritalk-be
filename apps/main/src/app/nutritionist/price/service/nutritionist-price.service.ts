@@ -37,7 +37,13 @@ export class NutritionistPriceService {
 	 * @returns A promise that resolves to the updated price entity.
 	 * @throws NotFoundException - If no price is found for the given nutritionist ID.
 	 */
-	@RefreshCache((nutritionistId: string) => `price:${nutritionistId}`)
+	@RefreshCache<IPriceEntity>(
+		(nutritionistId: string) => `price:${nutritionistId}`,
+		{
+			ttl: 1,
+			unit: "minutes",
+		},
+	)
 	async updatePrice(
 		nutritionistId: string,
 		reqData: Partial<Pick<IPriceEntity, "online" | "offline">>,
