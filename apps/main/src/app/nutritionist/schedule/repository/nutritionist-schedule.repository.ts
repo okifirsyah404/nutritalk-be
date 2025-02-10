@@ -41,6 +41,7 @@ export class NutritionistScheduleRepository {
 			allowToSort,
 			paginationOptions.order,
 		);
+
 		const totalItems = await this.prisma.schedule
 			.count({
 				where: {
@@ -60,6 +61,9 @@ export class NutritionistScheduleRepository {
 				select: {
 					...PrismaSelector.SCHEDULE,
 					scheduleTimes: {
+						orderBy: {
+							start: "asc",
+						},
 						select: PrismaSelector.SCHEDULE_TIME,
 					},
 				},
@@ -96,6 +100,9 @@ export class NutritionistScheduleRepository {
 				select: {
 					...PrismaSelector.SCHEDULE,
 					scheduleTimes: {
+						orderBy: {
+							start: "asc",
+						},
 						select: PrismaSelector.SCHEDULE_TIME,
 					},
 				},
@@ -127,6 +134,9 @@ export class NutritionistScheduleRepository {
 				select: {
 					...PrismaSelector.SCHEDULE,
 					scheduleTimes: {
+						orderBy: {
+							start: "asc",
+						},
 						select: PrismaSelector.SCHEDULE_TIME,
 					},
 				},
@@ -151,7 +161,7 @@ export class NutritionistScheduleRepository {
 		scheduleId: string,
 		paginationOptions: IIndexPaginationOption,
 	): Promise<IPaginationResult<IScheduleTimeEntity>> {
-		const allowToSort = ["active", "start", "createdAt", "updatedAt"];
+		const allowToSort = ["start", "active", "start", "createdAt", "updatedAt"];
 
 		const sortKey =
 			allowToSort.find((key) => key === paginationOptions.sort) ||
