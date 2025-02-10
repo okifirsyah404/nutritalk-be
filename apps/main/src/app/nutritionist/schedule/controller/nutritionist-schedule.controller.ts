@@ -179,10 +179,12 @@ export class NutritionistScheduleController {
 	 */
 	@Put(":scheduleId/time/:scheduleTimeId")
 	async updateScheduleTime(
+		@Param("scheduleId") scheduleId: string,
 		@Param("scheduleTimeId") scheduleTimeId: string,
 		@Body() reqBody: NutritionistCreateScheduleTimeRequest,
 	): Promise<IApiResponse<NutritionistScheduleTimeResponse>> {
 		const result = await this.service.updateScheduleTime(
+			scheduleId,
 			scheduleTimeId,
 			reqBody,
 		);

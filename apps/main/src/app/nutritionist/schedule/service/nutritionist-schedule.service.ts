@@ -138,6 +138,7 @@ export class NutritionistScheduleService {
 	 * @throws BadRequestException - If the new schedule time overlaps with existing schedule times.
 	 */
 	async updateScheduleTime(
+		scheduleId: string,
 		scheduleTimeId: string,
 		scheduleTime: Partial<Pick<IScheduleTimeEntity, "start" | "end">>,
 	): Promise<IScheduleTimeEntity> {
@@ -156,7 +157,10 @@ export class NutritionistScheduleService {
 		);
 
 		const existingEntries = (
-			await this.repository.findManyScheduleTimes(scheduleTimeId)
+			await this.repository.findManyScheduleTimesExcludingId(
+				scheduleId,
+				scheduleTimeId,
+			)
 		).map((entry) => TimeRange.fromDates(entry.start, entry.end));
 
 		if (timeRange.overlapsOthers(existingEntries)) {
