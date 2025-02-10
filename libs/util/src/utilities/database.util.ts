@@ -16,11 +16,13 @@ export class DatabaseUtil {
 		const parts = validSortField.split("."); // e.g., "profile.name" -> ["profile", "name"]
 
 		// Build nested orderBy object with sortOrder as the innermost value
-		return parts
+		const result = parts
 			.reverse()
 			.reduce<
 				Record<string, any>
 			>((acc, part, index) => (index === 0 ? { [part]: sortOrder } : { [part]: acc }), {});
+
+		return result;
 	}
 
 	static getOrderBy(
