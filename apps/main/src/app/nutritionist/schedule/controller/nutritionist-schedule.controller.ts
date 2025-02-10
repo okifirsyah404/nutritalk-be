@@ -216,4 +216,26 @@ export class NutritionistScheduleController {
 			data: undefined,
 		});
 	}
+
+	/**
+	 * Retrieves a schedule entity by its ID.
+	 *
+	 * Response:
+	 * - status: string
+	 * - statusCode: number
+	 * - message: string
+	 * - data: object of schedule information
+	 *
+	 */
+	@Get(":scheduleId")
+	async getScheduleById(
+		@Param("scheduleId") scheduleId: string,
+	): Promise<IApiResponse<NutritionistScheduleResponse>> {
+		const result = await this.service.getScedule(scheduleId);
+
+		return BaseApiResponse.success({
+			message: ScheduleSuccessMessage.SUCCESS_GET_SCHEDULE,
+			data: NutritionistScheduleResponse.fromEntity(result),
+		});
+	}
 }

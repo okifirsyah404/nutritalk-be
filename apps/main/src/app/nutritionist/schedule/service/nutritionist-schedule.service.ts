@@ -32,6 +32,23 @@ export class NutritionistScheduleService {
 	}
 
 	/**
+	 * Retrieves a schedule by its ID.
+	 *
+	 * @param {string} scheduleId - The ID of the schedule to retrieve.
+	 * @returns {Promise<IScheduleEntity>} A promise that resolves to the schedule entity.
+	 * @throws {NotFoundException} If the schedule with the given ID is not found.
+	 */
+	async getScedule(scheduleId: string): Promise<IScheduleEntity> {
+		const result = await this.repository.findScheduleById(scheduleId);
+
+		if (!result) {
+			throw new NotFoundException(ScheduleErrorMessage.ERR_SCHEDULE_NOT_FOUND);
+		}
+
+		return result;
+	}
+
+	/**
 	 * Toggles the active status of a schedule.
 	 *
 	 * @param {string} scheduleId - The ID of the schedule to toggle.
