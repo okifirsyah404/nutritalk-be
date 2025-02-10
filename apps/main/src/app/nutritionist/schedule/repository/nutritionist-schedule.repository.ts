@@ -216,6 +216,23 @@ export class NutritionistScheduleRepository {
 			.catch(createDatabaseErrorHandler);
 	}
 
+	async findManyScheduleTimesExcludingId(
+		scheduleId: string,
+		scheduleTimeId: string,
+	): Promise<IScheduleTimeEntity[]> {
+		return await this.prisma.scheduleTime
+			.findMany({
+				where: {
+					scheduleId,
+					id: {
+						not: scheduleTimeId,
+					},
+				},
+				select: PrismaSelector.SCHEDULE_TIME,
+			})
+			.catch(createDatabaseErrorHandler);
+	}
+
 	/**
 	 * Finds a schedule time by its unique identifier.
 	 *
