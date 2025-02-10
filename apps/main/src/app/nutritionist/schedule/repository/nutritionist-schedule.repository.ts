@@ -93,7 +93,12 @@ export class NutritionistScheduleRepository {
 				where: {
 					id: scheduleId,
 				},
-				select: PrismaSelector.SCHEDULE,
+				select: {
+					...PrismaSelector.SCHEDULE,
+					scheduleTimes: {
+						select: PrismaSelector.SCHEDULE_TIME,
+					},
+				},
 			})
 			.catch(createDatabaseErrorHandler);
 	}
