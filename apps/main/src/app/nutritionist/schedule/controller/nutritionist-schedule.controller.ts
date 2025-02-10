@@ -25,6 +25,7 @@ import {
 import { AccountRole } from "@prisma/client";
 import { UriUtil } from "@util";
 import { NutritionistCreateScheduleTimeRequest } from "../dto/request/nutritionist-create-schedule-time.request";
+import { NutritionistUpdateScheduleTimeRequest } from "../dto/request/nutritionist-update-schedule-time.request";
 import { NutritionistScheduleTimeResponse } from "../dto/response/nutritionist-schedule-time.response";
 import { NutritionistScheduleResponse } from "../dto/response/nutritionist-schedule.response";
 import { NutritionistScheduleService } from "../service/nutritionist-schedule.service";
@@ -181,7 +182,7 @@ export class NutritionistScheduleController {
 	async updateScheduleTime(
 		@Param("scheduleId") scheduleId: string,
 		@Param("scheduleTimeId") scheduleTimeId: string,
-		@Body() reqBody: NutritionistCreateScheduleTimeRequest,
+		@Body() reqBody: NutritionistUpdateScheduleTimeRequest,
 	): Promise<IApiResponse<NutritionistScheduleTimeResponse>> {
 		const result = await this.service.updateScheduleTime(
 			scheduleId,
