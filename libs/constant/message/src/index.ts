@@ -35,6 +35,7 @@ export * from "./validation/phone-number-validation.message";
 export * from "./validation/place-of-birth-validation.message";
 export * from "./validation/price-validation.message";
 export * from "./validation/registration-certificate-validation.message";
+export * from "./validation/schedule-validation.message";
 export * from "./validation/signature-validation.message";
 export * from "./validation/time-validation.message";
 export * from "./validation/work-place-validation.message";
