@@ -82,6 +82,7 @@ async function seedNutritionist(prisma: PrismaClient): Promise<void> {
 				data: {
 					email: nutritionist.email,
 					password: await hashPassword(nutritionist.email),
+					lastActivity: new Date(),
 					deviceInfo: {
 						create: {
 							device: "device",

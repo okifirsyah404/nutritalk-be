@@ -2,7 +2,6 @@ import {
 	AccountErrorMessage,
 	AuthErrorMessage,
 	OtpErrorMessage,
-	SignatureErrorMessage,
 } from "@constant/message";
 import {
 	IAccountEntity,
@@ -117,19 +116,6 @@ export class AuthForgetPasswordService {
 	}): Promise<IOtpEmail> {
 		if (reqData.password !== reqData.confirmPassword) {
 			throw new BadRequestException(AuthErrorMessage.ERR_PASSWORD_NOT_MATCH);
-		}
-
-		const isSignatureValid = await this.signatureService.validateSignature(
-			reqData.signature,
-			{
-				deleteAfterValidation: true,
-			},
-		);
-
-		if (!isSignatureValid) {
-			throw new BadRequestException(
-				SignatureErrorMessage.ERR_SIGNATURE_INVALID,
-			);
 		}
 
 		const account: IAccountEntity =
