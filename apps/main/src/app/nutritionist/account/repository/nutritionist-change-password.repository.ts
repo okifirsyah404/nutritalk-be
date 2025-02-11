@@ -24,6 +24,7 @@ export class NutritionistChangePasswordRepository {
 				},
 				data: {
 					password,
+					lastActivity: new Date(),
 				},
 				select: {
 					...PrismaSelector.ACCOUNT,

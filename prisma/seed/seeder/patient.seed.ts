@@ -49,6 +49,7 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 					create: {
 						email: "johndoe@example.com",
 						password: await hashPassword("johndoe@example.com"),
+						lastActivity: new Date(),
 						deviceInfo: {
 							create: {
 								device: "device",

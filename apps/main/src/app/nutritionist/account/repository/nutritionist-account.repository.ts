@@ -25,6 +25,7 @@ export class NutritionistAccountRepository {
 				},
 				select: {
 					...PrismaSelector.ACCOUNT,
+					lastActivity: true,
 					createdAt: true,
 					updatedAt: true,
 				},
