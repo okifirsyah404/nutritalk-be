@@ -6,6 +6,7 @@ import {
 	IJwtRefresh,
 	IJwtToken,
 } from "@contract";
+import { IDeviceInfoEntity } from "@contract/entities/device-info.entity.interface";
 import { createDatabaseErrorHandler } from "@infrastructure";
 import { AppJwtService } from "@module/app-jwt";
 import {
@@ -34,15 +35,18 @@ export class NutritionistAuthService {
 	 * @throws {UnauthorizedException} If the account is not a nutritionist or if the password does not match.
 	 */
 	@SetCache<IJwtToken>(
-		(reqData: Pick<IAccountEntity, "email" | "password" | "fcmToken">) =>
-			`auth:signin:${reqData.email}`,
+		(
+			reqData: Pick<IAccountEntity, "email" | "password"> &
+				Pick<IDeviceInfoEntity, "fcmToken">,
+		) => `auth:signin:${reqData.email}`,
 		{
 			ttl: 1,
 			unit: "minutes",
 		},
 	)
 	async signIn(
-		reqData: Pick<IAccountEntity, "email" | "password" | "fcmToken">,
+		reqData: Pick<IAccountEntity, "email" | "password"> &
+			Pick<IDeviceInfoEntity, "fcmToken">,
 	): Promise<IAuthResponse> {
 		const result = await this.repository
 			.findAccountByEmail(reqData.email)
@@ -67,7 +71,7 @@ export class NutritionistAuthService {
 			throw new UnauthorizedException(AuthErrorMessage.ERR_PASSWORD_NOT_MATCH);
 		}
 
-		this.repository.updateFcmToken(result.id, reqData.fcmToken);
+		await this.repository.updateFcmToken(result.id, reqData.fcmToken);
 
 		const { accessToken, refreshToken } =
 			await this.appJwtService.generateAuthTokens({
@@ -95,7 +99,7 @@ export class NutritionistAuthService {
 	 */
 	async refreshToken(
 		token: IJwtRefresh,
-		reqData: Pick<IAccountEntity, "fcmToken">,
+		reqData: Pick<IDeviceInfoEntity, "fcmToken">,
 	): Promise<IAuthResponse> {
 		const nutritionistAccount = await this.repository.findAccountByEmail(
 			token.payload.email,
@@ -109,7 +113,10 @@ export class NutritionistAuthService {
 				email: token.payload.email,
 			});
 
-		this.repository.updateFcmToken(nutritionistAccount.id, reqData.fcmToken);
+		void this.repository.updateFcmToken(
+			nutritionistAccount.id,
+			reqData.fcmToken,
+		);
 
 		return {
 			accessToken,
@@ -127,7 +134,7 @@ export class NutritionistAuthService {
 	async signOut(id: string): Promise<void> {
 		const account = await this.repository.findAccountById(id);
 
-		if (!account.fcmToken && !account.refreshToken) {
+		if (!account.deviceInfo.fcmToken && !account.refreshToken) {
 			throw new UnauthorizedException(
 				AccountErrorMessage.ERR_ACCOUNT_ALREADY_SIGN_OUT,
 			);

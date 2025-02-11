@@ -231,6 +231,13 @@ export class NutritionistScheduleRepository {
 			.catch(createDatabaseErrorHandler);
 	}
 
+	/**
+	 * Finds and returns a list of schedule times excluding a specific schedule time ID.
+	 *
+	 * @param scheduleId - The ID of the schedule to search within.
+	 * @param scheduleTimeId - The ID of the schedule time to exclude from the results.
+	 * @returns A promise that resolves to an array of schedule time entities.
+	 */
 	async findManyScheduleTimesExcludingId(
 		scheduleId: string,
 		scheduleTimeId: string,

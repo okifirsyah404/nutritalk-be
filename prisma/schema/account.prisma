@@ -7,7 +7,6 @@ model Account {
   // Main Fields
   email        String  @unique
   password     String
-  fcmToken     String?
   refreshToken String? @unique
 
   // Date Metadata
@@ -21,7 +20,8 @@ model Account {
   patient      Patient?
   nutritionist Nutritionist?
   sso          SingleSignOn?
-  role        Role?
+  role         Role?
+  deviceInfo   DeviceInfo?
 }
 
 // ------------------------------------------------------------------

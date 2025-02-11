@@ -41,6 +41,12 @@ export abstract class PrismaSelector {
 		},
 	} satisfies Prisma.AccountSelect;
 
+	static readonly DEVICE_INFO = {
+		id: true,
+		device: true,
+		fcmToken: true,
+	} satisfies Prisma.DeviceInfoSelect;
+
 	static readonly PROFILE = {
 		id: true,
 		name: true,

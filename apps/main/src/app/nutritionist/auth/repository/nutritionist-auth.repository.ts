@@ -45,8 +45,10 @@ export class NutritionistAuthRepository {
 				select: {
 					...PrismaSelector.ACCOUNT,
 					password: true,
-					fcmToken: true,
 					refreshToken: true,
+					deviceInfo: {
+						select: PrismaSelector.DEVICE_INFO,
+					},
 					nutritionist: {
 						select: PrismaSelector.NUTRITIONIST_WITH_PROFILE,
 					},
@@ -69,7 +71,11 @@ export class NutritionistAuthRepository {
 					id,
 				},
 				data: {
-					fcmToken,
+					deviceInfo: {
+						update: {
+							fcmToken,
+						},
+					},
 				},
 				select: {
 					...PrismaSelector.ACCOUNT,
