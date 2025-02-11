@@ -1,0 +1,16 @@
+model DeviceInfo {
+  id String @id @default(cuid())
+
+  device   String?
+  fcmToken String?
+
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Foreign Keys
+  accountId String? @unique
+
+  // Relations
+  account Account? @relation(fields: [accountId], references: [id])
+}
