@@ -5,3 +5,5 @@ export * from "./pipe/image-file-validation.pipe";
 export * from "./request/index-pagination.request";
 export * from "./response/base-api.response";
 export * from "./transformer/null-to-undefined.transform";
+export * from "./validator/is-not-empty-string.validator";
+export * from "./validator/match-other.validator";

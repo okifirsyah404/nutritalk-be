@@ -1,3 +1,4 @@
+import { IsMatchOther } from "@common";
 import {
 	ConfirmPasswordValidationMessage,
 	PasswordValidationMessage,
@@ -5,10 +6,12 @@ import {
 } from "@constant/message";
 import { IsStrongPasswordConstant } from "@constant/option";
 import { IChangePasswordRequest } from "@contract";
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty, PickType } from "@nestjs/swagger";
 import { IsNotEmpty, IsString, IsStrongPassword } from "class-validator";
+import { NutritionistAuthSignInRequest } from "./nutritionist-auth-sign-in.request";
 
 export class NutritionistForgetPasswordRequest
+	extends PickType(NutritionistAuthSignInRequest, ["email"])
 	implements IChangePasswordRequest
 {
 	/**
@@ -24,14 +27,14 @@ export class NutritionistForgetPasswordRequest
 	@ApiProperty({
 		example: "Secret Password",
 	})
+	@IsStrongPassword(IsStrongPasswordConstant.STRONG_PASSWORD, {
+		message: PasswordValidationMessage.ERR_PASSWORD_PATTERN,
+	})
 	@IsString({
 		message: PasswordValidationMessage.ERR_PASSWORD_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
 		message: PasswordValidationMessage.ERR_PASSWORD_REQUIRED,
-	})
-	@IsStrongPassword(IsStrongPasswordConstant.STRONG_PASSWORD, {
-		message: PasswordValidationMessage.ERR_PASSWORD_PATTERN,
 	})
 	password: string;
 
@@ -48,15 +51,18 @@ export class NutritionistForgetPasswordRequest
 	@ApiProperty({
 		example: "Secret Password",
 	})
+	@IsMatchOther("password", {
+		message: ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_NOT_MATCH,
+	})
+	@IsStrongPassword(IsStrongPasswordConstant.STRONG_PASSWORD, {
+		message: ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_PATTERN,
+	})
 	@IsString({
 		message:
 			ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
 		message: ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_REQUIRED,
-	})
-	@IsStrongPassword(IsStrongPasswordConstant.STRONG_PASSWORD, {
-		message: ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_PATTERN,
 	})
 	confirmPassword: string;
 

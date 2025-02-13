@@ -2,7 +2,6 @@ import { BaseApiResponse } from "@common";
 import { AccountSuccessMessage, OtpSuccessMessage } from "@constant/message";
 import { IApiResponse, INutritionistEntity } from "@contract";
 import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
-import { SignatureTokenGuard } from "@module/signature";
 import { Body, Controller, Get, Post, Put, UseGuards } from "@nestjs/common";
 import { AccountRole } from "@prisma/client";
 import { UriUtil } from "@util";
@@ -88,7 +87,6 @@ export class NutritionistChangePasswordController {
 	 * - data: object of account change password response
 	 *
 	 */
-	@UseGuards(SignatureTokenGuard)
 	@Put()
 	async changePassword(
 		@GetNutritionistLogged() nutritionist: INutritionistEntity,

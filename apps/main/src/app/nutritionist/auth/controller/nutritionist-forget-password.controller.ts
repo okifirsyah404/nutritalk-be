@@ -1,8 +1,7 @@
 import { BaseApiResponse } from "@common";
 import { AuthSuccessMessage, OtpSuccessMessage } from "@constant/message";
-import { IApiResponse, IJwtSignaturePayload } from "@contract";
-import { GetSignaturePayload, SignatureTokenGuard } from "@module/signature";
-import { Body, Controller, Post, UseGuards } from "@nestjs/common";
+import { IApiResponse } from "@contract";
+import { Body, Controller, Post } from "@nestjs/common";
 import { AccountRole } from "@prisma/client";
 import { UriUtil } from "@util";
 import { NutritionistForgetPasswordSendOtpRequest } from "../dto/request/nutritionist-forget-password-send-otp.request";
@@ -85,14 +84,11 @@ export class NutritionistForgetPasswordController {
 	 * - data: object of email
 	 *
 	 */
-	@UseGuards(SignatureTokenGuard)
 	@Post()
 	async resetPassword(
 		@Body() reqBody: NutritionistForgetPasswordRequest,
-		@GetSignaturePayload() signaturePayload: IJwtSignaturePayload,
 	): Promise<IApiResponse<NutritionistForgetPasswordResponse>> {
 		const result = await this.service.resetPassword({
-			email: signaturePayload.email,
 			reqData: reqBody,
 		});
 

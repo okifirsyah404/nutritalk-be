@@ -1,8 +1,8 @@
 import { MailQueueService } from "@app/module/queue/service/mail-queue.service";
 import {
 	AccountErrorMessage,
-	AuthErrorMessage,
 	OtpErrorMessage,
+	SignatureErrorMessage,
 } from "@constant/message";
 import {
 	IAccountEntity,
@@ -108,27 +108,35 @@ export class NutritionistForgetPasswordService {
 	 * @throws {NotFoundException} - If no account is found with the given email.
 	 */
 	async resetPassword({
-		email,
 		reqData,
 	}: {
-		email: string;
-		reqData: IChangePasswordRequest;
+		reqData: IChangePasswordRequest & IOtpEmail;
 	}): Promise<IOtpEmail> {
-		if (reqData.password !== reqData.confirmPassword) {
-			throw new BadRequestException(AuthErrorMessage.ERR_PASSWORD_NOT_MATCH);
-		}
-
-		const account: IAccountEntity =
-			await this.repository.findAccountByEmail(email);
+		const account: IAccountEntity = await this.repository.findAccountByEmail(
+			reqData.email,
+		);
 
 		if (!account) {
 			throw new NotFoundException(AccountErrorMessage.ERR_ACCOUNT_NOT_FOUND);
 		}
 
+		const isSignatureValid = await this.signatureService.validateSignature(
+			reqData.signature,
+			{
+				deleteAfterValidation: true,
+			},
+		);
+
+		if (!isSignatureValid) {
+			throw new BadRequestException(
+				SignatureErrorMessage.ERR_SIGNATURE_INVALID,
+			);
+		}
+
 		await this.repository.updatePassword(account.id, reqData.password);
 
 		return {
-			email,
+			email: reqData.email,
 		};
 	}
 }
