@@ -1,11 +1,5 @@
-import { SetCache } from "@config/app-cache";
 import { AccountErrorMessage, AuthErrorMessage } from "@constant/message";
-import {
-	IAccountEntity,
-	IAuthResponse,
-	IJwtRefresh,
-	IJwtToken,
-} from "@contract";
+import { IAccountEntity, IAuthResponse, IJwtRefresh } from "@contract";
 import { IDeviceInfoEntity } from "@contract/entities/device-info.entity.interface";
 import { createDatabaseErrorHandler } from "@infrastructure";
 import { AppJwtService } from "@module/app-jwt";
@@ -34,16 +28,6 @@ export class NutritionistAuthService {
 	 * @throws {NotFoundException} If the account is not found.
 	 * @throws {UnauthorizedException} If the account is not a nutritionist or if the password does not match.
 	 */
-	@SetCache<IJwtToken>(
-		(
-			reqData: Pick<IAccountEntity, "email" | "password"> &
-				Pick<IDeviceInfoEntity, "fcmToken">,
-		) => `auth:signin:${reqData.email}`,
-		{
-			ttl: 1,
-			unit: "minutes",
-		},
-	)
 	async signIn(
 		reqData: Pick<IAccountEntity, "email" | "password"> &
 			Pick<IDeviceInfoEntity, "fcmToken">,
