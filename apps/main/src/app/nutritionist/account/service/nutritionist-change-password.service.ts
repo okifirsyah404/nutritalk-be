@@ -1,4 +1,5 @@
 import { MailQueueService } from "@app/module/queue/service/mail-queue.service";
+import { AppConfigService } from "@config/app-config";
 import { OtpErrorMessage, SignatureErrorMessage } from "@constant/message";
 import {
 	IAccountEntity,
@@ -12,6 +13,7 @@ import { OtpService } from "@module/otp";
 import { SignatureService } from "@module/signature";
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { OtpPurpose } from "@prisma/client";
+import { CryptoUtil } from "@util";
 import { NutritionistChangePasswordRepository } from "../repository/nutritionist-change-password.repository";
 @Injectable()
 export class NutritionistChangePasswordService {
@@ -20,6 +22,8 @@ export class NutritionistChangePasswordService {
 		private readonly otpService: OtpService,
 		private readonly mailQueueService: MailQueueService,
 		private readonly signatureService: SignatureService,
+		private readonly cryptoUtil: CryptoUtil,
+		private readonly config: AppConfigService,
 	) {}
 
 	/**
@@ -107,9 +111,14 @@ export class NutritionistChangePasswordService {
 			);
 		}
 
+		const hashedPassword = await this.cryptoUtil.hash(
+			reqData.password,
+			this.config.bcryptConfig.saltRounds,
+		);
+
 		const updatedAccount = await this.repository.updatePassword(
 			account.id,
-			reqData.password,
+			hashedPassword,
 		);
 
 		return updatedAccount;

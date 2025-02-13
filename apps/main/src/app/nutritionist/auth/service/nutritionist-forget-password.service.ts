@@ -1,4 +1,5 @@
 import { MailQueueService } from "@app/module/queue/service/mail-queue.service";
+import { AppConfigService } from "@config/app-config";
 import {
 	AccountErrorMessage,
 	OtpErrorMessage,
@@ -19,6 +20,7 @@ import {
 	NotFoundException,
 } from "@nestjs/common";
 import { OtpPurpose } from "@prisma/client";
+import { CryptoUtil } from "@util";
 import { NutritionistForgetPasswordRepository } from "../repository/nutritionist-forget-password.repository";
 
 @Injectable()
@@ -28,6 +30,8 @@ export class NutritionistForgetPasswordService {
 		private readonly otpService: OtpService,
 		private readonly mailQueueService: MailQueueService,
 		private readonly signatureService: SignatureService,
+		private readonly cryptoUtil: CryptoUtil,
+		private readonly config: AppConfigService,
 	) {}
 
 	/**
@@ -133,7 +137,12 @@ export class NutritionistForgetPasswordService {
 			);
 		}
 
-		await this.repository.updatePassword(account.id, reqData.password);
+		const hashedPassword = await this.cryptoUtil.hash(
+			reqData.password,
+			this.config.bcryptConfig.saltRounds,
+		);
+
+		await this.repository.updatePassword(account.id, hashedPassword);
 
 		return {
 			email: reqData.email,
