@@ -1,8 +1,5 @@
 import { MailQueueService } from "@app/module/queue/service/mail-queue.service";
-import {
-	ConfirmPasswordValidationMessage,
-	OtpErrorMessage,
-} from "@constant/message";
+import { OtpErrorMessage, SignatureErrorMessage } from "@constant/message";
 import {
 	IAccountEntity,
 	IChangePasswordRequest,
@@ -97,9 +94,16 @@ export class NutritionistChangePasswordService {
 		account: IAccountEntity,
 		reqData: IChangePasswordRequest,
 	): Promise<IAccountEntity> {
-		if (reqData.password !== reqData.confirmPassword) {
+		const isSignatureValid = await this.signatureService.validateSignature(
+			reqData.signature,
+			{
+				deleteAfterValidation: true,
+			},
+		);
+
+		if (!isSignatureValid) {
 			throw new BadRequestException(
-				ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_NOT_MATCH,
+				SignatureErrorMessage.ERR_SIGNATURE_INVALID,
 			);
 		}
 

@@ -1,3 +1,4 @@
+import { IsMatchOther } from "@common";
 import {
 	ConfirmPasswordValidationMessage,
 	PasswordValidationMessage,
@@ -47,6 +48,9 @@ export class NutritionistChangePasswordRequest
 	 */
 	@ApiProperty({
 		example: "Secret Password",
+	})
+	@IsMatchOther("password", {
+		message: ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_NOT_MATCH,
 	})
 	@IsStrongPassword(IsStrongPasswordConstant.STRONG_PASSWORD, {
 		message: ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_PATTERN,
