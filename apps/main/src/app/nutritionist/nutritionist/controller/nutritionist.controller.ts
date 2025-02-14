@@ -59,8 +59,9 @@ export class NutritionistController {
 	@Get(":nutritionistId")
 	async getNutritionist(
 		@Param("nutritionistId") id: string,
+		@Query() query: NutritionistIndexQuery,
 	): Promise<IApiResponse<NutritionistResponse>> {
-		const result = await this.service.getNutritionist(id);
+		const result = await this.service.getNutritionist(id, query);
 
 		return BaseApiResponse.success({
 			message: NutritionistSuccessMessage.SUCCESS_GET_NUTRITIONIST,

@@ -1,5 +1,5 @@
 import { IIndexPaginationOption, SortOrderEnum } from "@contract";
-import { Type } from "class-transformer";
+import { Transform } from "class-transformer";
 import { IsEnum, IsNumber, IsOptional, Max } from "class-validator";
 export class IndexPaginationRequest implements IIndexPaginationOption {
 	@IsOptional()
@@ -8,16 +8,27 @@ export class IndexPaginationRequest implements IIndexPaginationOption {
 	@IsOptional()
 	sort?: string;
 
+	@Transform(({ value }): string | undefined => (value === "" ? "asc" : value))
 	@IsEnum(SortOrderEnum)
 	@IsOptional()
-	order?: SortOrderEnum = SortOrderEnum.ASC;
+	order: SortOrderEnum = SortOrderEnum.ASC;
 
-	@Type(() => Number)
+	@Transform(({ value }) => {
+		if (value === "") {
+			return 1;
+		}
+		return Number(value);
+	})
 	@IsNumber()
 	@IsOptional()
 	page: number = 1;
 
-	@Type(() => Number)
+	@Transform(({ value }) => {
+		if (value === "") {
+			return 10;
+		}
+		return Number(value);
+	})
 	@Max(100)
 	@IsNumber()
 	@IsOptional()

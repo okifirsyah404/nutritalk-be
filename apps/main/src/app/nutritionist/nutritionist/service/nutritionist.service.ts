@@ -52,8 +52,14 @@ export class NutritionistService {
 	 * @returns {Promise<INutritionistEntity>} A promise that resolves to the nutritionist entity.
 	 * @throws {NotFoundException} If the nutritionist is not found.
 	 */
-	async getNutritionist(nutritionistId: string): Promise<INutritionistEntity> {
-		const result = await this.repository.getNutritionistById(nutritionistId);
+	async getNutritionist(
+		nutritionistId: string,
+		query: NutritionistIndexQuery,
+	): Promise<INutritionistEntity> {
+		const result = await this.repository.getNutritionistById(
+			nutritionistId,
+			query,
+		);
 
 		if (!result) {
 			throw new NotFoundException(
