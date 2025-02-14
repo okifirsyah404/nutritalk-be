@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 import { faker } from "@faker-js/faker";
 import { Logger } from "@nestjs/common";
 import {
@@ -38,7 +38,7 @@ async function seedConsultation(prisma: PrismaClient): Promise<void> {
 		const nutritionist = await prisma.nutritionist.findFirst({
 			where: {
 				account: {
-					email: "devnutritionist@local.com",
+					email: "dev@nutritionist.com",
 				},
 			},
 			select: {
