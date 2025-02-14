@@ -20,7 +20,7 @@ import {
 	Injectable,
 	NotFoundException,
 } from "@nestjs/common";
-import { OtpPurpose } from "@prisma/client";
+import { AccountRole, OtpPurpose } from "@prisma/client";
 import { CryptoUtil } from "@util";
 import { NutritionistForgetPasswordRepository } from "../repository/nutritionist-forget-password.repository";
 
@@ -48,6 +48,12 @@ export class NutritionistForgetPasswordService {
 
 		if (!result) {
 			throw new NotFoundException(AccountErrorMessage.ERR_ACCOUNT_NOT_FOUND);
+		}
+
+		if (result.role.accountRole !== AccountRole.NUTRITIONIST) {
+			throw new BadRequestException(
+				AccountErrorMessage.ERR_ACCOUNT_NOT_NUTRITIONIST,
+			);
 		}
 
 		const otpResult = await this.otpService.generateOtp({
