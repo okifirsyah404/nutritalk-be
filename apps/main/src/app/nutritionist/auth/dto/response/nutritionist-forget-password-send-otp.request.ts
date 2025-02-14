@@ -1,18 +1,23 @@
-import { IOtpEmail } from "@contract";
+import { IOtpResponse } from "@contract";
 
-export class NutritionistForgetPasswordSendOtpResponse implements IOtpEmail {
-	private constructor(email: string) {
-		this.email = email;
+export class NutritionistForgetPasswordSendOtpResponse implements IOtpResponse {
+	private constructor(entity: IOtpResponse) {
+		this.email = entity.email;
+		this.expiryAt = entity.expiryAt;
 	}
 
 	email: string;
+	expiryAt: Date;
 
 	static fromEntity(
-		entity: IOtpEmail,
+		entity: IOtpResponse,
 	): NutritionistForgetPasswordSendOtpResponse {
-		return new NutritionistForgetPasswordSendOtpResponse(entity.email);
+		return new NutritionistForgetPasswordSendOtpResponse(entity);
 	}
 
 	static readonly exampleData: NutritionistForgetPasswordSendOtpResponse =
-		new NutritionistForgetPasswordSendOtpResponse("johndoe@example.com");
+		new NutritionistForgetPasswordSendOtpResponse({
+			email: "johndoe@example.com",
+			expiryAt: new Date(),
+		});
 }
