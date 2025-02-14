@@ -9,6 +9,7 @@ import {
 	IAccountEntity,
 	IChangePasswordRequest,
 	IOtpEmail,
+	IOtpResponse,
 	IOtpVerifyRequest,
 	IOtpVerifyResponse,
 } from "@contract";
@@ -42,7 +43,7 @@ export class NutritionistForgetPasswordService {
 	 *
 	 * @throws {NotFoundException} - If no account is found for the given email.
 	 */
-	async checkAccount(reqData: IOtpEmail): Promise<IOtpEmail> {
+	async checkAccount(reqData: IOtpEmail): Promise<IOtpResponse> {
 		const result = await this.repository.findAccountByEmail(reqData.email);
 
 		if (!result) {
@@ -55,7 +56,7 @@ export class NutritionistForgetPasswordService {
 			purpose: OtpPurpose.AUTH_FORGOT_PASSWORD,
 		});
 
-		this.mailQueueService.sendOtpMail({
+		void this.mailQueueService.sendOtpMail({
 			to: result.email,
 			subject: "Forget Password OTP",
 			body: {
@@ -67,7 +68,8 @@ export class NutritionistForgetPasswordService {
 		});
 
 		return {
-			email: result.email,
+			email: otpResult.email,
+			expiryAt: otpResult.expiryAt,
 		};
 	}
 
