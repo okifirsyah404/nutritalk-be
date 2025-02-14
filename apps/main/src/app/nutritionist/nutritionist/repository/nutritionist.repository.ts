@@ -126,6 +126,7 @@ export class NutritionistRepository {
 	 */
 	async getNutritionistById(
 		nutritionistId: string,
+		query: NutritionistIndexQuery,
 	): Promise<INutritionistEntity> {
 		return this.prisma.nutritionist.findUnique({
 			where: {
@@ -133,22 +134,19 @@ export class NutritionistRepository {
 			},
 			select: {
 				...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
-				consultationMeta: {
+				consultationMeta: query.consultationMeta && {
 					select: PrismaSelector.CONSULTATION_META,
 				},
-				schedules: {
-					select: PrismaSelector.SCHEDULE_WITH_TIMES,
-					where: {
-						active: true,
-					},
+				schedules: query.schedules && {
+					select: PrismaSelector.SCHEDULE,
 				},
-				price: {
+				price: query.price && {
 					select: PrismaSelector.PRICE,
 				},
-				registrationCertificate: {
+				registrationCertificate: query.registrationCertificate && {
 					select: PrismaSelector.REGISTRATION_CERTIFICATE,
 				},
-				occupation: {
+				occupation: query.occupation && {
 					select: PrismaSelector.OCCUPATION,
 				},
 			},
