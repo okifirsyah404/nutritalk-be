@@ -82,6 +82,9 @@ export class NutritionistRepository {
 					select: PrismaSelector.CONSULTATION_META,
 				},
 				schedules: query.schedules === true && {
+					orderBy: {
+						dayOfWeekIndex: "asc",
+					},
 					select: PrismaSelector.SCHEDULE,
 				},
 				price: query.price === true && {
@@ -141,6 +144,9 @@ export class NutritionistRepository {
 					select: PrismaSelector.CONSULTATION_META,
 				},
 				schedules: query.schedules === true && {
+					orderBy: {
+						dayOfWeekIndex: "asc",
+					},
 					select: PrismaSelector.SCHEDULE_WITH_TIMES,
 				},
 				price: query.price === true && {
