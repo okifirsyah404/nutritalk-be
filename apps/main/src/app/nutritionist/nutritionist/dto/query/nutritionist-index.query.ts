@@ -28,6 +28,11 @@ export class NutritionistIndexQuery
 	@Type(() => Boolean)
 	@IsBoolean()
 	@IsOptional()
+	readonly account?: boolean;
+
+	@Type(() => Boolean)
+	@IsBoolean()
+	@IsOptional()
 	readonly consultationMeta?: boolean;
 
 	@Type(() => Boolean)

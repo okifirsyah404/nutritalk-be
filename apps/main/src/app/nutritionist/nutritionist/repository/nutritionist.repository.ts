@@ -78,19 +78,19 @@ export class NutritionistRepository {
 			},
 			select: {
 				...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
-				consultationMeta: query.consultationMeta && {
+				consultationMeta: query.consultationMeta === true && {
 					select: PrismaSelector.CONSULTATION_META,
 				},
-				schedules: query.schedules && {
+				schedules: query.schedules === true && {
 					select: PrismaSelector.SCHEDULE,
 				},
-				price: query.price && {
+				price: query.price === true && {
 					select: PrismaSelector.PRICE,
 				},
-				registrationCertificate: query.registrationCertificate && {
+				registrationCertificate: query.registrationCertificate === true && {
 					select: PrismaSelector.REGISTRATION_CERTIFICATE,
 				},
-				occupation: query.occupation && {
+				occupation: query.occupation === true && {
 					select: PrismaSelector.OCCUPATION,
 				},
 			},
@@ -134,19 +134,22 @@ export class NutritionistRepository {
 			},
 			select: {
 				...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
-				consultationMeta: query.consultationMeta && {
+				account: query.account === true && {
+					select: PrismaSelector.ACCOUNT,
+				},
+				consultationMeta: query.consultationMeta === true && {
 					select: PrismaSelector.CONSULTATION_META,
 				},
-				schedules: query.schedules && {
-					select: PrismaSelector.SCHEDULE,
+				schedules: query.schedules === true && {
+					select: PrismaSelector.SCHEDULE_WITH_TIMES,
 				},
-				price: query.price && {
+				price: query.price === true && {
 					select: PrismaSelector.PRICE,
 				},
-				registrationCertificate: query.registrationCertificate && {
+				registrationCertificate: query.registrationCertificate === true && {
 					select: PrismaSelector.REGISTRATION_CERTIFICATE,
 				},
-				occupation: query.occupation && {
+				occupation: query.occupation === true && {
 					select: PrismaSelector.OCCUPATION,
 				},
 			},
