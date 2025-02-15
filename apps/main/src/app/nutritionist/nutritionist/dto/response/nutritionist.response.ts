@@ -1,4 +1,5 @@
 import {
+	IAccountEntity,
 	IConsultationMetaEntity,
 	INutritionistEntity,
 	IOccupationEntity,
@@ -16,6 +17,7 @@ export class NutritionistResponse implements INutritionistEntity {
 		this.nip = entity.nip;
 		this.nidn = entity.nidn;
 		this.isAvailable = entity.isAvailable;
+		this.account = entity.account;
 		this.profile = entity.profile;
 		this.consultationMeta = entity.consultationMeta;
 		this.occupation = entity.occupation;
@@ -28,6 +30,7 @@ export class NutritionistResponse implements INutritionistEntity {
 	nip: string;
 	nidn: string;
 	isAvailable: boolean;
+	account?: IAccountEntity;
 	profile?: IProfileEntity;
 	consultationMeta?: IConsultationMetaEntity;
 	occupation?: IOccupationEntity;
