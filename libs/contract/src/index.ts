@@ -37,6 +37,7 @@ export * from "./mail/mailer.interface";
 export * from "./otp/otp.interface";
 export * from "./pagination/pagination.interface";
 export * from "./request/account/change-password-request.interface";
+export * from "./request/account/google-sso-request.interface";
 export * from "./request/index-pagination-option.interface";
 export * from "./response/api-response.interface";
 export * from "./response/auth/auth-response.interface";

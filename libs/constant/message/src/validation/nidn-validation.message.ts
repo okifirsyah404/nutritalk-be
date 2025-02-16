@@ -1,5 +1,5 @@
 export abstract class NidnValidationMessage {
-	static readonly NIDN_INVALID = "NIDN_INVALID";
-	static readonly NIDN_REQUIRED = "NIDN_REQUIRED";
-	static readonly NIDN_MUST_BE_STRING = "NIDN_MUST_BE_STRING";
+	static readonly ERR_NIDN_INVALID = "ERR_NIDN_INVALID";
+	static readonly ERR_NIDN_REQUIRED = "ERR_NIDN_REQUIRED";
+	static readonly ERR_NIDN_MUST_BE_STRING = "ERR_NIDN_MUST_BE_STRING";
 }
