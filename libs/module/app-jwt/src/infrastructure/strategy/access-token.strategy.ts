@@ -39,10 +39,10 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy) {
 
 		switch (payload.role) {
 			case AccountRole.NUTRITIONIST:
-				user = await this._validateNutritionist(payload.sub);
+				user = await this._validateNutritionist(payload.userId);
 				break;
 			case AccountRole.PATIENT:
-				user = await this._validatePatient(payload.sub);
+				user = await this._validatePatient(payload.userId);
 				break;
 			default:
 				throw new UnauthorizedException("User not found");

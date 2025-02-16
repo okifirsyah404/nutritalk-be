@@ -14,7 +14,6 @@ export interface IAccountEntity
 	password?: string;
 	refreshToken?: string;
 	roleId?: string;
-	lastActivity?: Date;
 	patient?: IPatientEntity;
 	nutritionist?: INutritionistEntity;
 	sso?: ISingleSignOnEntity;

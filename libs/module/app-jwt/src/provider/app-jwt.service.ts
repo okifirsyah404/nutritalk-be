@@ -57,7 +57,7 @@ export class AppJwtService {
 		const token = await this._generateRefreshToken(payload);
 
 		if (options.saveAfterGenerate) {
-			await this._updateRefreshToken(payload.sub, token);
+			await this._updateRefreshToken(payload.accountId, token);
 		}
 
 		return token;
@@ -81,18 +81,18 @@ export class AppJwtService {
 		},
 	): Promise<IJwtToken> {
 		const accessToken = await this._generateAccessToken({
-			email: payload.email,
+			userId: payload.userId,
+			accountId: payload.accountId,
 			role: payload.role,
-			sub: payload.userId,
 		});
 
 		const refreshToken = await this._generateRefreshToken({
-			sub: payload.sub,
-			email: payload.email,
+			accountId: payload.accountId,
+			userId: payload.userId,
 		});
 
 		if (options.saveAfterGenerate) {
-			await this._updateRefreshToken(payload.sub, refreshToken);
+			await this._updateRefreshToken(payload.accountId, refreshToken);
 		}
 
 		return { accessToken, refreshToken };
@@ -135,9 +135,9 @@ export class AppJwtService {
 	): Promise<INutritionistEntity | IPatientEntity | null> {
 		switch (payload.role) {
 			case AccountRole.NUTRITIONIST:
-				return await this.repository.findNutritionistById(payload.sub);
+				return await this.repository.findNutritionistById(payload.accountId);
 			case AccountRole.PATIENT:
-				return await this.repository.findPatientById(payload.sub);
+				return await this.repository.findPatientById(payload.accountId);
 			default:
 				return null;
 		}

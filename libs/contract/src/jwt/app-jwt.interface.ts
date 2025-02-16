@@ -1,8 +1,8 @@
 import { AccountRole } from "@prisma/client";
 
 export interface IJwtPayload {
-	sub: string;
-	email: string;
+	userId: string;
+	accountId: string;
 }
 
 export interface IJwtAccessPayload extends IJwtPayload {
@@ -11,7 +11,10 @@ export interface IJwtAccessPayload extends IJwtPayload {
 
 export interface IJwtRefreshPayload extends IJwtPayload {}
 
-export interface IJwtSignaturePayload extends IJwtPayload {}
+export interface IJwtSignaturePayload {
+	sub: string;
+	email: string;
+}
 
 export interface IJwtToken {
 	accessToken: string;

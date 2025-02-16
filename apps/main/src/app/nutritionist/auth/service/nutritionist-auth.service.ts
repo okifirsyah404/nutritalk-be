@@ -59,10 +59,9 @@ export class NutritionistAuthService {
 
 		const { accessToken, refreshToken } =
 			await this.appJwtService.generateAuthTokens({
-				sub: result.id,
+				accountId: result.id,
 				userId: result.nutritionist.id,
 				role: AccountRole.NUTRITIONIST,
-				email: result.email,
 			});
 
 		return {
@@ -85,16 +84,15 @@ export class NutritionistAuthService {
 		token: IJwtRefresh,
 		reqData: Pick<IDeviceInfoEntity, "fcmToken">,
 	): Promise<IAuthResponse> {
-		const nutritionistAccount = await this.repository.findAccountByEmail(
-			token.payload.email,
+		const nutritionistAccount = await this.repository.findAccountById(
+			token.payload.accountId,
 		);
 
 		const { accessToken, refreshToken } =
 			await this.appJwtService.generateAuthTokens({
-				sub: token.payload.sub,
+				accountId: token.payload.accountId,
 				userId: nutritionistAccount.nutritionist.id,
 				role: AccountRole.NUTRITIONIST,
-				email: token.payload.email,
 			});
 
 		void this.repository.updateFcmToken(
