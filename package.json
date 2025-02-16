@@ -27,9 +27,6 @@
 		"staging:all": "concurrently \"yarn staging:main\" \"yarn staging:cron\"",
 		"prod:main": "node dist/apps/main/main",
 		"prod:cron": "node dist/apps/cron/main",
-		"meta:patient": "npx ts-node apps/patient/src/generate-metadata.ts",
-		"meta:nutritionist": "npx ts-node apps/nutritionist/src/generate-metadata.ts",
-		"meta:admin": "npx ts-node apps/admin/src/generate-metadata.ts",
 		"compodoc": "npx compodoc -p tsconfig.json -s",
 		"compodoc:cron": "npx compodoc -p apps/cron/tsconfig.app.json -s",
 		"db:migrate": "yarn prisma migrate dev --schema prisma/schema",
@@ -163,7 +160,7 @@
 		"testEnvironment": "node",
 		"roots": [
 			"<rootDir>/apps/",
-			"<rootDir>/apps/nutritionist/",
+			"<rootDir>/apps/main/",
 			"<rootDir>/libs/"
 		],
 		"moduleNameMapper": {
