@@ -15,6 +15,8 @@ import { AdminModule } from "./app/admin/admin.module";
 import { HealthCheckModule } from "./app/health-check/health-check.module";
 import { NutritionistAppModule } from "./app/nutritionist/nutritionist.app.module";
 import { PatientAppModule } from "./app/patient/patient.app.module";
+import { APP_GUARD } from "@nestjs/core";
+import { HttpThrottleGuard } from "@common";
 
 @Module({
 	imports: [
@@ -96,6 +98,11 @@ import { PatientAppModule } from "./app/patient/patient.app.module";
 		HealthCheckModule,
 	],
 	controllers: [],
-	providers: [],
+	providers: [
+		{
+			provide: APP_GUARD,
+			useClass: HttpThrottleGuard,
+		},
+	],
 })
 export class AppModule {}
