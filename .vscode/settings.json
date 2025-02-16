@@ -1,8 +1,8 @@
 {
 	"workbench.editor.customLabels.patterns": {
-		"*/apps/nutritionist/**/*.ts": "Nutritionist - ${filename}.${extname}",
-		"*/apps/patient/**/*.ts": "Patient - ${filename}.${extname}",
-		"*/apps/admin/**/*.ts": "Admin - ${filename}.${extname}",
+		"*/apps/main/src/app/nutritionist/**/*.ts": "Nutritionist - ${filename}.${extname}",
+		"*/apps/main/src/app/patient/**/*.ts": "Patient - ${filename}.${extname}",
+		"*/apps/main/src/app/admin/**/*.ts": "Admin - ${filename}.${extname}",
 		"*/apps/cron/**/*.ts": "Cron - ${filename}.${extname}",
 		"*/apps/notification/**/*.ts": "Notification - ${filename}.${extname}",
 		"*/libs/common/**/*.ts": "Common - ${filename}.${extname}",

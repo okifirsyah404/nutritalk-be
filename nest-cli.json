@@ -87,35 +87,6 @@
 				"tsConfigPath": "apps/main/tsconfig.app.json"
 			}
 		},
-		"nutritionist": {
-			"type": "application",
-			"root": "apps/nutritionist",
-			"entryFile": "main",
-			"sourceRoot": "apps/nutritionist/src",
-			"generateOptions": {
-				"spec": false
-			},
-			"compilerOptions": {
-				"tsConfigPath": "apps/nutritionist/tsconfig.app.json",
-				"deleteOutDir": true,
-				"plugins": [
-					{
-						"name": "@nestjs/swagger",
-						"options": {
-							"introspectComments": true,
-							"controllerKeyOfComment": "description",
-							"classValidatorShim": true,
-							"dtoFileNameSuffix": [
-								".dto.ts",
-								".entity.ts",
-								".request.ts",
-								".response.ts"
-							]
-						}
-					}
-				]
-			}
-		},
 		"otp": {
 			"type": "library",
 			"root": "libs/module/otp",

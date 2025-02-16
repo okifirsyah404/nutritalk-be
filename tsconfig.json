@@ -62,8 +62,6 @@
 			"@module/permission/*": ["libs/module/permission/src/*"],
 			"@module/signature": ["libs/module/signature/src"],
 			"@module/signature/*": ["libs/module/signature/src/*"],
-			"@nutritionist": ["apps/nutritionist/src"],
-			"@nutritionist/*": ["apps/nutritionist/src/*"],
 			"@util": ["libs/util/src"],
 			"@util/*": ["libs/util/src/*"]
 		}
