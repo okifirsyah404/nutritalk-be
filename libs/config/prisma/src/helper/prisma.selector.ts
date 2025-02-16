@@ -36,6 +36,7 @@ export abstract class PrismaSelector {
 	static readonly ACCOUNT = {
 		id: true,
 		email: true,
+		lastActivity: true,
 		role: {
 			select: PrismaSelector.ROLE,
 		},

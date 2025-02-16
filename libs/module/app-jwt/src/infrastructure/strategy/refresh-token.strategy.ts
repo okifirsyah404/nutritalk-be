@@ -31,7 +31,10 @@ export class RefreshTokenStrategy extends PassportStrategy(
 	): Promise<IJwtRefresh> {
 		const token = ExtractJwt.fromHeader("x-refresh-token")(req);
 
-		const isValid = await this.service.validateRefreshToken(payload.sub, token);
+		const isValid = await this.service.validateRefreshToken(
+			payload.accountId,
+			token,
+		);
 
 		if (!isValid) {
 			throw new UnauthorizedException("User not found");
