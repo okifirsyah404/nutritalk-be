@@ -10,7 +10,7 @@ export class NutritionistUpdateCredentialRequest
 		value === "" ? undefined : value,
 	)
 	@IsString({
-		message: NipValidationMessage.NIP_MUST_BE_STRING,
+		message: NipValidationMessage.ERR_NIP_MUST_BE_STRING,
 	})
 	@IsOptional()
 	nip?: string;
@@ -19,7 +19,7 @@ export class NutritionistUpdateCredentialRequest
 		value === "" ? undefined : value,
 	)
 	@IsString({
-		message: NidnValidationMessage.NIDN_MUST_BE_STRING,
+		message: NidnValidationMessage.ERR_NIDN_MUST_BE_STRING,
 	})
 	@IsOptional()
 	nidn?: string;

@@ -1,5 +1,5 @@
 export class NipValidationMessage {
-	static readonly NIP_INVALID = "NIP_INVALID";
-	static readonly NIP_REQUIRED = "NIP_REQUIRED";
-	static readonly NIP_MUST_BE_STRING = "NIP_MUST_BE_STRING";
+	static readonly ERR_NIP_INVALID = "ERR_NIP_INVALID";
+	static readonly ERR_NIP_REQUIRED = "ERR_NIP_REQUIRED";
+	static readonly ERR_NIP_MUST_BE_STRING = "ERR_NIP_MUST_BE_STRING";
 }
