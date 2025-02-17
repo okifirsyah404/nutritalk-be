@@ -14,12 +14,13 @@ export class FirebaseService implements OnModuleInit {
 
 	private _app: FirebaseAdmin.app.App;
 	onModuleInit(): void {
-		this._app = FirebaseAdmin.initializeApp({
-			credential: FirebaseAdmin.credential.cert(this.options.credential),
-			databaseURL: this.options.databaseURL,
-		});
+		const credential = FirebaseAdmin.credential.cert(this.options.credential);
 
-		this.logger.log("Firebase app initialized");
+		this._app = FirebaseAdmin.initializeApp({
+			credential: credential,
+			databaseURL: this.options.databaseURL,
+			projectId: this.options.projectId,
+		});
 	}
 
 	get app(): FirebaseAdmin.app.App {
