@@ -1,7 +1,6 @@
 import { AccountErrorMessage, AuthErrorMessage } from "@constant/message";
 import { IAccountEntity, IAuthResponse, IJwtRefresh } from "@contract";
 import { IDeviceInfoEntity } from "@contract/entities/device-info.entity.interface";
-import { createDatabaseErrorHandler } from "@infrastructure";
 import { AppJwtService } from "@module/app-jwt";
 import {
 	Injectable,
@@ -32,9 +31,7 @@ export class NutritionistAuthService {
 		reqData: Pick<IAccountEntity, "email" | "password"> &
 			Pick<IDeviceInfoEntity, "fcmToken">,
 	): Promise<IAuthResponse> {
-		const result = await this.repository
-			.findAccountByEmail(reqData.email)
-			.catch(createDatabaseErrorHandler);
+		const result = await this.repository.findAccountByEmail(reqData.email);
 
 		if (!result) {
 			throw new NotFoundException(AccountErrorMessage.ERR_ACCOUNT_NOT_FOUND);

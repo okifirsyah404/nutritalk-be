@@ -1,5 +1,4 @@
-import { IAccountEntity, IRoleEntity } from "@contract";
-import { AccountRole } from "@prisma/client";
+import { IAccountEntity, IRoleEntity, ISingleSignOnEntity } from "@contract";
 
 export class NutritionistAccountResponse implements IAccountEntity {
 	private constructor(account: IAccountEntity) {
@@ -7,13 +6,18 @@ export class NutritionistAccountResponse implements IAccountEntity {
 		this.email = account.email;
 		this.lastActivity = account.lastActivity;
 		this.role = account.role;
+		this.sso = account.sso;
 		this.createdAt = account.createdAt;
 		this.updatedAt = account.updatedAt;
 	}
+	password?: string;
+	refreshToken?: string;
+	roleId?: string;
 	id: string;
 	email: string;
-	lastActivity?: Date;
+	lastActivity: Date;
 	role: IRoleEntity;
+	sso?: ISingleSignOnEntity;
 	createdAt?: Date;
 	updatedAt?: Date;
 
@@ -22,16 +26,4 @@ export class NutritionistAccountResponse implements IAccountEntity {
 	): NutritionistAccountResponse {
 		return new NutritionistAccountResponse(account);
 	}
-
-	static readonly exampleData: NutritionistAccountResponse = {
-		id: "cm32r86wi000b3vptrq0792sp",
-		email: "johndoe@example.com",
-		lastActivity: new Date(),
-		role: {
-			id: "cm32r86wi000b3vptrq0792sp",
-			accountRole: AccountRole.NUTRITIONIST,
-		},
-		createdAt: new Date(),
-		updatedAt: new Date(),
-	};
 }

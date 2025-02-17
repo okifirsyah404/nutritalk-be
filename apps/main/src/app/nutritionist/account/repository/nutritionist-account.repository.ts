@@ -28,6 +28,9 @@ export class NutritionistAccountRepository {
 					lastActivity: true,
 					createdAt: true,
 					updatedAt: true,
+					sso: {
+						select: PrismaSelector.SINGLE_SIGN_ON,
+					},
 				},
 			})
 			.catch(createDatabaseErrorHandler);

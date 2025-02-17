@@ -1,4 +1,5 @@
 import { QueueModule } from "@app/module/queue/queue.module";
+import { HttpThrottleGuard } from "@common";
 import { AppCacheModule } from "@config/app-cache";
 import { AppConfigModule, AppConfigService } from "@config/app-config";
 import { FirebaseModule } from "@config/firebase";
@@ -9,14 +10,13 @@ import { MailerModule } from "@module/mailer";
 import { HttpModule } from "@nestjs/axios";
 import { BullModule } from "@nestjs/bull";
 import { Module } from "@nestjs/common";
+import { APP_GUARD } from "@nestjs/core";
 import { ThrottlerModule, seconds } from "@nestjs/throttler";
 import { UtilityModule } from "@util";
 import { AdminModule } from "./app/admin/admin.module";
 import { HealthCheckModule } from "./app/health-check/health-check.module";
 import { NutritionistAppModule } from "./app/nutritionist/nutritionist.app.module";
 import { PatientAppModule } from "./app/patient/patient.app.module";
-import { APP_GUARD } from "@nestjs/core";
-import { HttpThrottleGuard } from "@common";
 
 @Module({
 	imports: [
