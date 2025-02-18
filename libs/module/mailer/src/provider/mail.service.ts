@@ -63,8 +63,10 @@ export class MailService {
 				},
 			);
 
+			const senderMail = this.config.smtpConfig.user;
+
 			const mailOptions = {
-				from: this.hostMail,
+				from: senderMail,
 				to,
 				subject,
 				html,

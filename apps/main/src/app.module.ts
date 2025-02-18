@@ -9,7 +9,7 @@ import { FirebaseServicePath } from "@constant/path/main/firebase-service-path";
 import { MailerModule } from "@module/mailer";
 import { HttpModule } from "@nestjs/axios";
 import { BullModule } from "@nestjs/bull";
-import { Module } from "@nestjs/common";
+import { Logger, Module } from "@nestjs/common";
 import { APP_GUARD } from "@nestjs/core";
 import { ThrottlerModule, seconds } from "@nestjs/throttler";
 import { UtilityModule } from "@util";
@@ -58,11 +58,15 @@ import { PatientAppModule } from "./app/patient/patient.app.module";
 			inject: [AppConfigService],
 			isGlobal: true,
 			useFactory: (appConfig: AppConfigService) => {
+				new Logger().log(
+					`SMTP Config: ${JSON.stringify(appConfig.smtpConfig)}`,
+				);
+
 				return {
 					smtpOptions: {
 						host: appConfig.smtpConfig.host,
 						port: appConfig.smtpConfig.port,
-						secure: false,
+						secure: appConfig.smtpConfig.secure,
 						auth: {
 							user: appConfig.smtpConfig.user,
 							pass: appConfig.smtpConfig.password,
