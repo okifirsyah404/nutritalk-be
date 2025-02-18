@@ -47,7 +47,7 @@ import { ScheduleService } from "./schedule/schedule.service";
 					smtpOptions: {
 						host: appConfig.smtpConfig.host,
 						port: appConfig.smtpConfig.port,
-						secure: false,
+						secure: appConfig.smtpConfig.secure,
 						auth: {
 							user: appConfig.smtpConfig.user,
 							pass: appConfig.smtpConfig.password,

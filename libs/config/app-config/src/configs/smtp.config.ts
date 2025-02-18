@@ -1,5 +1,11 @@
 import { registerAs } from "@nestjs/config";
-import { IsDefined, IsEmail, IsNumberString, IsString } from "class-validator";
+import {
+	IsBooleanString,
+	IsDefined,
+	IsEmail,
+	IsNumberString,
+	IsString,
+} from "class-validator";
 
 /**
  * Configuration settings for SMTP (Simple Mail Transfer Protocol).
@@ -15,13 +21,7 @@ export type SmtpConfig = {
 	port: number;
 	user: string;
 	password: string;
-};
-
-export const SMTP_CONFIG: SmtpConfig = {
-	host: process.env.SMTP_HOST,
-	port: parseInt(process.env.SMTP_PORT),
-	user: process.env.SMTP_USER,
-	password: process.env.SMTP_PASSWORD,
+	secure: boolean;
 };
 
 /**
@@ -45,6 +45,7 @@ export const smtpConfig = registerAs(
 		port: parseInt(process.env.SMTP_PORT),
 		user: process.env.SMTP_USER,
 		password: process.env.SMTP_PASSWORD,
+		secure: process.env.SMTP_SECURE === "true",
 	}),
 );
 
@@ -60,20 +61,42 @@ export const smtpConfig = registerAs(
  *
  */
 export class SmtpEnvironmentVariables {
-	@IsDefined()
-	@IsString()
+	@IsDefined({
+		message: "SMTP_HOST is required.",
+	})
+	@IsString({
+		message: "SMTP_HOST must be a string.",
+	})
 	SMTP_HOST!: string;
 
-	@IsDefined()
-	@IsNumberString()
+	@IsDefined({
+		message: "SMTP_PORT is required.",
+	})
+	@IsNumberString({}, { message: "SMTP_PORT must be a number." })
 	SMTP_PORT!: string;
 
-	@IsDefined()
-	@IsString()
-	@IsEmail()
+	@IsDefined({
+		message: "SMTP_USER is required.",
+	})
+	@IsString({
+		message: "SMTP_USER must be a string.",
+	})
+	@IsEmail({}, { message: "SMTP_USER must be a valid email address." })
 	SMTP_USER!: string;
 
-	@IsDefined()
-	@IsString()
+	@IsDefined({
+		message: "SMTP_PASSWORD is required.",
+	})
+	@IsString({
+		message: "SMTP_PASSWORD must be a string.",
+	})
 	SMTP_PASSWORD!: string;
+
+	@IsDefined({
+		message: "SMTP_SECURE is required.",
+	})
+	@IsBooleanString({
+		message: "SMTP_SECURE must be a boolean value.",
+	})
+	SMTP_SECURE!: string;
 }
