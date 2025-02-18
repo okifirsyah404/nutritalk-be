@@ -32,9 +32,9 @@ jobs:
             git checkout staging
             git pull
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nutritalk-base:staging
-            docker-compose down -v 
+            docker-compose down -v -f docker-compose.staging.yml
             echo "${{secrets.CD_ENV_STAGING}}" | base64 --decode > .env
-            docker-compose up -d --build --force-recreate
+            docker-compose up -d -f docker-compose.staging.yml --build --force-recreate
 
   post-deploy:
     if: github.event.pull_request.merged == true
