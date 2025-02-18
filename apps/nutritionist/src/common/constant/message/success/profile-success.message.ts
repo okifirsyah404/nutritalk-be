@@ -1,9 +1,0 @@
-export abstract class ProfileSuccessMessage {
-  static readonly SUCCESS_GET_PROFILE = 'SUCCESS_GET_PROFILE';
-
-  static readonly SUCCESS_UPDATE_PROFILE = 'SUCCESS_UPDATE_PROFILE';
-
-  static readonly SUCCESS_UPLOAD_IMAGE_PROFILE = 'SUCCESS_UPLOAD_IMAGE_PROFILE';
-
-  static readonly SUCCESS_SET_AVAILABILITY = 'SUCCESS_SET_AVAILABILITY';
-}

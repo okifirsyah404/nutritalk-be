@@ -1,0 +1,52 @@
+model BasePermission {
+  id String @id @default(cuid())
+
+  // Main Fields
+  key         String  @unique
+  description String?
+
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Relations
+  rolePermissions RolePermission[]
+}
+
+model Role {
+  id String @id @default(cuid())
+
+  // Main Fields
+  accountRole AccountRole
+
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Foreign Keys
+  accountId String? @unique
+
+  // Relations
+  permissions RolePermission[]
+  account     Account?         @relation(fields: [accountId], references: [id])
+}
+
+model RolePermission {
+  id String @id @default(cuid())
+
+  // Main Fields
+  isPermitted Boolean
+
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Foreign Keys
+  roleId String?
+
+  // Relations
+  role       Role?           @relation(fields: [roleId], references: [id])
+  permission BasePermission? @relation(fields: [basePermissionId], references: [id])
+
+  basePermissionId String?
+}

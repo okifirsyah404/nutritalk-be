@@ -1,0 +1,60 @@
+name: Node.js Deploy Production
+
+on:
+  pull_request:
+    types: [closed]
+    branches: ["main"]
+
+env:
+  HUSKY: 0
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    environment: CD
+    runs-on: ubuntu-latest
+    steps:
+      - name: Initialize ZeroTier
+        uses: zerotier/github-action@v1.0.1
+        with:
+          network_id: ${{ secrets.ZEROTIER_NETWORK_ID }}
+          auth_token: ${{ secrets.ZEROTIER_API_TOKEN }}
+
+      - name: Deploy to prod remote server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          script: |
+            cd ~/nutritalk-be-prod
+            git checkout main
+            git pull
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nutritalk-base:prod
+            docker-compose down -v 
+            echo "${{secrets.CD_ENV_PROD}}" | base64 --decode > .env
+            docker-compose up -d --build --force-recreate
+
+  post-deploy:
+    if: github.event.pull_request.merged == true
+    needs: deploy
+    environment: CD
+    runs-on: ubuntu-latest
+    steps:
+      - name: Initialize ZeroTier
+        uses: zerotier/github-action@v1.0.1
+        with:
+          network_id: ${{ secrets.ZEROTIER_NETWORK_ID }}
+          auth_token: ${{ secrets.ZEROTIER_API_TOKEN }}
+
+      - name: Post deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          script: |
+            docker image prune -a -f
+            docker builder prune -a -f

@@ -1,0 +1,106 @@
+version: "3.6"
+
+services:
+  # Redis cache
+  cache-redis:
+    image: redis:7.4.1-alpine3.20
+    ports:
+      - 43711:${REDIS_PORT:?}
+    env_file:
+      - .env
+    command: redis-server
+    networks:
+      - nutritalk-be
+    volumes:
+      - cache-data:/data
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: 100M
+
+  nutritionist-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.nutritionist
+    env_file:
+      - .env
+    ports:
+      - ${APP_NUTRITIONIST_PORT:?}:${APP_NUTRITIONIST_PORT:?}
+    depends_on:
+      - cache-redis
+    networks:
+      - nutritalk-be
+    deploy:
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 500M
+
+  patient-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.patient
+    env_file:
+      - .env
+    ports:
+      - ${APP_PATIENT_PORT:?}:${APP_PATIENT_PORT:?}
+    depends_on:
+      - cache-redis
+    networks:
+      - nutritalk-be
+    deploy:
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 500M
+
+  admin-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.admin
+    env_file:
+      - .env
+    ports:
+      - ${APP_ADMIN_PORT:?}:${APP_ADMIN_PORT:?}
+    depends_on:
+      - cache-redis
+    networks:
+      - nutritalk-be
+    deploy:
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 500M
+
+  cron:
+    build:
+      context: .
+      dockerfile: Dockerfile.cron
+    env_file:
+      - .env
+    depends_on:
+      - cache-redis
+    networks:
+      - nutritalk-be
+    deploy:
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 500M
+
+volumes:
+  cache-data:
+
+networks:
+  nutritalk-be:
+    driver: bridge

@@ -2,8 +2,6 @@
 
 <!--
 Add issuse ticket
-example:
-1. #123
  -->
 
 1. TODO: Add issue number
@@ -12,8 +10,6 @@ example:
 
 <!--
 Describe changes
-example:
-- Lorem Ipsum
  -->
 
 - TODO: Add changes
@@ -27,3 +23,5 @@ Add checklist TODO -->
 - [ ] Unit Test
 - [ ] Code Documentation
 - [ ] Swagger Documentation
+- [ ] Major Fix
+- [ ] Hotfix

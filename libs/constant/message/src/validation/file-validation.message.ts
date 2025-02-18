@@ -1,0 +1,10 @@
+export abstract class FileValidationMessage {
+	static readonly ERR_FILE_REQUIRED = "ERR_FILE_REQUIRED";
+	static readonly ERR_INVALID_FILE_TYPE = "ERR_INVALID_FILE_TYPE";
+	static readonly ERR_FILE_SIZE_LIMIT = "ERR_FILE_SIZE_LIMIT";
+
+	static readonly ERR_IMAGE_FILE_REQUIRED = "ERR_IMAGE_FILE_REQUIRED";
+	static readonly ERR_INVALID_IMAGE_FILE_TYPE = "ERR_INVALID_IMAGE_FILE_TYPE";
+	static readonly ERR_IMAGE_FILE_SIZE_LIMIT_10_MB =
+		"ERR_IMAGE_FILE_SIZE_LIMIT_10_MB";
+}
