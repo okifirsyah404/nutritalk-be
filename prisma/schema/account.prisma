@@ -1,0 +1,51 @@
+// ------------------------------------------------------------------
+// ACCOUNT MODEL
+// ------------------------------------------------------------------
+model Account {
+  id String @id @default(cuid())
+
+  // Main Fields
+  email        String    @unique
+  password     String
+  refreshToken String?   @unique
+  lastActivity DateTime?
+
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Foreign Keys
+  roleId String?
+
+  // Relations
+  patient      Patient?
+  nutritionist Nutritionist?
+  sso          SingleSignOn?
+  role         Role?
+  deviceInfo   DeviceInfo?
+}
+
+// ------------------------------------------------------------------
+// PROFILE MODEL
+// ------------------------------------------------------------------
+model Profile {
+  id String @id @default(cuid())
+
+  // Main Fields
+  name         String
+  gender       Gender
+  phoneNumber  String?
+  address      String?
+  placeOfBirth String?
+  dateOfBirth  DateTime?
+  age          Int?
+  imageKey     String?
+
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Relations
+  patient      Patient?
+  nutritionist Nutritionist?
+}

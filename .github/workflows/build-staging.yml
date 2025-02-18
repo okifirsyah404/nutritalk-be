@@ -4,8 +4,13 @@
 name: Node.js CI Build Staging
 
 on:
+  push:
+    branches: ["staging"]
   pull_request:
-    branches: ['staging']
+    branches: ["staging"]
+
+env:
+  HUSKY: 0
 
 jobs:
   build:
@@ -14,21 +19,36 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.x, 22.x]
+        node-version: [22.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
+          cache: "yarn"
+
+      - run: |
+          touch ./.credentials/${{secrets.FIREBASE_JSON_NAME}}.json
+          echo "${{secrets.FIREBASE_JSON}}" | base64 --decode >> ./.credentials/${{secrets.FIREBASE_JSON_NAME}}.json
+
       - run: |
           touch .env 
-          echo "${{secrets.WORKFLOW_ENV}}" >> .env
-          cat .env
-      - run: yarn install --immutable --frozen-lockfile
-      - run: yarn run db:generate
-      - run: yarn run lint
-      - run: yarn run build
+          echo "${{secrets.CI_ENV_STAGING}}" | base64 --decode >> .env
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          file: ./Dockerfile
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nutritalk-base:staging

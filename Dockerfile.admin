@@ -1,0 +1,22 @@
+FROM okifirsyah404/nutritalk-base:dev AS base
+
+FROM node:lts-alpine
+
+WORKDIR /usr/src/app
+
+RUN apk add --no-cache bash openssl
+
+COPY --from=base /usr/src/app/node_modules ./node_modules
+COPY --from=base /usr/src/app/package*.json ./
+COPY --from=base /usr/src/app/yarn.lock ./
+COPY --from=base /usr/src/app/dist/apps/admin ./dist/apps/admin
+COPY --from=base /usr/src/app/prisma ./prisma
+COPY --from=base /usr/src/app/.credentials ./.credentials
+COPY --from=base /usr/src/app/tsconfig.* ./
+COPY --from=base /usr/src/app/.env ./
+COPY --from=base /usr/src/app/public ./public
+COPY --from=base /usr/src/app/views ./views
+
+EXPOSE 43312
+
+CMD ["node", "dist/apps/admin/main.js"]

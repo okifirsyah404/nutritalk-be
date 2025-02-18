@@ -3,51 +3,58 @@ name: Node.js Deploy Staging
 on:
   pull_request:
     types: [closed]
-    branches: ['staging']
+    branches: ["staging"]
+
+env:
+  HUSKY: 0
 
 jobs:
-  build:
-    environment: CI
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [20.x, 22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
-    steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-      - run: |
-          touch .env 
-          echo "${{secrets.WORKFLOW_ENV}}" >> .env
-          cat .env
-      - run: yarn install --immutable --frozen-lockfile
-      - run: yarn run db:generate
-      - run: yarn run lint
-      - run: yarn run build
-
   deploy:
     if: github.event.pull_request.merged == true
     environment: CD
-    needs:
-      - build
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to staging server
+      - name: Initialize ZeroTier
+        uses: zerotier/github-action@v1.0.1
+        with:
+          network_id: ${{ secrets.ZEROTIER_NETWORK_ID }}
+          auth_token: ${{ secrets.ZEROTIER_API_TOKEN }}
+
+      - name: Deploy to staging remote server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
+          password: ${{ secrets.PASSWORD }}
           port: 22
           script: |
-            cd ~/nutritalk-be
+            cd ~/nutritalk-be-staging
             git checkout staging
             git pull
-            docker-compose down
-            docker-compose -f docker-compose.yml up -d --build
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nutritalk-base:staging
+            docker-compose down -v 
+            echo "${{secrets.CD_ENV_STAGING}}" | base64 --decode > .env
+            docker-compose up -d --build --force-recreate
+
+  post-deploy:
+    if: github.event.pull_request.merged == true
+    needs: deploy
+    environment: CD
+    runs-on: ubuntu-latest
+    steps:
+      - name: Initialize ZeroTier
+        uses: zerotier/github-action@v1.0.1
+        with:
+          network_id: ${{ secrets.ZEROTIER_NETWORK_ID }}
+          auth_token: ${{ secrets.ZEROTIER_API_TOKEN }}
+
+      - name: Post deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          script: |
+            docker image prune -a -f
+            docker builder prune -a -f
