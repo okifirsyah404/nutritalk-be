@@ -1,4 +1,3 @@
-import { SetCache } from "@config/app-cache";
 import { AccountErrorMessage } from "@constant/message";
 import { IAccountEntity } from "@contract";
 import { Injectable, NotFoundException } from "@nestjs/common";
@@ -14,7 +13,6 @@ export class NutritionistAccountService {
 	 * @param nutritionistId - The unique identifier of the nutritionist.
 	 * @returns A promise that resolves to the account entity associated with the given nutritionist ID.
 	 */
-	@SetCache((nutritionistId: string) => `account:${nutritionistId}`)
 	async getAccountByNutritionistId(
 		nutritionistId: string,
 	): Promise<IAccountEntity> {
