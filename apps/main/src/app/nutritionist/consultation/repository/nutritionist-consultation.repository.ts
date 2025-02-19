@@ -121,12 +121,10 @@ export class NutritionistConsultationRepository {
 		consultationId: string,
 	): Promise<IConsultationEntity> {
 		return this.prisma.consultation
-			.findFirst({
+			.findUnique({
 				where: {
 					id: consultationId,
-					nutritionist: {
-						id: nutritionistId,
-					},
+					nutritionistId,
 				},
 				select: {
 					...PrismaSelector.CONSULTATION,

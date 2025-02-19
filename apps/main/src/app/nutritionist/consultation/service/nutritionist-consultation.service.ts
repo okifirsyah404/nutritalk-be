@@ -1,9 +1,10 @@
+import { SetCache } from "@config/app-cache";
 import { S3StorageService } from "@config/s3storage";
+import { ConsultationErrorMessage } from "@constant/message";
 import { IConsultationEntity, IPaginationResult } from "@contract";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { NutritionistConsultationIndexQuery } from "../dto/query/nutritionist-consultation-index.query";
 import { NutritionistConsultationRepository } from "../repository/nutritionist-consultation.repository";
-import { ConsultationErrorMessage } from "@constant/message";
 
 @Injectable()
 export class NutritionistConsultationService {
@@ -41,6 +42,14 @@ export class NutritionistConsultationService {
 		};
 	}
 
+	@SetCache(
+		(nutritionistId: string, consultationId: string) =>
+			`consultation:${nutritionistId}:${consultationId}`,
+		{
+			ttl: 1,
+			unit: "minutes",
+		},
+	)
 	async getConsultationById(
 		nutritionistId: string,
 		consultationId: string,
