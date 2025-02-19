@@ -12,6 +12,7 @@ import { ScheduleModule } from "@nestjs/schedule";
 import { UtilityModule } from "@util";
 import { OtpSchedulerModule } from "./app/otp-scheduler/otp-scheduler.module";
 import { ScheduleService } from "./schedule/schedule.service";
+import { SignatureSchedulerModule } from "./app/signature-scheduler/signature-scheduler.module";
 
 @Module({
 	imports: [
@@ -78,6 +79,7 @@ import { ScheduleService } from "./schedule/schedule.service";
 
 		// App Modules
 		OtpSchedulerModule,
+		SignatureSchedulerModule,
 	],
 	providers: [ScheduleService],
 })
