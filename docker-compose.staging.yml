@@ -1,0 +1,64 @@
+version: "3.6"
+
+services:
+  # Redis cache
+  cache-redis:
+    image: redis:7.4.1-alpine3.20
+    env_file:
+      - .env
+    command: redis-server
+    networks:
+      - nutritalk-be
+    volumes:
+      - cache-data:/data
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 100M
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.main
+    env_file:
+      - .env
+    ports:
+      - ${APP_PORT:?}:${APP_PORT:?}
+    depends_on:
+      - cache-redis
+    networks:
+      - nutritalk-be
+    deploy:
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "1"
+          memory: 500M
+
+  cron:
+    build:
+      context: .
+      dockerfile: Dockerfile.cron
+    env_file:
+      - .env
+    depends_on:
+      - cache-redis
+    networks:
+      - nutritalk-be
+    deploy:
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 500M
+
+volumes:
+  cache-data:
+
+networks:
+  nutritalk-be:
+    driver: bridge
