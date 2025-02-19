@@ -199,6 +199,7 @@ export abstract class PrismaSelector {
 	} satisfies Prisma.TransactionPriceSelect;
 
 	static readonly TRANSACTION_PAYMENT = {
+		id: true,
 		method: true,
 		code: true,
 		status: true,
