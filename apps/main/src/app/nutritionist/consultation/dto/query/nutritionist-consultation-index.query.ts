@@ -5,7 +5,7 @@ import {
 	NutritionistConsultationSortIndexQuery,
 } from "@contract";
 import { ConsultationType, TransactionStatus } from "@prisma/client";
-import { Transform, Type } from "class-transformer";
+import { Transform } from "class-transformer";
 import { IsDate, IsEnum, IsOptional } from "class-validator";
 
 export class NutritionistConsultationIndexQuery
@@ -56,16 +56,20 @@ export class NutritionistConsultationIndexQuery
 	@IsOptional()
 	readonly typeFilter?: ConsultationType;
 
-	@Type(() => Date)
+	@Transform(({ value }: { value: string }): Date | undefined =>
+		value != "" ? new Date(value) : undefined,
+	)
 	@IsDate({
-		message: QueryFilterValidationMessage.ERR_DATE_FILTER_MUST_BE_DATE,
+		message: QueryFilterValidationMessage.ERR_DATE_START_FILTER_MUST_BE_DATE,
 	})
 	@IsOptional()
 	readonly startDateFilter?: Date;
 
-	@Type(() => Date)
+	@Transform(({ value }: { value: string }): Date | undefined =>
+		value != "" ? new Date(value) : undefined,
+	)
 	@IsDate({
-		message: QueryFilterValidationMessage.ERR_DATE_FILTER_MUST_BE_DATE,
+		message: QueryFilterValidationMessage.ERR_DATE_END_FILTER_MUST_BE_DATE,
 	})
 	@IsOptional()
 	readonly endDateFilter?: Date;
