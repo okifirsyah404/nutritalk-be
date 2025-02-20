@@ -1,11 +1,11 @@
-import { PrismaSelector, PrismaService } from "@config/prisma";
-import { INutritionistEntity, IPaginationResult } from "@contract";
 import { Injectable } from "@nestjs/common";
+import { PrismaSelector, PrismaService } from "@config/prisma";
 import { DatabaseUtil, PaginationUtil } from "@util";
-import { NutritionistIndexQuery } from "../dto/query/nutritionist-index.query";
+import { NutritionistIndexQuery } from "@app/app/nutritionist/nutritionist/dto/query/nutritionist-index.query";
+import { INutritionistEntity, IPaginationResult } from "@contract";
 
 @Injectable()
-export class NutritionistRepository {
+export class PublicNutritionistRepository {
 	constructor(
 		private readonly prisma: PrismaService,
 		private readonly databaseUtil: DatabaseUtil,
@@ -38,7 +38,6 @@ export class NutritionistRepository {
 	 * ```
 	 */
 	async paginate(
-		nutritionistId: string,
 		query: NutritionistIndexQuery,
 	): Promise<IPaginationResult<INutritionistEntity>> {
 		const allowToSort = ["profile.name", "createdAt", "updatedAt", "active"];
@@ -57,7 +56,6 @@ export class NutritionistRepository {
 						mode: "insensitive",
 					},
 				},
-				NOT: query.excludeSelf ? { id: nutritionistId } : undefined,
 			},
 		});
 
@@ -72,7 +70,6 @@ export class NutritionistRepository {
 						mode: "insensitive",
 					},
 				},
-				NOT: query.excludeSelf ? { id: nutritionistId } : undefined,
 			},
 			select: {
 				...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
@@ -135,9 +132,6 @@ export class NutritionistRepository {
 			},
 			select: {
 				...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
-				account: query.account === true && {
-					select: PrismaSelector.ACCOUNT,
-				},
 				consultationMeta: query.consultationMeta === true && {
 					select: PrismaSelector.CONSULTATION_META,
 				},
