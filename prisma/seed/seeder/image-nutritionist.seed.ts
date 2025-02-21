@@ -17,7 +17,7 @@ export async function seedNutritionistImage(
 	try {
 		const bucketName = process.env.S3_BUCKET_NAME;
 
-		await deleteObjectsAndDir(s3, bucketName);
+		await deleteObjectsAndDir(s3, bucketName, "nutritionist");
 
 		const nutritionists = await prisma.nutritionist.findMany({
 			select: {
@@ -51,6 +51,7 @@ export async function seedNutritionistImage(
 async function deleteObjectsAndDir(
 	s3: awsS3.S3Client,
 	bucketName: string,
+	mainDir: string,
 ): Promise<void> {
 	const objects = await s3.send(
 		new awsS3.ListObjectsCommand({
@@ -60,12 +61,14 @@ async function deleteObjectsAndDir(
 
 	if (objects.Contents) {
 		for (const object of objects.Contents) {
-			await s3.send(
-				new awsS3.DeleteObjectCommand({
-					Bucket: bucketName,
-					Key: object.Key,
-				}),
-			);
+			if (object.Key.includes(mainDir)) {
+				await s3.send(
+					new awsS3.DeleteObjectCommand({
+						Bucket: bucketName,
+						Key: object.Key,
+					}),
+				);
+			}
 		}
 	}
 }

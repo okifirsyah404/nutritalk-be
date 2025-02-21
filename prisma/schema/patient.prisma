@@ -28,7 +28,7 @@ model MedicalRecordKey {
   id String @id @default(cuid())
 
   // Main Fields
-  code String @unique
+  code String? @unique @default(dbgenerated("generate_rm_index()"))
   name String
 
   // Date Metadata

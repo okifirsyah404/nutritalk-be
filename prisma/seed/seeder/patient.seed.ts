@@ -43,8 +43,22 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 			},
 		});
 
+		const medicalRecordKey = await prisma.medicalRecordKey.findFirst({
+			where: {
+				code: "RM-0000",
+			},
+			select: {
+				id: true,
+			},
+		});
+
 		await prisma.patient.create({
 			data: {
+				medicalRecordKey: {
+					connect: {
+						id: medicalRecordKey.id,
+					},
+				},
 				account: {
 					create: {
 						email: "johndoe@example.com",
@@ -78,16 +92,42 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 						placeOfBirth: "Jember",
 						address: "Jl. Raya Jember No. 123",
 						gender: Gender.MALE,
+						imageKey: faker.image.urlPicsumPhotos({
+							height: 200,
+							width: 200,
+						}),
 					},
 				},
 			},
 		});
 
-		for (let i = 0; i < 50; i++) {
+		const dummyMedicalRecordKeys = await prisma.medicalRecordKey.findMany({
+			where: {
+				code: {
+					not: "RM-0000",
+				},
+			},
+			take: 50,
+			orderBy: {
+				code: "asc",
+			},
+			select: {
+				id: true,
+				name: true,
+				code: true,
+			},
+		});
+
+		for (let i = 0; i < dummyMedicalRecordKeys.length; i++) {
 			const email = faker.internet.email();
 
 			await prisma.patient.create({
 				data: {
+					medicalRecordKey: {
+						connect: {
+							id: dummyMedicalRecordKeys[i].id,
+						},
+					},
 					account: {
 						create: {
 							email: email,
@@ -102,6 +142,10 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 							placeOfBirth: faker.location.city(),
 							address: faker.location.streetAddress(),
 							gender: Gender.MALE,
+							imageKey: faker.image.urlPicsumPhotos({
+								height: 200,
+								width: 200,
+							}),
 						},
 					},
 				},

@@ -9,20 +9,20 @@ import {
 } from "@prisma/client";
 
 async function seedConsultation(prisma: PrismaClient): Promise<void> {
-	const logger = new Logger("TransactionSeeder");
+	const logger = new Logger("ConsultationSeeder");
 
 	if (process.env.NODE_ENV === "production") {
-		logger.log("Skipping transaction seed in production...");
+		logger.log("Skipping consultation seed in production...");
 		return;
 	}
 
 	try {
-		logger.log("Deleting all transaction data...");
+		logger.log("Deleting all consultation data...");
 
 		await prisma.consultation.deleteMany();
 
-		logger.log("Deleted all transaction data");
-		logger.log("Seeding transaction data...");
+		logger.log("Deleted all consultation data");
+		logger.log("Seeding consultation data...");
 
 		const patient = await prisma.patient.findFirst({
 			where: {
@@ -146,9 +146,9 @@ async function seedConsultation(prisma: PrismaClient): Promise<void> {
 			},
 		});
 
-		logger.log("Seed transaction complete");
+		logger.log("Seed consultation complete");
 	} catch (error) {
-		logger.error("There's an error when seeding transaction");
+		logger.error("There's an error when seeding consultation");
 
 		throw error;
 	}
