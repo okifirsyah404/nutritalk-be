@@ -10,6 +10,7 @@ import { NutritionistOccupationModule } from "./occupation/nutritionist-occupati
 import { NutritionistPriceModule } from "./price/nutritionist-price.module";
 import { NutritionistProfileModule } from "./profile/nutritionist-profile.module";
 import { NutritionistScheduleModule } from "./schedule/nutritionist-schedule.module";
+import { NutritionistDashboardMetaModule } from "@app/app/nutritionist/dashboard-meta/nutritionist-dashboard-meta.module";
 
 @Module({
 	imports: [
@@ -23,6 +24,7 @@ import { NutritionistScheduleModule } from "./schedule/nutritionist-schedule.mod
 		NutritionistConsultationMetaModule,
 		NutritionistCredentialModule,
 		NutritionistConsultationModule,
+		NutritionistDashboardMetaModule,
 		NutritionistModule,
 	],
 	controllers: [],
