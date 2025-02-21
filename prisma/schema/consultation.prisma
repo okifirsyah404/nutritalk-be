@@ -2,8 +2,8 @@
 // TRANSACTION MODEL
 // ------------------------------------------------------------------
 model Consultation {
-  id   String @id @default(cuid())
-  trId String @unique @default(dbgenerated("generate_custom_id('TR')"))
+  id   String  @id @default(cuid())
+  trId String? @unique @default(dbgenerated("generate_custom_id('TR')"))
 
   // Main Fields
   status TransactionStatus

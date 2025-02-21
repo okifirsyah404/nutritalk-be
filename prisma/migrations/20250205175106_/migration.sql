@@ -23,6 +23,23 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL VOLATILE;
 
+CREATE SEQUENCE rm_index_seq START 0 MINVALUE 0;
+
+CREATE OR REPLACE FUNCTION generate_rm_index() RETURNS TEXT AS $$
+DECLARE
+new_index INT;
+    formatted_index TEXT;
+BEGIN
+    -- Get the next sequence value
+    new_index := nextval('rm_index_seq');
+
+    -- Format the index as "RM-0000", "RM-0001", ensuring proper formatting beyond 10 and 100
+    formatted_index := 'RM-' || LPAD(new_index::TEXT, 4, '0');
+
+RETURN formatted_index;
+END;
+$$ LANGUAGE PLPGSQL VOLATILE;
+
 -- CreateEnum
 CREATE TYPE "AccountRole" AS ENUM ('ADMIN', 'PATIENT', 'NUTRITIONIST');
 
