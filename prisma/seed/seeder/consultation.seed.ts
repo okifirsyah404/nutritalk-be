@@ -61,7 +61,8 @@ async function seedConsultation(prisma: PrismaClient): Promise<void> {
 		}[] = [];
 
 		for (let i = 0; i < 30; i++) {
-			const date = new Date();
+			const date = faker.date.soon({ days: 20 });
+			const endTime = new Date(date.getTime() + 60 * 60 * 1000);
 
 			const status: TransactionStatus = randomEnum(TransactionStatus);
 
@@ -83,7 +84,7 @@ async function seedConsultation(prisma: PrismaClient): Promise<void> {
 					consultationTime: {
 						create: {
 							start: date,
-							end: new Date(date.setHours(date.getHours() + 1)),
+							end: endTime,
 						},
 					},
 					transactionPayment: {

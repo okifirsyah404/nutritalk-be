@@ -91,7 +91,12 @@ export class NutritionistConsultationRepository {
 			select: {
 				...PrismaSelector.CONSULTATION,
 				patient: {
-					select: PrismaSelector.PATIENT_WITH_PROFILE,
+					select: {
+						...PrismaSelector.PATIENT_WITH_PROFILE,
+						medicalRecordKey: {
+							select: PrismaSelector.MEDICAL_RECORD_KEY,
+						},
+					},
 				},
 				transactionPrice: {
 					select: PrismaSelector.TRANSACTION_PRICE,
