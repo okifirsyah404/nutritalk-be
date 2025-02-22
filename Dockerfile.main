@@ -4,7 +4,7 @@ FROM node:lts-alpine
 
 WORKDIR /usr/src/app
 
-RUN apk add --no-cache bash openssl
+RUN apk add --no-cache bash openssl tzdata
 
 COPY --from=base /usr/src/app/node_modules ./node_modules
 COPY --from=base /usr/src/app/package*.json ./
