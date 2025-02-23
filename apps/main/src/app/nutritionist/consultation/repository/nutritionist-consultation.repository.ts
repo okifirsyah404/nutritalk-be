@@ -2,6 +2,7 @@ import { PrismaSelector, PrismaService } from "@config/prisma";
 import { IConsultationEntity, IPaginationResult } from "@contract";
 import { createDatabaseErrorHandler } from "@infrastructure";
 import { Injectable, Logger } from "@nestjs/common";
+import { TransactionStatus } from "@prisma/client";
 import { DatabaseUtil, PaginationUtil } from "@util";
 import { NutritionistConsultationIndexQuery } from "../dto/query/nutritionist-consultation-index.query";
 
@@ -58,6 +59,9 @@ export class NutritionistConsultationRepository {
 						lte: query.endDateFilter,
 					},
 				},
+				NOT: {
+					status: TransactionStatus.WAITING_PAYMENT,
+				},
 			},
 		});
 
@@ -86,6 +90,9 @@ export class NutritionistConsultationRepository {
 					end: {
 						lte: query.endDateFilter,
 					},
+				},
+				NOT: {
+					status: TransactionStatus.WAITING_PAYMENT,
 				},
 			},
 			select: {
