@@ -27,7 +27,7 @@ async function seedConsultation(prisma: PrismaClient): Promise<void> {
 		const patient = await prisma.patient.findFirst({
 			where: {
 				account: {
-					email: "johndoe@example.com",
+					email: "dev@patient.com",
 				},
 			},
 			select: {
