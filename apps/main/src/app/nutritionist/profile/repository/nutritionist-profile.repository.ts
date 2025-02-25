@@ -53,6 +53,7 @@ export class NutritionistProfileRepository {
 		placeOfBirth,
 		dateOfBirth,
 		age,
+		bio,
 	}: Partial<IProfileEntity>): Promise<INutritionistEntity> {
 		return this.prisma.nutritionist
 			.update({
@@ -68,6 +69,7 @@ export class NutritionistProfileRepository {
 							placeOfBirth,
 							dateOfBirth,
 							age,
+							bio,
 						},
 					},
 				},

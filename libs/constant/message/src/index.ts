@@ -29,6 +29,7 @@ export * from "./success/schedule-success.message";
 export * from "./validation/address-validation.message";
 export * from "./error/consultation-error.message";
 export * from "./success/consultation-success.message";
+export * from "./validation/bio-validation.message";
 export * from "./validation/date-of-birth-validation.message";
 export * from "./validation/email-validation.message";
 export * from "./validation/experience-validation.message";

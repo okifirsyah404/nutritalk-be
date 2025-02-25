@@ -74,6 +74,7 @@ export class NutritionistProfileService {
 				reqData.dateOfBirth,
 				async (value) => (await this.dateUtil.countAge(value)).year,
 			),
+			bio: reqData.bio,
 		});
 
 		if (!result) {
