@@ -58,6 +58,7 @@ export abstract class PrismaSelector {
 		age: true,
 		imageKey: true,
 		address: true,
+		bio: true,
 	} satisfies Prisma.ProfileSelect;
 
 	static readonly PATIENT = {

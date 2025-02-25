@@ -1,5 +1,6 @@
 export * from "./app-jwt.module";
 export * from "./infrastructure/decorator/get-nutritionist-logged.decorator";
+export * from "./infrastructure/decorator/get-patient-logged.decorator";
 export * from "./infrastructure/decorator/refresh-token.decorator";
 export * from "./infrastructure/guard/access-token.guard";
 export * from "./infrastructure/guard/refresh-token.guard";

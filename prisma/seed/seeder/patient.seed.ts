@@ -61,8 +61,8 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 				},
 				account: {
 					create: {
-						email: "johndoe@example.com",
-						password: await hashPassword("johndoe@example.com"),
+						email: "dev@patient.com",
+						password: await hashPassword("dev@patient.com"),
 						lastActivity: new Date(),
 						deviceInfo: {
 							create: {
@@ -96,6 +96,7 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 							height: 200,
 							width: 200,
 						}),
+						bio: faker.person.bio(),
 					},
 				},
 			},
@@ -146,6 +147,7 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 								height: 200,
 								width: 200,
 							}),
+							bio: faker.person.bio(),
 						},
 					},
 				},
