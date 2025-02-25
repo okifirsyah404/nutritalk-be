@@ -7,7 +7,7 @@ import { UriUtil } from "@util";
 import { NutritionistForgetPasswordSendOtpRequest } from "../dto/request/nutritionist-forget-password-send-otp.request";
 import { NutritionistForgetPasswordVerifyOtpRequest } from "../dto/request/nutritionist-forget-password-verify-otp.request";
 import { NutritionistForgetPasswordRequest } from "../dto/request/nutritionist-forget-password.request";
-import { NutritionistForgetPasswordSendOtpResponse } from "../dto/response/nutritionist-forget-password-send-otp.request";
+import { NutritionistForgetPasswordSendOtpResponse } from "../dto/response/nutritionist-forget-password-send-otp.response";
 import { NutritionistForgetPasswordVerifyOtpResponse } from "../dto/response/nutritionist-forget-password-verify-otp.response";
 import { NutritionistForgetPasswordResponse } from "../dto/response/nutritionist-forget-password.response";
 import { NutritionistForgetPasswordService } from "../service/nutritionist-forget-password.service";
