@@ -2,6 +2,7 @@ import { nullToUndefined } from "@common";
 import { IsNotEmptyString } from "@common/validator/is-not-empty-string.validator";
 import {
 	AddressValidationMessage,
+	BioValidationMessage,
 	DateOfBirthValidationMessage,
 	NameValidationMessage,
 	PhoneNumberValidationMessage,
@@ -10,7 +11,13 @@ import {
 import { IProfileEntity } from "@contract";
 import { ApiProperty } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
-import { IsDate, IsOptional, IsPhoneNumber, IsString } from "class-validator";
+import {
+	IsDate,
+	IsOptional,
+	IsPhoneNumber,
+	IsString,
+	MaxLength,
+} from "class-validator";
 
 export class NutritionistUpdateProfileRequest
 	implements
@@ -79,4 +86,17 @@ export class NutritionistUpdateProfileRequest
 	})
 	@IsOptional()
 	readonly dateOfBirth?: Date;
+
+	@ApiProperty({
+		example: "Lorem Ipsum",
+	})
+	@Transform(nullToUndefined)
+	@MaxLength(300, {
+		message: BioValidationMessage.ERR_BIO_MAX_300,
+	})
+	@IsString({
+		message: BioValidationMessage.ERR_BIO_MUST_BE_STRING,
+	})
+	@IsOptional()
+	readonly bio?: string;
 }
