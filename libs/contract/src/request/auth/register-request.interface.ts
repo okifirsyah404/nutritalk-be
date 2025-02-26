@@ -1,15 +1,18 @@
 import { IChangePasswordRequest, IProfileEntity } from "@contract";
 import { Gender } from "@prisma/client";
-import { IDeviceInfoEntity } from "@contract/entities/device-info.entity.interface";
 
 export interface IRegisterRequest
-	extends IChangePasswordRequest,
-		Partial<
+	extends Partial<
 			Pick<IProfileEntity, "placeOfBirth" | "dateOfBirth" | "address" | "bio">
 		>,
-		Pick<IDeviceInfoEntity, "fcmToken"> {
+		Pick<IChangePasswordRequest, "signature"> {
 	name: string;
 	email: string;
 	gender: Gender;
 	phoneNumber: string;
+}
+
+export interface IPreRegisterRequest extends IChangePasswordRequest {
+	email: string;
+	fcmToken: string;
 }

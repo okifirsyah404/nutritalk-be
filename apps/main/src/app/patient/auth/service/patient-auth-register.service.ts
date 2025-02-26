@@ -16,6 +16,7 @@ import {
 	IOtpResponse,
 	IOtpVerifyRequest,
 	IOtpVerifyResponse,
+	IPreRegisterRequest,
 	IRegisterRequest,
 } from "@contract";
 import {
@@ -25,6 +26,7 @@ import {
 } from "@constant/message";
 import { AccountRole, OtpPurpose } from "@prisma/client";
 import { AppJwtService } from "@module/app-jwt";
+import { AppCacheService } from "@config/app-cache";
 
 @Injectable()
 export class PatientAuthRegisterService {
@@ -36,6 +38,7 @@ export class PatientAuthRegisterService {
 		private readonly cryptoUtil: CryptoUtil,
 		private readonly config: AppConfigService,
 		private readonly appJwtService: AppJwtService,
+		private readonly cacheService: AppCacheService,
 	) {}
 
 	private readonly logger = new Logger(PatientAuthRegisterService.name);
@@ -110,7 +113,9 @@ export class PatientAuthRegisterService {
 		};
 	}
 
-	async register(reqData: IRegisterRequest): Promise<IAuthResponse> {
+	async preRegisterAccount(
+		reqData: IPreRegisterRequest,
+	): Promise<IOtpVerifyResponse> {
 		const existingAccount = await this.repository.findAccountByEmail(
 			reqData.email,
 		);
@@ -128,21 +133,74 @@ export class PatientAuthRegisterService {
 			},
 		);
 
+		this.logger.log(`Is signature valid: ${isSignatureValid}`);
+
 		if (!isSignatureValid) {
 			throw new BadRequestException(
 				SignatureErrorMessage.ERR_SIGNATURE_INVALID,
 			);
 		}
 
+		const signature = await this.signatureService.generateSignature({
+			sub: reqData.fcmToken,
+			email: reqData.email,
+		});
+
 		const hashedPassword = await this.cryptoUtil.hash(
 			reqData.password,
 			this.config.bcryptConfig.saltRounds,
 		);
 
+		await this.cacheService.set<IPreRegisterRequest>(
+			`register:${reqData.email}:${signature}`,
+			{
+				...reqData,
+				password: hashedPassword,
+				confirmPassword: hashedPassword,
+			},
+			{
+				ttl: 20,
+				unit: "minutes",
+			},
+		);
+
+		return {
+			email: reqData.email,
+			signature,
+		};
+	}
+
+	async register(reqData: IRegisterRequest): Promise<IAuthResponse> {
+		const isSignatureValid = await this.signatureService.validateSignature(
+			reqData.signature,
+			{
+				deleteAfterValidation: true,
+			},
+		);
+
+		if (!isSignatureValid) {
+			throw new BadRequestException(
+				SignatureErrorMessage.ERR_SIGNATURE_INVALID,
+			);
+		}
+
+		const cachedData: IPreRegisterRequest = await this.cacheService.get(
+			`register:${reqData.email}:${reqData.signature}`,
+		);
+
+		if (!cachedData) {
+			throw new BadRequestException("Invalid request. Please try again.");
+		}
+
+		// const hashedPassword = await this.cryptoUtil.hash(
+		// 	cachedData.password,
+		// 	this.config.bcryptConfig.saltRounds,
+		// );
+
 		const registerPatient = await this.repository.createPatientAccount(
 			{
 				email: reqData.email,
-				password: hashedPassword,
+				password: cachedData.password,
 			},
 			{
 				name: reqData.name,
@@ -154,8 +212,12 @@ export class PatientAuthRegisterService {
 				bio: reqData.bio,
 			},
 			{
-				fcmToken: reqData.fcmToken,
+				fcmToken: cachedData.fcmToken,
 			},
+		);
+
+		await this.cacheService.delete(
+			`register:${reqData.email}:${reqData.signature}`,
 		);
 
 		const { accessToken, refreshToken } =

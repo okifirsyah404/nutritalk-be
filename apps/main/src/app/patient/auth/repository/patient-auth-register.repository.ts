@@ -76,6 +76,11 @@ export class PatientAuthRegisterRepository {
 									fcmToken,
 								},
 							},
+							role: {
+								create: {
+									accountRole: "PATIENT",
+								},
+							},
 						},
 						select: {
 							...PrismaSelector.ACCOUNT,

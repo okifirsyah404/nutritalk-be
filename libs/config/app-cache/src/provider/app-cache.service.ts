@@ -2,6 +2,7 @@ import { AppConfigService } from "@config/app-config";
 import { CACHE_MANAGER } from "@nestjs/cache-manager";
 import { Inject, Injectable } from "@nestjs/common";
 import { Cache } from "cache-manager";
+import moment from "moment/moment";
 
 @Injectable()
 export class AppCacheService {
@@ -15,13 +16,17 @@ export class AppCacheService {
 		value: T,
 		options?: {
 			ttl?: number;
+			unit?: moment.DurationInputArg2;
 		},
 	): Promise<void> {
-		await this.cacheManager.set(
-			key,
-			value,
-			options.ttl || this.config.redisConfig.ttl,
-		);
+		const ttl = moment
+			.duration(
+				options?.ttl || this.config.redisConfig.ttl,
+				options?.unit || "seconds",
+			)
+			.asMilliseconds();
+
+		await this.cacheManager.set(key, value, ttl);
 	}
 
 	async setBuilder<T>(
@@ -29,6 +34,7 @@ export class AppCacheService {
 		value: T,
 		options?: {
 			ttl?: number;
+			unit?: moment.DurationInputArg2;
 		},
 	): Promise<void> {
 		await this.set(keyBuilder(value), value, options);
@@ -36,5 +42,9 @@ export class AppCacheService {
 
 	async get<T>(key: string): Promise<T> {
 		return this.cacheManager.get(key);
+	}
+
+	async delete(key: string): Promise<void> {
+		await this.cacheManager.del(key);
 	}
 }

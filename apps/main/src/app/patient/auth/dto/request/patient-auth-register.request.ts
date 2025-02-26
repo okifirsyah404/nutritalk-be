@@ -20,14 +20,9 @@ import {
 } from "@constant/message";
 import { Type } from "class-transformer";
 import { PickType } from "@nestjs/swagger";
-import { PatientAuthSignInRequest } from "@app/app/patient/auth/dto/request/patient-auth-sign-in.request";
-import { IntersectionType } from "@nestjs/mapped-types";
 
 export class PatientAuthRegisterRequest
-	extends IntersectionType(
-		PatientForgetPasswordRequest,
-		PickType(PatientAuthSignInRequest, ["fcmToken"]),
-	)
+	extends PickType(PatientForgetPasswordRequest, ["email", "signature"])
 	implements IRegisterRequest
 {
 	@IsString({
