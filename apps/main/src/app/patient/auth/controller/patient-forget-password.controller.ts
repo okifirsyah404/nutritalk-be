@@ -29,7 +29,7 @@ export class PatientForgetPasswordController {
 	 * - status: string
 	 * - statusCode: number
 	 * - message: string
-	 * - data: object of accessToken and refreshToken
+	 * - data: object of email
 	 *
 	 */
 	@Post("otp")

@@ -6,4 +6,6 @@ export abstract class AuthSuccessMessage {
 	static readonly SUCCESS_RESET_PASSWORD = "SUCCESS_RESET_PASSWORD";
 	static readonly SUCCESS_AUTH_SIGN_IN_WITH_GOOGLE =
 		"SUCCESS_AUTH_SIGN_IN_WITH_GOOGLE";
+	static readonly SUCCESS_AUTH_SIGN_UP_CACHED = "SUCCESS_AUTH_SIGN_UP_CACHED";
+	static readonly SUCCESS_AUTH_SIGN_UP = "SUCCESS_AUTH_SIGN_UP";
 }

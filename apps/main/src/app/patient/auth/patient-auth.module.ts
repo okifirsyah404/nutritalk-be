@@ -8,14 +8,23 @@ import { PatientAuthRepository } from "@app/app/patient/auth/repository/patient-
 import { PatientForgetPasswordRepository } from "@app/app/patient/auth/repository/patient-forget-password.repository";
 import { PatientForgetPasswordService } from "@app/app/patient/auth/service/patient-forget-password.service";
 import { PatientForgetPasswordController } from "@app/app/patient/auth/controller/patient-forget-password.controller";
+import { PatientAuthRegisterService } from "@app/app/patient/auth/service/patient-auth-register.service";
+import { PatientAuthRegisterRepository } from "@app/app/patient/auth/repository/patient-auth-register.repository";
+import { PatientAuthRegisterController } from "@app/app/patient/auth/controller/patient-auth-register.controller";
 
 @Module({
 	imports: [AppJwtModule, OtpModule, SignatureModule],
-	controllers: [PatientAuthController, PatientForgetPasswordController],
+	controllers: [
+		PatientAuthController,
+		PatientAuthRegisterController,
+		PatientForgetPasswordController,
+	],
 	providers: [
 		PatientAuthService,
+		PatientAuthRegisterService,
 		PatientForgetPasswordService,
 		PatientAuthRepository,
+		PatientAuthRegisterRepository,
 		PatientForgetPasswordRepository,
 	],
 })

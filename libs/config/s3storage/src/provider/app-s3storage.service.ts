@@ -78,7 +78,7 @@ export class AppS3StorageService {
 			contentType: file.mimetype,
 		});
 
-		FileUtil.deleteTempFile(tempFilePath);
+		void FileUtil.deleteTempFile(tempFilePath);
 
 		return key;
 	}
