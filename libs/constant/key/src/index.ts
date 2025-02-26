@@ -1,1 +1,1 @@
-export * from "./queue/mail-queue-key.constant";
+export * from "./queue/queue-key.constant";

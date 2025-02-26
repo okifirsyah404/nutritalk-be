@@ -34,6 +34,7 @@ export * from "./enum/sort-order.enum";
 export * from "./jwt/app-jwt.interface";
 export * from "./mail/mail.interface";
 export * from "./mail/mailer.interface";
+export * from "./dice-bear/dice-bear.interface";
 export * from "./otp/otp.interface";
 export * from "./pagination/pagination.interface";
 export * from "./request/auth/change-password-request.interface";

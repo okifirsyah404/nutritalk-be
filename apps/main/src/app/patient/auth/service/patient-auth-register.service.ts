@@ -27,6 +27,8 @@ import {
 import { AccountRole, OtpPurpose } from "@prisma/client";
 import { AppJwtService } from "@module/app-jwt";
 import { AppCacheService } from "@config/app-cache";
+import { AppS3StorageService } from "@config/s3storage";
+import { DiceBearQueueService } from "@app/module/queue/service/dice-bear-queue.service";
 
 @Injectable()
 export class PatientAuthRegisterService {
@@ -34,11 +36,13 @@ export class PatientAuthRegisterService {
 		private readonly repository: PatientAuthRegisterRepository,
 		private readonly otpService: OtpService,
 		private readonly mailQueueService: MailQueueService,
+		private readonly diceBearQueueService: DiceBearQueueService,
 		private readonly signatureService: SignatureService,
 		private readonly cryptoUtil: CryptoUtil,
 		private readonly config: AppConfigService,
 		private readonly appJwtService: AppJwtService,
 		private readonly cacheService: AppCacheService,
+		private readonly s3Service: AppS3StorageService,
 	) {}
 
 	private readonly logger = new Logger(PatientAuthRegisterService.name);
@@ -133,8 +137,6 @@ export class PatientAuthRegisterService {
 			},
 		);
 
-		this.logger.log(`Is signature valid: ${isSignatureValid}`);
-
 		if (!isSignatureValid) {
 			throw new BadRequestException(
 				SignatureErrorMessage.ERR_SIGNATURE_INVALID,
@@ -188,15 +190,6 @@ export class PatientAuthRegisterService {
 			`register:${reqData.email}:${reqData.signature}`,
 		);
 
-		if (!cachedData) {
-			throw new BadRequestException("Invalid request. Please try again.");
-		}
-
-		// const hashedPassword = await this.cryptoUtil.hash(
-		// 	cachedData.password,
-		// 	this.config.bcryptConfig.saltRounds,
-		// );
-
 		const registerPatient = await this.repository.createPatientAccount(
 			{
 				email: reqData.email,
@@ -226,6 +219,22 @@ export class PatientAuthRegisterService {
 				userId: registerPatient.id,
 				role: AccountRole.PATIENT,
 			});
+
+		void this.diceBearQueueService.generateImage(
+			{
+				seed: registerPatient.profile.name ?? "Patient",
+				key: registerPatient.id,
+			},
+			async (result) => {
+				const res = await this.s3Service.uploadFileFromPath({
+					seed: registerPatient.id,
+					role: AccountRole.PATIENT,
+					filePath: result.path,
+				});
+
+				await this.repository.updateImageKey(registerPatient.id, res);
+			},
+		);
 
 		return {
 			accessToken: accessToken,
