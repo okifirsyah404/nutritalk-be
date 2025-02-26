@@ -4,6 +4,8 @@ import { IProfileEntity } from "@contract";
 import { Injectable } from "@nestjs/common";
 import { AccountRole } from "@prisma/client";
 import { FileUtil } from "@util";
+import mime from "mime";
+import path from "path";
 import { S3StorageService } from "./s3storage.service";
 
 @Injectable()
@@ -79,6 +81,34 @@ export class AppS3StorageService {
 		});
 
 		void FileUtil.deleteTempFile(tempFilePath);
+
+		return key;
+	}
+
+	async uploadFileFromPath({
+		seed,
+		role,
+		filePath,
+		deleteAfterUpload,
+	}: {
+		seed: string;
+		role: AccountRole;
+		filePath: string;
+		deleteAfterUpload?: boolean;
+	}): Promise<string> {
+		const key = `${role.toLowerCase()}/${seed}/${seed}${path.extname(filePath)}`;
+
+		const contentType = mime.getType(filePath) || "image/*";
+
+		await this.service.uploadObject({
+			key,
+			body: filePath,
+			contentType,
+		});
+
+		if (deleteAfterUpload) {
+			await FileUtil.deleteTempFile(filePath);
+		}
 
 		return key;
 	}

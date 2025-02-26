@@ -113,7 +113,7 @@ export class PatientAuthRegisterRepository {
 							},
 						},
 						select: {
-							...PrismaSelector.PATIENT,
+							...PrismaSelector.PATIENT_WITH_PROFILE,
 							account: {
 								select: PrismaSelector.ACCOUNT,
 							},
@@ -126,6 +126,36 @@ export class PatientAuthRegisterRepository {
 					isolationLevel: "Serializable",
 				},
 			)
+			.catch(createDatabaseErrorHandler);
+	}
+
+	/**
+	 * Updates the image key for a patient's profile.
+	 *
+	 * @param id - The unique identifier of the patient.
+	 * @param key - The new image key to be set for the patient's profile.
+	 * @returns A promise that resolves to the updated patient object.
+	 */
+	async updateImageKey(id: string, key: string): Promise<IPatientEntity> {
+		return this.prisma.patient
+			.update({
+				where: {
+					id,
+				},
+				data: {
+					profile: {
+						update: {
+							imageKey: key,
+						},
+					},
+				},
+				select: {
+					...PrismaSelector.PATIENT_WITH_PROFILE,
+					account: {
+						select: PrismaSelector.ACCOUNT,
+					},
+				},
+			})
 			.catch(createDatabaseErrorHandler);
 	}
 
