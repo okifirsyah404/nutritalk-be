@@ -47,6 +47,7 @@ enum TransactionStatus {
 // ------------------------------------------------------------------
 enum OtpPurpose {
   AUTH
+  AUTH_REGISTER
   AUTH_FORGOT_PASSWORD
   ACCOUNT
   ACCOUNT_CHANGE_PASSWORD

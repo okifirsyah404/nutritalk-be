@@ -102,6 +102,8 @@ export class MailService {
 		switch (purpose) {
 			case OtpPurpose.AUTH:
 				return "Auth";
+			case OtpPurpose.AUTH_REGISTER:
+				return "Registrasi Akun Nutritalk";
 			case OtpPurpose.AUTH_FORGOT_PASSWORD:
 				return "Lupa Password";
 			case OtpPurpose.ACCOUNT:
