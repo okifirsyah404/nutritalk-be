@@ -7,3 +7,4 @@ export * from "./response/base-api.response";
 export * from "./transformer/null-to-undefined.transform";
 export * from "./validator/is-not-empty-string.validator";
 export * from "./validator/match-other.validator";
+export * from "./validator/is-indonesian-phone-number.validator";

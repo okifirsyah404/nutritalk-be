@@ -40,8 +40,6 @@ export class FirebaseAuthService {
 	async getUserByIdToken(idToken: string): Promise<TFirebaseUserRecord> {
 		const decodedIdToken = await this.verifyIdToken(idToken);
 
-		this.logger.log(`Decoded ID Token: ${JSON.stringify(decodedIdToken)}`);
-
 		return this.getUser(decodedIdToken.uid);
 	}
 }
