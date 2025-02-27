@@ -4,7 +4,7 @@ import { IApiResponse } from "@contract";
 import { Body, Controller, Post } from "@nestjs/common";
 import { AccountRole } from "@prisma/client";
 import { UriUtil } from "@util";
-import { NutritionistAuthSSOGoolgleRequest } from "../dto/request/nutritionist-auth-sso-google.request";
+import { NutritionistAuthSSOGoogleRequest } from "../dto/request/nutritionist-auth-sso-google.request";
 import { NutritionistAuthResponse } from "../dto/response/nutritionist-auth.response";
 import { NutritionistAuthSSOService } from "../service/nutritionist-auth-sso.service";
 
@@ -14,7 +14,7 @@ export class NutritionistAuthSSOController {
 
 	@Post("google")
 	async signInWithGoogle(
-		@Body() reqBody: NutritionistAuthSSOGoolgleRequest,
+		@Body() reqBody: NutritionistAuthSSOGoogleRequest,
 	): Promise<IApiResponse<NutritionistAuthResponse>> {
 		const result = await this.service.signInWithGoogle(reqBody);
 

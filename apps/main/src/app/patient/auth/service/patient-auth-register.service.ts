@@ -7,7 +7,7 @@ import {
 import { OtpService } from "@module/otp";
 import { MailQueueService } from "@app/module/queue/service/mail-queue.service";
 import { SignatureService } from "@module/signature";
-import { CryptoUtil } from "@util";
+import { CryptoUtil, FileUtil } from "@util";
 import { AppConfigService } from "@config/app-config";
 import { PatientAuthRegisterRepository } from "@app/app/patient/auth/repository/patient-auth-register.repository";
 import {
@@ -233,6 +233,8 @@ export class PatientAuthRegisterService {
 				});
 
 				await this.repository.updateImageKey(registerPatient.id, res);
+
+				await FileUtil.deleteTempFile(result.path);
 			},
 		);
 

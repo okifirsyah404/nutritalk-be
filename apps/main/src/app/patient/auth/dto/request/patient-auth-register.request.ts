@@ -6,7 +6,6 @@ import {
 	IsEnum,
 	IsNotEmpty,
 	IsOptional,
-	IsPhoneNumber,
 	IsString,
 	MaxLength,
 } from "class-validator";
@@ -20,6 +19,7 @@ import {
 } from "@constant/message";
 import { Type } from "class-transformer";
 import { PickType } from "@nestjs/swagger";
+import { IsIndonesianPhoneNumber } from "@common";
 
 export class PatientAuthRegisterRequest
 	extends PickType(PatientForgetPasswordRequest, ["email", "signature"])
@@ -33,7 +33,10 @@ export class PatientAuthRegisterRequest
 	})
 	readonly name: string;
 
-	@IsPhoneNumber("ID", {
+	// @IsPhoneNumber("ID", {
+	// 	message: PhoneNumberValidationMessage.ERR_PHONE_NUMBER_INVALID,
+	// })
+	@IsIndonesianPhoneNumber({
 		message: PhoneNumberValidationMessage.ERR_PHONE_NUMBER_INVALID,
 	})
 	@IsString({

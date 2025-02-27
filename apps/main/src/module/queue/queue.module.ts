@@ -6,6 +6,8 @@ import { MailQueueService } from "./service/mail-queue.service";
 import { DiceBearQueueProcessor } from "@app/module/queue/processor/dice-bear-queue.processor";
 import { DiceBearQueueService } from "@app/module/queue/service/dice-bear-queue.service";
 import { DiceBearModule } from "@module/dice-bear";
+import { ImageDownloadQueueProcessor } from "@app/module/queue/processor/image-download-queue.processor";
+import { ImageDownloadQueueService } from "@app/module/queue/service/image-download-queue.service";
 
 @Global()
 @Module({
@@ -29,13 +31,22 @@ import { DiceBearModule } from "@module/dice-bear";
 				removeOnFail: true,
 			},
 		}),
+		BullModule.registerQueue({
+			name: QueueKeyConstant.IMAGE_DOWNLOAD_QUEUE_PROCESSOR,
+			defaultJobOptions: {
+				removeOnComplete: true,
+				removeOnFail: true,
+			},
+		}),
 	],
 	providers: [
 		MailQueueProcessor,
 		MailQueueService,
 		DiceBearQueueProcessor,
 		DiceBearQueueService,
+		ImageDownloadQueueProcessor,
+		ImageDownloadQueueService,
 	],
-	exports: [MailQueueService, DiceBearQueueService],
+	exports: [MailQueueService, DiceBearQueueService, ImageDownloadQueueService],
 })
 export class QueueModule {}
