@@ -2581,7 +2581,7 @@
   resolved "https://registry.yarnpkg.com/@dicebear/bottts/-/bottts-9.2.2.tgz#8f2587469a5f6fe1a69c4b4ef5504455c3a4dd68"
   integrity sha512-wugFkzw8JNWV1nftq/Wp/vmQsLAXDxrMtRK3AoMODuUpSVoP3EHRUfKS043xggOsQFvoj0HZ7kadmhn0AMLf5A==
 
-"@dicebear/collection@^9.2.1":
+"@dicebear/collection@^9.2.2":
   version "9.2.2"
   resolved "https://registry.yarnpkg.com/@dicebear/collection/-/collection-9.2.2.tgz#1f8affc2c19c670b7696e7c23a2fe4072dc64af4"
   integrity sha512-vZAmXhPWCK3sf8Fj9/QflFC6XOLroJOT5K1HdnzHaPboEvffUQideGCrrEamnJtlH0iF0ZDXh8gqmwy2fu+yHA==
@@ -2617,7 +2617,7 @@
     "@dicebear/shapes" "9.2.2"
     "@dicebear/thumbs" "9.2.2"
 
-"@dicebear/converter@^9.2.1":
+"@dicebear/converter@^9.2.2":
   version "9.2.2"
   resolved "https://registry.yarnpkg.com/@dicebear/converter/-/converter-9.2.2.tgz#1cc4a5add2a281368d1963cb90d3e2a541602513"
   integrity sha512-704MOowKUOGI88tOJIYFSkd2HXbkNtPdjMrPTx7j+7gAqImCBZ298KVUk0TCo36VCUfN0EtgngUuBZUxyPTadQ==
@@ -2627,7 +2627,7 @@
     sharp "^0.33.5"
     tmp-promise "^3.0.3"
 
-"@dicebear/core@^9.2.1":
+"@dicebear/core@^9.2.2":
   version "9.2.2"
   resolved "https://registry.yarnpkg.com/@dicebear/core/-/core-9.2.2.tgz#dcaf941e4d9e79046d466b3197dfa3393288e5b2"
   integrity sha512-ROhgHG249dPtcXgBHcqPEsDeAPRPRD/9d+tZCjLYyueO+cXDlIA8dUlxpwIVcOuZFvCyW6RJtqo8BhNAi16pIQ==

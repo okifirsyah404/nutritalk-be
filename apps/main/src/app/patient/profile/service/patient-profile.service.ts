@@ -1,10 +1,10 @@
-import { Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { PatientProfileRepository } from "@app/app/patient/profile/repository/patient-profile.repository";
-import { AppS3StorageService } from "@config/s3storage";
-import { DateUtil, GeneralUtil, PhoneNumberUtil } from "@util";
 import { RefreshCache, SetCache } from "@config/app-cache";
-import { IPatientEntity, IProfileEntity } from "@contract";
+import { AppS3StorageService } from "@config/s3storage";
 import { ProfileErrorMessage } from "@constant/message";
+import { IPatientEntity, IProfileEntity } from "@contract";
+import { Injectable, Logger, NotFoundException } from "@nestjs/common";
+import { DateUtil, GeneralUtil, PhoneNumberUtil } from "@util";
 
 @Injectable()
 export class PatientProfileService {
@@ -31,8 +31,6 @@ export class PatientProfileService {
 	})
 	async getProfileById(id: string): Promise<IPatientEntity> {
 		const result = await this.repository.findProfileById(id);
-
-		this.logger.log(`PROFILE: ${JSON.stringify(result)}`);
 
 		if (!result) {
 			throw new NotFoundException(ProfileErrorMessage.ERR_PROFILE_NOT_FOUND);

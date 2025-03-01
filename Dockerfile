@@ -1,11 +1,12 @@
-FROM node:lts-alpine AS builder
+FROM node:lts-slim AS builder
 
 WORKDIR /usr/src/app
 
 COPY package.json yarn.lock ./
 COPY prisma ./prisma
 
-RUN apk add --no-cache bash && yarn install --frozen-lockfile
+# RUN apk add --no-cache bash && yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile
 
 COPY . .
 

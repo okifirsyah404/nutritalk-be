@@ -37,8 +37,8 @@ services:
         condition: on-failure
       resources:
         limits:
-          cpus: "1"
-          memory: 500M
+          cpus: "2"
+          memory: 1024M
 
   cron:
     build:

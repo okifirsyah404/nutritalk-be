@@ -1,15 +1,14 @@
-import {
-	BadRequestException,
-	Injectable,
-	Logger,
-	NotFoundException,
-} from "@nestjs/common";
-import { OtpService } from "@module/otp";
-import { MailQueueService } from "@app/module/queue/service/mail-queue.service";
-import { SignatureService } from "@module/signature";
-import { CryptoUtil, FileUtil } from "@util";
-import { AppConfigService } from "@config/app-config";
 import { PatientAuthRegisterRepository } from "@app/app/patient/auth/repository/patient-auth-register.repository";
+import { DiceBearQueueService } from "@app/module/queue/service/dice-bear-queue.service";
+import { MailQueueService } from "@app/module/queue/service/mail-queue.service";
+import { AppCacheService } from "@config/app-cache";
+import { AppConfigService } from "@config/app-config";
+import { AppS3StorageService } from "@config/s3storage";
+import {
+	AccountErrorMessage,
+	OtpErrorMessage,
+	SignatureErrorMessage,
+} from "@constant/message";
 import {
 	IAuthResponse,
 	IOtpEmail,
@@ -19,16 +18,17 @@ import {
 	IPreRegisterRequest,
 	IRegisterRequest,
 } from "@contract";
-import {
-	AccountErrorMessage,
-	OtpErrorMessage,
-	SignatureErrorMessage,
-} from "@constant/message";
-import { AccountRole, OtpPurpose } from "@prisma/client";
 import { AppJwtService } from "@module/app-jwt";
-import { AppCacheService } from "@config/app-cache";
-import { AppS3StorageService } from "@config/s3storage";
-import { DiceBearQueueService } from "@app/module/queue/service/dice-bear-queue.service";
+import { OtpService } from "@module/otp";
+import { SignatureService } from "@module/signature";
+import {
+	BadRequestException,
+	Injectable,
+	Logger,
+	NotFoundException,
+} from "@nestjs/common";
+import { AccountRole, OtpPurpose } from "@prisma/client";
+import { CryptoUtil, FileUtil } from "@util";
 
 @Injectable()
 export class PatientAuthRegisterService {

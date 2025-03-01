@@ -1,8 +1,9 @@
-import { Injectable } from "@nestjs/common";
 import { PrismaSelector, PrismaService } from "@config/prisma";
-import { createDatabaseErrorHandler } from "@infrastructure";
 import { IAccountEntity, IPatientEntity, IProfileEntity } from "@contract";
 import { IDeviceInfoEntity } from "@contract/entities/device-info.entity.interface";
+import { createDatabaseErrorHandler } from "@infrastructure";
+import { Injectable } from "@nestjs/common";
+import { AccountRole } from "@prisma/client";
 
 @Injectable()
 export class PatientAuthRegisterRepository {
@@ -78,7 +79,7 @@ export class PatientAuthRegisterRepository {
 							},
 							role: {
 								create: {
-									accountRole: "PATIENT",
+									accountRole: AccountRole.PATIENT,
 								},
 							},
 						},
