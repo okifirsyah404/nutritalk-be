@@ -6,6 +6,7 @@ import { AppNutritionistConfig } from "../configs/app-nutritionist.config";
 import { AppConfig } from "../configs/app.config";
 import { BcryptConfig } from "../configs/bcrypt.config";
 import { DatabaseConfig } from "../configs/database.config";
+import { DiceBearConfig } from "../configs/dice-bear.config";
 import { DocsConfig } from "../configs/docs.config";
 import { JwtConfig } from "../configs/jwt.config";
 import { MultipartConfig } from "../configs/multipart.config";
@@ -67,6 +68,15 @@ export class AppConfigService {
 	 */
 	get jwtConfig(): JwtConfig {
 		return this.config.get<JwtConfig>("jwtConfig");
+	}
+
+	/**
+	 * Retrieves the configuration settings for DiceBear.
+	 *
+	 * @returns {DiceBearConfig} The configuration object for DiceBear.
+	 */
+	get diceBearConfig(): DiceBearConfig {
+		return this.config.get<DiceBearConfig>("diceBearConfig");
 	}
 
 	/**

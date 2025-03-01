@@ -1,15 +1,15 @@
-import {
-	BadRequestException,
-	Injectable,
-	Logger,
-	NotFoundException,
-} from "@nestjs/common";
-import { OtpService } from "@module/otp";
-import { MailQueueService } from "@app/module/queue/service/mail-queue.service";
-import { SignatureService } from "@module/signature";
-import { CryptoUtil, FileUtil } from "@util";
-import { AppConfigService } from "@config/app-config";
 import { PatientAuthRegisterRepository } from "@app/app/patient/auth/repository/patient-auth-register.repository";
+import { DiceBearQueueService } from "@app/module/queue/service/dice-bear-queue.service";
+import { ImageDownloadQueueService } from "@app/module/queue/service/image-download-queue.service";
+import { MailQueueService } from "@app/module/queue/service/mail-queue.service";
+import { AppCacheService } from "@config/app-cache";
+import { AppConfigService } from "@config/app-config";
+import { AppS3StorageService } from "@config/s3storage";
+import {
+	AccountErrorMessage,
+	OtpErrorMessage,
+	SignatureErrorMessage,
+} from "@constant/message";
 import {
 	IAuthResponse,
 	IOtpEmail,
@@ -19,16 +19,17 @@ import {
 	IPreRegisterRequest,
 	IRegisterRequest,
 } from "@contract";
-import {
-	AccountErrorMessage,
-	OtpErrorMessage,
-	SignatureErrorMessage,
-} from "@constant/message";
-import { AccountRole, OtpPurpose } from "@prisma/client";
 import { AppJwtService } from "@module/app-jwt";
-import { AppCacheService } from "@config/app-cache";
-import { AppS3StorageService } from "@config/s3storage";
-import { DiceBearQueueService } from "@app/module/queue/service/dice-bear-queue.service";
+import { OtpService } from "@module/otp";
+import { SignatureService } from "@module/signature";
+import {
+	BadRequestException,
+	Injectable,
+	Logger,
+	NotFoundException,
+} from "@nestjs/common";
+import { AccountRole, OtpPurpose } from "@prisma/client";
+import { CryptoUtil, FileUtil } from "@util";
 
 @Injectable()
 export class PatientAuthRegisterService {
@@ -37,6 +38,7 @@ export class PatientAuthRegisterService {
 		private readonly otpService: OtpService,
 		private readonly mailQueueService: MailQueueService,
 		private readonly diceBearQueueService: DiceBearQueueService,
+		private readonly imageDownloadQueue: ImageDownloadQueueService,
 		private readonly signatureService: SignatureService,
 		private readonly cryptoUtil: CryptoUtil,
 		private readonly config: AppConfigService,
@@ -220,21 +222,40 @@ export class PatientAuthRegisterService {
 				role: AccountRole.PATIENT,
 			});
 
-		void this.diceBearQueueService.generateImage(
+		// void this.diceBearQueueService.generateImage(
+		// 	{
+		// 		seed: registerPatient.profile.name ?? "Patient",
+		// 		key: registerPatient.id,
+		// 	},
+		// 	async (result) => {
+		// 		const res = await this.s3Service.uploadFileFromPath({
+		// 			seed: registerPatient.id,
+		// 			role: AccountRole.PATIENT,
+		// 			filePath: result.path,
+		// 		});
+
+		// 		await this.repository.updateImageKey(registerPatient.id, res);
+
+		// 		await FileUtil.deleteTempFile(result.path);
+		// 	},
+		// );
+
+		void this.imageDownloadQueue.downloadImage(
 			{
-				seed: registerPatient.profile.name ?? "Patient",
-				key: registerPatient.id,
+				url: `${this.config.diceBearConfig.url}&seed=${registerPatient.profile.name}`,
+				seed: registerPatient.id,
 			},
 			async (result) => {
 				const res = await this.s3Service.uploadFileFromPath({
 					seed: registerPatient.id,
 					role: AccountRole.PATIENT,
-					filePath: result.path,
+					filePath: result,
 				});
 
 				await this.repository.updateImageKey(registerPatient.id, res);
 
-				await FileUtil.deleteTempFile(result.path);
+				await FileUtil.deleteTempFile(result);
+				// await this.cryptoUtil.deleteTempFile(result);
 			},
 		);
 

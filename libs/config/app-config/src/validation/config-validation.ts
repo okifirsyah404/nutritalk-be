@@ -8,6 +8,7 @@ import { AppPatientEnvironmentVariables } from "../configs/app-patient.config";
 import { AppEnvironmentVariables } from "../configs/app.config";
 import { BcryptEnvironmentVariables } from "../configs/bcrypt.config";
 import { DatabaseEnvironmentVariables } from "../configs/database.config";
+import { DiceBearEnvironmentVariables } from "../configs/dice-bear.config";
 import { JwtEnvironmentVariables } from "../configs/jwt.config";
 import { MultipartEnvironmentVariables } from "../configs/multipart.config";
 import { PaggingEnvironmentVariables } from "../configs/pagging.config";
@@ -22,6 +23,7 @@ class EnvironmentVariables extends IntersectionType(
 	AppPatientEnvironmentVariables,
 	JwtEnvironmentVariables,
 	RedisEnvironmentVariables,
+	DiceBearEnvironmentVariables,
 	SmtpEnvironmentVariables,
 	ThrottleEnvironmentVariables,
 	MultipartEnvironmentVariables,

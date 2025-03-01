@@ -1,13 +1,10 @@
-import {
-	BadRequestException,
-	Injectable,
-	NotFoundException,
-	UnauthorizedException,
-} from "@nestjs/common";
 import { PatientAuthSSORepository } from "@app/app/patient/auth/repository/patient-auth-sso.repository";
+import { ImageDownloadQueueService } from "@app/module/queue/service/image-download-queue.service";
+import { AppCacheService } from "@config/app-cache";
+import { AppConfigService } from "@config/app-config";
 import { FirebaseAuthService } from "@config/firebase";
-import { AppJwtService } from "@module/app-jwt";
-import { IDeviceInfoEntity } from "@contract/entities/device-info.entity.interface";
+import { AppS3StorageService } from "@config/s3storage";
+import { AccountErrorMessage, SignatureErrorMessage } from "@constant/message";
 import {
 	IAuthResponse,
 	IGoogleSSORequest,
@@ -16,14 +13,17 @@ import {
 	IPreRegisterRequest,
 	IRegisterRequest,
 } from "@contract";
-import { AccountErrorMessage, SignatureErrorMessage } from "@constant/message";
-import { AccountRole } from "@prisma/client";
+import { IDeviceInfoEntity } from "@contract/entities/device-info.entity.interface";
+import { AppJwtService } from "@module/app-jwt";
 import { SignatureService } from "@module/signature";
-import { AppS3StorageService } from "@config/s3storage";
-import { AppCacheService } from "@config/app-cache";
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException,
+	UnauthorizedException,
+} from "@nestjs/common";
+import { AccountRole } from "@prisma/client";
 import { CryptoUtil, FileUtil } from "@util";
-import { AppConfigService } from "@config/app-config";
-import { ImageDownloadQueueService } from "@app/module/queue/service/image-download-queue.service";
 
 @Injectable()
 export class PatientAuthSSOService {
