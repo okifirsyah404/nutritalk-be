@@ -6,6 +6,7 @@ import { appPatientConfig } from "./configs/app-patient.config";
 import { appConfig } from "./configs/app.config";
 import { bcryptConfig } from "./configs/bcrypt.config";
 import { databaseConfig } from "./configs/database.config";
+import { diceBearConfig } from "./configs/dice-bear.config";
 import { docsConfig } from "./configs/docs.config";
 import { jwtConfig } from "./configs/jwt.config";
 import { multipartConfig } from "./configs/multipart.config";
@@ -36,6 +37,7 @@ import { validateConfig } from "./validation/config-validation";
 				appNutritionistConfig,
 				appPatientConfig,
 				jwtConfig,
+				diceBearConfig,
 				docsConfig,
 				s3Config,
 				redisConfig,

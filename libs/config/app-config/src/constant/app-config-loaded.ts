@@ -4,6 +4,7 @@ import { AppNutritionistConfig } from "../configs/app-nutritionist.config";
 import { AppConfig, Environment } from "../configs/app.config";
 import { BcryptConfig } from "../configs/bcrypt.config";
 import { DatabaseConfig } from "../configs/database.config";
+import { DiceBearConfig } from "../configs/dice-bear.config";
 import { DocsConfig } from "../configs/docs.config";
 import { JwtConfig } from "../configs/jwt.config";
 import { MultipartConfig } from "../configs/multipart.config";
@@ -65,6 +66,15 @@ export class AppConfigLoaded {
 			refreshTokenExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN,
 			signatureTokenSecret: process.env.JWT_SIGNATURE_SECRET,
 			signatureTokenExpiresIn: process.env.JWT_SIGNATURE_EXPIRES_IN,
+		};
+	}
+
+	static async diceBearConfig(): Promise<DiceBearConfig> {
+		await ConfigModule.envVariablesLoaded;
+
+		return {
+			url: process.env.DICE_BEAR_URL,
+			size: parseInt(process.env.DICE_BEAR_SIZE),
 		};
 	}
 

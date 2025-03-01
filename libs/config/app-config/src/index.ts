@@ -6,6 +6,7 @@ export * from "./configs/app-patient.config";
 export * from "./configs/app.config";
 export * from "./configs/bcrypt.config";
 export * from "./configs/database.config";
+export * from "./configs/dice-bear.config";
 export * from "./configs/docs.config";
 export * from "./configs/jwt.config";
 export * from "./configs/multipart.config";
