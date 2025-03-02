@@ -1,4 +1,5 @@
 import { BaseApiResponse } from "@common";
+import { AccountSuccessMessage } from "@constant/message";
 import { INutritionistEntity } from "@contract";
 import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
 import { Body, Controller, Put, UseGuards } from "@nestjs/common";
@@ -21,7 +22,7 @@ export class NutritionistAccountSSOController {
 		const result = await this.service.bindGoogleSSO(nutritionist.account, data);
 
 		return BaseApiResponse.success({
-			message: "Google SSO has been successfully binded.",
+			message: AccountSuccessMessage.SUCCESS_BIND_GOOGLE_SSO,
 			data: NutritionistAccountResponse.fromEntity(result),
 		});
 	}

@@ -1,7 +1,7 @@
 import { FirebaseAuthService } from "@config/firebase";
 import { SSOErrorMessage } from "@constant/message";
 import { IAccountEntity, IGoogleSSORequest } from "@contract";
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, Logger } from "@nestjs/common";
 import { NutritionistAccountSSORepository } from "../repository/nutritionist-account-sso.repository";
 
 @Injectable()
@@ -10,6 +10,8 @@ export class NutritionistAccountSSOService {
 		private readonly repostory: NutritionistAccountSSORepository,
 		private readonly firebaseAuth: FirebaseAuthService,
 	) {}
+
+	private readonly logger = new Logger(NutritionistAccountSSOService.name);
 
 	/**
 	 * Binds a Google SSO account to the given account.
@@ -27,7 +29,7 @@ export class NutritionistAccountSSOService {
 			data.googleJwtToken,
 		);
 
-		const userSSO = await this.repostory.findSSOByEmail(account.email);
+		const userSSO = await this.repostory.findSSOByGoogleId(googleUser.uid);
 
 		if (userSSO) {
 			if (userSSO.googleSSO) {
