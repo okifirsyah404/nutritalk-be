@@ -27,12 +27,14 @@ export class NutritionistAccountSSOService {
 			data.googleJwtToken,
 		);
 
-		const userSSO = await this.repostory.findSSOByAccountId(account.id);
+		const userSSO = await this.repostory.findSSOByEmail(account.email);
 
-		if (userSSO && userSSO.googleSSO) {
-			throw new BadRequestException(
-				SSOErrorMessage.ERR_SSO_GOOGLE_ALREADY_EXISTS,
-			);
+		if (userSSO) {
+			if (userSSO.googleSSO) {
+				throw new BadRequestException(
+					SSOErrorMessage.ERR_SSO_GOOGLE_ALREADY_EXISTS,
+				);
+			}
 		}
 
 		if (!userSSO) {

@@ -85,6 +85,17 @@ export class NutritionistAccountSSORepository {
 		});
 	}
 
+	async findSSOByEmail(email: string): Promise<ISingleSignOnEntity> {
+		return this.prisma.singleSignOn.findFirst({
+			where: {
+				account: {
+					email,
+				},
+			},
+			select: PrismaSelector.SINGLE_SIGN_ON,
+		});
+	}
+
 	/**
 	 * Creates a single sign-on entity associated with a given account ID.
 	 *
