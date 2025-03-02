@@ -1,17 +1,17 @@
-import { Body, Controller, Logger, Post } from "@nestjs/common";
-import { UriUtil } from "@util";
-import { AccountRole } from "@prisma/client";
-import { PatientAuthRegisterService } from "@app/app/patient/auth/service/patient-auth-register.service";
-import { IApiResponse } from "@contract";
-import { BaseApiResponse } from "@common";
-import { AuthSuccessMessage, OtpSuccessMessage } from "@constant/message";
+import { PatientAuthPreRegisterRequest } from "@app/app/patient/auth/dto/request/patient-auth-pre-register.request";
+import { PatientAuthRegisterRequest } from "@app/app/patient/auth/dto/request/patient-auth-register.request";
 import { PatientAuthSendOtpRequest } from "@app/app/patient/auth/dto/request/patient-auth-send-otp.request";
-import { PatientAuthSendOtpResponse } from "@app/app/patient/auth/dto/response/patient-auth-send-otp.response";
 import { PatientAuthVerifyOtpRequest } from "@app/app/patient/auth/dto/request/patient-auth-verify-otp.request";
+import { PatientAuthSendOtpResponse } from "@app/app/patient/auth/dto/response/patient-auth-send-otp.response";
 import { PatientAuthVerifyOtpResponse } from "@app/app/patient/auth/dto/response/patient-auth-verify-otp.response";
 import { PatientAuthResponse } from "@app/app/patient/auth/dto/response/patient-auth.response";
-import { PatientAuthRegisterRequest } from "@app/app/patient/auth/dto/request/patient-auth-register.request";
-import { PatientAuthPreRegisterRequest } from "@app/app/patient/auth/dto/request/patient-auth-pre-register.request";
+import { PatientAuthRegisterService } from "@app/app/patient/auth/service/patient-auth-register.service";
+import { BaseApiResponse } from "@common";
+import { AuthSuccessMessage, OtpSuccessMessage } from "@constant/message";
+import { IApiResponse } from "@contract";
+import { Body, Controller, Logger, Post } from "@nestjs/common";
+import { AccountRole } from "@prisma/client";
+import { UriUtil } from "@util";
 
 @Controller(UriUtil.uriFromRoleBase(AccountRole.PATIENT, "auth/sign-up"))
 export class PatientAuthRegisterController {
@@ -74,6 +74,20 @@ export class PatientAuthRegisterController {
 		});
 	}
 
+	/**
+	 *
+	 * Http endpoint for pre-registering an account.
+	 *
+	 * Request body:
+	 * - email: (required) string
+	 *
+	 * Response:
+	 * - status: string
+	 * - statusCode: number
+	 * - message: string
+	 * - data: object of signature
+	 *
+	 */
 	@Post("pre-register")
 	async preRegister(
 		@Body() reqBody: PatientAuthPreRegisterRequest,
@@ -86,6 +100,22 @@ export class PatientAuthRegisterController {
 		});
 	}
 
+	/**
+	 *
+	 * Http endpoint for registering an account.
+	 *
+	 * Request body:
+	 * - email: (required) string
+	 * - password: (required) string
+	 * - otp: (required) string
+	 *
+	 * Response:
+	 * - status: string
+	 * - statusCode: number
+	 * - message: string
+	 * - data: object of PatientAuthResponse
+	 *
+	 */
 	@Post()
 	async register(
 		@Body() reqBody: PatientAuthRegisterRequest,

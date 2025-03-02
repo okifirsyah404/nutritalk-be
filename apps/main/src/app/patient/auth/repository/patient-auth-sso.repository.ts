@@ -1,4 +1,3 @@
-import { Injectable } from "@nestjs/common";
 import { PrismaSelector, PrismaService } from "@config/prisma";
 import {
 	IAccountEntity,
@@ -6,8 +5,9 @@ import {
 	IPatientEntity,
 	IProfileEntity,
 } from "@contract";
-import { createDatabaseErrorHandler } from "@infrastructure";
 import { IDeviceInfoEntity } from "@contract/entities/device-info.entity.interface";
+import { createDatabaseErrorHandler } from "@infrastructure";
+import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class PatientAuthSSORepository {
@@ -97,6 +97,16 @@ export class PatientAuthSSORepository {
 			.catch(createDatabaseErrorHandler);
 	}
 
+	/**
+	 * Creates a new patient account.
+	 *
+	 * @param email - The email of the account to create.
+	 * @param password - The password of the account to create.
+	 * @param googleId - The Google ID of the account to create.
+	 * @param profile - The profile of the patient to create.
+	 * @param fcmToken - The FCM token of the device associated with the account.
+	 * @returns A promise that resolves to the created patient object.
+	 */
 	async createPatientAccount(
 		{
 			email,

@@ -1,8 +1,8 @@
-import { Injectable } from "@nestjs/common";
 import { PrismaSelector, PrismaService } from "@config/prisma";
-import { createDatabaseErrorHandler } from "@infrastructure";
 import { IAccountEntity, IPatientEntity, IProfileEntity } from "@contract";
 import { IDeviceInfoEntity } from "@contract/entities/device-info.entity.interface";
+import { createDatabaseErrorHandler } from "@infrastructure";
+import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class PatientAuthRegisterRepository {
@@ -58,6 +58,15 @@ export class PatientAuthRegisterRepository {
 			.catch(createDatabaseErrorHandler);
 	}
 
+	/**
+	 * Creates a new patient account.
+	 *
+	 * @param email - The email of the account to create.
+	 * @param password - The password of the account to create.
+	 * @param profile - The profile of the patient to create.
+	 * @param fcmToken - The FCM token of the device associated with the account.
+	 * @returns A promise that resolves to the created patient object.
+	 */
 	async createPatientAccount(
 		{ email, password }: Pick<IAccountEntity, "email" | "password">,
 		profile: Omit<IProfileEntity, "id" | "imageKey" | "age">,
@@ -158,108 +167,4 @@ export class PatientAuthRegisterRepository {
 			})
 			.catch(createDatabaseErrorHandler);
 	}
-
-	// /**
-	//  * Creates a new account.
-	//  *
-	//  * @param account - The account to create.
-	//  * @returns A promise that resolves to the created account.
-	//  */
-	// async createAccount({
-	// 	email,
-	// 	password,
-	// }: Pick<IAccountEntity, "email" | "password">): Promise<IAccountEntity> {
-	// 	return this.prisma.account
-	// 		.create({
-	// 			data: {
-	// 				email,
-	// 				password,
-	// 				lastActivity: new Date(),
-	// 			},
-	// 			select: {
-	// 				...PrismaSelector.ACCOUNT,
-	// 				password: true,
-	// 			},
-	// 		})
-	// 		.catch(createDatabaseErrorHandler);
-	// }
-
-	// async createPatient(
-	// 	accountId: string,
-	// 	profile: IProfileEntity,
-	// ): Promise<IPatientEntity> {
-	// 	return this.prisma.patient
-	// 		.create({
-	// 			data: {
-	// 				account: {
-	// 					connect: {
-	// 						id: accountId,
-	// 					},
-	// 				},
-	// 				profile: {
-	// 					create: {
-	// 						name: profile.name,
-	// 						gender: profile.gender,
-	// 						phoneNumber: profile.phoneNumber,
-	// 						imageKey: profile.imageKey,
-	// 						address: profile.address,
-	// 						placeOfBirth: profile.placeOfBirth,
-	// 						dateOfBirth: profile.dateOfBirth,
-	// 						bio: profile.bio,
-	// 						age: profile.age,
-	// 					},
-	// 				},
-	// 				credit: {
-	// 					create: {
-	// 						balance: 0,
-	// 					},
-	// 				},
-	// 			},
-	// 		})
-	// 		.catch(createDatabaseErrorHandler);
-	// }
-	//
-	// async updateImageKey(
-	// 	patientId: string,
-	// 	imageKey: string,
-	// ): Promise<IPatientEntity> {
-	// 	return this.prisma.patient
-	// 		.update({
-	// 			where: {
-	// 				id: patientId,
-	// 			},
-	// 			data: {
-	// 				profile: {
-	// 					update: {
-	// 						imageKey,
-	// 					},
-	// 				},
-	// 			},
-	// 		})
-	// 		.catch(createDatabaseErrorHandler);
-	// }
-	//
-	// async updateFcmToken(id: string, fcmToken: string): Promise<IAccountEntity> {
-	// 	return this.prisma.account
-	// 		.update({
-	// 			where: {
-	// 				id,
-	// 			},
-	// 			data: {
-	// 				deviceInfo: {
-	// 					update: {
-	// 						fcmToken,
-	// 					},
-	// 				},
-	// 			},
-	// 			select: {
-	// 				...PrismaSelector.ACCOUNT,
-	// 				password: true,
-	// 				patient: {
-	// 					select: PrismaSelector.PATIENT_WITH_PROFILE,
-	// 				},
-	// 			},
-	// 		})
-	// 		.catch(createDatabaseErrorHandler);
-	// }
 }

@@ -119,6 +119,15 @@ export class PatientAuthRegisterService {
 		};
 	}
 
+	/**
+	 * Pre-registers an account for the register process.
+	 *
+	 * @param {IPreRegisterRequest} reqData - The request data containing the account details.
+	 * @returns A promise that resolves to an object containing the email and a generated signature.
+	 * @throws {NotFoundException} If an account already exists for the given email.
+	 * @throws {BadRequestException} If the signature validation fails.
+	 * @throws {Error} If an error occurs during the cache operation.
+	 */
 	async preRegisterAccount(
 		reqData: IPreRegisterRequest,
 	): Promise<IOtpVerifyResponse> {
@@ -174,6 +183,13 @@ export class PatientAuthRegisterService {
 		};
 	}
 
+	/**
+	 * Registers a patient account.
+	 *
+	 * @param {IRegisterRequest} reqData - The request data containing the account details.
+	 * @returns A promise that resolves to an object containing the access token, refresh token, and account role.
+	 * @throws {BadRequestException} If the signature validation fails.
+	 */
 	async register(reqData: IRegisterRequest): Promise<IAuthResponse> {
 		const isSignatureValid = await this.signatureService.validateSignature(
 			reqData.signature,
@@ -221,24 +237,6 @@ export class PatientAuthRegisterService {
 				userId: registerPatient.id,
 				role: AccountRole.PATIENT,
 			});
-
-		// void this.diceBearQueueService.generateImage(
-		// 	{
-		// 		seed: registerPatient.profile.name ?? "Patient",
-		// 		key: registerPatient.id,
-		// 	},
-		// 	async (result) => {
-		// 		const res = await this.s3Service.uploadFileFromPath({
-		// 			seed: registerPatient.id,
-		// 			role: AccountRole.PATIENT,
-		// 			filePath: result.path,
-		// 		});
-
-		// 		await this.repository.updateImageKey(registerPatient.id, res);
-
-		// 		await FileUtil.deleteTempFile(result.path);
-		// 	},
-		// );
 
 		void this.imageDownloadQueue.downloadImage(
 			{
