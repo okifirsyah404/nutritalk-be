@@ -85,10 +85,33 @@ export class NutritionistAccountSSORepository {
 		});
 	}
 
+	/**
+	 * Retrieves a single sign-on entity associated with a given Google ID.
+	 *
+	 * @param googleId - The Google ID associated with the single sign-on entity to be retrieved.
+	 * @returns A promise that resolves to the single sign-on entity associated with the given Google ID.
+	 */
+	async findSSOByGoogleId(googleId: string): Promise<ISingleSignOnEntity> {
+		return this.prisma.singleSignOn.findFirst({
+			where: {
+				googleSSO: {
+					googleId,
+				},
+			},
+			select: PrismaSelector.SINGLE_SIGN_ON,
+		});
+	}
+
+	/**
+	 * Retrieves a single sign-on entity associated with a given email address.
+	 *
+	 * @param email - The email address associated with the single sign-on entity to be retrieved.
+	 * @returns A promise that resolves to the single sign-on entity associated with the given email address.
+	 */
 	async findSSOByEmail(email: string): Promise<ISingleSignOnEntity> {
 		return this.prisma.singleSignOn.findFirst({
 			where: {
-				account: {
+				googleSSO: {
 					email,
 				},
 			},
