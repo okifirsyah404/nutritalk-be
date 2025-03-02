@@ -80,6 +80,13 @@ export class PatientAuthSSOService {
 		};
 	}
 
+	/**
+	 * Registers a new patient account with the provided Google SSO credentials.
+	 *
+	 * @param {IGoogleSSORequest} data - The request data containing the Google JWT token.
+	 * @returns {Promise<IOtpVerifyResponse>} A promise that resolves to an object containing the email and signature.
+	 * @throws {UnauthorizedException} If the account already exists.
+	 */
 	async registerWithGoogle(
 		data: IGoogleSSORequest,
 	): Promise<IOtpVerifyResponse> {
@@ -117,6 +124,13 @@ export class PatientAuthSSOService {
 		};
 	}
 
+	/**
+	 * Pre-registers a new patient account with the provided Google SSO credentials.
+	 *
+	 * @param {IPreRegisterRequest} reqData - The request data containing the account details.
+	 * @returns {Promise<IOtpVerifyResponse & Pick<IGoogleUser, "displayName">>} A promise that resolves to an object containing the email, display name, and signature.
+	 * @throws {NotFoundException} If the account already exists.
+	 */
 	async preRegisterWithGoogle(
 		reqData: IPreRegisterRequest,
 	): Promise<IOtpVerifyResponse & Pick<IGoogleUser, "displayName">> {
@@ -166,6 +180,13 @@ export class PatientAuthSSOService {
 		};
 	}
 
+	/**
+	 * Completes the registration process for a new patient account with the provided Google SSO credentials.
+	 *
+	 * @param {IRegisterRequest} reqData - The request data containing the account details.
+	 * @returns {Promise<IAuthResponse>} A promise that resolves to an object containing the access token, refresh token, and account role.
+	 * @throws {BadRequestException} If the signature validation fails.
+	 */
 	async completeRegisterWithGoogle(
 		reqData: IRegisterRequest,
 	): Promise<IAuthResponse> {
@@ -232,6 +253,13 @@ export class PatientAuthSSOService {
 		};
 	}
 
+	/**
+	 * Validates the given signature.
+	 *
+	 * @param {string} signature - The signature to validate.
+	 * @returns {Promise<void>} A promise that resolves if the signature is valid.
+	 * @throws {BadRequestException} If the signature is invalid.
+	 */
 	private async validateSignature(signature: string): Promise<void> {
 		const isSignatureValid = await this.signatureService.validateSignature(
 			signature,

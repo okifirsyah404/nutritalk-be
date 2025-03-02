@@ -34,7 +34,7 @@ export class NutritionistAccountSSOService {
 		if (userSSO) {
 			if (userSSO.googleSSO) {
 				throw new BadRequestException(
-					SSOErrorMessage.ERR_SSO_GOOGLE_ALREADY_EXISTS,
+					SSOErrorMessage.ERR_SSO_GOOGLE_ALREADY_TAKEN,
 				);
 			}
 		}

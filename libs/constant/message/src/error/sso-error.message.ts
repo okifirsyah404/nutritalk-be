@@ -7,4 +7,5 @@ export abstract class SSOErrorMessage {
 	static readonly ERR_SSO_GOOGLE_NOT_FOUND = "ERR_SSO_GOOGLE_NOT_FOUND";
 	static readonly ERR_SSO_GOOGLE_ALREADY_EXISTS =
 		"ERR_SSO_GOOGLE_ALREADY_EXISTS";
+	static readonly ERR_SSO_GOOGLE_ALREADY_TAKEN = "ERR_SSO_GOOGLE_ALREADY_TAKEN";
 }
