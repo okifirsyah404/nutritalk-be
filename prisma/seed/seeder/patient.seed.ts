@@ -1,6 +1,14 @@
 import { faker } from "@faker-js/faker";
 import { Logger } from "@nestjs/common";
-import { AccountRole, Gender, PrismaClient } from "@prisma/client";
+import {
+	AccountRole,
+	BmiStatus,
+	DietGoal,
+	DietPlan,
+	Gender,
+	PatientActivity,
+	PrismaClient,
+} from "@prisma/client";
 import { hashPassword } from "../helper/crypto-helper";
 
 async function seedPatient(prisma: PrismaClient): Promise<void> {
@@ -49,6 +57,47 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 			},
 			select: {
 				id: true,
+			},
+		});
+
+		const height = Math.floor(Math.random() * 200) + 120;
+		const weight = Math.floor(Math.random() * 100) + 40;
+
+		const bmi = +(weight / Math.pow(height / 100, 2)).toFixed(2);
+
+		const dateOfBirth = faker.date.past({
+			years: 20,
+		});
+
+		const age = new Date().getFullYear() - dateOfBirth.getFullYear();
+
+		await prisma.patientDetail.create({
+			data: {
+				medicalRecordKey: {
+					connect: {
+						id: medicalRecordKey.id,
+					},
+				},
+				activityLevel: PatientActivity.SEDENTARY,
+				anthropometric: {
+					create: {
+						bmi: bmi,
+						height: height,
+						weight: weight,
+						bmiStatus: BmiStatus.NORMAL,
+					},
+				},
+				name: "John Doe",
+				gender: Gender.MALE,
+				dateOfBirth: dateOfBirth,
+				age: age,
+				nutritionCarePlan: {
+					create: {
+						dietGoal: DietGoal.MAINTAIN,
+						dietPlan: DietPlan.MAINTAIN,
+						dietPlanDescription: "Maintain weight",
+					},
+				},
 			},
 		});
 
@@ -114,19 +163,61 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 			},
 			select: {
 				id: true,
-				name: true,
 				code: true,
 			},
 		});
 
-		for (let i = 0; i < dummyMedicalRecordKeys.length; i++) {
+		for (const key of dummyMedicalRecordKeys) {
 			const email = faker.internet.email();
+
+			const name = faker.person.fullName();
+
+			const _height = Math.floor(Math.random() * 200) + 120;
+			const _weight = Math.floor(Math.random() * 100) + 40;
+
+			const _bmi = +(weight / Math.pow(height / 100, 2)).toFixed(2);
+
+			const _dateOfBirth = faker.date.past({
+				years: 20,
+			});
+
+			const _age = new Date().getFullYear() - dateOfBirth.getFullYear();
+
+			await prisma.patientDetail.create({
+				data: {
+					medicalRecordKey: {
+						connect: {
+							id: key.id,
+						},
+					},
+					activityLevel: PatientActivity.SEDENTARY,
+					anthropometric: {
+						create: {
+							bmi: _bmi,
+							height: _height,
+							weight: _weight,
+							bmiStatus: BmiStatus.NORMAL,
+						},
+					},
+					name: name,
+					gender: Gender.MALE,
+					dateOfBirth: _dateOfBirth,
+					age: _age,
+					nutritionCarePlan: {
+						create: {
+							dietGoal: DietGoal.MAINTAIN,
+							dietPlan: DietPlan.MAINTAIN,
+							dietPlanDescription: "Maintain weight",
+						},
+					},
+				},
+			});
 
 			await prisma.patient.create({
 				data: {
 					medicalRecordKey: {
 						connect: {
-							id: dummyMedicalRecordKeys[i].id,
+							id: key.id,
 						},
 					},
 					account: {
@@ -138,7 +229,7 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 					},
 					profile: {
 						create: {
-							name: faker.person.fullName(),
+							name: name,
 							phoneNumber: faker.phone.number(),
 							placeOfBirth: faker.location.city(),
 							address: faker.location.streetAddress(),

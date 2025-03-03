@@ -1,0 +1,176 @@
+// ------------------------------------------------------------------
+// MEDICAL RECORD KEY MODEL
+// ------------------------------------------------------------------
+model MedicalRecordKey {
+  id String @id @default(cuid())
+
+  // Main Fields
+  code String? @unique @default(dbgenerated("generate_rm_index()"))
+
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Relations
+  patient                Patient?
+  patientDetail          PatientDetail?
+  medicalRecordHistories MedicalRecordHistory[]
+}
+
+// ------------------------------------------------------------------
+// PATIENT DETAIL MODEL
+// ------------------------------------------------------------------
+model PatientDetail {
+  id String @id @default(cuid())
+
+  // Main Fields
+  name          String?
+  gender        Gender?
+  dateOfBirth   DateTime?
+  age           Int?
+  activityLevel PatientActivity?
+  dailyCalories Int?
+
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Relations
+  medicalRecordKey  MedicalRecordKey?  @relation(fields: [medicalRecordKeyId], references: [id], onDelete: Cascade)
+  anthropometric    Anthropometric?    @relation(fields: [anthropometricId], references: [id], onDelete: Cascade)
+  nutritionCarePlan NutritionCarePlan? @relation(fields: [nutritionCarePlanId], references: [id], onDelete: Cascade)
+
+  // Foreign Keys
+  medicalRecordKeyId  String? @unique
+  anthropometricId    String? @unique
+  nutritionCarePlanId String? @unique
+}
+
+// ------------------------------------------------------------------
+// MEDICAL RECORD HISTORY MODEL
+// ------------------------------------------------------------------
+model MedicalRecordHistory {
+  id String @id @default(cuid())
+
+  // Main Fields
+  diagnosis String?
+  notes     String?
+  others    String?
+
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Relations
+  medicalRecordKey       MedicalRecordKey?       @relation(fields: [medicalRecordKeyId], references: [id], onDelete: Cascade)
+  anthropometric         Anthropometric?         @relation(fields: [anthropometricId], references: [id], onDelete: Cascade)
+  dietaryAssessment      DietaryAssessment?      @relation(fields: [dietaryAssessmentId], references: [id], onDelete: Cascade)
+  gastrointestinalRecord GastrointestinalRecord? @relation(fields: [gastrointestinalRecordId], references: [id], onDelete: Cascade)
+  consultation           Consultation?           @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+
+  // Foreign Keys
+  medicalRecordKeyId       String?
+  anthropometricId         String? @unique
+  dietaryAssessmentId      String? @unique
+  gastrointestinalRecordId String? @unique
+  consultationId           String? @unique
+}
+
+// ------------------------------------------------------------------
+// ANTHROPOMETRIC MODEL
+// ------------------------------------------------------------------
+
+model Anthropometric {
+  id String @id @default(cuid())
+
+  // Main Fields
+  height        Int?
+  weight        Int?
+  bmi           Float?
+  bmiStatus     BmiStatus?
+  fatPercentage Float?
+  muscleMass    Float?
+
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Relations
+  medicalRecordHistory MedicalRecordHistory?
+  patientDetail        PatientDetail?
+}
+
+// ------------------------------------------------------------------
+// DIETARY ASSESSMENT MODEL
+// ------------------------------------------------------------------
+model DietaryAssessment {
+  id String @id @default(cuid())
+
+  // Main Fields
+  usualDiet          String?
+  caloricIntake      Int?
+  proteinIntake      Int?
+  carbohydrateIntake Int?
+  fatIntake          Int?
+  fiberIntake        Int?
+  waterIntake        Int?
+  foodAllergies      String?
+  supplements        String?
+  foodPreferences    String?
+
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Relations
+  medicalRecordHistory MedicalRecordHistory?
+}
+
+// ------------------------------------------------------------------
+// GASTROINTESTINAL RECORD MODEL
+// ------------------------------------------------------------------
+model GastrointestinalRecord {
+  id String @id @default(cuid())
+
+  // Main Fields
+  disability         String?
+  allergies          String?
+  foodPreferences    String?
+  foodAvoidances     String?
+  appetite           String?
+  diarrhea           Boolean? @default(false)
+  constipation       Boolean? @default(false)
+  vomit              Boolean? @default(false)
+  nausea             Boolean? @default(false)
+  bloating           Boolean? @default(false)
+  swallowingDisorder Boolean? @default(false)
+  chewingDisorder    Boolean? @default(false)
+  suckingDisorder    Boolean? @default(false)
+
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Relations
+  medicalRecordHistory MedicalRecordHistory?
+}
+
+// ------------------------------------------------------------------
+// NUTRITION CARE PLAN MODEL
+// ------------------------------------------------------------------
+model NutritionCarePlan {
+  id String @id @default(cuid())
+
+  // Main Fields
+  dietPlan            DietPlan?
+  dietGoal            DietGoal?
+  dietPlanDescription String?
+  exerciseGuidelines  String?
+
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Relations
+  patientDetail PatientDetail?
+}
