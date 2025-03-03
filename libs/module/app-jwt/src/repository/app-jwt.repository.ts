@@ -42,7 +42,7 @@ export class AppJwtRepository {
 		return this.prisma.patient.findUnique({
 			where: { id: patientId },
 			select: {
-				...PrismaSelector.PATIENT,
+				...PrismaSelector.PATIENT_WITH_PROFILE,
 				account: {
 					select: PrismaSelector.ACCOUNT,
 				},
