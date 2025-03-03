@@ -184,6 +184,7 @@
 			"^@contract(|/.*)$": "<rootDir>/libs/contract/src/$1",
 			"^@infrastructure(|/.*)$": "<rootDir>/libs/@infrastructure/$1",
 			"^@module/app-jwt(|/.*)$": "<rootDir>/libs/module/app-jwt/src/$1",
+			"^@module/bmi(|/.*)$": "<rootDir>/libs/module/bmi/src/$1",
 			"^@module/dice-bear(|/.*)$": "<rootDir>/libs/module/dice-bear/src/$1",
 			"^@module/mailer(|/.*)$": "<rootDir>/libs/module/mailer/src/$1",
 			"^@module/otp(|/.*)$": "<rootDir>/libs/otp/module/src/$1",
