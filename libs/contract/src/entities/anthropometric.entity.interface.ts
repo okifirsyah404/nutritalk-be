@@ -3,14 +3,12 @@ import { Prisma } from "@prisma/client";
 import { IBaseEntity } from "./base/base.entity.interface";
 import { IMedicalRecordHistoryEntity } from "./medical-record-history.entity.interface";
 import { IPatientDetailEntity } from "./patient-detail.entity.interface";
-import { IPatientEntity } from "./patient.entity.interface";
 
-export interface IMedicalRecordKeyEntity
+export interface IAnthropometricEntity
 	extends IBaseEntity,
-		Prisma.MedicalRecordKeyGetPayload<{
-			select: (typeof PrismaSelector)["MEDICAL_RECORD_KEY"];
+		Prisma.AnthropometricGetPayload<{
+			select: (typeof PrismaSelector)["ANTHROPOMETRIC"];
 		}> {
-	patient?: IPatientEntity;
 	patientDetail?: IPatientDetailEntity;
-	medicalRecordHistories?: IMedicalRecordHistoryEntity[];
+	medicalRecordHistory?: IMedicalRecordHistoryEntity;
 }

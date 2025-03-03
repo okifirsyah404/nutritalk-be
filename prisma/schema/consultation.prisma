@@ -6,21 +6,23 @@ model Consultation {
   trId String? @unique @default(dbgenerated("generate_custom_id('TR')"))
 
   // Main Fields
-  status TransactionStatus
-  type   ConsultationType
-  note   String?
+  status           TransactionStatus
+  type             ConsultationType
+  patientNote      String?
+  nutritionistNote String?
 
   // Date Metadata
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
 
   // Relations
-  patient            Patient?            @relation(fields: [patientId], references: [id], onDelete: Cascade)
-  nutritionist       Nutritionist?       @relation(fields: [nutritionistId], references: [id], onDelete: Cascade)
-  consultationTime   ConsultationTime?
-  transactionPrice   TransactionPrice?
-  transactionPayment TransactionPayment?
-  consultationReview ConsultationReview?
+  patient              Patient?              @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  nutritionist         Nutritionist?         @relation(fields: [nutritionistId], references: [id], onDelete: Cascade)
+  consultationTime     ConsultationTime?
+  transactionPrice     TransactionPrice?
+  transactionPayment   TransactionPayment?
+  consultationReview   ConsultationReview?
+  medicalRecordHistory MedicalRecordHistory?
 
   // Foreign Keys
   patientId      String?

@@ -15,6 +15,8 @@ export async function seedNutritionistImage(
 	const logger = new Logger("NutritionistImageSeeder");
 
 	try {
+		logger.log("Seeding nutritionist images");
+
 		const bucketName = process.env.S3_BUCKET_NAME;
 
 		await deleteObjectsAndDir(s3, bucketName, "nutritionist");

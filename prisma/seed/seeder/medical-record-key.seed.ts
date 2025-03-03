@@ -1,6 +1,5 @@
 import { Logger } from "@nestjs/common";
 import { PrismaClient } from "@prisma/client";
-import { faker } from "@faker-js/faker";
 
 async function seedMedicalRecordKey(prisma: PrismaClient): Promise<void> {
 	const logger = new Logger("MedicalRecordSeeder");
@@ -17,16 +16,11 @@ async function seedMedicalRecordKey(prisma: PrismaClient): Promise<void> {
 
 		logger.log("Deleted all medical record data");
 
-		const dummyData: { name: string }[] = [];
-
 		for (let i = 0; i <= 150; i++) {
-			dummyData.push({ name: faker.person.fullName() });
+			await prisma.medicalRecordKey.create({
+				data: {},
+			});
 		}
-
-		await prisma.medicalRecordKey.createMany({
-			data: dummyData,
-			skipDuplicates: true,
-		});
 
 		logger.log("Seed medical record complete");
 	} catch (error) {

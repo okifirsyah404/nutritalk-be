@@ -11,6 +11,8 @@ import { NutritionistPriceModule } from "./price/nutritionist-price.module";
 import { NutritionistProfileModule } from "./profile/nutritionist-profile.module";
 import { NutritionistScheduleModule } from "./schedule/nutritionist-schedule.module";
 import { NutritionistDashboardMetaModule } from "@app/app/nutritionist/dashboard-meta/nutritionist-dashboard-meta.module";
+import { NutritionistPatientModule } from "./patient/nutritionist-patient.module";
+import { NutritionistMedicalRecordModule } from "@app/app/nutritionist/medical-record/nutritionist-medical-record.module";
 
 @Module({
 	imports: [
@@ -25,6 +27,8 @@ import { NutritionistDashboardMetaModule } from "@app/app/nutritionist/dashboard
 		NutritionistCredentialModule,
 		NutritionistConsultationModule,
 		NutritionistDashboardMetaModule,
+		NutritionistPatientModule,
+		NutritionistMedicalRecordModule,
 		NutritionistModule,
 	],
 	controllers: [],

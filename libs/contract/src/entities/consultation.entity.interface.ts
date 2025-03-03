@@ -3,6 +3,7 @@ import { Prisma } from "@prisma/client";
 import { IBaseEntity } from "./base/base.entity.interface";
 import { IConsultationReviewEntity } from "./consultation-review.entity.interface";
 import { IConsultationTimeEntity } from "./consultation-time.entity.interface";
+import { IMedicalRecordHistoryEntity } from "./medical-record-history.entity.interface";
 import { INutritionistEntity } from "./nutritionist.entity.interface";
 import { IPatientEntity } from "./patient.entity.interface";
 import { ITransactionPaymentEntity } from "./transaction-payment.entity.interface";
@@ -21,4 +22,5 @@ export interface IConsultationEntity
 	transactionPrice?: ITransactionPriceEntity;
 	transactionPayment?: ITransactionPaymentEntity;
 	consultationReview?: IConsultationReviewEntity;
+	medicalRecordHistory?: IMedicalRecordHistoryEntity;
 }

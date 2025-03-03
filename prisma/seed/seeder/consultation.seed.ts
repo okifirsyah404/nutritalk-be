@@ -3,6 +3,7 @@
 import { faker } from "@faker-js/faker";
 import { Logger } from "@nestjs/common";
 import {
+	BmiStatus,
 	ConsultationType,
 	PrismaClient,
 	TransactionStatus,
@@ -32,6 +33,7 @@ async function seedConsultation(prisma: PrismaClient): Promise<void> {
 			},
 			select: {
 				id: true,
+				medicalRecordKey: true,
 			},
 		});
 
@@ -80,7 +82,11 @@ async function seedConsultation(prisma: PrismaClient): Promise<void> {
 					},
 					type: randomEnum(ConsultationType),
 					status: status,
-					note: faker.lorem.sentence(),
+					patientNote: faker.lorem.sentence(),
+					nutritionistNote:
+						status === TransactionStatus.FINISHED
+							? faker.lorem.sentence()
+							: null,
 					consultationTime: {
 						create: {
 							start: date,
@@ -111,6 +117,46 @@ async function seedConsultation(prisma: PrismaClient): Promise<void> {
 									},
 								}
 							: undefined,
+					medicalRecordHistory: {
+						create: {
+							medicalRecordKey: {
+								connect: {
+									id: patient.medicalRecordKey.id,
+								},
+							},
+							diagnosis: faker.lorem.sentence(),
+							notes: faker.lorem.sentence(),
+							others: faker.lorem.sentence(),
+							dietaryAssessment: {
+								create: {
+									usualDiet: faker.lorem.sentence(),
+									caloricIntake: faker.number.int({ min: 1000, max: 5000 }),
+									proteinIntake: faker.number.int({ min: 50, max: 200 }),
+									fatIntake: faker.number.int({ min: 50, max: 200 }),
+									fiberIntake: faker.number.int({ min: 10, max: 50 }),
+									carbohydrateIntake: faker.number.int({ min: 50, max: 200 }),
+								},
+							},
+							anthropometric: {
+								create: {
+									bmi: faker.number.float({
+										min: 10,
+										max: 50,
+										fractionDigits: 2,
+									}),
+									weight: faker.number.int({ min: 40, max: 200 }),
+									height: faker.number.int({ min: 120, max: 200 }),
+									bmiStatus: BmiStatus.NORMAL,
+								},
+							},
+							gastrointestinalRecord: {
+								create: {
+									allergies: faker.lorem.sentence(),
+									appetite: faker.lorem.sentence(),
+								},
+							},
+						},
+					},
 				},
 				select: {
 					id: true,

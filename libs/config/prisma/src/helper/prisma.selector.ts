@@ -77,48 +77,91 @@ export abstract class PrismaSelector {
 		note: true,
 	} satisfies Prisma.CreditHistorySelect;
 
+	static readonly ANTHROPOMETRIC = {
+		id: true,
+		height: true,
+		weight: true,
+		bmi: true,
+		bmiStatus: true,
+		fatPercentage: true,
+		muscleMass: true,
+	} satisfies Prisma.AnthropometricSelect;
+
+	static readonly DIETARY_ASSESSMENT = {
+		id: true,
+		usualDiet: true,
+		caloricIntake: true,
+		carbohydrateIntake: true,
+		proteinIntake: true,
+		fatIntake: true,
+		fiberIntake: true,
+		foodAllergies: true,
+		foodPreferences: true,
+		waterIntake: true,
+		supplements: true,
+	} satisfies Prisma.DietaryAssessmentSelect;
+
+	static readonly GASTROINTESTINAL_RECORD = {
+		id: true,
+		nausea: true,
+		vomit: true,
+		allergies: true,
+		appetite: true,
+		bloating: true,
+		chewingDisorder: true,
+		constipation: true,
+		diarrhea: true,
+		disability: true,
+		foodAvoidances: true,
+		foodPreferences: true,
+		suckingDisorder: true,
+		swallowingDisorder: true,
+	} satisfies Prisma.GastrointestinalRecordSelect;
+
+	static readonly NUTRITION_CARE_PLAN = {
+		id: true,
+		dietGoal: true,
+		dietPlan: true,
+		dietPlanDescription: true,
+		exerciseGuidelines: true,
+	} satisfies Prisma.NutritionCarePlanSelect;
+
 	static readonly MEDICAL_RECORD_KEY = {
 		id: true,
 		code: true,
-		name: true,
 	} satisfies Prisma.MedicalRecordKeySelect;
 
 	static readonly PATIENT_DETAIL = {
 		id: true,
+		name: true,
+		gender: true,
+		dateOfBirth: true,
+		age: true,
 		activityLevel: true,
 		dailyCalories: true,
-		height: true,
-		weight: true,
-		dietPlan: true,
-		dietGoal: true,
-		dietPlanDescription: true,
-		bmi: true,
-		bmiStatus: true,
+		anthropometric: {
+			select: PrismaSelector.ANTHROPOMETRIC,
+		},
+		nutritionCarePlan: {
+			select: PrismaSelector.NUTRITION_CARE_PLAN,
+		},
 	} satisfies Prisma.PatientDetailSelect;
 
-	static readonly MEDICAL_RECORD = {
+	static readonly MEDICAL_RECORD_HISTORY = {
 		id: true,
-		weight: true,
-		height: true,
-		bmi: true,
-		bmiStatus: true,
-		disability: true,
 		diagnosis: true,
-		allergies: true,
-		foodPreferences: true,
-		foodAvoidances: true,
-		appetite: true,
-		diarrhea: true,
-		constipation: true,
-		vomit: true,
-		nausea: true,
-		bloating: true,
-		swallowingDisorder: true,
-		chewingDisorder: true,
-		suckingDisorder: true,
 		notes: true,
 		others: true,
-	} satisfies Prisma.MedicalRecordSelect;
+		anthropometric: {
+			select: PrismaSelector.ANTHROPOMETRIC,
+		},
+		dietaryAssessment: {
+			select: PrismaSelector.DIETARY_ASSESSMENT,
+		},
+		gastrointestinalRecord: {
+			select: PrismaSelector.GASTROINTESTINAL_RECORD,
+		},
+	} satisfies Prisma.MedicalRecordHistorySelect;
 
 	static readonly NUTRITIONIST = {
 		id: true,
@@ -181,7 +224,8 @@ export abstract class PrismaSelector {
 		trId: true,
 		status: true,
 		type: true,
-		note: true,
+		patientNote: true,
+		nutritionistNote: true,
 	} satisfies Prisma.ConsultationSelect;
 
 	static readonly CONSULTATION_TIME = {

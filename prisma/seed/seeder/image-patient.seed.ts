@@ -13,6 +13,8 @@ export async function seedPatientImage(
 	const logger = new Logger("PatientImageSeeder");
 
 	try {
+		logger.log("Seeding patient images");
+
 		const bucketName = process.env.S3_BUCKET_NAME;
 
 		await deleteObjectsAndDir(s3, bucketName, "patient");
