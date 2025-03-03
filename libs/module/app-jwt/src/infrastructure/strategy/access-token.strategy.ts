@@ -9,6 +9,7 @@ import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { AccountRole } from "@prisma/client";
 import { ExtractJwt, Strategy } from "passport-jwt";
+import { SetCache } from "@config/app-cache";
 
 @Injectable()
 /**
@@ -51,6 +52,10 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy) {
 		return user;
 	}
 
+	@SetCache((id: string) => `nutritionist:${id}`, {
+		ttl: 5,
+		unit: "minutes",
+	})
 	private async _validateNutritionist(
 		id: string,
 	): Promise<INutritionistEntity> {
@@ -62,6 +67,10 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy) {
 		return nutritionist;
 	}
 
+	@SetCache((id: string) => `patient:${id}`, {
+		ttl: 5,
+		unit: "minutes",
+	})
 	private async _validatePatient(id: string): Promise<IPatientEntity> {
 		const patient = await this.service.getPatientById(id);
 

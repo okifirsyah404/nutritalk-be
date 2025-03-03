@@ -1,17 +1,17 @@
-import { FirebaseAuthService } from "@config/firebase";
-import { SSOErrorMessage } from "@constant/message";
-import { IAccountEntity, IGoogleSSORequest } from "@contract";
 import { BadRequestException, Injectable, Logger } from "@nestjs/common";
-import { NutritionistAccountSSORepository } from "../repository/nutritionist-account-sso.repository";
+import { PatientAccountSSORepository } from "@app/app/patient/account/repository/patient-account-sso.repository";
+import { FirebaseAuthService } from "@config/firebase";
+import { IAccountEntity, IGoogleSSORequest } from "@contract";
+import { SSOErrorMessage } from "@constant/message";
 
 @Injectable()
-export class NutritionistAccountSSOService {
+export class PatientAccountSSOService {
 	constructor(
-		private readonly repository: NutritionistAccountSSORepository,
+		private readonly repository: PatientAccountSSORepository,
 		private readonly firebaseAuth: FirebaseAuthService,
 	) {}
 
-	private readonly logger = new Logger(NutritionistAccountSSOService.name);
+	private readonly logger = new Logger(PatientAccountSSOService.name);
 
 	/**
 	 * Binds a Google SSO account to the given account.
