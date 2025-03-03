@@ -50,6 +50,7 @@ export class PatientProfileRepository {
 		placeOfBirth,
 		dateOfBirth,
 		age,
+		bio,
 	}: Partial<IProfileEntity>): Promise<IPatientEntity> {
 		return this.prisma.patient
 			.update({
@@ -65,6 +66,7 @@ export class PatientProfileRepository {
 							placeOfBirth,
 							dateOfBirth,
 							age,
+							bio,
 						},
 					},
 				},
