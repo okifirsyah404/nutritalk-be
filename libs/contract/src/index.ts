@@ -1,3 +1,5 @@
+export * from "./bmi/bmi-param.interface";
+export * from "./bmi/bmi-result.interface";
 export * from "./decorator/apply-decorators.type";
 export * from "./dice-bear/dice-bear.interface";
 export * from "./entities/account.entity.interface";

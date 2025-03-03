@@ -54,6 +54,8 @@
 			"@infrastructure/*": ["libs/infrastructure/src/*"],
 			"@module/app-jwt": ["libs/module/app-jwt/src"],
 			"@module/app-jwt/*": ["libs/module/app-jwt/src/*"],
+			"@module/bmi": ["libs/module/bmi/src"],
+			"@module/bmi/*": ["libs/module/bmi/src/*"],
 			"@module/dice-bear": ["libs/module/dice-bear/src"],
 			"@module/dice-bear/*": ["libs/module/dice-bear/src/*"],
 			"@module/mailer": ["libs/module/mailer/src"],

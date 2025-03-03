@@ -50,6 +50,15 @@
 				"tsConfigPath": "libs/module/app-jwt/tsconfig.lib.json"
 			}
 		},
+		"bmi": {
+			"type": "library",
+			"root": "libs/module/bmi",
+			"entryFile": "index",
+			"sourceRoot": "libs/module/bmi/src",
+			"compilerOptions": {
+				"tsConfigPath": "libs/module/bmi/tsconfig.lib.json"
+			}
+		},
 		"cron": {
 			"type": "application",
 			"root": "apps/cron",
