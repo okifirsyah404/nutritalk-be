@@ -1,4 +1,4 @@
-import { RegistrationCertificateValidationMessage } from "@constant/message";
+import { NutritionistValidationMessage } from "@constant/message";
 import { RegexConstant } from "@constant/regex";
 import { IRegistrationCertificateEntity } from "@contract";
 import { Type } from "class-transformer";
@@ -18,31 +18,27 @@ export class NutritionistCreateCertificateRequest
 		>
 {
 	@Matches(RegexConstant.REGISTRATION_CERTIFICATE, {
-		message:
-			RegistrationCertificateValidationMessage.ERR_REGISTRATION_NUMBER_INVALID,
+		message: NutritionistValidationMessage.ERR_REGISTRATION_NUMBER_INVALID,
 	})
 	@IsString({
 		message:
-			RegistrationCertificateValidationMessage.ERR_REGISTRATION_NUMBER_MUST_BE_STRING,
+			NutritionistValidationMessage.ERR_REGISTRATION_NUMBER_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
-		message:
-			RegistrationCertificateValidationMessage.ERR_REGISTRATION_NUMBER_REQUIRED,
+		message: NutritionistValidationMessage.ERR_REGISTRATION_NUMBER_REQUIRED,
 	})
 	registrationNumber: string;
 
 	@Type(() => Date)
 	@IsDate({
-		message:
-			RegistrationCertificateValidationMessage.ERR_ISSUE_DATE_MUST_BE_DATE,
+		message: NutritionistValidationMessage.ERR_ISSUE_DATE_MUST_BE_DATE,
 	})
 	@IsOptional({})
 	issueDate: Date;
 
 	@Type(() => Date)
 	@IsDate({
-		message:
-			RegistrationCertificateValidationMessage.ERR_VALID_UNTIL_MUST_BE_DATE,
+		message: NutritionistValidationMessage.ERR_VALID_UNTIL_MUST_BE_DATE,
 	})
 	@IsOptional()
 	validUntil: Date;

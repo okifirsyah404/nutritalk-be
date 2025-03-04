@@ -1,6 +1,6 @@
 import { nullToUndefined } from "@common";
 import { IsNotEmptyString } from "@common/validator/is-not-empty-string.validator";
-import { RegistrationCertificateValidationMessage } from "@constant/message";
+import { NutritionistValidationMessage } from "@constant/message";
 import { RegexConstant } from "@constant/regex";
 import { PartialType } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
@@ -12,16 +12,14 @@ export class NutritionistUpdateCertificateRequest extends PartialType(
 ) {
 	@Transform(nullToUndefined)
 	@Matches(RegexConstant.REGISTRATION_CERTIFICATE, {
-		message:
-			RegistrationCertificateValidationMessage.ERR_REGISTRATION_NUMBER_INVALID,
+		message: NutritionistValidationMessage.ERR_REGISTRATION_NUMBER_INVALID,
 	})
 	@IsNotEmptyString({
-		message:
-			RegistrationCertificateValidationMessage.ERR_REGISTRATION_NUMBER_REQUIRED,
+		message: NutritionistValidationMessage.ERR_REGISTRATION_NUMBER_REQUIRED,
 	})
 	@IsString({
 		message:
-			RegistrationCertificateValidationMessage.ERR_REGISTRATION_NUMBER_MUST_BE_STRING,
+			NutritionistValidationMessage.ERR_REGISTRATION_NUMBER_MUST_BE_STRING,
 	})
 	@IsOptional()
 	registrationNumber?: string;

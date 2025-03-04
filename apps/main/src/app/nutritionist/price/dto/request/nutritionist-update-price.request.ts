@@ -1,5 +1,5 @@
 import { nullToUndefined } from "@common";
-import { PriceValidationMessage } from "@constant/message";
+import { NutritionistValidationMessage } from "@constant/message";
 import { IPriceEntity } from "@contract";
 import { ApiProperty } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
@@ -25,13 +25,13 @@ export class NutritionistUpdatePriceRequest
 	})
 	@Transform(nullToUndefined)
 	@Min(50_000, {
-		message: PriceValidationMessage.ERR_ONLINE_PRICE_MIN,
+		message: NutritionistValidationMessage.ERR_ONLINE_PRICE_MIN,
 	})
 	@Max(10_000_000, {
-		message: PriceValidationMessage.ERR_ONLINE_PRICE_MAX,
+		message: NutritionistValidationMessage.ERR_ONLINE_PRICE_MAX,
 	})
 	@IsInt({
-		message: PriceValidationMessage.ERR_ONLINE_PRICE_MUST_BE_NUMBER,
+		message: NutritionistValidationMessage.ERR_ONLINE_PRICE_MUST_BE_NUMBER,
 	})
 	@IsOptional()
 	online?: number;
@@ -52,13 +52,13 @@ export class NutritionistUpdatePriceRequest
 	})
 	@Transform(nullToUndefined)
 	@Min(50_000, {
-		message: PriceValidationMessage.ERR_OFFLINE_PRICE_MIN,
+		message: NutritionistValidationMessage.ERR_OFFLINE_PRICE_MIN,
 	})
 	@Max(10_000_000, {
-		message: PriceValidationMessage.ERR_OFFLINE_PRICE_MAX,
+		message: NutritionistValidationMessage.ERR_OFFLINE_PRICE_MAX,
 	})
 	@IsInt({
-		message: PriceValidationMessage.ERR_OFFLINE_PRICE_MUST_BE_NUMBER,
+		message: NutritionistValidationMessage.ERR_OFFLINE_PRICE_MUST_BE_NUMBER,
 	})
 	@IsOptional()
 	offline?: number;
