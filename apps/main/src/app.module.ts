@@ -11,12 +11,13 @@ import { HttpModule } from "@nestjs/axios";
 import { BullModule } from "@nestjs/bull";
 import { Logger, Module } from "@nestjs/common";
 import { APP_GUARD } from "@nestjs/core";
-import { ThrottlerModule, seconds } from "@nestjs/throttler";
+import { seconds, ThrottlerModule } from "@nestjs/throttler";
 import { UtilityModule } from "@util";
 import { AdminModule } from "./app/admin/admin.module";
 import { HealthCheckModule } from "./app/health-check/health-check.module";
 import { NutritionistAppModule } from "./app/nutritionist/nutritionist.app.module";
 import { PatientAppModule } from "./app/patient/patient.app.module";
+import { CommonAppModule } from "./app/common/common.app.module";
 
 @Module({
 	imports: [
@@ -100,6 +101,7 @@ import { PatientAppModule } from "./app/patient/patient.app.module";
 		NutritionistAppModule,
 		AdminModule,
 		HealthCheckModule,
+		CommonAppModule,
 	],
 	controllers: [],
 	providers: [

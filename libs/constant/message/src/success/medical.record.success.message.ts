@@ -8,4 +8,6 @@ export abstract class MedicalRecordSuccessMessage {
 
 	static readonly SUCCESS_BIND_PATIENT = "SUCCESS_BIND_PATIENT";
 	static readonly SUCCESS_UNBIND_PATIENT = "SUCCESS_UNBIND_PATIENT";
+
+	static readonly SUCCESS_CALCULATE_BMI = "SUCCESS_CALCULATE_BMI";
 }
