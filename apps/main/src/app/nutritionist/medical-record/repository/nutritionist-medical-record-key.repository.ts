@@ -107,27 +107,131 @@ export class NutritionistMedicalRecordKeyRepository {
 		data: ICreateMedicalRecordKey,
 	): Promise<IMedicalRecordKeyEntity> {
 		// TODO: Create medical record key, not sure if this is correct implementation
-		return this.prisma.medicalRecordKey
-			.create({
-				data: {
-					patient: data.patientId
-						? {
-								connect: {
-									id: data.patientId,
+		// return this.prisma.medicalRecordKey
+		// 	.create({
+		// 		data: {
+		// 			patient: data.patientId
+		// 				? {
+		// 						connect: {
+		// 							id: data.patientId,
+		// 						},
+		// 					}
+		// 				: undefined,
+		// 			patientDetail:
+		// 				data.dailyCalories || data.activityLevel
+		// 					? {
+		// 							create: {
+		// 								dailyCalories: data.dailyCalories,
+		// 								activityLevel: data.activityLevel,
+		// 								anthropometric:
+		// 									data.height || data.weight
+		// 										? {
+		// 												create: {
+		// 													height: data.height,
+		// 													weight: data.weight,
+		// 													bmi: data.bmi,
+		// 													bmiStatus: data.bmiStatus,
+		// 												},
+		// 											}
+		// 										: undefined,
+		// 							},
+		// 						}
+		// 					: undefined,
+		// 		},
+		// 		select: {
+		// 			...PrismaSelector.MEDICAL_RECORD_KEY,
+		// 			patient: {
+		// 				select: PrismaSelector.PATIENT_WITH_PROFILE,
+		// 			},
+		// 			patientDetail: {
+		// 				select: PrismaSelector.PATIENT_DETAIL,
+		// 			},
+		// 		},
+		// 	})
+		// 	.catch(createDatabaseErrorHandler);
+
+		const result: IMedicalRecordKeyEntity = await this.prisma.$transaction(
+			async (trx) => {
+				const anthropometric =
+					data.height || data.weight
+						? await trx.anthropometric.create({
+								data: {
+									height: data.height,
+									weight: data.weight,
+									bmi: data.bmi,
+									bmiStatus: data.bmiStatus,
 								},
-							}
-						: undefined,
-				},
-				select: {
-					...PrismaSelector.MEDICAL_RECORD_KEY,
-					patient: {
-						select: PrismaSelector.PATIENT_WITH_PROFILE,
+								select: {
+									id: true,
+								},
+							})
+						: undefined;
+
+				const patient = data.patientId
+					? await trx.patient.findUnique({
+							where: {
+								id: data.patientId,
+							},
+							select: PrismaSelector.PATIENT_WITH_PROFILE,
+						})
+					: undefined;
+
+				const patientDetail =
+					data.dailyCalories || data.activityLevel
+						? await trx.patientDetail.create({
+								data: {
+									dailyCalories: data.dailyCalories,
+									activityLevel: data.activityLevel,
+									name: patient?.profile.name,
+									gender: patient?.profile.gender,
+									dateOfBirth: patient?.profile.dateOfBirth,
+									age: patient?.profile.age,
+									anthropometric: anthropometric
+										? {
+												connect: {
+													id: anthropometric.id,
+												},
+											}
+										: undefined,
+								},
+							})
+						: undefined;
+
+				const medicalRecordKey = await trx.medicalRecordKey.create({
+					data: {
+						patient: patient
+							? {
+									connect: {
+										id: patient.id,
+									},
+								}
+							: undefined,
+						patientDetail: patientDetail
+							? {
+									connect: {
+										id: patientDetail.id,
+									},
+								}
+							: undefined,
 					},
-					patientDetail: {
-						select: PrismaSelector.PATIENT_DETAIL,
+					select: {
+						...PrismaSelector.MEDICAL_RECORD_KEY,
+						patient: {
+							select: PrismaSelector.PATIENT_WITH_PROFILE,
+						},
+						patientDetail: {
+							select: PrismaSelector.PATIENT_DETAIL,
+						},
 					},
-				},
-			})
-			.catch(createDatabaseErrorHandler);
+				});
+
+				return medicalRecordKey;
+			},
+			{
+				isolationLevel: "Serializable",
+			},
+		);
+
+		return result;
 	}
 }

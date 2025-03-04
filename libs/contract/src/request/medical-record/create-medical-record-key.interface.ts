@@ -1,22 +1,7 @@
-import { IPatientDetailEntity } from "@contract";
+import { IAnthropometricEntity, IPatientDetailEntity } from "@contract";
 
 export interface ICreateMedicalRecordKey
-	extends Partial<
-		Omit<
-			IPatientDetailEntity,
-			| "id"
-			| "createdAt"
-			| "updatedAt"
-			| "dietGoal"
-			| "dietPlan"
-			| "age"
-			| "bmi"
-			| "bmiStatus"
-			| "dietPlanDescription"
-			| "dailyCalories"
-			| "medicalRecordKey"
-			| "medicalRecordKeyId"
-		>
-	> {
+	extends Pick<IPatientDetailEntity, "dailyCalories" | "activityLevel">,
+		Pick<IAnthropometricEntity, "height" | "weight" | "bmi" | "bmiStatus"> {
 	patientId?: string;
 }
