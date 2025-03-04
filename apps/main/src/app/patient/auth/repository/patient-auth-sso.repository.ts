@@ -1,11 +1,11 @@
 import { PrismaSelector, PrismaService } from "@config/prisma";
 import {
 	IAccountEntity,
+	IDeviceInfoEntity,
 	IGoogleSSOEntity,
 	IPatientEntity,
 	IProfileEntity,
 } from "@contract";
-import { IDeviceInfoEntity } from "@contract/entities/device-info.entity.interface";
 import { createDatabaseErrorHandler } from "@infrastructure";
 import { Injectable } from "@nestjs/common";
 

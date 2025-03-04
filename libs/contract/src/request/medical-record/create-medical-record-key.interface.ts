@@ -1,4 +1,4 @@
-import { IPatientDetailEntity } from "@contract/entities/patient-detail.entity.interface";
+import { IPatientDetailEntity } from "@contract";
 
 export interface ICreateMedicalRecordKey
 	extends Partial<

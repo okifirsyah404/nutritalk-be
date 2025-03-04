@@ -1,15 +1,19 @@
+import { PatientAuthRepository } from "@app/app/patient/auth/repository/patient-auth.repository";
+import { AccountErrorMessage, AuthErrorMessage } from "@constant/message";
+import {
+	IAccountEntity,
+	IAuthResponse,
+	IDeviceInfoEntity,
+	IJwtRefresh,
+} from "@contract";
+import { AppJwtService } from "@module/app-jwt";
 import {
 	Injectable,
 	NotFoundException,
 	UnauthorizedException,
 } from "@nestjs/common";
-import { PatientAuthRepository } from "@app/app/patient/auth/repository/patient-auth.repository";
-import { AppJwtService } from "@module/app-jwt";
-import { CryptoUtil } from "@util";
-import { IAccountEntity, IAuthResponse, IJwtRefresh } from "@contract";
-import { IDeviceInfoEntity } from "@contract/entities/device-info.entity.interface";
-import { AccountErrorMessage, AuthErrorMessage } from "@constant/message";
 import { AccountRole } from "@prisma/client";
+import { CryptoUtil } from "@util";
 
 @Injectable()
 export class PatientAuthService {
