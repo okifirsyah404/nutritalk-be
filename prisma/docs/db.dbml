@@ -556,7 +556,7 @@ Ref: Credit.patientId - Patient.id [delete: Cascade]
 
 Ref: CreditHistory.creditId > Credit.id [delete: Cascade]
 
-Ref: DeviceInfo.accountId - Account.id
+Ref: DeviceInfo.accountId - Account.id [delete: Cascade]
 
 Ref: PatientDetail.medicalRecordKeyId - MedicalRecordKey.id [delete: Cascade]
 
@@ -596,12 +596,12 @@ Ref: Patient.profileId - Profile.id [delete: Cascade]
 
 Ref: Patient.medicalRecordKeyId - MedicalRecordKey.id [delete: Cascade]
 
-Ref: Role.accountId - Account.id
+Ref: Role.accountId - Account.id [delete: Cascade]
 
-Ref: RolePermission.roleId > Role.id
+Ref: RolePermission.roleId > Role.id [delete: Cascade]
 
-Ref: RolePermission.basePermissionId > BasePermission.id
+Ref: RolePermission.basePermissionId > BasePermission.id [delete: Cascade]
 
-Ref: SingleSignOn.accountId - Account.id
+Ref: SingleSignOn.accountId - Account.id [delete: Cascade]
 
-Ref: GoogleSSO.ssoId - SingleSignOn.id
+Ref: GoogleSSO.ssoId - SingleSignOn.id [delete: Cascade]
