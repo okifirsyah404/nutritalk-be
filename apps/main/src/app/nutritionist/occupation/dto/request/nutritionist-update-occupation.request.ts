@@ -1,7 +1,7 @@
 import { nullToUndefined } from "@common";
 import {
 	ExperienceValidationMessage,
-	NameValidationMessage,
+	ProfileValidationMessage,
 	WorkPlaceValidationMessage,
 } from "@constant/message";
 import { IOccupationEntity } from "@contract";
@@ -14,7 +14,7 @@ export class NutritionistUpdateOccupationRequest
 {
 	@Transform(nullToUndefined)
 	@IsString({
-		message: NameValidationMessage.ERR_NAME_MUST_BE_STRING,
+		message: ProfileValidationMessage.ERR_NAME_MUST_BE_STRING,
 	})
 	@IsOptional()
 	readonly name?: string;
