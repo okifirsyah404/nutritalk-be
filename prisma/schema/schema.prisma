@@ -7,12 +7,27 @@
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["relationJoins", "prismaSchemaFolder"]
-	binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+  binaryTargets   = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+generator typescriptInterfaces {
+  provider          = "prisma-generator-typescript-interfaces"
+  output            = "../../libs/contract/src/entities/prisma.entity.interface.ts"
+  prettier          = true
+  optionalNullables = true
+  modelPrefix       = "I"
+  modelSuffix       = "Entity"
+  enumSuffix        = "Enum"
+  enumType          = "stringUnion"
+}
+
+generator dbml {
+  provider   = "prisma-dbml-generator"
+  output     = "../docs"
+  outputName = "db.dbml"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
-

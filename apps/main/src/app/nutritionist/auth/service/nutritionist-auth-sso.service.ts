@@ -1,7 +1,6 @@
 import { FirebaseAuthService } from "@config/firebase";
 import { AccountErrorMessage } from "@constant/message";
-import { IAuthResponse, IGoogleSSORequest } from "@contract";
-import { IDeviceInfoEntity } from "@contract/entities/device-info.entity.interface";
+import { IAuthResponse, IDeviceInfoEntity, IGoogleSSORequest } from "@contract";
 import { AppJwtService } from "@module/app-jwt";
 import {
 	Injectable,

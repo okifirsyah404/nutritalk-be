@@ -3,10 +3,9 @@ import {
 	FcmTokenValidationMessage,
 	PasswordValidationMessage,
 } from "@constant/message";
-import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { IAccountEntity, IDeviceInfoEntity } from "@contract";
 import { ApiProperty } from "@nestjs/swagger";
-import { IAccountEntity } from "@contract";
-import { IDeviceInfoEntity } from "@contract/entities/device-info.entity.interface";
+import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 
 export class PatientAuthSignInRequest
 	implements

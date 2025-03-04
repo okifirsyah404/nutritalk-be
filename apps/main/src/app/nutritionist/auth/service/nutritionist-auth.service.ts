@@ -1,6 +1,10 @@
 import { AccountErrorMessage, AuthErrorMessage } from "@constant/message";
-import { IAccountEntity, IAuthResponse, IJwtRefresh } from "@contract";
-import { IDeviceInfoEntity } from "@contract/entities/device-info.entity.interface";
+import {
+	IAccountEntity,
+	IAuthResponse,
+	IDeviceInfoEntity,
+	IJwtRefresh,
+} from "@contract";
 import { AppJwtService } from "@module/app-jwt";
 import {
 	Injectable,

@@ -7,13 +7,13 @@ import { AppS3StorageService } from "@config/s3storage";
 import { AccountErrorMessage, SignatureErrorMessage } from "@constant/message";
 import {
 	IAuthResponse,
+	IDeviceInfoEntity,
 	IGoogleSSORequest,
 	IGoogleUser,
 	IOtpVerifyResponse,
 	IPreRegisterRequest,
 	IRegisterRequest,
 } from "@contract";
-import { IDeviceInfoEntity } from "@contract/entities/device-info.entity.interface";
 import { AppJwtService } from "@module/app-jwt";
 import { SignatureService } from "@module/signature";
 import {
