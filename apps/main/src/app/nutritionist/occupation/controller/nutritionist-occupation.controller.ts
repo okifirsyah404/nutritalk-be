@@ -1,5 +1,5 @@
 import { BaseApiResponse } from "@common";
-import { OccupationSuccessMessage } from "@constant/message";
+import { NutritionistSuccessMessage } from "@constant/message";
 import { IApiResponse, INutritionistEntity } from "@contract";
 import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
 import { Body, Controller, Get, Put, UseGuards } from "@nestjs/common";
@@ -31,7 +31,7 @@ export class NutritionistOccupationController {
 		const result = await this.service.getOccupation(nutritionist.id);
 
 		return BaseApiResponse.success({
-			message: OccupationSuccessMessage.SUCCESS_GET_OCCUPATION,
+			message: NutritionistSuccessMessage.SUCCESS_GET_OCCUPATION,
 			data: NutritionistOccupationResponse.fromEntity(result),
 		});
 	}
@@ -62,7 +62,7 @@ export class NutritionistOccupationController {
 		);
 
 		return BaseApiResponse.success({
-			message: OccupationSuccessMessage.SUCCESS_UPDATE_OCCUPATION,
+			message: NutritionistSuccessMessage.SUCCESS_UPDATE_OCCUPATION,
 			data: NutritionistOccupationResponse.fromEntity(result),
 		});
 	}

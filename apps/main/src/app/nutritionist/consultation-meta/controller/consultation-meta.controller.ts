@@ -1,5 +1,5 @@
 import { BaseApiResponse } from "@common";
-import { ConsultationMetaSuccessMessage } from "@constant/message";
+import { NutritionistSuccessMessage } from "@constant/message";
 import { IApiResponse, INutritionistEntity } from "@contract";
 import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
 import { Controller, Get, UseGuards } from "@nestjs/common";
@@ -24,7 +24,7 @@ export class NutritionistConsultationMetaController {
 		);
 
 		return BaseApiResponse.success({
-			message: ConsultationMetaSuccessMessage.SUCCESS_GET_CONSULTATION_META,
+			message: NutritionistSuccessMessage.SUCCESS_GET_CONSULTATION_META,
 			data: NutritionistConsultationMetaResponse.fromEntity(result),
 		});
 	}

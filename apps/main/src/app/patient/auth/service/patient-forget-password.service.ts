@@ -1,14 +1,7 @@
-import {
-	BadRequestException,
-	Injectable,
-	NotFoundException,
-} from "@nestjs/common";
 import { PatientForgetPasswordRepository } from "@app/app/patient/auth/repository/patient-forget-password.repository";
 import { MailQueueService } from "@app/module/queue/service/mail-queue.service";
-import { OtpService } from "@module/otp";
-import { SignatureService } from "@module/signature";
-import { CryptoUtil } from "@util";
 import { AppConfigService } from "@config/app-config";
+import { AccountErrorMessage } from "@constant/message";
 import {
 	IAccountEntity,
 	IChangePasswordRequest,
@@ -17,12 +10,15 @@ import {
 	IOtpVerifyRequest,
 	IOtpVerifyResponse,
 } from "@contract";
+import { OtpService } from "@module/otp";
+import { SignatureService } from "@module/signature";
 import {
-	AccountErrorMessage,
-	OtpErrorMessage,
-	SignatureErrorMessage,
-} from "@constant/message";
+	BadRequestException,
+	Injectable,
+	NotFoundException,
+} from "@nestjs/common";
 import { AccountRole, OtpPurpose } from "@prisma/client";
+import { CryptoUtil } from "@util";
 
 @Injectable()
 export class PatientForgetPasswordService {
@@ -95,7 +91,7 @@ export class PatientForgetPasswordService {
 		});
 
 		if (!validateResult) {
-			throw new BadRequestException(OtpErrorMessage.ERR_OTP_INVALID);
+			throw new BadRequestException(AccountErrorMessage.ERR_OTP_INVALID);
 		}
 
 		const signature = await this.signatureService.generateSignature({
@@ -140,9 +136,7 @@ export class PatientForgetPasswordService {
 		);
 
 		if (!isSignatureValid) {
-			throw new BadRequestException(
-				SignatureErrorMessage.ERR_SIGNATURE_INVALID,
-			);
+			throw new BadRequestException(AccountErrorMessage.ERR_SIGNATURE_INVALID);
 		}
 
 		const hashedPassword = await this.cryptoUtil.hash(

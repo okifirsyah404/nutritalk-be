@@ -1,5 +1,5 @@
 import { BaseApiResponse } from "@common";
-import { AuthSuccessMessage } from "@constant/message";
+import { AccountSuccessMessage } from "@constant/message";
 import { IApiResponse, IJwtRefresh, INutritionistEntity } from "@contract";
 import {
 	AccessTokenGuard,
@@ -41,7 +41,7 @@ export class NutritionistAuthController {
 		const result = await this.service.signIn(reqBody);
 
 		return BaseApiResponse.created({
-			message: AuthSuccessMessage.SUCCESS_AUTH_SIGN_IN,
+			message: AccountSuccessMessage.SUCCESS_AUTH_SIGN_IN,
 			data: NutritionistAuthResponse.fromEntity(result),
 		});
 	}
@@ -69,7 +69,7 @@ export class NutritionistAuthController {
 		const result = await this.service.refreshToken(refreshToken, reqBody);
 
 		return BaseApiResponse.success({
-			message: AuthSuccessMessage.SUCCESS_AUTH_REFRESH_TOKEN,
+			message: AccountSuccessMessage.SUCCESS_AUTH_REFRESH_TOKEN,
 			data: NutritionistAuthResponse.fromEntity(result),
 		});
 	}
@@ -93,7 +93,7 @@ export class NutritionistAuthController {
 		await this.service.signOut(nutritionist.account.id);
 
 		return BaseApiResponse.success({
-			message: AuthSuccessMessage.SUCCESS_AUTH_SIGN_OUT,
+			message: AccountSuccessMessage.SUCCESS_AUTH_SIGN_OUT,
 			data: undefined,
 		});
 	}

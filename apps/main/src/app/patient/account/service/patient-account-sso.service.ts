@@ -1,8 +1,8 @@
-import { BadRequestException, Injectable, Logger } from "@nestjs/common";
 import { PatientAccountSSORepository } from "@app/app/patient/account/repository/patient-account-sso.repository";
 import { FirebaseAuthService } from "@config/firebase";
+import { AccountErrorMessage } from "@constant/message";
 import { IAccountEntity, IGoogleSSORequest } from "@contract";
-import { SSOErrorMessage } from "@constant/message";
+import { BadRequestException, Injectable, Logger } from "@nestjs/common";
 
 @Injectable()
 export class PatientAccountSSOService {
@@ -34,7 +34,7 @@ export class PatientAccountSSOService {
 		if (userSSO) {
 			if (userSSO.googleSSO) {
 				throw new BadRequestException(
-					SSOErrorMessage.ERR_SSO_GOOGLE_ALREADY_TAKEN,
+					AccountErrorMessage.ERR_SSO_GOOGLE_ALREADY_TAKEN,
 				);
 			}
 		}

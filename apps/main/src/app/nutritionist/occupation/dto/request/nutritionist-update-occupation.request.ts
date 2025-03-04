@@ -1,8 +1,7 @@
 import { nullToUndefined } from "@common";
 import {
-	ExperienceValidationMessage,
-	NameValidationMessage,
-	WorkPlaceValidationMessage,
+	NutritionistValidationMessage,
+	ProfileValidationMessage,
 } from "@constant/message";
 import { IOccupationEntity } from "@contract";
 import { Transform } from "class-transformer";
@@ -14,21 +13,21 @@ export class NutritionistUpdateOccupationRequest
 {
 	@Transform(nullToUndefined)
 	@IsString({
-		message: NameValidationMessage.ERR_NAME_MUST_BE_STRING,
+		message: ProfileValidationMessage.ERR_NAME_MUST_BE_STRING,
 	})
 	@IsOptional()
 	readonly name?: string;
 
 	@Transform(nullToUndefined)
 	@IsString({
-		message: WorkPlaceValidationMessage.ERR_WORK_PLACE_MUST_BE_STRING,
+		message: NutritionistValidationMessage.ERR_WORK_PLACE_MUST_BE_STRING,
 	})
 	@IsOptional()
 	readonly workPlace?: string;
 
 	@Transform(nullToUndefined)
 	@IsInt({
-		message: ExperienceValidationMessage.ERR_EXPERIENCE_MUST_BE_INT,
+		message: NutritionistValidationMessage.ERR_EXPERIENCE_MUST_BE_INT,
 	})
 	@IsOptional()
 	readonly experience?: number;

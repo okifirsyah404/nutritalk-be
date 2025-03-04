@@ -1,5 +1,5 @@
 import { RefreshCache, SetCache } from "@config/app-cache";
-import { PriceErrorMessage } from "@constant/message";
+import { NutritionistErrorMessage } from "@constant/message";
 import { IPriceEntity } from "@contract";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { NutritionistPriceRepository } from "../repository/nutritionist-price.repository";
@@ -23,7 +23,7 @@ export class NutritionistPriceService {
 			await this.repository.findPriceByNutritionistId(nutritionistId);
 
 		if (!result) {
-			throw new NotFoundException(PriceErrorMessage.ERR_PRICE_NOT_FOUND);
+			throw new NotFoundException(NutritionistErrorMessage.ERR_PRICE_NOT_FOUND);
 		}
 
 		return result;
@@ -52,7 +52,7 @@ export class NutritionistPriceService {
 			await this.repository.findPriceByNutritionistId(nutritionistId);
 
 		if (!price) {
-			throw new NotFoundException(PriceErrorMessage.ERR_PRICE_NOT_FOUND);
+			throw new NotFoundException(NutritionistErrorMessage.ERR_PRICE_NOT_FOUND);
 		}
 
 		return this.repository.updatePrice({

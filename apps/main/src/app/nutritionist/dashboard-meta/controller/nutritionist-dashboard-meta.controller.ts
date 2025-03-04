@@ -1,12 +1,12 @@
-import { Controller, Get, UseGuards } from "@nestjs/common";
-import { NutritionistDashboardMetaService } from "../service/nutritionist-dashboard-meta.service";
-import { UriUtil } from "@util";
-import { AccountRole } from "@prisma/client";
-import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
-import { IApiResponse, INutritionistEntity } from "@contract";
-import { NutritionistDashboardMetaResponse } from "../dto/response/nutritionist-dashboard-meta.response";
 import { BaseApiResponse } from "@common";
-import { DashboardSuccessMessage } from "@constant/message";
+import { NutritionistSuccessMessage } from "@constant/message";
+import { IApiResponse, INutritionistEntity } from "@contract";
+import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
+import { Controller, Get, UseGuards } from "@nestjs/common";
+import { AccountRole } from "@prisma/client";
+import { UriUtil } from "@util";
+import { NutritionistDashboardMetaResponse } from "../dto/response/nutritionist-dashboard-meta.response";
+import { NutritionistDashboardMetaService } from "../service/nutritionist-dashboard-meta.service";
 
 @UseGuards(AccessTokenGuard)
 @Controller(UriUtil.uriFromRoleBase(AccountRole.NUTRITIONIST, "dashboard-meta"))
@@ -22,7 +22,7 @@ export class NutritionistDashboardMetaController {
 		);
 
 		return BaseApiResponse.success({
-			message: DashboardSuccessMessage.SUCCESS_GET_DASHBOARD_META,
+			message: NutritionistSuccessMessage.SUCCESS_GET_DASHBOARD_META,
 			data: result,
 		});
 	}

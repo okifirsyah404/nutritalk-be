@@ -1,16 +1,16 @@
+import { PatientChangePasswordVerifyOtpRequest } from "@app/app/patient/account/dto/request/patient-change-password-verify-otp.request";
+import { PatientChangePasswordRequest } from "@app/app/patient/account/dto/request/patient-change-password.request";
+import { PatientChangePasswordSendOtpResponse } from "@app/app/patient/account/dto/response/patient-change-password-send-otp.response";
+import { PatientChangePasswordVerifyOtpResponse } from "@app/app/patient/account/dto/response/patient-change-password-verify-otp.response";
+import { PatientChangePasswordResponse } from "@app/app/patient/account/dto/response/patient-change-password.response";
+import { PatientChangePasswordService } from "@app/app/patient/account/service/patient-change-password.service";
 import { BaseApiResponse } from "@common";
-import { AccountSuccessMessage, OtpSuccessMessage } from "@constant/message";
+import { AccountSuccessMessage } from "@constant/message";
 import { IApiResponse, IPatientEntity } from "@contract";
 import { AccessTokenGuard, GetPatientLogged } from "@module/app-jwt";
 import { Body, Controller, Get, Post, Put, UseGuards } from "@nestjs/common";
 import { AccountRole } from "@prisma/client";
 import { UriUtil } from "@util";
-import { PatientChangePasswordService } from "@app/app/patient/account/service/patient-change-password.service";
-import { PatientChangePasswordSendOtpResponse } from "@app/app/patient/account/dto/response/patient-change-password-send-otp.response";
-import { PatientChangePasswordVerifyOtpRequest } from "@app/app/patient/account/dto/request/patient-change-password-verify-otp.request";
-import { PatientChangePasswordVerifyOtpResponse } from "@app/app/patient/account/dto/response/patient-change-password-verify-otp.response";
-import { PatientChangePasswordRequest } from "@app/app/patient/account/dto/request/patient-change-password.request";
-import { PatientChangePasswordResponse } from "@app/app/patient/account/dto/response/patient-change-password.response";
 
 @UseGuards(AccessTokenGuard)
 @Controller(
@@ -40,7 +40,7 @@ export class PatientChangePasswordController {
 		const result = await this.service.sendOtp(patient);
 
 		return BaseApiResponse.success({
-			message: OtpSuccessMessage.SUCCESS_SEND_OTP,
+			message: AccountSuccessMessage.SUCCESS_SEND_OTP,
 			data: PatientChangePasswordSendOtpResponse.fromEntity(result),
 		});
 	}
@@ -67,7 +67,7 @@ export class PatientChangePasswordController {
 		const result = await this.service.verifyOtp(reqBody);
 
 		return BaseApiResponse.created({
-			message: OtpSuccessMessage.SUCCESS_VERIFY_OTP,
+			message: AccountSuccessMessage.SUCCESS_VERIFY_OTP,
 			data: PatientChangePasswordVerifyOtpResponse.fromEntity(result),
 		});
 	}

@@ -1,4 +1,4 @@
-import { ScheduleErrorMessage } from "@constant/message";
+import { NutritionistErrorMessage } from "@constant/message";
 import {
 	IIndexPaginationOption,
 	IPaginationResult,
@@ -42,7 +42,9 @@ export class NutritionistScheduleService {
 		const result = await this.repository.findScheduleById(scheduleId);
 
 		if (!result) {
-			throw new NotFoundException(ScheduleErrorMessage.ERR_SCHEDULE_NOT_FOUND);
+			throw new NotFoundException(
+				NutritionistErrorMessage.ERR_SCHEDULE_NOT_FOUND,
+			);
 		}
 
 		return result;
@@ -59,7 +61,9 @@ export class NutritionistScheduleService {
 		const currentSchedule = await this.repository.findScheduleById(scheduleId);
 
 		if (!currentSchedule) {
-			throw new NotFoundException(ScheduleErrorMessage.ERR_SCHEDULE_NOT_FOUND);
+			throw new NotFoundException(
+				NutritionistErrorMessage.ERR_SCHEDULE_NOT_FOUND,
+			);
 		}
 
 		return this.repository.updateActiveSchedule(
@@ -104,7 +108,9 @@ export class NutritionistScheduleService {
 		const countEntries = await this.repository.countScheduleTimes(scheduleId);
 
 		if (countEntries >= 3) {
-			throw new BadRequestException(ScheduleErrorMessage.ERR_MAX_SCHEDULE_TIME);
+			throw new BadRequestException(
+				NutritionistErrorMessage.ERR_MAX_SCHEDULE_TIME_3,
+			);
 		}
 
 		const timeRange = TimeRange.fromDates(scheduleTime.start, scheduleTime.end);
@@ -115,7 +121,7 @@ export class NutritionistScheduleService {
 
 		if (timeRange.overlapsOthers(existingEntries)) {
 			throw new BadRequestException(
-				ScheduleErrorMessage.ERR_SCHEDULE_TIME_OVERLAP,
+				NutritionistErrorMessage.ERR_SCHEDULE_TIME_OVERLAP,
 			);
 		}
 
@@ -138,7 +144,7 @@ export class NutritionistScheduleService {
 
 		if (!result) {
 			throw new NotFoundException(
-				ScheduleErrorMessage.ERR_SCHEDULE_TIME_NOT_FOUND,
+				NutritionistErrorMessage.ERR_SCHEDULE_TIME_NOT_FOUND,
 			);
 		}
 
@@ -164,7 +170,7 @@ export class NutritionistScheduleService {
 
 		if (!currentScheduleTime) {
 			throw new NotFoundException(
-				ScheduleErrorMessage.ERR_SCHEDULE_TIME_NOT_FOUND,
+				NutritionistErrorMessage.ERR_SCHEDULE_TIME_NOT_FOUND,
 			);
 		}
 
@@ -182,7 +188,7 @@ export class NutritionistScheduleService {
 
 		if (timeRange.overlapsOthers(existingEntries)) {
 			throw new BadRequestException(
-				ScheduleErrorMessage.ERR_SCHEDULE_TIME_OVERLAP,
+				NutritionistErrorMessage.ERR_SCHEDULE_TIME_OVERLAP,
 			);
 		}
 
@@ -205,7 +211,7 @@ export class NutritionistScheduleService {
 
 		if (!currentScheduleTime) {
 			throw new NotFoundException(
-				ScheduleErrorMessage.ERR_SCHEDULE_TIME_NOT_FOUND,
+				NutritionistErrorMessage.ERR_SCHEDULE_TIME_NOT_FOUND,
 			);
 		}
 

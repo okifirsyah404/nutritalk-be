@@ -1,8 +1,4 @@
-import {
-	EmailValidationMessage,
-	FcmTokenValidationMessage,
-	PasswordValidationMessage,
-} from "@constant/message";
+import { AccountValidationMessage } from "@constant/message";
 import { IAccountEntity, IDeviceInfoEntity } from "@contract";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, IsString } from "class-validator";
@@ -28,14 +24,14 @@ export class NutritionistAuthSignInRequest
 	@IsEmail(
 		{},
 		{
-			message: EmailValidationMessage.ERR_EMAIL_INVALID,
+			message: AccountValidationMessage.ERR_EMAIL_INVALID,
 		},
 	)
 	@IsString({
-		message: EmailValidationMessage.ERR_EMAIL_MUST_BE_STRING,
+		message: AccountValidationMessage.ERR_EMAIL_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
-		message: EmailValidationMessage.ERR_EMAIL_REQUIRED,
+		message: AccountValidationMessage.ERR_EMAIL_REQUIRED,
 	})
 	email: string;
 
@@ -52,10 +48,10 @@ export class NutritionistAuthSignInRequest
 		example: "Secret Password",
 	})
 	@IsString({
-		message: PasswordValidationMessage.ERR_PASSWORD_MUST_BE_STRING,
+		message: AccountValidationMessage.ERR_PASSWORD_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
-		message: PasswordValidationMessage.ERR_PASSWORD_REQUIRED,
+		message: AccountValidationMessage.ERR_PASSWORD_REQUIRED,
 	})
 	password: string;
 
@@ -72,10 +68,10 @@ export class NutritionistAuthSignInRequest
 		example: "fcmToken",
 	})
 	@IsString({
-		message: FcmTokenValidationMessage.ERR_FCM_TOKEN_MUST_BE_STRING,
+		message: AccountValidationMessage.ERR_FCM_TOKEN_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
-		message: FcmTokenValidationMessage.ERR_FCM_TOKEN_REQUIRED,
+		message: AccountValidationMessage.ERR_FCM_TOKEN_REQUIRED,
 	})
 	fcmToken: string;
 }

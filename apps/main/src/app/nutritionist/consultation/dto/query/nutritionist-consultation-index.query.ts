@@ -12,6 +12,11 @@ export class NutritionistConsultationIndexQuery
 	extends IndexPaginationRequest
 	implements IIndexPaginationOption
 {
+	/**
+	 * @description Sort by field
+	 *
+	 * @type {NutritionistConsultationSortIndexQuery}
+	 */
 	@Transform(({ value }: { value: string }) => {
 		switch (value) {
 			case "createdAt":
@@ -38,6 +43,13 @@ export class NutritionistConsultationIndexQuery
 	@IsOptional()
 	declare sort?: NutritionistConsultationSortIndexQuery;
 
+	/**
+	 *
+	 * @description Filter by status
+	 *
+	 * @type {TransactionStatus}
+	 *
+	 */
 	@Transform(({ value }: { value: string }) =>
 		value != "" ? value.toUpperCase() : undefined,
 	)
@@ -47,6 +59,13 @@ export class NutritionistConsultationIndexQuery
 	@IsOptional()
 	readonly statusFilter?: TransactionStatus;
 
+	/**
+	 *
+	 * @description Filter by type
+	 *
+	 * @type {ConsultationType}
+	 *
+	 */
 	@Transform(({ value }: { value: string }) =>
 		value != "" ? value.toUpperCase() : undefined,
 	)
@@ -56,6 +75,13 @@ export class NutritionistConsultationIndexQuery
 	@IsOptional()
 	readonly typeFilter?: ConsultationType;
 
+	/**
+	 *
+	 * @description Filter by start date
+	 *
+	 * @type {Date}
+	 *
+	 */
 	@Transform(({ value }: { value: string }): Date | undefined =>
 		value != "" ? new Date(value) : undefined,
 	)
@@ -65,6 +91,13 @@ export class NutritionistConsultationIndexQuery
 	@IsOptional()
 	readonly startDateFilter?: Date;
 
+	/**
+	 *
+	 * @description Filter by end date
+	 *
+	 * @type {Date}
+	 *
+	 */
 	@Transform(({ value }: { value: string }): Date | undefined =>
 		value != "" ? new Date(value) : undefined,
 	)

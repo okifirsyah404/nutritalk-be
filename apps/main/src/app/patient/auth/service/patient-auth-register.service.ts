@@ -5,11 +5,7 @@ import { MailQueueService } from "@app/module/queue/service/mail-queue.service";
 import { AppCacheService } from "@config/app-cache";
 import { AppConfigService } from "@config/app-config";
 import { AppS3StorageService } from "@config/s3storage";
-import {
-	AccountErrorMessage,
-	OtpErrorMessage,
-	SignatureErrorMessage,
-} from "@constant/message";
+import { AccountErrorMessage } from "@constant/message";
 import {
 	IAuthResponse,
 	IOtpEmail,
@@ -105,7 +101,7 @@ export class PatientAuthRegisterService {
 		});
 
 		if (!validateResult) {
-			throw new BadRequestException(OtpErrorMessage.ERR_OTP_INVALID);
+			throw new BadRequestException(AccountErrorMessage.ERR_OTP_INVALID);
 		}
 
 		const signature = await this.signatureService.generateSignature({
@@ -149,9 +145,7 @@ export class PatientAuthRegisterService {
 		);
 
 		if (!isSignatureValid) {
-			throw new BadRequestException(
-				SignatureErrorMessage.ERR_SIGNATURE_INVALID,
-			);
+			throw new BadRequestException(AccountErrorMessage.ERR_SIGNATURE_INVALID);
 		}
 
 		const signature = await this.signatureService.generateSignature({
@@ -199,9 +193,7 @@ export class PatientAuthRegisterService {
 		);
 
 		if (!isSignatureValid) {
-			throw new BadRequestException(
-				SignatureErrorMessage.ERR_SIGNATURE_INVALID,
-			);
+			throw new BadRequestException(AccountErrorMessage.ERR_SIGNATURE_INVALID);
 		}
 
 		const cachedData: IPreRegisterRequest = await this.cacheService.get(

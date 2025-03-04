@@ -1,5 +1,5 @@
 import { BaseApiResponse } from "@common";
-import { CredentialSuccessMessage } from "@constant/message";
+import { NutritionistSuccessMessage } from "@constant/message";
 import { INutritionistEntity } from "@contract";
 import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
 import { Body, Controller, Get, Put, UseGuards } from "@nestjs/common";
@@ -21,7 +21,7 @@ export class NutritionistCredentialController {
 		const result = await this.service.getNutritionist(nutritionist.id);
 
 		return BaseApiResponse.success({
-			message: CredentialSuccessMessage.SUCCESS_GET_CREDENTIAL,
+			message: NutritionistSuccessMessage.SUCCESS_GET_CREDENTIAL,
 			data: NutritionistCredentialResponse.fromEntity(result),
 		});
 	}
@@ -37,7 +37,7 @@ export class NutritionistCredentialController {
 		);
 
 		return BaseApiResponse.success({
-			message: CredentialSuccessMessage.SUCCESS_UPDATE_CREDENTIAL,
+			message: NutritionistSuccessMessage.SUCCESS_UPDATE_CREDENTIAL,
 			data: NutritionistCredentialResponse.fromEntity(result),
 		});
 	}

@@ -1,23 +1,10 @@
 import { nullToUndefined } from "@common";
 import { IsNotEmptyString } from "@common/validator/is-not-empty-string.validator";
-import {
-	AddressValidationMessage,
-	BioValidationMessage,
-	DateOfBirthValidationMessage,
-	NameValidationMessage,
-	PhoneNumberValidationMessage,
-	PlaceOfBirthValidationMessage,
-} from "@constant/message";
+import { ProfileValidationMessage } from "@constant/message";
 import { IProfileEntity } from "@contract";
 import { ApiProperty } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
-import {
-	IsDate,
-	IsOptional,
-	IsPhoneNumber,
-	IsString,
-	MaxLength,
-} from "class-validator";
+import { IsDate, IsOptional, IsPhoneNumber, IsString } from "class-validator";
 
 export class NutritionistUpdateProfileRequest
 	implements
@@ -33,10 +20,10 @@ export class NutritionistUpdateProfileRequest
 	})
 	@Transform(nullToUndefined)
 	@IsNotEmptyString({
-		message: NameValidationMessage.ERR_NAME_REQUIRED,
+		message: ProfileValidationMessage.ERR_NAME_REQUIRED,
 	})
 	@IsString({
-		message: NameValidationMessage.ERR_NAME_MUST_BE_STRING,
+		message: ProfileValidationMessage.ERR_NAME_MUST_BE_STRING,
 	})
 	@IsOptional()
 	readonly name?: string;
@@ -46,13 +33,13 @@ export class NutritionistUpdateProfileRequest
 	})
 	@Transform(nullToUndefined)
 	@IsPhoneNumber("ID", {
-		message: PhoneNumberValidationMessage.ERR_PHONE_NUMBER_INVALID,
+		message: ProfileValidationMessage.ERR_PHONE_NUMBER_INVALID,
 	})
 	@IsNotEmptyString({
-		message: PhoneNumberValidationMessage.ERR_PHONE_NUMBER_REQUIRED,
+		message: ProfileValidationMessage.ERR_PHONE_NUMBER_REQUIRED,
 	})
 	@IsString({
-		message: PhoneNumberValidationMessage.ERR_PHONE_NUMBER_MUST_BE_STRING,
+		message: ProfileValidationMessage.ERR_PHONE_NUMBER_MUST_BE_STRING,
 	})
 	@IsOptional()
 	readonly phoneNumber?: string;
@@ -62,7 +49,7 @@ export class NutritionistUpdateProfileRequest
 	})
 	@Transform(nullToUndefined)
 	@IsString({
-		message: AddressValidationMessage.ERR_ADDRESS_MUST_BE_STRING,
+		message: ProfileValidationMessage.ERR_ADDRESS_MUST_BE_STRING,
 	})
 	@IsOptional()
 	readonly address?: string;
@@ -72,7 +59,7 @@ export class NutritionistUpdateProfileRequest
 	})
 	@Transform(nullToUndefined)
 	@IsString({
-		message: PlaceOfBirthValidationMessage.ERR_PLACE_OF_BIRTH_MUST_BE_STRING,
+		message: ProfileValidationMessage.ERR_PLACE_OF_BIRTH_MUST_BE_STRING,
 	})
 	@IsOptional()
 	readonly placeOfBirth?: string;
@@ -82,7 +69,7 @@ export class NutritionistUpdateProfileRequest
 	})
 	@Transform(({ value }) => (value ? new Date(value) : undefined))
 	@IsDate({
-		message: DateOfBirthValidationMessage.ERR_DATE_OF_BIRTH_MUST_BE_DATE,
+		message: ProfileValidationMessage.ERR_DATE_OF_BIRTH_MUST_BE_DATE,
 	})
 	@IsOptional()
 	readonly dateOfBirth?: Date;
@@ -91,11 +78,8 @@ export class NutritionistUpdateProfileRequest
 		example: "Lorem Ipsum",
 	})
 	@Transform(nullToUndefined)
-	@MaxLength(300, {
-		message: BioValidationMessage.ERR_BIO_MAX_300,
-	})
 	@IsString({
-		message: BioValidationMessage.ERR_BIO_MUST_BE_STRING,
+		message: ProfileValidationMessage.ERR_BIO_MUST_BE_STRING,
 	})
 	@IsOptional()
 	readonly bio?: string;
