@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { booleanStringTransformer, IndexPaginationRequest } from "@common";
 import { QueryFilterValidationMessage } from "@constant/message";
 import {
