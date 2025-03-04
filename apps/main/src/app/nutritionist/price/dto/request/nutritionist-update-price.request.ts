@@ -25,10 +25,10 @@ export class NutritionistUpdatePriceRequest
 	})
 	@Transform(nullToUndefined)
 	@Min(50_000, {
-		message: NutritionistValidationMessage.ERR_ONLINE_PRICE_MIN,
+		message: NutritionistValidationMessage.ERR_ONLINE_PRICE_MIN_50000,
 	})
 	@Max(10_000_000, {
-		message: NutritionistValidationMessage.ERR_ONLINE_PRICE_MAX,
+		message: NutritionistValidationMessage.ERR_ONLINE_PRICE_MAX_10000000,
 	})
 	@IsInt({
 		message: NutritionistValidationMessage.ERR_ONLINE_PRICE_MUST_BE_NUMBER,
@@ -52,10 +52,10 @@ export class NutritionistUpdatePriceRequest
 	})
 	@Transform(nullToUndefined)
 	@Min(50_000, {
-		message: NutritionistValidationMessage.ERR_OFFLINE_PRICE_MIN,
+		message: NutritionistValidationMessage.ERR_OFFLINE_PRICE_MIN_50000,
 	})
 	@Max(10_000_000, {
-		message: NutritionistValidationMessage.ERR_OFFLINE_PRICE_MAX,
+		message: NutritionistValidationMessage.ERR_OFFLINE_PRICE_MAX_10000000,
 	})
 	@IsInt({
 		message: NutritionistValidationMessage.ERR_OFFLINE_PRICE_MUST_BE_NUMBER,
