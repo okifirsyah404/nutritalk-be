@@ -33,7 +33,7 @@ export class NutritionistCreateCertificateRequest
 	@IsDate({
 		message: NutritionistValidationMessage.ERR_ISSUE_DATE_MUST_BE_DATE,
 	})
-	@IsOptional({})
+	@IsOptional()
 	issueDate: Date;
 
 	@Type(() => Date)

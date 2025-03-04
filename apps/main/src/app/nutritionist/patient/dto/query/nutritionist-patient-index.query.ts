@@ -1,9 +1,9 @@
 import { booleanStringTransformer, IndexPaginationRequest } from "@common";
+import { QueryFilterValidationMessage } from "@constant/message";
 import {
 	IIndexPaginationOption,
 	NutritionistPatientSortIndexQuery,
 } from "@contract";
-import { QueryFilterValidationMessage } from "@constant/message";
 import { Transform } from "class-transformer";
 import { IsBoolean, IsEnum, IsOptional } from "class-validator";
 
@@ -11,6 +11,12 @@ export class NutritionistPatientIndexQuery
 	extends IndexPaginationRequest
 	implements IIndexPaginationOption
 {
+	/**
+	 * @description Sort by field
+	 *
+	 * @type {NutritionistPatientSortIndexQuery}
+	 *
+	 */
 	@Transform(({ value }: { value: string }) => {
 		switch (value) {
 			case "createdAt":
@@ -31,8 +37,18 @@ export class NutritionistPatientIndexQuery
 	@IsOptional()
 	declare sort?: NutritionistPatientSortIndexQuery;
 
+	/**
+	 *
+	 * @description Filter by registered
+	 *
+	 * @type {boolean}
+	 *
+	 */
 	@Transform(booleanStringTransformer)
-	@IsBoolean()
+	@IsBoolean({
+		message:
+			QueryFilterValidationMessage.ERR_REGISTERED_BOOLEAN_FILTER_MUST_BE_BOOLEAN,
+	})
 	@IsOptional()
 	registered?: boolean;
 }
