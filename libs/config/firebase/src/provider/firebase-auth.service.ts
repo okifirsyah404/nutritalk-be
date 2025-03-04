@@ -1,4 +1,4 @@
-import { FirebaseErrorMessage } from "@constant/message";
+import { AccountErrorMessage } from "@constant/message";
 import {
 	Injectable,
 	InternalServerErrorException,
@@ -24,7 +24,7 @@ export class FirebaseAuthService {
 	async verifyIdToken(idToken: string): Promise<TFirebaseDecodedIdToken> {
 		return this.auth.verifyIdToken(idToken, true).catch(() => {
 			throw new InternalServerErrorException(
-				FirebaseErrorMessage.ERR_FIREBASE_AUTHENTICATION_INVALID,
+				AccountErrorMessage.ERR_FIREBASE_AUTHENTICATION_INVALID,
 			);
 		});
 	}
@@ -32,7 +32,7 @@ export class FirebaseAuthService {
 	async getUser(uid: string): Promise<TFirebaseUserRecord> {
 		return this.auth.getUser(uid).catch(() => {
 			throw new InternalServerErrorException(
-				FirebaseErrorMessage.ERR_FIREBASE_AUTHENTICATION,
+				AccountErrorMessage.ERR_FIREBASE_AUTHENTICATION,
 			);
 		});
 	}

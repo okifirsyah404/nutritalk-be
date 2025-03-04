@@ -1,4 +1,4 @@
-import { AccountErrorMessage, AuthErrorMessage } from "@constant/message";
+import { AccountErrorMessage } from "@constant/message";
 import {
 	IAccountEntity,
 	IAuthResponse,
@@ -53,7 +53,9 @@ export class NutritionistAuthService {
 		);
 
 		if (!isPasswordMatch) {
-			throw new UnauthorizedException(AuthErrorMessage.ERR_PASSWORD_NOT_MATCH);
+			throw new UnauthorizedException(
+				AccountErrorMessage.ERR_PASSWORD_NOT_MATCH,
+			);
 		}
 
 		await this.repository.updateFcmToken(result.id, reqData.fcmToken);

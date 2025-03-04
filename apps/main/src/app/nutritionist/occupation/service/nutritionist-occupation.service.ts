@@ -1,4 +1,4 @@
-import { OccupationErrorMessage } from "@constant/message";
+import { NutritionistErrorMessage } from "@constant/message";
 import { IOccupationEntity } from "@contract";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { NutritionistOccupationRepository } from "../repository/nutritionist-occupation.repository";
@@ -19,7 +19,9 @@ export class NutritionistOccupationService {
 			await this.repository.findOccupationByNutritionistId(nutritionistId);
 
 		if (!result) {
-			throw new NotFoundException(OccupationErrorMessage.OCCUPATION_NOT_FOUND);
+			throw new NotFoundException(
+				NutritionistErrorMessage.OCCUPATION_NOT_FOUND,
+			);
 		}
 
 		return result;

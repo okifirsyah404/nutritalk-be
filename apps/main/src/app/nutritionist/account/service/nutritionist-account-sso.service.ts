@@ -1,5 +1,5 @@
 import { FirebaseAuthService } from "@config/firebase";
-import { SSOErrorMessage } from "@constant/message";
+import { AccountErrorMessage } from "@constant/message";
 import { IAccountEntity, IGoogleSSORequest } from "@contract";
 import { BadRequestException, Injectable, Logger } from "@nestjs/common";
 import { NutritionistAccountSSORepository } from "../repository/nutritionist-account-sso.repository";
@@ -34,7 +34,7 @@ export class NutritionistAccountSSOService {
 		if (userSSO) {
 			if (userSSO.googleSSO) {
 				throw new BadRequestException(
-					SSOErrorMessage.ERR_SSO_GOOGLE_ALREADY_TAKEN,
+					AccountErrorMessage.ERR_SSO_GOOGLE_ALREADY_TAKEN,
 				);
 			}
 		}

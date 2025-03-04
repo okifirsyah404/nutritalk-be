@@ -1,5 +1,0 @@
-export abstract class FirebaseErrorMessage {
-	static readonly ERR_FIREBASE_AUTHENTICATION = "ERR_FIREBASE_AUTHENTICATION";
-	static readonly ERR_FIREBASE_AUTHENTICATION_INVALID =
-		"ERR_FIREBASE_AUTHENTICATION_INVALID";
-}

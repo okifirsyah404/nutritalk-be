@@ -1,4 +1,4 @@
-import { ConsultationMetaErrorMessage } from "@constant/message";
+import { NutritionistErrorMessage } from "@constant/message";
 import { IConsultationMetaEntity } from "@contract";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { NutritionistConsultationMetaRepository } from "../repository/nutritionist-consultation-meta.repository";
@@ -26,7 +26,7 @@ export class NutritionistConsultationMetaService {
 
 		if (!result) {
 			throw new NotFoundException(
-				ConsultationMetaErrorMessage.ERR_CONSULTATION_META_NOT_FOUND,
+				NutritionistErrorMessage.ERR_CONSULTATION_META_NOT_FOUND,
 			);
 		}
 
