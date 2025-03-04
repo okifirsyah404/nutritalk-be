@@ -12,5 +12,5 @@ model DeviceInfo {
   accountId String? @unique
 
   // Relations
-  account Account? @relation(fields: [accountId], references: [id])
+  account Account? @relation(fields: [accountId], references: [id], onDelete: Cascade)
 }

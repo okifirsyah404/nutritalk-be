@@ -3,7 +3,7 @@ model SingleSignOn {
 
   // Relations
   googleSSO GoogleSSO?
-  account   Account?   @relation(fields: [accountId], references: [id])
+  account   Account?   @relation(fields: [accountId], references: [id], onDelete: Cascade)
 
   // Date Metadata
   createdAt DateTime? @default(now())
@@ -28,5 +28,5 @@ model GoogleSSO {
   ssoId String? @unique
 
   // Relations
-  sso SingleSignOn? @relation(fields: [ssoId], references: [id])
+  sso SingleSignOn? @relation(fields: [ssoId], references: [id], onDelete: Cascade)
 }

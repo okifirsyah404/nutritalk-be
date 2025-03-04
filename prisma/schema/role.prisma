@@ -28,7 +28,7 @@ model Role {
 
   // Relations
   permissions RolePermission[]
-  account     Account?         @relation(fields: [accountId], references: [id])
+  account     Account?         @relation(fields: [accountId], references: [id], onDelete: Cascade)
 }
 
 model RolePermission {
@@ -45,8 +45,8 @@ model RolePermission {
   roleId String?
 
   // Relations
-  role       Role?           @relation(fields: [roleId], references: [id])
-  permission BasePermission? @relation(fields: [basePermissionId], references: [id])
+  role       Role?           @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission BasePermission? @relation(fields: [basePermissionId], references: [id], onDelete: Cascade)
 
   basePermissionId String?
 }
