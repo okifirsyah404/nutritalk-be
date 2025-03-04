@@ -146,6 +146,8 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 							width: 200,
 						}),
 						bio: faker.person.bio(),
+						age: age,
+						dateOfBirth: dateOfBirth,
 					},
 				},
 			},
@@ -157,7 +159,7 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 					not: "RM-0000",
 				},
 			},
-			take: 50,
+			take: 20,
 			orderBy: {
 				code: "asc",
 			},
@@ -238,7 +240,49 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 								height: 200,
 								width: 200,
 							}),
+							age: _age,
+							dateOfBirth: _dateOfBirth,
 							bio: faker.person.bio(),
+						},
+					},
+				},
+			});
+		}
+
+		for (let i = 0; i < 10; i++) {
+			const email = faker.internet.email();
+
+			const name = faker.person.fullName();
+
+			const _dateOfBirth = faker.date.past({
+				years: 20,
+			});
+
+			const _age = new Date().getFullYear() - dateOfBirth.getFullYear();
+
+			await prisma.patient.create({
+				data: {
+					account: {
+						create: {
+							email: email,
+							password: await hashPassword(email),
+							lastActivity: new Date(),
+						},
+					},
+					profile: {
+						create: {
+							name: name,
+							phoneNumber: faker.phone.number(),
+							placeOfBirth: faker.location.city(),
+							address: faker.location.streetAddress(),
+							gender: Gender.MALE,
+							imageKey: faker.image.urlPicsumPhotos({
+								height: 200,
+								width: 200,
+							}),
+							bio: faker.person.bio(),
+							age: _age,
+							dateOfBirth: _dateOfBirth,
 						},
 					},
 				},

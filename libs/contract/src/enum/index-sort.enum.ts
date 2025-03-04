@@ -7,3 +7,10 @@ export enum NutritionistConsultationSortIndexQuery {
 	END_DATE = "consultationTime.end",
 	PATIENT_NAME = "patient.profile.name",
 }
+
+export enum NutritionistPatientSortIndexQuery {
+	CREATED_AT = "createdAt",
+	UPDATED_AT = "updatedAt",
+	NAME = "profile.name",
+	MEDICAL_RECORD = "medicalRecordKey.code",
+}
