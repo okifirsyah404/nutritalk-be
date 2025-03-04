@@ -1,4 +1,4 @@
-import { NidnValidationMessage, NipValidationMessage } from "@constant/message";
+import { NutritionistValidationMessage } from "@constant/message";
 import { INutritionistEntity } from "@contract";
 import { Transform } from "class-transformer";
 import { IsOptional, IsString } from "class-validator";
@@ -10,7 +10,7 @@ export class NutritionistUpdateCredentialRequest
 		value === "" ? undefined : value,
 	)
 	@IsString({
-		message: NipValidationMessage.ERR_NIP_MUST_BE_STRING,
+		message: NutritionistValidationMessage.ERR_NIP_MUST_BE_STRING,
 	})
 	@IsOptional()
 	nip?: string;
@@ -19,7 +19,7 @@ export class NutritionistUpdateCredentialRequest
 		value === "" ? undefined : value,
 	)
 	@IsString({
-		message: NidnValidationMessage.ERR_NIDN_MUST_BE_STRING,
+		message: NutritionistValidationMessage.ERR_NIDN_MUST_BE_STRING,
 	})
 	@IsOptional()
 	nidn?: string;

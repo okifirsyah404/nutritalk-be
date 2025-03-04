@@ -1,4 +1,4 @@
-import { OtpValidationMessage } from "@constant/message";
+import { AccountValidationMessage } from "@constant/message";
 import { IOtpVerifyRequest } from "@contract";
 import { ApiProperty, PickType } from "@nestjs/swagger";
 import { IsNotEmpty, IsString } from "class-validator";
@@ -21,10 +21,10 @@ export class NutritionistForgetPasswordVerifyOtpRequest
 		example: "123456",
 	})
 	@IsString({
-		message: OtpValidationMessage.ERR_OTP_MUST_BE_STRING,
+		message: AccountValidationMessage.ERR_OTP_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
-		message: OtpValidationMessage.ERR_OTP_REQUIRED,
+		message: AccountValidationMessage.ERR_OTP_REQUIRED,
 	})
 	otp: string;
 }

@@ -1,7 +1,7 @@
-import { ApiProperty, PickType } from "@nestjs/swagger";
 import { PatientAuthSignInRequest } from "@app/app/patient/auth/dto/request/patient-auth-sign-in.request";
+import { AccountValidationMessage } from "@constant/message";
 import { IOtpVerifyRequest } from "@contract";
-import { OtpValidationMessage } from "@constant/message";
+import { ApiProperty, PickType } from "@nestjs/swagger";
 import { IsNotEmpty, IsString } from "class-validator";
 
 export class PatientAuthVerifyOtpRequest
@@ -21,10 +21,10 @@ export class PatientAuthVerifyOtpRequest
 		example: "123456",
 	})
 	@IsString({
-		message: OtpValidationMessage.ERR_OTP_MUST_BE_STRING,
+		message: AccountValidationMessage.ERR_OTP_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
-		message: OtpValidationMessage.ERR_OTP_REQUIRED,
+		message: AccountValidationMessage.ERR_OTP_REQUIRED,
 	})
 	otp: string;
 }

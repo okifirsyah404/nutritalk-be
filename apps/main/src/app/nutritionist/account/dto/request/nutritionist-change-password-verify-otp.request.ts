@@ -1,7 +1,4 @@
-import {
-	EmailValidationMessage,
-	OtpValidationMessage,
-} from "@constant/message";
+import { AccountValidationMessage } from "@constant/message";
 import { IOtpVerifyRequest } from "@contract";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, IsString } from "class-validator";
@@ -25,14 +22,14 @@ export class NutritionistChangePasswordVerifyOtpRequest
 	@IsEmail(
 		{},
 		{
-			message: EmailValidationMessage.ERR_EMAIL_INVALID,
+			message: AccountValidationMessage.ERR_EMAIL_INVALID,
 		},
 	)
 	@IsString({
-		message: EmailValidationMessage.ERR_EMAIL_MUST_BE_STRING,
+		message: AccountValidationMessage.ERR_EMAIL_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
-		message: EmailValidationMessage.ERR_EMAIL_REQUIRED,
+		message: AccountValidationMessage.ERR_EMAIL_REQUIRED,
 	})
 	email: string;
 
@@ -49,10 +46,10 @@ export class NutritionistChangePasswordVerifyOtpRequest
 		example: "123456",
 	})
 	@IsString({
-		message: OtpValidationMessage.ERR_OTP_MUST_BE_STRING,
+		message: AccountValidationMessage.ERR_OTP_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
-		message: OtpValidationMessage.ERR_OTP_REQUIRED,
+		message: AccountValidationMessage.ERR_OTP_REQUIRED,
 	})
 	otp: string;
 }

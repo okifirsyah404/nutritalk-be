@@ -1,6 +1,0 @@
-export class PhoneNumberValidationMessage {
-	static readonly ERR_PHONE_NUMBER_MUST_BE_STRING =
-		"ERR_PHONE_NUMBER_MUST_BE_STRING";
-	static readonly ERR_PHONE_NUMBER_REQUIRED = "ERR_PHONE_NUMBER_REQUIRED";
-	static readonly ERR_PHONE_NUMBER_INVALID = "ERR_PHONE_NUMBER_INVALID";
-}
