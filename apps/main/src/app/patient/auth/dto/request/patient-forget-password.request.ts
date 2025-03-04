@@ -1,14 +1,10 @@
-import { ApiProperty, PickType } from "@nestjs/swagger";
 import { PatientAuthSignInRequest } from "@app/app/patient/auth/dto/request/patient-auth-sign-in.request";
-import { IChangePasswordRequest } from "@contract";
-import { IsNotEmpty, IsString, IsStrongPassword } from "class-validator";
-import { IsStrongPasswordConstant } from "@constant/option";
-import {
-	ConfirmPasswordValidationMessage,
-	PasswordValidationMessage,
-	SignatureValidationMessage,
-} from "@constant/message";
 import { IsMatchOther } from "@common";
+import { AccountValidationMessage } from "@constant/message";
+import { IsStrongPasswordConstant } from "@constant/option";
+import { IChangePasswordRequest } from "@contract";
+import { ApiProperty, PickType } from "@nestjs/swagger";
+import { IsNotEmpty, IsString, IsStrongPassword } from "class-validator";
 
 export class PatientForgetPasswordRequest
 	extends PickType(PatientAuthSignInRequest, ["email"])
@@ -28,13 +24,13 @@ export class PatientForgetPasswordRequest
 		example: "Secret Password",
 	})
 	@IsStrongPassword(IsStrongPasswordConstant.STRONG_PASSWORD, {
-		message: PasswordValidationMessage.ERR_PASSWORD_PATTERN,
+		message: AccountValidationMessage.ERR_PASSWORD_PATTERN,
 	})
 	@IsString({
-		message: PasswordValidationMessage.ERR_PASSWORD_MUST_BE_STRING,
+		message: AccountValidationMessage.ERR_PASSWORD_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
-		message: PasswordValidationMessage.ERR_PASSWORD_REQUIRED,
+		message: AccountValidationMessage.ERR_PASSWORD_REQUIRED,
 	})
 	password: string;
 
@@ -52,17 +48,16 @@ export class PatientForgetPasswordRequest
 		example: "Secret Password",
 	})
 	@IsMatchOther("password", {
-		message: ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_NOT_MATCH,
+		message: AccountValidationMessage.ERR_CONFIRM_PASSWORD_NOT_MATCH,
 	})
 	@IsStrongPassword(IsStrongPasswordConstant.STRONG_PASSWORD, {
-		message: ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_PATTERN,
+		message: AccountValidationMessage.ERR_CONFIRM_PASSWORD_PATTERN,
 	})
 	@IsString({
-		message:
-			ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_MUST_BE_STRING,
+		message: AccountValidationMessage.ERR_CONFIRM_PASSWORD_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
-		message: ConfirmPasswordValidationMessage.ERR_CONFIRM_PASSWORD_REQUIRED,
+		message: AccountValidationMessage.ERR_CONFIRM_PASSWORD_REQUIRED,
 	})
 	confirmPassword: string;
 
@@ -80,10 +75,10 @@ export class PatientForgetPasswordRequest
 			"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ",
 	})
 	@IsString({
-		message: SignatureValidationMessage.ERR_SIGNATURE_MUST_BE_STRING,
+		message: AccountValidationMessage.ERR_SIGNATURE_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
-		message: SignatureValidationMessage.ERR_SIGNATURE_REQUIRED,
+		message: AccountValidationMessage.ERR_SIGNATURE_REQUIRED,
 	})
 	signature: string;
 }

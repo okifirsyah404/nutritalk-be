@@ -1,20 +1,17 @@
-import {
-	FcmTokenValidationMessage,
-	JWTTokenValidationMessage,
-} from "@constant/message";
+import { AccountValidationMessage } from "@constant/message";
 import { IGoogleSSORequest } from "@contract";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsJWT, IsNotEmpty, IsString } from "class-validator";
 
 export class NutritionistAuthSSOGoogleRequest implements IGoogleSSORequest {
 	@IsJWT({
-		message: JWTTokenValidationMessage.ERR_GOOGLE_JWT_TOKEN_MUST_BE_JWT,
+		message: AccountValidationMessage.ERR_GOOGLE_JWT_TOKEN_MUST_BE_JWT,
 	})
 	@IsString({
-		message: JWTTokenValidationMessage.ERR_GOOGLE_JWT_TOKEN_MUST_BE_STRING,
+		message: AccountValidationMessage.ERR_GOOGLE_JWT_TOKEN_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
-		message: JWTTokenValidationMessage.ERR_GOOGLE_JWT_TOKEN_REQUIRED,
+		message: AccountValidationMessage.ERR_GOOGLE_JWT_TOKEN_REQUIRED,
 	})
 	googleJwtToken: string;
 
@@ -31,10 +28,10 @@ export class NutritionistAuthSSOGoogleRequest implements IGoogleSSORequest {
 		example: "fcmToken",
 	})
 	@IsString({
-		message: FcmTokenValidationMessage.ERR_FCM_TOKEN_MUST_BE_STRING,
+		message: AccountValidationMessage.ERR_FCM_TOKEN_MUST_BE_STRING,
 	})
 	@IsNotEmpty({
-		message: FcmTokenValidationMessage.ERR_FCM_TOKEN_REQUIRED,
+		message: AccountValidationMessage.ERR_FCM_TOKEN_REQUIRED,
 	})
 	fcmToken: string;
 }
