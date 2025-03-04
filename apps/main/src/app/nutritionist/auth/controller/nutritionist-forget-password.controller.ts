@@ -1,5 +1,5 @@
 import { BaseApiResponse } from "@common";
-import { AuthSuccessMessage, OtpSuccessMessage } from "@constant/message";
+import { AccountSuccessMessage } from "@constant/message";
 import { IApiResponse } from "@contract";
 import { Body, Controller, Post } from "@nestjs/common";
 import { AccountRole } from "@prisma/client";
@@ -38,7 +38,7 @@ export class NutritionistForgetPasswordController {
 		const result = await this.service.checkAccount(reqBody);
 
 		return BaseApiResponse.created({
-			message: OtpSuccessMessage.SUCCESS_SEND_OTP,
+			message: AccountSuccessMessage.SUCCESS_SEND_OTP,
 			data: NutritionistForgetPasswordSendOtpResponse.fromEntity(result),
 		});
 	}
@@ -65,7 +65,7 @@ export class NutritionistForgetPasswordController {
 		const result = await this.service.verifyOtp(reqBody);
 
 		return BaseApiResponse.created({
-			message: OtpSuccessMessage.SUCCESS_VERIFY_OTP,
+			message: AccountSuccessMessage.SUCCESS_VERIFY_OTP,
 			data: NutritionistForgetPasswordVerifyOtpResponse.fromEntity(result),
 		});
 	}
@@ -93,7 +93,7 @@ export class NutritionistForgetPasswordController {
 		});
 
 		return BaseApiResponse.created({
-			message: AuthSuccessMessage.SUCCESS_RESET_PASSWORD,
+			message: AccountSuccessMessage.SUCCESS_RESET_PASSWORD,
 			data: NutritionistForgetPasswordResponse.fromEntity(result),
 		});
 	}

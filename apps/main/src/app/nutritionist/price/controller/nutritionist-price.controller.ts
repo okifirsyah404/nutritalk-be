@@ -1,5 +1,5 @@
 import { BaseApiResponse } from "@common";
-import { PriceSuccessMessage } from "@constant/message";
+import { NutritionistSuccessMessage } from "@constant/message";
 import { IApiResponse, INutritionistEntity } from "@contract";
 import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
 import { Body, Controller, Get, Put, UseGuards } from "@nestjs/common";
@@ -31,7 +31,7 @@ export class NutritionistPriceController {
 		const result = await this.service.getPriceByNutritionistId(nutritionist.id);
 
 		return BaseApiResponse.success({
-			message: PriceSuccessMessage.SUCCESS_GET_PRICE,
+			message: NutritionistSuccessMessage.SUCCESS_GET_PRICE,
 			data: NutritionistPriceResponse.fromEntity(result),
 		});
 	}
@@ -59,7 +59,7 @@ export class NutritionistPriceController {
 		const result = await this.service.updatePrice(nutritionist.id, reqBody);
 
 		return BaseApiResponse.success({
-			message: PriceSuccessMessage.SUCCESS_UPDATE_PRICE,
+			message: NutritionistSuccessMessage.SUCCESS_UPDATE_PRICE,
 			data: NutritionistPriceResponse.fromEntity(result),
 		});
 	}

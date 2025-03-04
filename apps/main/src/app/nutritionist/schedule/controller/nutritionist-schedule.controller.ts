@@ -3,7 +3,7 @@ import {
 	BaseApiResponse,
 	IndexPaginationRequest,
 } from "@common";
-import { ScheduleSuccessMessage } from "@constant/message";
+import { NutritionistSuccessMessage } from "@constant/message";
 import {
 	IApiPaginationResponse,
 	IApiResponse,
@@ -57,7 +57,7 @@ export class NutritionistScheduleController {
 		);
 
 		return BaseApiPaginationResponse.success({
-			message: ScheduleSuccessMessage.SUCCESS_GET_SCHEDULE,
+			message: NutritionistSuccessMessage.SUCCESS_GET_SCHEDULE,
 			pagination: result.pagination,
 			data: NutritionistScheduleResponse.fromEntities(result.items),
 		});
@@ -80,7 +80,7 @@ export class NutritionistScheduleController {
 		const result = await this.service.toggleScheduleActive(scheduleId);
 
 		return BaseApiResponse.success({
-			message: ScheduleSuccessMessage.SUCCESS_TOGGLE_SCHEDULE_ACTIVE,
+			message: NutritionistSuccessMessage.SUCCESS_TOGGLE_SCHEDULE_ACTIVE,
 			data: NutritionistScheduleResponse.fromEntity(result),
 		});
 	}
@@ -109,7 +109,7 @@ export class NutritionistScheduleController {
 		);
 
 		return BaseApiPaginationResponse.success({
-			message: ScheduleSuccessMessage.SUCCESS_GET_SCHEDULE_TIME,
+			message: NutritionistSuccessMessage.SUCCESS_GET_SCHEDULE_TIME,
 			pagination: result.pagination,
 			data: NutritionistScheduleTimeResponse.fromEntities(result.items),
 		});
@@ -137,7 +137,7 @@ export class NutritionistScheduleController {
 		const result = await this.service.createScheduleTime(scheduleId, reqBody);
 
 		return BaseApiResponse.success({
-			message: ScheduleSuccessMessage.SUCCESS_CREATE_SCHEDULE_TIME,
+			message: NutritionistSuccessMessage.SUCCESS_CREATE_SCHEDULE_TIME,
 			data: NutritionistScheduleTimeResponse.fromEntity(result),
 		});
 	}
@@ -159,7 +159,7 @@ export class NutritionistScheduleController {
 		const result = await this.service.getScheduleTime(scheduleTimeId);
 
 		return BaseApiResponse.success({
-			message: ScheduleSuccessMessage.SUCCESS_GET_SCHEDULE_TIME,
+			message: NutritionistSuccessMessage.SUCCESS_GET_SCHEDULE_TIME,
 			data: NutritionistScheduleTimeResponse.fromEntity(result),
 		});
 	}
@@ -191,7 +191,7 @@ export class NutritionistScheduleController {
 		);
 
 		return BaseApiResponse.success({
-			message: ScheduleSuccessMessage.SUCCESS_UPDATE_SCHEDULE_TIME,
+			message: NutritionistSuccessMessage.SUCCESS_UPDATE_SCHEDULE_TIME,
 			data: NutritionistScheduleTimeResponse.fromEntity(result),
 		});
 	}
@@ -213,7 +213,7 @@ export class NutritionistScheduleController {
 		await this.service.deleteScheduleTime(scheduleTimeId);
 
 		return BaseApiResponse.success({
-			message: ScheduleSuccessMessage.SUCCESS_DELETE_SCHEDULE_TIME,
+			message: NutritionistSuccessMessage.SUCCESS_DELETE_SCHEDULE_TIME,
 			data: undefined,
 		});
 	}
@@ -235,7 +235,7 @@ export class NutritionistScheduleController {
 		const result = await this.service.getScedule(scheduleId);
 
 		return BaseApiResponse.success({
-			message: ScheduleSuccessMessage.SUCCESS_GET_SCHEDULE,
+			message: NutritionistSuccessMessage.SUCCESS_GET_SCHEDULE,
 			data: NutritionistScheduleResponse.fromEntity(result),
 		});
 	}

@@ -1,5 +1,5 @@
 import { BaseApiResponse } from "@common";
-import { AuthSuccessMessage } from "@constant/message";
+import { AccountSuccessMessage } from "@constant/message";
 import { IApiResponse } from "@contract";
 import { Body, Controller, Post } from "@nestjs/common";
 import { AccountRole } from "@prisma/client";
@@ -19,7 +19,7 @@ export class NutritionistAuthSSOController {
 		const result = await this.service.signInWithGoogle(reqBody);
 
 		return BaseApiResponse.created({
-			message: AuthSuccessMessage.SUCCESS_AUTH_SIGN_IN,
+			message: AccountSuccessMessage.SUCCESS_AUTH_SIGN_IN,
 			data: NutritionistAuthResponse.fromEntity(result),
 		});
 	}

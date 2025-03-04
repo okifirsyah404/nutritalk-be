@@ -6,7 +6,7 @@ import { PatientAuthVerifyOtpResponse } from "@app/app/patient/auth/dto/response
 import { PatientAuthResponse } from "@app/app/patient/auth/dto/response/patient-auth.response";
 import { PatientAuthSSOService } from "@app/app/patient/auth/service/patient-auth-sso.service";
 import { BaseApiResponse } from "@common";
-import { AuthSuccessMessage } from "@constant/message";
+import { AccountSuccessMessage } from "@constant/message";
 import { IApiResponse } from "@contract";
 import { Body, Controller, Post } from "@nestjs/common";
 import { AccountRole } from "@prisma/client";
@@ -39,7 +39,7 @@ export class PatientAuthSSOController {
 		const result = await this.service.signInWithGoogle(reqBody);
 
 		return BaseApiResponse.created({
-			message: AuthSuccessMessage.SUCCESS_AUTH_SIGN_IN_WITH_GOOGLE,
+			message: AccountSuccessMessage.SUCCESS_AUTH_SIGN_IN_WITH_GOOGLE,
 			data: PatientAuthResponse.fromEntity(result),
 		});
 	}
@@ -67,7 +67,7 @@ export class PatientAuthSSOController {
 		const result = await this.service.registerWithGoogle(reqBody);
 
 		return BaseApiResponse.created({
-			message: AuthSuccessMessage.SUCCESS_AUTH_SIGN_UP_WITH_GOOGLE,
+			message: AccountSuccessMessage.SUCCESS_AUTH_SIGN_UP_WITH_GOOGLE,
 			data: PatientAuthVerifyOtpResponse.fromEntity(result),
 		});
 	}
@@ -93,7 +93,7 @@ export class PatientAuthSSOController {
 		const result = await this.service.preRegisterWithGoogle(reqBody);
 
 		return BaseApiResponse.created({
-			message: AuthSuccessMessage.SUCCESS_AUTH_SIGN_UP_CACHED,
+			message: AccountSuccessMessage.SUCCESS_AUTH_SIGN_UP_CACHED,
 			data: PatientAuthSSOGooglePreRegisterResponse.fromEntity(result),
 		});
 	}
@@ -121,7 +121,7 @@ export class PatientAuthSSOController {
 		const result = await this.service.completeRegisterWithGoogle(reqBody);
 
 		return BaseApiResponse.created({
-			message: AuthSuccessMessage.SUCCESS_AUTH_SIGN_UP,
+			message: AccountSuccessMessage.SUCCESS_AUTH_SIGN_UP,
 			data: PatientAuthResponse.fromEntity(result),
 		});
 	}
