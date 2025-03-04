@@ -29,6 +29,13 @@ import { NutritionistBindMedicalRecordPatientRequest } from "@app/app/nutritioni
 export class NutritionistMedicalRecordKeyController {
 	constructor(private readonly service: NutritionistMedicalRecordKeyService) {}
 
+	/*
+	 * Paginate medical record key
+	 *
+	 * Request Query: IndexPaginationRequest
+	 *
+	 * Response: BaseApiPaginationResponse<NutritionistMedicalRecordKeyResponse>
+	 */
 	@Get()
 	async paginate(
 		@Query() query: IndexPaginationRequest,
@@ -42,6 +49,13 @@ export class NutritionistMedicalRecordKeyController {
 		});
 	}
 
+	/*
+	 * Get medical record key
+	 *
+	 * Request Param: medicalRecordKeyId
+	 *
+	 * Response: BaseApiResponse<NutritionistMedicalRecordKeyResponse>
+	 */
 	@Get(":medicalRecordKeyId")
 	async getMedicalRecordKey(
 		@Param("medicalRecordKeyId") id: string,
@@ -54,6 +68,13 @@ export class NutritionistMedicalRecordKeyController {
 		});
 	}
 
+	/*
+	 * Create medical record key
+	 *
+	 * Request Body: NutritionistCreateMedicalRecordKeyRequest
+	 *
+	 * Response: BaseApiResponse<NutritionistMedicalRecordKeyResponse>
+	 */
 	@Post()
 	async createMedicalRecordKey(
 		@Body() reqBody: NutritionistCreateMedicalRecordKeyRequest,
@@ -66,6 +87,14 @@ export class NutritionistMedicalRecordKeyController {
 		});
 	}
 
+	/*
+	 * Bind patient to medical record key
+	 *
+	 * Request Param: medicalRecordKeyId
+	 * Request Body: NutritionistBindMedicalRecordPatientRequest
+	 *
+	 * Response: BaseApiResponse<NutritionistMedicalRecordKeyResponse>
+	 */
 	@Post("bind-patient/:medicalRecordKeyId")
 	async bindPatient(
 		@Param("medicalRecordKeyId") id: string,
@@ -82,6 +111,13 @@ export class NutritionistMedicalRecordKeyController {
 		});
 	}
 
+	/*
+	 * Unbind patient from medical record key
+	 *
+	 * Request Param: medicalRecordKeyId
+	 *
+	 * Response: BaseApiResponse<NutritionistMedicalRecordKeyResponse>
+	 */
 	@Delete("bind-patient/:medicalRecordKeyId")
 	async unbindPatient(
 		@Param("medicalRecordKeyId") id: string,

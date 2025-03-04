@@ -23,6 +23,13 @@ export class NutritionistMedicalRecordKeyService {
 		NutritionistMedicalRecordKeyService.name,
 	);
 
+	/**
+	 * Paginate medical record key
+	 *
+	 * @param query
+	 *
+	 * @returns IPaginationResult<IMedicalRecordKeyEntity>
+	 */
 	async paginate(
 		query: IndexPaginationRequest,
 	): Promise<IPaginationResult<IMedicalRecordKeyEntity>> {
@@ -54,6 +61,13 @@ export class NutritionistMedicalRecordKeyService {
 		};
 	}
 
+	/**
+	 * Get medical record key
+	 *
+	 * @param id
+	 *
+	 * @returns IMedicalRecordKeyEntity
+	 */
 	async getMedicalRecordKey(id: string): Promise<IMedicalRecordKeyEntity> {
 		const result = await this.repository.findMedicalRecordKeyById(id);
 
@@ -82,6 +96,14 @@ export class NutritionistMedicalRecordKeyService {
 		};
 	}
 
+	/**
+	 * Create medical record key
+	 *
+	 * @param reqData
+	 *
+	 * @returns IMedicalRecordKeyEntity
+	 *
+	 */
 	async createMedicalRecordKey(
 		reqData: ICreateMedicalRecordKey,
 	): Promise<IMedicalRecordKeyEntity> {
@@ -102,6 +124,14 @@ export class NutritionistMedicalRecordKeyService {
 		return this.repository.createMedicalRecordKey(data);
 	}
 
+	/**
+	 * Bind medical record key to patient
+	 *
+	 * @param medicalRecordKeyId
+	 * @param reqData
+	 *
+	 * @returns IMedicalRecordKeyEntity
+	 */
 	async bindMedicalRecordKeyToPatient(
 		medicalRecordKeyId: string,
 		reqData: NutritionistBindMedicalRecordPatientRequest,
@@ -135,6 +165,13 @@ export class NutritionistMedicalRecordKeyService {
 		});
 	}
 
+	/**
+	 * Unbind medical record key to patient
+	 *
+	 * @param medicalRecordKeyId
+	 *
+	 * @returns IMedicalRecordKeyEntity
+	 */
 	async unbindMedicalRecordKeyToPatient(
 		medicalRecordKeyId: string,
 	): Promise<IMedicalRecordKeyEntity> {
