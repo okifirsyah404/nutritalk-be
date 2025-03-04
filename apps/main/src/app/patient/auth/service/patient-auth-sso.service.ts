@@ -4,7 +4,7 @@ import { AppCacheService } from "@config/app-cache";
 import { AppConfigService } from "@config/app-config";
 import { FirebaseAuthService } from "@config/firebase";
 import { AppS3StorageService } from "@config/s3storage";
-import { AccountErrorMessage, SignatureErrorMessage } from "@constant/message";
+import { AccountErrorMessage } from "@constant/message";
 import {
 	IAuthResponse,
 	IDeviceInfoEntity,
@@ -269,9 +269,7 @@ export class PatientAuthSSOService {
 		);
 
 		if (!isSignatureValid) {
-			throw new BadRequestException(
-				SignatureErrorMessage.ERR_SIGNATURE_INVALID,
-			);
+			throw new BadRequestException(AccountErrorMessage.ERR_SIGNATURE_INVALID);
 		}
 	}
 }

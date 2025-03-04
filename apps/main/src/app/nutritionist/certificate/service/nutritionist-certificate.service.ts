@@ -1,4 +1,4 @@
-import { RegistrationCertificateErrorMessage } from "@constant/message";
+import { NutritionistErrorMessage } from "@constant/message";
 import { IRegistrationCertificateEntity } from "@contract";
 import {
 	BadRequestException,
@@ -26,7 +26,7 @@ export class NutritionistCertificateService {
 
 		if (!result) {
 			throw new NotFoundException(
-				RegistrationCertificateErrorMessage.ERR_CERTIFICATE_NOT_FOUND,
+				NutritionistErrorMessage.ERR_CERTIFICATE_NOT_FOUND,
 			);
 		}
 
@@ -53,7 +53,7 @@ export class NutritionistCertificateService {
 
 		if (existingCertificate) {
 			throw new BadRequestException(
-				RegistrationCertificateErrorMessage.ERR_CERTIFICATE_ALREADY_EXISTS,
+				NutritionistErrorMessage.ERR_CERTIFICATE_ALREADY_EXISTS,
 			);
 		}
 
@@ -87,7 +87,7 @@ export class NutritionistCertificateService {
 
 		if (!existingCertificate) {
 			throw new NotFoundException(
-				RegistrationCertificateErrorMessage.ERR_CERTIFICATE_NOT_FOUND,
+				NutritionistErrorMessage.ERR_CERTIFICATE_NOT_FOUND,
 			);
 		}
 

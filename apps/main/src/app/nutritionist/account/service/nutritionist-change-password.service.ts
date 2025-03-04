@@ -1,6 +1,6 @@
 import { MailQueueService } from "@app/module/queue/service/mail-queue.service";
 import { AppConfigService } from "@config/app-config";
-import { OtpErrorMessage, SignatureErrorMessage } from "@constant/message";
+import { AccountErrorMessage } from "@constant/message";
 import {
 	IAccountEntity,
 	IChangePasswordRequest,
@@ -72,7 +72,7 @@ export class NutritionistChangePasswordService {
 		});
 
 		if (!validateResult) {
-			throw new BadRequestException(OtpErrorMessage.ERR_OTP_INVALID);
+			throw new BadRequestException(AccountErrorMessage.ERR_OTP_INVALID);
 		}
 
 		const signature = await this.signatureService.generateSignature({
@@ -106,9 +106,7 @@ export class NutritionistChangePasswordService {
 		);
 
 		if (!isSignatureValid) {
-			throw new BadRequestException(
-				SignatureErrorMessage.ERR_SIGNATURE_INVALID,
-			);
+			throw new BadRequestException(AccountErrorMessage.ERR_SIGNATURE_INVALID);
 		}
 
 		const hashedPassword = await this.cryptoUtil.hash(
