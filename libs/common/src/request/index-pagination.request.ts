@@ -3,12 +3,33 @@ import { IIndexPaginationOption, SortOrderEnum } from "@contract";
 import { Transform } from "class-transformer";
 import { IsEnum, IsInt, IsOptional, Max } from "class-validator";
 export class IndexPaginationRequest implements IIndexPaginationOption {
+	/**
+	 *
+	 * @description Search query
+	 *
+	 * @type {string}
+	 *
+	 */
 	@IsOptional()
 	search?: string;
 
+	/**
+	 *
+	 * @description Sort by field
+	 *
+	 * @type {string}
+	 *
+	 */
 	@IsOptional()
 	sort?: string;
 
+	/**
+	 *
+	 * @description Sort order
+	 *
+	 * @type {SortOrderEnum}
+	 *
+	 */
 	@Transform(({ value }): string | undefined => (value === "" ? "asc" : value))
 	@IsEnum(SortOrderEnum, {
 		message: QueryFilterValidationMessage.ERR_ORDER_INVALID,
@@ -16,6 +37,13 @@ export class IndexPaginationRequest implements IIndexPaginationOption {
 	@IsOptional()
 	order: SortOrderEnum = SortOrderEnum.ASC;
 
+	/**
+	 *
+	 * @description Page number
+	 *
+	 * @type {number}
+	 *
+	 */
 	@Transform(({ value }) => {
 		if (value === "") {
 			return 1;
@@ -28,6 +56,15 @@ export class IndexPaginationRequest implements IIndexPaginationOption {
 	@IsOptional()
 	page: number = 1;
 
+	/**
+	 *
+	 * @description Limit number
+	 *
+	 * @type {number}
+	 * @default 10
+	 * @maximum 100
+	 * @minimum 1
+	 */
 	@Transform(({ value }) => {
 		if (value === "") {
 			return 10;
