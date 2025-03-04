@@ -7,7 +7,7 @@ import { PatientAuthVerifyOtpResponse } from "@app/app/patient/auth/dto/response
 import { PatientAuthResponse } from "@app/app/patient/auth/dto/response/patient-auth.response";
 import { PatientAuthRegisterService } from "@app/app/patient/auth/service/patient-auth-register.service";
 import { BaseApiResponse } from "@common";
-import { AuthSuccessMessage, OtpSuccessMessage } from "@constant/message";
+import { AccountSuccessMessage } from "@constant/message";
 import { IApiResponse } from "@contract";
 import { Body, Controller, Logger, Post } from "@nestjs/common";
 import { AccountRole } from "@prisma/client";
@@ -42,7 +42,7 @@ export class PatientAuthRegisterController {
 		const result = await this.service.checkAccount(reqBody);
 
 		return BaseApiResponse.created({
-			message: OtpSuccessMessage.SUCCESS_SEND_OTP,
+			message: AccountSuccessMessage.SUCCESS_SEND_OTP,
 			data: PatientAuthSendOtpResponse.fromEntity(result),
 		});
 	}
@@ -69,7 +69,7 @@ export class PatientAuthRegisterController {
 		const result = await this.service.verifyOtp(reqBody);
 
 		return BaseApiResponse.created({
-			message: OtpSuccessMessage.SUCCESS_VERIFY_OTP,
+			message: AccountSuccessMessage.SUCCESS_VERIFY_OTP,
 			data: PatientAuthVerifyOtpResponse.fromEntity(result),
 		});
 	}
@@ -95,7 +95,7 @@ export class PatientAuthRegisterController {
 		const result = await this.service.preRegisterAccount(reqBody);
 
 		return BaseApiResponse.created({
-			message: AuthSuccessMessage.SUCCESS_AUTH_SIGN_UP_CACHED,
+			message: AccountSuccessMessage.SUCCESS_AUTH_SIGN_UP_CACHED,
 			data: PatientAuthVerifyOtpResponse.fromEntity(result),
 		});
 	}
@@ -123,7 +123,7 @@ export class PatientAuthRegisterController {
 		const result = await this.service.register(reqBody);
 
 		return BaseApiResponse.created({
-			message: AuthSuccessMessage.SUCCESS_AUTH_SIGN_UP,
+			message: AccountSuccessMessage.SUCCESS_AUTH_SIGN_UP,
 			data: PatientAuthResponse.fromEntity(result),
 		});
 	}

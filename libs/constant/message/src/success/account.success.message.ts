@@ -1,4 +1,9 @@
-export abstract class AuthSuccessMessage {
+export abstract class AccountSuccessMessage {
+	static readonly SUCCESS_GET_ACCOUNT = "SUCCESS_GET_ACCOUNT";
+	static readonly SUCCESS_CHANGE_ACCOUNT_PASSWORD =
+		"SUCCESS_CHANGE_ACCOUNT_PASSWORD";
+	static readonly SUCCESS_BIND_GOOGLE_SSO = "SUCCESS_BIND_GOOGLE_SSO";
+
 	static readonly SUCCESS_AUTH_SIGN_IN = "SUCCESS_AUTH_SIGN_IN";
 	static readonly SUCCESS_AUTH_CHECK_EMAIL = "SUCCESS_AUTH_CHECK_EMAIL";
 	static readonly SUCCESS_AUTH_REFRESH_TOKEN = "SUCCESS_AUTH_REFRESH_TOKEN";
@@ -10,4 +15,7 @@ export abstract class AuthSuccessMessage {
 		"SUCCESS_AUTH_SIGN_UP_WITH_GOOGLE";
 	static readonly SUCCESS_AUTH_SIGN_UP_CACHED = "SUCCESS_AUTH_SIGN_UP_CACHED";
 	static readonly SUCCESS_AUTH_SIGN_UP = "SUCCESS_AUTH_SIGN_UP";
+
+	static readonly SUCCESS_SEND_OTP = "SUCCESS_CREATE_OTP";
+	static readonly SUCCESS_VERIFY_OTP = "SUCCESS_VERIFY_OTP";
 }

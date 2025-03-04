@@ -1,16 +1,16 @@
-import { Body, Controller, Post } from "@nestjs/common";
-import { PatientForgetPasswordService } from "@app/app/patient/auth/service/patient-forget-password.service";
-import { UriUtil } from "@util";
-import { AccountRole } from "@prisma/client";
 import { PatientAuthSendOtpRequest } from "@app/app/patient/auth/dto/request/patient-auth-send-otp.request";
-import { PatientAuthSendOtpResponse } from "@app/app/patient/auth/dto/response/patient-auth-send-otp.response";
-import { IApiResponse } from "@contract";
-import { BaseApiResponse } from "@common";
-import { AuthSuccessMessage, OtpSuccessMessage } from "@constant/message";
 import { PatientAuthVerifyOtpRequest } from "@app/app/patient/auth/dto/request/patient-auth-verify-otp.request";
-import { PatientAuthVerifyOtpResponse } from "@app/app/patient/auth/dto/response/patient-auth-verify-otp.response";
 import { PatientForgetPasswordRequest } from "@app/app/patient/auth/dto/request/patient-forget-password.request";
+import { PatientAuthSendOtpResponse } from "@app/app/patient/auth/dto/response/patient-auth-send-otp.response";
+import { PatientAuthVerifyOtpResponse } from "@app/app/patient/auth/dto/response/patient-auth-verify-otp.response";
 import { PatientForgetPasswordResponse } from "@app/app/patient/auth/dto/response/patient-forget-password.response";
+import { PatientForgetPasswordService } from "@app/app/patient/auth/service/patient-forget-password.service";
+import { BaseApiResponse } from "@common";
+import { AccountSuccessMessage } from "@constant/message";
+import { IApiResponse } from "@contract";
+import { Body, Controller, Post } from "@nestjs/common";
+import { AccountRole } from "@prisma/client";
+import { UriUtil } from "@util";
 
 @Controller(
 	UriUtil.uriFromRoleBase(AccountRole.PATIENT, "auth/forget-password"),
@@ -39,7 +39,7 @@ export class PatientForgetPasswordController {
 		const result = await this.service.checkAccount(reqBody);
 
 		return BaseApiResponse.created({
-			message: OtpSuccessMessage.SUCCESS_SEND_OTP,
+			message: AccountSuccessMessage.SUCCESS_SEND_OTP,
 			data: PatientAuthSendOtpResponse.fromEntity(result),
 		});
 	}
@@ -66,7 +66,7 @@ export class PatientForgetPasswordController {
 		const result = await this.service.verifyOtp(reqBody);
 
 		return BaseApiResponse.created({
-			message: OtpSuccessMessage.SUCCESS_VERIFY_OTP,
+			message: AccountSuccessMessage.SUCCESS_VERIFY_OTP,
 			data: PatientAuthVerifyOtpResponse.fromEntity(result),
 		});
 	}
@@ -94,7 +94,7 @@ export class PatientForgetPasswordController {
 		});
 
 		return BaseApiResponse.created({
-			message: AuthSuccessMessage.SUCCESS_RESET_PASSWORD,
+			message: AccountSuccessMessage.SUCCESS_RESET_PASSWORD,
 			data: PatientForgetPasswordResponse.fromEntity(result),
 		});
 	}

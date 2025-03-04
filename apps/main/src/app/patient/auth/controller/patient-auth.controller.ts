@@ -1,19 +1,19 @@
-import { Body, Controller, Delete, Post, UseGuards } from "@nestjs/common";
-import { AccountRole } from "@prisma/client";
-import { UriUtil } from "@util";
-import { PatientAuthService } from "../service/patient-auth.service";
-import { IApiResponse, IJwtRefresh, IPatientEntity } from "@contract";
+import { PatientAuthRefreshTokenRequest } from "@app/app/patient/auth/dto/request/patient-auth-refresh-token.request";
+import { PatientAuthSignInRequest } from "@app/app/patient/auth/dto/request/patient-auth-sign-in.request";
+import { PatientAuthResponse } from "@app/app/patient/auth/dto/response/patient-auth.response";
 import { BaseApiResponse } from "@common";
-import { AuthSuccessMessage } from "@constant/message";
+import { AccountSuccessMessage } from "@constant/message";
+import { IApiResponse, IJwtRefresh, IPatientEntity } from "@contract";
 import {
 	AccessTokenGuard,
 	GetPatientLogged,
 	RefreshToken,
 	RefreshTokenGuard,
 } from "@module/app-jwt";
-import { PatientAuthSignInRequest } from "@app/app/patient/auth/dto/request/patient-auth-sign-in.request";
-import { PatientAuthResponse } from "@app/app/patient/auth/dto/response/patient-auth.response";
-import { PatientAuthRefreshTokenRequest } from "@app/app/patient/auth/dto/request/patient-auth-refresh-token.request";
+import { Body, Controller, Delete, Post, UseGuards } from "@nestjs/common";
+import { AccountRole } from "@prisma/client";
+import { UriUtil } from "@util";
+import { PatientAuthService } from "../service/patient-auth.service";
 
 @Controller(UriUtil.uriFromRoleBase(AccountRole.PATIENT, "auth"))
 export class PatientAuthController {
@@ -41,7 +41,7 @@ export class PatientAuthController {
 		const result = await this.service.signIn(reqBody);
 
 		return BaseApiResponse.created({
-			message: AuthSuccessMessage.SUCCESS_AUTH_SIGN_IN,
+			message: AccountSuccessMessage.SUCCESS_AUTH_SIGN_IN,
 			data: PatientAuthResponse.fromEntity(result),
 		});
 	}
@@ -69,7 +69,7 @@ export class PatientAuthController {
 		const result = await this.service.refreshToken(refreshToken, reqBody);
 
 		return BaseApiResponse.success({
-			message: AuthSuccessMessage.SUCCESS_AUTH_REFRESH_TOKEN,
+			message: AccountSuccessMessage.SUCCESS_AUTH_REFRESH_TOKEN,
 			data: PatientAuthResponse.fromEntity(result),
 		});
 	}
@@ -93,7 +93,7 @@ export class PatientAuthController {
 		await this.service.signOut(patient.account.id);
 
 		return BaseApiResponse.success({
-			message: AuthSuccessMessage.SUCCESS_AUTH_SIGN_OUT,
+			message: AccountSuccessMessage.SUCCESS_AUTH_SIGN_OUT,
 			data: undefined,
 		});
 	}

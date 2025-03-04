@@ -1,5 +1,5 @@
 import { BaseApiResponse } from "@common";
-import { AccountSuccessMessage, OtpSuccessMessage } from "@constant/message";
+import { AccountSuccessMessage } from "@constant/message";
 import { IApiResponse, INutritionistEntity } from "@contract";
 import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
 import { Body, Controller, Get, Post, Put, UseGuards } from "@nestjs/common";
@@ -40,7 +40,7 @@ export class NutritionistChangePasswordController {
 		const result = await this.service.sendOtp(nutritionist);
 
 		return BaseApiResponse.success({
-			message: OtpSuccessMessage.SUCCESS_SEND_OTP,
+			message: AccountSuccessMessage.SUCCESS_SEND_OTP,
 			data: NutritionistChangePasswordSendOtpResponse.fromEntity(result),
 		});
 	}
@@ -67,7 +67,7 @@ export class NutritionistChangePasswordController {
 		const result = await this.service.verifyOtp(reqBody);
 
 		return BaseApiResponse.created({
-			message: OtpSuccessMessage.SUCCESS_VERIFY_OTP,
+			message: AccountSuccessMessage.SUCCESS_VERIFY_OTP,
 			data: NutritionistChangePasswordVerifyOtpResponse.fromEntity(result),
 		});
 	}

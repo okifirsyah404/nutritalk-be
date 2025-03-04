@@ -1,5 +1,5 @@
 import { BaseApiResponse } from "@common";
-import { RegistrationCertificateSuccessMessage } from "@constant/message";
+import { NutritionistSuccessMessage } from "@constant/message";
 import { IApiResponse, INutritionistEntity } from "@contract";
 import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
 import {
@@ -42,8 +42,7 @@ export class NutritionistCertificateController {
 		);
 
 		return BaseApiResponse.success({
-			message:
-				RegistrationCertificateSuccessMessage.SUCCESS_GET_REGISTRATION_CERTIFICATE,
+			message: NutritionistSuccessMessage.SUCCESS_GET_REGISTRATION_CERTIFICATE,
 			data: NutritionistCertificateResponse.fromEntity(result),
 		});
 	}
@@ -76,7 +75,7 @@ export class NutritionistCertificateController {
 
 		return BaseApiResponse.success({
 			message:
-				RegistrationCertificateSuccessMessage.SUCCESS_CREATE_REGISTRATION_CERTIFICATE,
+				NutritionistSuccessMessage.SUCCESS_CREATE_REGISTRATION_CERTIFICATE,
 			data: NutritionistCertificateResponse.fromEntity(result),
 		});
 	}
@@ -109,7 +108,7 @@ export class NutritionistCertificateController {
 
 		return BaseApiResponse.success({
 			message:
-				RegistrationCertificateSuccessMessage.SUCCESS_UPDATE_REGISTRATION_CERTIFICATE,
+				NutritionistSuccessMessage.SUCCESS_UPDATE_REGISTRATION_CERTIFICATE,
 			data: NutritionistCertificateResponse.fromEntity(result),
 		});
 	}
@@ -132,7 +131,7 @@ export class NutritionistCertificateController {
 
 		return BaseApiResponse.success({
 			message:
-				RegistrationCertificateSuccessMessage.SUCCESS_DELETE_REGISTRATION_CERTIFICATE,
+				NutritionistSuccessMessage.SUCCESS_DELETE_REGISTRATION_CERTIFICATE,
 			data: undefined,
 		});
 	}
