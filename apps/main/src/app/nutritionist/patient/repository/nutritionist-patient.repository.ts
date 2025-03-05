@@ -42,7 +42,9 @@ export class NutritionistPatientRepository {
 		try {
 			const [totalItems, items]: [number, IPatientEntity[]] =
 				await this.prisma.$transaction(async (trx) => {
-					const isSearchingByMedicalRecordKey = query.search?.startsWith("RM-");
+					const isSearchingByMedicalRecordKey = query.search
+						?.toLowerCase()
+						.startsWith("rm-");
 
 					const whereCondition: Prisma.PatientWhereInput = {
 						profile: isSearchingByMedicalRecordKey
