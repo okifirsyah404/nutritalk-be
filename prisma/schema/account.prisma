@@ -6,7 +6,7 @@ model Account {
 
   // Main Fields
   email        String    @unique
-  password     String
+  password     String?
   refreshToken String?   @unique
   lastActivity DateTime?
 

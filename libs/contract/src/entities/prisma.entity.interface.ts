@@ -59,7 +59,7 @@ export type PaymentSourceEnum = "CREDIT" | "MIDTRANS";
 export interface IAccountEntity {
 	id: string;
 	email: string;
-	password: string;
+	password?: string | null;
 	refreshToken?: string | null;
 	lastActivity?: Date | null;
 	createdAt?: Date | null;
