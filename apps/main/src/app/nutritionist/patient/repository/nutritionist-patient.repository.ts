@@ -74,6 +74,8 @@ export class NutritionistPatientRepository {
 					});
 
 					const results = await trx.patient.findMany({
+						skip: this.paginationUtil.countOffset(query),
+						take: query.limit,
 						orderBy: order,
 						where: whereCondition,
 						select: {
