@@ -5,7 +5,7 @@
 Table Account {
   id String [pk]
   email String [unique, not null]
-  password String [not null]
+  password String
   refreshToken String [unique]
   lastActivity DateTime
   createdAt DateTime [default: `now()`]

@@ -15,7 +15,8 @@ export class NutritionistConsultationResponse implements IConsultationEntity {
 		this.trId = entity.trId;
 		this.status = entity.status;
 		this.type = entity.type;
-		this.note = entity.note;
+		this.patientNote = entity.patientNote;
+		this.nutritionistNote = entity.nutritionistNote;
 		this.createdAt = entity.createdAt;
 		this.updatedAt = entity.updatedAt;
 		this.patient = entity.patient;
@@ -30,7 +31,8 @@ export class NutritionistConsultationResponse implements IConsultationEntity {
 	trId: string;
 	status: TransactionStatus;
 	type: ConsultationType;
-	note: string | null;
+	patientNote?: string;
+	nutritionistNote?: string;
 	createdAt?: Date;
 	updatedAt?: Date;
 	patient?: IPatientEntity;
