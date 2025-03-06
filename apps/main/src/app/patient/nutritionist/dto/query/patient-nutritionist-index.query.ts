@@ -1,10 +1,10 @@
-import { booleanStringTransformer, IndexPaginationRequest } from "@common";
 import { QueryFilterValidationMessage } from "@constant/message";
+import { booleanStringTransformer, IndexPaginationRequest } from "@common";
 import { IIndexPaginationOption } from "@contract";
 import { Transform } from "class-transformer";
 import { IsBoolean, IsOptional } from "class-validator";
 
-export class NutritionistIndexQuery
+export class PatientNutritionistIndexQuery
 	extends IndexPaginationRequest
 	implements IIndexPaginationOption
 {
@@ -101,19 +101,4 @@ export class NutritionistIndexQuery
 	})
 	@IsOptional()
 	readonly schedules?: boolean;
-
-	/**
-	 *
-	 * @description Exclude self
-	 *
-	 * @type {boolean}
-	 *
-	 */
-	@Transform(booleanStringTransformer)
-	@IsBoolean({
-		message:
-			QueryFilterValidationMessage.ERR_EXCLUDE_SELF_BOOLEAN_FILTER_MUST_BE_BOOLEAN,
-	})
-	@IsOptional()
-	readonly excludeSelf?: boolean;
 }
