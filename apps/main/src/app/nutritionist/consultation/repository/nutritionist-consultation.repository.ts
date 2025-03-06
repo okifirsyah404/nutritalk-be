@@ -21,6 +21,7 @@ export class NutritionistConsultationRepository {
 		query: NutritionistConsultationIndexQuery,
 	): Promise<IPaginationResult<IConsultationEntity>> {
 		const allowToSort = [
+			"trId",
 			"createdAt",
 			"updatedAt",
 			"status",

@@ -3,6 +3,7 @@ import { QueryFilterValidationMessage } from "@constant/message";
 import {
 	IIndexPaginationOption,
 	NutritionistConsultationSortIndexQuery,
+	SortOrderEnum,
 } from "@contract";
 import { ConsultationType, TransactionStatus } from "@prisma/client";
 import { Transform } from "class-transformer";
@@ -19,20 +20,22 @@ export class NutritionistConsultationIndexQuery
 	 */
 	@Transform(({ value }: { value: string }) => {
 		switch (value) {
+			case "transactionId":
+				return "trId";
 			case "createdAt":
-				return NutritionistConsultationSortIndexQuery.CREATED_AT;
+				return "createdAt";
 			case "updatedAt":
-				return NutritionistConsultationSortIndexQuery.UPDATED_AT;
+				return "updatedAt";
 			case "status":
-				return NutritionistConsultationSortIndexQuery.STATUS;
+				return "status";
 			case "type":
-				return NutritionistConsultationSortIndexQuery.TYPE;
+				return "type";
 			case "startDate":
-				return NutritionistConsultationSortIndexQuery.START_DATE;
+				return "consultationTime.start";
 			case "endDate":
-				return NutritionistConsultationSortIndexQuery.END_DATE;
+				return "consultationTime.end";
 			case "patientName":
-				return NutritionistConsultationSortIndexQuery.PATIENT_NAME;
+				return "patient.profile.name";
 			default:
 				return undefined;
 		}
@@ -41,7 +44,21 @@ export class NutritionistConsultationIndexQuery
 		message: QueryFilterValidationMessage.ERR_SORT_FILTER_INVALID,
 	})
 	@IsOptional()
-	declare sort?: NutritionistConsultationSortIndexQuery;
+	declare sort?: string;
+
+	/**
+	 *
+	 * @description Sort order
+	 *
+	 * @type {SortOrderEnum}
+	 *
+	 */
+	@Transform(({ value }): string | undefined => (value === "" ? "desc" : value))
+	@IsEnum(SortOrderEnum, {
+		message: QueryFilterValidationMessage.ERR_ORDER_INVALID,
+	})
+	@IsOptional()
+	order: SortOrderEnum = SortOrderEnum.DESC;
 
 	/**
 	 *
