@@ -1,8 +1,18 @@
-import { QueryFilterValidationMessage } from "@constant/message";
-import { booleanStringTransformer, IndexPaginationRequest } from "@common";
+import {
+	booleanStringTransformer,
+	consultationTypeEnumStringTransformer,
+	genderEnumStringTransformer,
+	IndexPaginationRequest,
+	numberStringTransformer,
+} from "@common";
+import {
+	ProfileValidationMessage,
+	QueryFilterValidationMessage,
+} from "@constant/message";
 import { IIndexPaginationOption } from "@contract";
+import { ConsultationType, Gender } from "@prisma/client";
 import { Transform } from "class-transformer";
-import { IsBoolean, IsOptional } from "class-validator";
+import { IsBoolean, IsEnum, IsInt, IsOptional } from "class-validator";
 
 export class PatientNutritionistIndexQuery
 	extends IndexPaginationRequest
@@ -25,7 +35,7 @@ export class PatientNutritionistIndexQuery
 			QueryFilterValidationMessage.ERR_ACCOUNT_BOOLEAN_FILTER_MUST_BE_BOOLEAN,
 	})
 	@IsOptional()
-	readonly account?: boolean;
+	readonly withAccount?: boolean;
 
 	/**
 	 *
@@ -40,7 +50,7 @@ export class PatientNutritionistIndexQuery
 			QueryFilterValidationMessage.ERR_CONSULTATION_META_BOOLEAN_FILTER_MUST_BE_BOOLEAN,
 	})
 	@IsOptional()
-	readonly consultationMeta?: boolean;
+	readonly withConsultationMeta?: boolean;
 
 	/**
 	 *
@@ -55,7 +65,7 @@ export class PatientNutritionistIndexQuery
 			QueryFilterValidationMessage.ERR_OCCUPATION_BOOLEAN_FILTER_MUST_BE_BOOLEAN,
 	})
 	@IsOptional()
-	readonly occupation?: boolean;
+	readonly withOccupation?: boolean;
 
 	/**
 	 *
@@ -70,7 +80,7 @@ export class PatientNutritionistIndexQuery
 			QueryFilterValidationMessage.ERR_PROFILE_BOOLEAN_FILTER_MUST_BE_BOOLEAN,
 	})
 	@IsOptional()
-	readonly price?: boolean;
+	readonly withPrice?: boolean;
 
 	/**
 	 *
@@ -85,7 +95,7 @@ export class PatientNutritionistIndexQuery
 			QueryFilterValidationMessage.ERR_CERTIFICATE_BOOLEAN_FILTER_MUST_BE_BOOLEAN,
 	})
 	@IsOptional()
-	readonly registrationCertificate?: boolean;
+	readonly withRegistrationCertificate?: boolean;
 
 	/**
 	 *
@@ -100,5 +110,90 @@ export class PatientNutritionistIndexQuery
 			QueryFilterValidationMessage.ERR_SCHEDULE_BOOLEAN_FILTER_MUST_BE_BOOLEAN,
 	})
 	@IsOptional()
-	readonly schedules?: boolean;
+	readonly withSchedules?: boolean;
+
+	/**
+	 *
+	 * @description Include consultation type
+	 *
+	 * @type {boolean}
+	 *
+	 */
+	@Transform(consultationTypeEnumStringTransformer)
+	@IsEnum(ConsultationType, {
+		message:
+			QueryFilterValidationMessage.ERR_CONSULTATION_TYPE_FILTER_MUST_BE_ENUM,
+	})
+	@IsOptional()
+	readonly consultationType: ConsultationType;
+
+	/**
+	 *
+	 * @description Include Nutritionist gender
+	 *
+	 * @type {string}
+	 *
+	 */
+	@Transform(genderEnumStringTransformer)
+	@IsEnum(Gender, {
+		message: ProfileValidationMessage.ERR_GENDER_INVALID,
+	})
+	@IsOptional()
+	readonly gender?: Gender;
+
+	/**
+	 *
+	 * @description Include min consultation fee
+	 *
+	 * @type {boolean}
+	 *
+	 */
+	@Transform(numberStringTransformer)
+	@IsInt({
+		message: QueryFilterValidationMessage.ERR_MIN_PRICE_FILTER_MUST_BE_INT,
+	})
+	@IsOptional()
+	readonly minPrice?: number;
+
+	/**
+	 *
+	 * @description Include max consultation fee
+	 *
+	 * @type {boolean}
+	 *
+	 */
+	@Transform(numberStringTransformer)
+	@IsInt({
+		message: QueryFilterValidationMessage.ERR_MAX_PRICE_FILTER_MUST_BE_INT,
+	})
+	@IsOptional()
+	readonly maxPrice?: number;
+
+	/**
+	 *
+	 * @description Include min experience
+	 *
+	 * @type {boolean}
+	 *
+	 */
+	@Transform(numberStringTransformer)
+	@IsInt({
+		message: QueryFilterValidationMessage.ERR_MIN_PRICE_FILTER_MUST_BE_INT,
+	})
+	@IsOptional()
+	readonly minExperience?: number;
+
+	/**
+	 *
+	 * @description Include max experience
+	 *
+	 * @type {boolean}
+	 *
+	 */
+	@Transform(numberStringTransformer)
+	@IsInt({
+		message: QueryFilterValidationMessage.ERR_MAX_PRICE_FILTER_MUST_BE_INT,
+	})
+	@IsOptional()
+	readonly maxExperience?: number;
 }

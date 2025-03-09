@@ -1,6 +1,8 @@
 import { PrismaSelector, PrismaService } from "@config/prisma";
 import { INutritionistEntity, IPaginationResult } from "@contract";
+import { createDatabaseErrorHandler } from "@infrastructure";
 import { Injectable } from "@nestjs/common";
+import { ConsultationType, Prisma } from "@prisma/client";
 import { DatabaseUtil, PaginationUtil } from "@util";
 import { NutritionistIndexQuery } from "../dto/query/nutritionist-index.query";
 
@@ -49,66 +51,109 @@ export class NutritionistRepository {
 			query.order,
 		);
 
-		const totalItems = await this.prisma.nutritionist.count({
-			where: {
-				profile: {
-					name: {
-						contains: query.search ?? undefined,
-						mode: "insensitive",
-					},
-				},
-				NOT: query.excludeSelf ? { id: nutritionistId } : undefined,
-			},
-		});
+		try {
+			const [totalItems, items]: [number, INutritionistEntity[]] =
+				await this.prisma.$transaction(async (trx) => {
+					const whereCondition: Prisma.NutritionistWhereInput = {
+						id: {
+							not: query.excludeSelf === true ? nutritionistId : undefined,
+						},
+						profile: {
+							name: {
+								contains: query.search ?? undefined,
+								mode: "insensitive",
+							},
+							gender: query.gender,
+						},
+						occupation: {
+							experience: {
+								gte: query.minExperience,
+								lte: query.maxExperience,
+							},
+						},
+						price: {
+							online:
+								query.consultationType === ConsultationType.ONLINE
+									? {
+											gte: query.minPrice,
+											lte: query.maxPrice,
+										}
+									: undefined,
+							offline:
+								query.consultationType === ConsultationType.OFFLINE
+									? {
+											gte: query.minPrice,
+											lte: query.maxPrice,
+										}
+									: undefined,
+						},
+					};
 
-		const items = await this.prisma.nutritionist.findMany({
-			skip: this.paginationUtil.countOffset(query),
-			take: query.limit,
-			orderBy: order,
-			where: {
-				profile: {
-					name: {
-						contains: query.search ?? undefined,
-						mode: "insensitive",
-					},
-				},
-				NOT: query.excludeSelf ? { id: nutritionistId } : undefined,
-			},
-			select: {
-				...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
-				consultationMeta: query.consultationMeta === true && {
-					select: PrismaSelector.CONSULTATION_META,
-				},
-				schedules: query.schedules === true && {
-					orderBy: {
-						dayOfWeekIndex: "asc",
-					},
-					select: PrismaSelector.SCHEDULE,
-				},
-				price: query.price === true && {
-					select: PrismaSelector.PRICE,
-				},
-				registrationCertificate: query.registrationCertificate === true && {
-					select: PrismaSelector.REGISTRATION_CERTIFICATE,
-				},
-				occupation: query.occupation === true && {
-					select: PrismaSelector.OCCUPATION,
-				},
-			},
-		});
+					const total = await trx.nutritionist.count({
+						where: whereCondition,
+					});
 
-		return {
-			pagination: {
-				page: query.page,
-				limit: query.limit,
-				totalItems,
-				totalPages: this.paginationUtil.countTotalPages({
-					totalItems,
+					const data: INutritionistEntity[] = await trx.nutritionist.findMany({
+						skip: this.paginationUtil.countOffset(query),
+						take: query.limit,
+						orderBy: order,
+						where: whereCondition,
+						select: {
+							...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
+							consultationMeta:
+								query.withConsultationMeta === true
+									? {
+											select: PrismaSelector.CONSULTATION_META,
+										}
+									: false,
+							schedules:
+								query.withSchedules === true
+									? {
+											orderBy: {
+												dayOfWeekIndex: "asc",
+											},
+											select: PrismaSelector.SCHEDULE,
+										}
+									: false,
+							price:
+								query.withPrice === true
+									? {
+											select: PrismaSelector.PRICE,
+										}
+									: false,
+							registrationCertificate:
+								query.withRegistrationCertificate === true
+									? {
+											select: PrismaSelector.REGISTRATION_CERTIFICATE,
+										}
+									: false,
+							occupation:
+								query.withOccupation === true
+									? {
+											select: PrismaSelector.OCCUPATION,
+										}
+									: false,
+						},
+					});
+
+					return [total, data];
+				});
+
+			return {
+				pagination: {
+					page: query.page,
 					limit: query.limit,
-				}),
-			},
-			items,
-		};
+					totalItems,
+					totalPages: this.paginationUtil.countTotalPages({
+						totalItems,
+						limit: query.limit,
+					}),
+				},
+				items,
+			};
+		} catch (e) {
+			createDatabaseErrorHandler(e);
+		}
 	}
 
 	/**
@@ -135,25 +180,25 @@ export class NutritionistRepository {
 			},
 			select: {
 				...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
-				account: query.account === true && {
+				account: query.withAccount === true && {
 					select: PrismaSelector.ACCOUNT,
 				},
-				consultationMeta: query.consultationMeta === true && {
+				consultationMeta: query.withConsultationMeta === true && {
 					select: PrismaSelector.CONSULTATION_META,
 				},
-				schedules: query.schedules === true && {
+				schedules: query.withSchedules === true && {
 					orderBy: {
 						dayOfWeekIndex: "asc",
 					},
 					select: PrismaSelector.SCHEDULE_WITH_TIMES,
 				},
-				price: query.price === true && {
+				price: query.withPrice === true && {
 					select: PrismaSelector.PRICE,
 				},
-				registrationCertificate: query.registrationCertificate === true && {
+				registrationCertificate: query.withRegistrationCertificate === true && {
 					select: PrismaSelector.REGISTRATION_CERTIFICATE,
 				},
-				occupation: query.occupation === true && {
+				occupation: query.withOccupation === true && {
 					select: PrismaSelector.OCCUPATION,
 				},
 			},
