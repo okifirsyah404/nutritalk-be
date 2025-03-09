@@ -1,9 +1,10 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { PrismaSelector, PrismaService } from "@config/prisma";
-import { DatabaseUtil, PaginationUtil } from "@util";
 import { PatientNutritionistIndexQuery } from "@app/app/patient/nutritionist/dto/query/patient-nutritionist-index.query";
+import { PrismaSelector, PrismaService } from "@config/prisma";
 import { INutritionistEntity, IPaginationResult } from "@contract";
 import { createDatabaseErrorHandler } from "@infrastructure";
+import { Injectable, Logger } from "@nestjs/common";
+import { ConsultationType, Prisma } from "@prisma/client";
+import { DatabaseUtil, PaginationUtil } from "@util";
 
 @Injectable()
 export class PatientNutritionistRepository {
@@ -55,39 +56,57 @@ export class PatientNutritionistRepository {
 		try {
 			const [totalItems, items]: [number, INutritionistEntity[]] =
 				await this.prisma.$transaction(async (trx) => {
-					const total = await trx.nutritionist.count({
-						where: {
-							profile: {
-								name: {
-									contains: query.search ?? undefined,
-									mode: "insensitive",
-								},
+					const whereCondition: Prisma.NutritionistWhereInput = {
+						profile: {
+							name: {
+								contains: query.search ?? undefined,
+								mode: "insensitive",
+							},
+							gender: query.gender,
+						},
+						occupation: {
+							experience: {
+								gte: query.minExperience,
+								lte: query.maxExperience,
 							},
 						},
+						price: {
+							online:
+								query.consultationType === ConsultationType.ONLINE
+									? {
+											gte: query.minPrice,
+											lte: query.maxPrice,
+										}
+									: undefined,
+							offline:
+								query.consultationType === ConsultationType.OFFLINE
+									? {
+											gte: query.minPrice,
+											lte: query.maxPrice,
+										}
+									: undefined,
+						},
+					};
+
+					const total = await trx.nutritionist.count({
+						where: whereCondition,
 					});
 
 					const data: INutritionistEntity[] = await trx.nutritionist.findMany({
 						skip: this.paginationUtil.countOffset(query),
 						take: query.limit,
 						orderBy: order,
-						where: {
-							profile: {
-								name: {
-									contains: query.search ?? undefined,
-									mode: "insensitive",
-								},
-							},
-						},
+						where: whereCondition,
 						select: {
 							...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
 							consultationMeta:
-								query.consultationMeta === true
+								query.withConsultationMeta === true
 									? {
 											select: PrismaSelector.CONSULTATION_META,
 										}
 									: false,
 							schedules:
-								query.schedules === true
+								query.withSchedules === true
 									? {
 											orderBy: {
 												dayOfWeekIndex: "asc",
@@ -96,19 +115,19 @@ export class PatientNutritionistRepository {
 										}
 									: false,
 							price:
-								query.price === true
+								query.withPrice === true
 									? {
 											select: PrismaSelector.PRICE,
 										}
 									: false,
 							registrationCertificate:
-								query.registrationCertificate === true
+								query.withRegistrationCertificate === true
 									? {
 											select: PrismaSelector.REGISTRATION_CERTIFICATE,
 										}
 									: false,
 							occupation:
-								query.occupation === true
+								query.withOccupation === true
 									? {
 											select: PrismaSelector.OCCUPATION,
 										}
@@ -134,67 +153,6 @@ export class PatientNutritionistRepository {
 		} catch (e) {
 			createDatabaseErrorHandler(e);
 		}
-
-		// const totalItems = await this.prisma.nutritionist.count({
-		// 	where: {
-		// 		profile: {
-		// 			name: {
-		// 				contains: query.search ?? undefined,
-		// 				mode: "insensitive",
-		// 			},
-		// 		},
-		// 	},
-		// });
-		//
-		// const items = await this.prisma.nutritionist.findMany({
-		// 	skip: this.paginationUtil.countOffset(query),
-		// 	take: query.limit,
-		// 	orderBy: order,
-		// 	where: {
-		// 		profile: {
-		// 			name: {
-		// 				contains: query.search ?? undefined,
-		// 				mode: "insensitive",
-		// 			},
-		// 		},
-		// 	},
-		// 	select: {
-		// 		...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
-		// 		consultationMeta:
-		// 			query.consultationMeta === true
-		// 				? {
-		// 						select: PrismaSelector.CONSULTATION_META,
-		// 					}
-		// 				: false,
-		// 		schedules:
-		// 			query.schedules === true
-		// 				? {
-		// 						orderBy: {
-		// 							dayOfWeekIndex: "asc",
-		// 						},
-		// 						select: PrismaSelector.SCHEDULE,
-		// 					}
-		// 				: false,
-		// 		price:
-		// 			query.price === true
-		// 				? {
-		// 						select: PrismaSelector.PRICE,
-		// 					}
-		// 				: false,
-		// 		registrationCertificate:
-		// 			query.registrationCertificate === true
-		// 				? {
-		// 						select: PrismaSelector.REGISTRATION_CERTIFICATE,
-		// 					}
-		// 				: false,
-		// 		occupation:
-		// 			query.occupation === true
-		// 				? {
-		// 						select: PrismaSelector.OCCUPATION,
-		// 					}
-		// 				: false,
-		// 	},
-		// });
 	}
 
 	/**
@@ -221,25 +179,25 @@ export class PatientNutritionistRepository {
 			},
 			select: {
 				...PrismaSelector.NUTRITIONIST_WITH_PROFILE,
-				account: query.account === true && {
+				account: query.withAccount === true && {
 					select: PrismaSelector.ACCOUNT,
 				},
-				consultationMeta: query.consultationMeta === true && {
+				consultationMeta: query.withConsultationMeta === true && {
 					select: PrismaSelector.CONSULTATION_META,
 				},
-				schedules: query.schedules === true && {
+				schedules: query.withSchedules === true && {
 					orderBy: {
 						dayOfWeekIndex: "asc",
 					},
 					select: PrismaSelector.SCHEDULE_WITH_TIMES,
 				},
-				price: query.price === true && {
+				price: query.withPrice === true && {
 					select: PrismaSelector.PRICE,
 				},
-				registrationCertificate: query.registrationCertificate === true && {
+				registrationCertificate: query.withRegistrationCertificate === true && {
 					select: PrismaSelector.REGISTRATION_CERTIFICATE,
 				},
-				occupation: query.occupation === true && {
+				occupation: query.withOccupation === true && {
 					select: PrismaSelector.OCCUPATION,
 				},
 			},

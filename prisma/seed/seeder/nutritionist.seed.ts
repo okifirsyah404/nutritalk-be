@@ -108,6 +108,7 @@ async function seedNutritionist(prisma: PrismaClient): Promise<void> {
 							nidn: nutritionist.nidn,
 							nip: nutritionist.nip,
 							type: NutritionistType.COUNSELOR,
+							isAvailable: true,
 							price: {
 								create: nutritionistPrice,
 							},
