@@ -45,6 +45,13 @@ export abstract class NutritionistValidationMessage {
 	static readonly ERR_END_MUST_BE_AFTER_START = "ERR_END_MUST_BE_AFTER_START";
 	static readonly ERR_START_MUST_BE_BEFORE_END = "ERR_START_MUST_BE_BEFORE_END";
 
+	static readonly ERR_MIN_TIME_7_AM_WIB = "ERR_MIN_TIME_7_AM_WIB";
+	static readonly ERR_MAX_TIME_7_PM_WIB = "ERR_MAX_TIME_7_PM_WIB";
+	static readonly ERR_MIN_START_TIME_7_AM_WIB = "ERR_MIN_START_TIME_7_AM_WIB";
+	static readonly ERR_MAX_START_TIME_7_PM_WIB = "ERR_MAX_START_TIME_7_PM_WIB";
+	static readonly ERR_MAX_END_TIME_7_PM_WIB = "ERR_MAX_END_TIME_7_PM_WIB";
+	static readonly ERR_MIN_END_TIME_7_AM_WIB = "ERR_MIN_END_TIME_7_AM_WIB";
+
 	static readonly ERR_TIME_REQUIRED = "ERR_TIME_REQUIRED";
 	static readonly ERR_TIME_MUST_BE_DATE = "ERR_TIME_MUST_BE_DATE";
 	static readonly ERR_TIME_MUST_BE_VALID = "ERR_TIME_MUST_BE_VALID";

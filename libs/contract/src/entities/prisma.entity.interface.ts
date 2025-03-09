@@ -206,6 +206,7 @@ export interface IConsultationReviewEntity {
 	id: string;
 	rating: number;
 	description?: string | null;
+	isAnonymous?: boolean | null;
 	createdAt?: Date | null;
 	updatedAt?: Date | null;
 	consultation?: IConsultationEntity | null;
@@ -241,6 +242,15 @@ export interface IDeviceInfoEntity {
 	updatedAt?: Date | null;
 	accountId?: string | null;
 	account?: IAccountEntity | null;
+}
+
+export interface INutritionistSystemSettingEntity {
+	id: string;
+	isAutoAvailable?: boolean | null;
+	createdAt?: Date | null;
+	updatedAt?: Date | null;
+	nutritionist?: INutritionistEntity | null;
+	nutritionistId?: string | null;
 }
 
 export interface IMedicalRecordKeyEntity {
@@ -368,6 +378,7 @@ export interface INutritionistEntity {
 	registrationCertificate?: IRegistrationCertificateEntity | null;
 	schedules?: IScheduleEntity[];
 	consultations?: IConsultationEntity[];
+	nutritionistSystemSetting?: INutritionistSystemSettingEntity | null;
 	accountId?: string | null;
 	profileId?: string | null;
 }

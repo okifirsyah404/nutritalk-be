@@ -6,6 +6,7 @@ export * from "./request/index-pagination.request";
 export * from "./response/base-api.response";
 export * from "./transformer/boolean-string.transformer";
 export * from "./transformer/consultation-type-enum-string.transformer";
+export * from "./transformer/date-time.transformer";
 export * from "./transformer/gender-enum-string.transformer";
 export * from "./transformer/null-to-undefined.transform";
 export * from "./transformer/number-string.transformer";
