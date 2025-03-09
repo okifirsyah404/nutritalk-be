@@ -13,6 +13,7 @@ import { UtilityModule } from "@util";
 import { OtpSchedulerModule } from "./app/otp-scheduler/otp-scheduler.module";
 import { ScheduleService } from "./schedule/schedule.service";
 import { SignatureSchedulerModule } from "./app/signature-scheduler/signature-scheduler.module";
+import { AutoAvailableSchedulerModule } from './app/auto-available-scheduler/auto-available-scheduler.module';
 
 @Module({
 	imports: [
@@ -80,6 +81,7 @@ import { SignatureSchedulerModule } from "./app/signature-scheduler/signature-sc
 		// App Modules
 		OtpSchedulerModule,
 		SignatureSchedulerModule,
+		AutoAvailableSchedulerModule,
 	],
 	providers: [ScheduleService],
 })

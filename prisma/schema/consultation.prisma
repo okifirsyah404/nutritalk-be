@@ -106,6 +106,7 @@ model ConsultationReview {
   // Main Fields
   rating      Float
   description String?
+  isAnonymous Boolean? @default(false)
 
   // Date Metadata
   createdAt DateTime? @default(now())

@@ -8,6 +8,7 @@ import {
 import {
 	BadRequestException,
 	Injectable,
+	Logger,
 	NotFoundException,
 } from "@nestjs/common";
 import { TimeRange } from "@util";
@@ -16,6 +17,8 @@ import { NutritionistScheduleRepository } from "../repository/nutritionist-sched
 @Injectable()
 export class NutritionistScheduleService {
 	constructor(private readonly repository: NutritionistScheduleRepository) {}
+
+	private readonly logger = new Logger(NutritionistScheduleService.name);
 
 	/**
 	 * Paginates the schedule for a given nutritionist.

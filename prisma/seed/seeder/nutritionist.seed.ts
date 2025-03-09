@@ -153,6 +153,11 @@ async function seedNutritionist(prisma: PrismaClient): Promise<void> {
 									consultation: 0,
 								},
 							},
+							nutritionistSystemSetting: {
+								create: {
+									isAutoAvailable: true,
+								},
+							},
 						},
 					},
 				},

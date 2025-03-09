@@ -15,14 +15,15 @@ model Nutritionist {
   updatedAt DateTime? @updatedAt
 
   // Relations
-  account                 Account?                 @relation(fields: [accountId], references: [id], onDelete: Cascade)
-  profile                 Profile?                 @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  consultationMeta        ConsultationMeta?
-  occupation              Occupation?
-  price                   Price?
-  registrationCertificate RegistrationCertificate?
-  schedules               Schedule[]
-  consultations           Consultation[]
+  account                   Account?                   @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  profile                   Profile?                   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  consultationMeta          ConsultationMeta?
+  occupation                Occupation?
+  price                     Price?
+  registrationCertificate   RegistrationCertificate?
+  schedules                 Schedule[]
+  consultations             Consultation[]
+  nutritionistSystemSetting NutritionistSystemSetting?
 
   // Foreign Keys
   accountId String? @unique
