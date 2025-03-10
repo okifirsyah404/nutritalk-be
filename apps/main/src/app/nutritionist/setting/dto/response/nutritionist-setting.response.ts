@@ -4,6 +4,7 @@ export class NutritionistSettingResponse
 	implements INutritionistSystemSettingEntity
 {
 	private constructor(entity: INutritionistSystemSettingEntity) {
+		this.id = entity.id;
 		this.isAutoAvailable = entity.isAutoAvailable;
 	}
 
