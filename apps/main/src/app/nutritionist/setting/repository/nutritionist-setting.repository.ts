@@ -7,6 +7,11 @@ import { Injectable } from "@nestjs/common";
 export class NutritionistSettingRepository {
 	constructor(private readonly prisma: PrismaService) {}
 
+	/**
+	 * @description Create a nutritionist setting
+	 * @param nutritionistId
+	 * @returns INutritionistSystemSettingEntity
+	 */
 	async findNutritionistSetting(
 		nutritionistId: string,
 	): Promise<INutritionistSystemSettingEntity> {
@@ -20,6 +25,11 @@ export class NutritionistSettingRepository {
 			.catch(createDatabaseErrorHandler);
 	}
 
+	/**
+	 * @description Create a nutritionist setting
+	 * @param nutritionistId
+	 * @returns INutritionistSystemSettingEntity
+	 */
 	async updateNutritionistSetting(
 		nutritionistId: string,
 		data: Partial<INutritionistSystemSettingEntity>,

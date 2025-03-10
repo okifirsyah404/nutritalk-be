@@ -7,6 +7,11 @@ import { NutritionistSettingRepository } from "../repository/nutritionist-settin
 export class NutritionistSettingService {
 	constructor(private readonly repository: NutritionistSettingRepository) {}
 
+	/**
+	 * @description Create a nutritionist setting
+	 * @param nutritionistId
+	 * @returns INutritionistSystemSettingEntity
+	 */
 	async getNutritionistSetting(
 		nutritionistId: string,
 	): Promise<INutritionistSystemSettingEntity> {
@@ -22,6 +27,13 @@ export class NutritionistSettingService {
 		return result;
 	}
 
+	/**
+	 * @description Update a nutritionist setting
+	 * @param nutritionistId - The ID of the nutritionist
+	 * @param data - Partial data to update the nutritionist setting
+	 * @returns INutritionistSystemSettingEntity
+	 * @throws NotFoundException if the nutritionist setting is not found
+	 */
 	async updateNutritionistSetting(
 		nutritionistId: string,
 		data: Partial<INutritionistSystemSettingEntity>,
