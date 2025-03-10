@@ -1,15 +1,15 @@
-import { Injectable, Logger, NotFoundException } from "@nestjs/common";
+import { NutritionistBindMedicalRecordPatientRequest } from "@app/app/nutritionist/medical-record/dto/request/nutritionist-bind-medical-record-patient.request";
 import { NutritionistMedicalRecordKeyRepository } from "@app/app/nutritionist/medical-record/repository/nutritionist-medical-record-key.repository";
-import { IndexPaginationRequest } from "@common";
+import { S3StorageService } from "@config/s3storage";
+import { MedicalRecordErrorMessage } from "@constant/message";
 import {
 	ICreateMedicalRecordKey,
 	IMedicalRecordKeyEntity,
 	IPaginationResult,
 } from "@contract";
-import { S3StorageService } from "@config/s3storage";
-import { MedicalRecordErrorMessage } from "@constant/message";
 import { BmiService } from "@module/bmi";
-import { NutritionistBindMedicalRecordPatientRequest } from "@app/app/nutritionist/medical-record/dto/request/nutritionist-bind-medical-record-patient.request";
+import { Injectable, Logger, NotFoundException } from "@nestjs/common";
+import { NutritionistMedicalRecordIndexQuery } from "../dto/query/nutritionist-medical-record-index.query";
 
 @Injectable()
 export class NutritionistMedicalRecordKeyService {
@@ -31,7 +31,7 @@ export class NutritionistMedicalRecordKeyService {
 	 * @returns IPaginationResult<IMedicalRecordKeyEntity>
 	 */
 	async paginate(
-		query: IndexPaginationRequest,
+		query: NutritionistMedicalRecordIndexQuery,
 	): Promise<IPaginationResult<IMedicalRecordKeyEntity>> {
 		const result = await this.repository.paginate(query);
 
@@ -41,15 +41,17 @@ export class NutritionistMedicalRecordKeyService {
 					...item,
 					patient: {
 						...item.patient,
-						profile: {
-							...item.patient.profile,
-							imageKey:
-								item.patient.profile.imageKey != null
-									? await this.s3Service.getSignedUrl(
-											item.patient.profile.imageKey,
-										)
-									: null,
-						},
+						profile: item.patient?.profile
+							? {
+									...item.patient.profile,
+									imageKey:
+										item.patient.profile.imageKey != null
+											? await this.s3Service.getSignedUrl(
+													item.patient.profile.imageKey,
+												)
+											: null,
+								}
+							: undefined,
 					},
 				};
 			}),

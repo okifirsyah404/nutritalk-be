@@ -1,3 +1,9 @@
+import { NutritionistBindMedicalRecordPatientRequest } from "@app/app/nutritionist/medical-record/dto/request/nutritionist-bind-medical-record-patient.request";
+import { NutritionistCreateMedicalRecordKeyRequest } from "@app/app/nutritionist/medical-record/dto/request/nutritionist-create-medical-record-key.request";
+import { NutritionistMedicalRecordKeyResponse } from "@app/app/nutritionist/medical-record/dto/response/nutritionist-medical-record-key.response";
+import { BaseApiPaginationResponse, BaseApiResponse } from "@common";
+import { MedicalRecordSuccessMessage } from "@constant/message";
+import { AccessTokenGuard } from "@module/app-jwt";
 import {
 	Body,
 	Controller,
@@ -8,19 +14,10 @@ import {
 	Query,
 	UseGuards,
 } from "@nestjs/common";
-import { NutritionistMedicalRecordKeyService } from "../service/nutritionist-medical-record-key.service";
-import { AccessTokenGuard } from "@module/app-jwt";
-import {
-	BaseApiPaginationResponse,
-	BaseApiResponse,
-	IndexPaginationRequest,
-} from "@common";
-import { UriUtil } from "@util";
 import { AccountRole } from "@prisma/client";
-import { NutritionistMedicalRecordKeyResponse } from "@app/app/nutritionist/medical-record/dto/response/nutritionist-medical-record-key.response";
-import { MedicalRecordSuccessMessage } from "@constant/message";
-import { NutritionistCreateMedicalRecordKeyRequest } from "@app/app/nutritionist/medical-record/dto/request/nutritionist-create-medical-record-key.request";
-import { NutritionistBindMedicalRecordPatientRequest } from "@app/app/nutritionist/medical-record/dto/request/nutritionist-bind-medical-record-patient.request";
+import { UriUtil } from "@util";
+import { NutritionistMedicalRecordIndexQuery } from "../dto/query/nutritionist-medical-record-index.query";
+import { NutritionistMedicalRecordKeyService } from "../service/nutritionist-medical-record-key.service";
 
 @UseGuards(AccessTokenGuard)
 @Controller(
@@ -38,7 +35,7 @@ export class NutritionistMedicalRecordKeyController {
 	 */
 	@Get()
 	async paginate(
-		@Query() query: IndexPaginationRequest,
+		@Query() query: NutritionistMedicalRecordIndexQuery,
 	): Promise<BaseApiPaginationResponse<NutritionistMedicalRecordKeyResponse>> {
 		const result = await this.service.paginate(query);
 
