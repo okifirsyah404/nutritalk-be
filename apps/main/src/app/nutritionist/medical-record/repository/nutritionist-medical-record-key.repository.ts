@@ -1,4 +1,3 @@
-import { IndexPaginationRequest } from "@common";
 import { PrismaSelector, PrismaService } from "@config/prisma";
 import {
 	IAnthropometricEntity,
@@ -9,6 +8,7 @@ import {
 import { createDatabaseErrorHandler } from "@infrastructure";
 import { Injectable, Logger } from "@nestjs/common";
 import { DatabaseUtil, PaginationUtil } from "@util";
+import { NutritionistMedicalRecordIndexQuery } from "../dto/query/nutritionist-medical-record-index.query";
 
 @Injectable()
 export class NutritionistMedicalRecordKeyRepository {
@@ -29,20 +29,23 @@ export class NutritionistMedicalRecordKeyRepository {
 	 * @returns IPaginationResult<IMedicalRecordKeyEntity>
 	 */
 	async paginate(
-		query: IndexPaginationRequest,
+		query: NutritionistMedicalRecordIndexQuery,
 	): Promise<IPaginationResult<IMedicalRecordKeyEntity>> {
 		const allowToSort = [
 			"code",
 			"patient.profile.name",
 			"createdAt",
 			"updatedAt",
-			"active",
 		];
 
 		const order = this.databaseUtil.getOrderBy(
 			query.sort,
 			allowToSort,
 			query.order,
+		);
+
+		this.logger.debug(
+			`Paginate medical record key with order: ${JSON.stringify(order)}`,
 		);
 
 		try {

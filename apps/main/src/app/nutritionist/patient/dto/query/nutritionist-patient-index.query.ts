@@ -7,13 +7,10 @@ import {
 	ProfileValidationMessage,
 	QueryFilterValidationMessage,
 } from "@constant/message";
-import {
-	IIndexPaginationOption,
-	NutritionistPatientSortIndexQuery,
-} from "@contract";
+import { IIndexPaginationOption } from "@contract";
 import { Gender } from "@prisma/client";
 import { Transform } from "class-transformer";
-import { IsBoolean, IsEnum, IsOptional } from "class-validator";
+import { IsBoolean, IsEnum, IsOptional, IsString } from "class-validator";
 
 export class NutritionistPatientIndexQuery
 	extends IndexPaginationRequest
@@ -27,23 +24,23 @@ export class NutritionistPatientIndexQuery
 	 */
 	@Transform(({ value }: { value: string }) => {
 		switch (value) {
+			case "name":
+				return "profile.name";
+			case "medicalRecord":
+				return "medicalRecordKey.code";
 			case "createdAt":
 				return "createdAt";
 			case "updatedAt":
 				return "updatedAt";
-			case "medicalRecord":
-				return "medicalRecordKey.code";
-			case "name":
-				return "profile.name";
 			default:
 				return undefined;
 		}
 	})
-	@IsEnum(NutritionistPatientSortIndexQuery, {
+	@IsString({
 		message: QueryFilterValidationMessage.ERR_SORT_FILTER_INVALID,
 	})
 	@IsOptional()
-	declare sort?: NutritionistPatientSortIndexQuery;
+	declare sort?: string;
 
 	/**
 	 *

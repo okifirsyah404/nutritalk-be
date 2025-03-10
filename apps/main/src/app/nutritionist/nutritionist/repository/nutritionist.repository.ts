@@ -1,7 +1,7 @@
 import { PrismaSelector, PrismaService } from "@config/prisma";
 import { INutritionistEntity, IPaginationResult } from "@contract";
 import { createDatabaseErrorHandler } from "@infrastructure";
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { ConsultationType, Prisma } from "@prisma/client";
 import { DatabaseUtil, PaginationUtil } from "@util";
 import { NutritionistIndexQuery } from "../dto/query/nutritionist-index.query";
@@ -13,6 +13,8 @@ export class NutritionistRepository {
 		private readonly databaseUtil: DatabaseUtil,
 		private readonly paginationUtil: PaginationUtil,
 	) {}
+
+	private readonly logger = new Logger(NutritionistRepository.name);
 
 	/**
 	 * Paginates the list of nutritionists, excluding the one with the given ID (if enabled).
@@ -43,12 +45,21 @@ export class NutritionistRepository {
 		nutritionistId: string,
 		query: NutritionistIndexQuery,
 	): Promise<IPaginationResult<INutritionistEntity>> {
-		const allowToSort = ["profile.name", "createdAt", "updatedAt", "active"];
+		const allowToSort = [
+			"profile.name",
+			"isAvailable",
+			"createdAt",
+			"updatedAt",
+		];
 
 		const order = this.databaseUtil.getOrderBy(
 			query.sort,
 			allowToSort,
 			query.order,
+		);
+
+		this.logger.debug(
+			`Paginate nutritionist with query: ${JSON.stringify(query)}`,
 		);
 
 		try {
