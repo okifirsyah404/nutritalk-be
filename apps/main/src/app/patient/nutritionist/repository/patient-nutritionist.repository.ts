@@ -86,6 +86,16 @@ export class PatientNutritionistRepository {
 										}
 									: undefined,
 						},
+						schedules: query.dayOfWeek
+							? {
+									some: {
+										dayOfWeek: {
+											equals: query.dayOfWeek,
+										},
+										active: true,
+									},
+								}
+							: undefined,
 					};
 
 					const total = await trx.nutritionist.count({
