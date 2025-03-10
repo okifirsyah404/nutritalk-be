@@ -219,6 +219,11 @@ export abstract class PrismaSelector {
 		},
 	} satisfies Prisma.ScheduleSelect;
 
+	static readonly NUTRITIONIST_SYSTEM_SETTING = {
+		id: true,
+		isAutoAvailable: true,
+	} satisfies Prisma.NutritionistSystemSettingSelect;
+
 	static readonly CONSULTATION = {
 		id: true,
 		trId: true,
