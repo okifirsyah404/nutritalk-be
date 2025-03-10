@@ -1,6 +1,7 @@
 import {
 	booleanStringTransformer,
 	consultationTypeEnumStringTransformer,
+	dayOfWeekStringTransformer,
 	genderEnumStringTransformer,
 	IndexPaginationRequest,
 	numberStringTransformer,
@@ -10,7 +11,7 @@ import {
 	QueryFilterValidationMessage,
 } from "@constant/message";
 import { IIndexPaginationOption } from "@contract";
-import { ConsultationType, Gender } from "@prisma/client";
+import { ConsultationType, DayOfWeek, Gender } from "@prisma/client";
 import { Transform } from "class-transformer";
 import { IsBoolean, IsEnum, IsInt, IsOptional } from "class-validator";
 
@@ -196,4 +197,18 @@ export class PatientNutritionistIndexQuery
 	})
 	@IsOptional()
 	readonly maxExperience?: number;
+
+	/**
+	 *
+	 * @description Include day of week
+	 *
+	 * @type {boolean}
+	 *
+	 */
+	@Transform(dayOfWeekStringTransformer)
+	@IsEnum(DayOfWeek, {
+		message: QueryFilterValidationMessage.ERR_DAY_OF_WEEK_FILTER_MUST_BE_ENUM,
+	})
+	@IsOptional()
+	readonly dayOfWeek?: DayOfWeek;
 }

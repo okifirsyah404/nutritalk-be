@@ -79,4 +79,6 @@ export abstract class QueryFilterValidationMessage {
 		"ERR_MAX_EXPERIENCE_FILTER_INVALID";
 	static readonly ERR_MAX_EXPERIENCE_FILTER_MUST_BE_INT =
 		"ERR_MAX_EXPERIENCE_FILTER_MUST_BE_INT";
+	static readonly ERR_DAY_OF_WEEK_FILTER_MUST_BE_ENUM =
+		"ERR_DAY_OF_WEEK_FILTER_MUST_BE_ENUM";
 }
