@@ -1,3 +1,4 @@
+import { GenderEnum } from "@contract";
 import { faker } from "@faker-js/faker";
 import { Logger } from "@nestjs/common";
 import {
@@ -159,7 +160,7 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 					not: "RM-0000",
 				},
 			},
-			take: 20,
+			take: 25,
 			orderBy: {
 				code: "asc",
 			},
@@ -172,7 +173,11 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 		for (const key of dummyMedicalRecordKeys) {
 			const email = faker.internet.email();
 
-			const name = faker.person.fullName();
+			const sex: "male" | "female" = faker.person.sex() as "male" | "female";
+
+			const name = faker.person.fullName({
+				sex: sex,
+			});
 
 			const _height = Math.floor(Math.random() * 200) + 120;
 			const _weight = Math.floor(Math.random() * 100) + 40;
@@ -202,7 +207,7 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 						},
 					},
 					name: name,
-					gender: Gender.MALE,
+					gender: sex.toUpperCase() as GenderEnum,
 					dateOfBirth: _dateOfBirth,
 					age: _age,
 					nutritionCarePlan: {
@@ -235,7 +240,7 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 							phoneNumber: faker.phone.number(),
 							placeOfBirth: faker.location.city(),
 							address: faker.location.streetAddress(),
-							gender: Gender.MALE,
+							gender: sex.toUpperCase() as GenderEnum,
 							imageKey: faker.image.urlPicsumPhotos({
 								height: 200,
 								width: 200,
@@ -249,10 +254,14 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 			});
 		}
 
-		for (let i = 0; i < 10; i++) {
+		for (let i = 0; i < 25; i++) {
 			const email = faker.internet.email();
 
-			const name = faker.person.fullName();
+			const sex: "male" | "female" = faker.person.sex() as "male" | "female";
+
+			const name = faker.person.fullName({
+				sex,
+			});
 
 			const _dateOfBirth = faker.date.past({
 				years: 20,
@@ -275,7 +284,7 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 							phoneNumber: faker.phone.number(),
 							placeOfBirth: faker.location.city(),
 							address: faker.location.streetAddress(),
-							gender: Gender.MALE,
+							gender: sex.toUpperCase() as GenderEnum,
 							imageKey: faker.image.urlPicsumPhotos({
 								height: 200,
 								width: 200,
