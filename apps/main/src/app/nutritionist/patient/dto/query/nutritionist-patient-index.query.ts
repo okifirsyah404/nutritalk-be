@@ -1,9 +1,17 @@
-import { booleanStringTransformer, IndexPaginationRequest } from "@common";
-import { QueryFilterValidationMessage } from "@constant/message";
+import {
+	booleanStringTransformer,
+	genderEnumStringTransformer,
+	IndexPaginationRequest,
+} from "@common";
+import {
+	ProfileValidationMessage,
+	QueryFilterValidationMessage,
+} from "@constant/message";
 import {
 	IIndexPaginationOption,
 	NutritionistPatientSortIndexQuery,
 } from "@contract";
+import { Gender } from "@prisma/client";
 import { Transform } from "class-transformer";
 import { IsBoolean, IsEnum, IsOptional } from "class-validator";
 
@@ -20,13 +28,13 @@ export class NutritionistPatientIndexQuery
 	@Transform(({ value }: { value: string }) => {
 		switch (value) {
 			case "createdAt":
-				return NutritionistPatientSortIndexQuery.CREATED_AT;
+				return "createdAt";
 			case "updatedAt":
-				return NutritionistPatientSortIndexQuery.UPDATED_AT;
+				return "updatedAt";
 			case "medicalRecord":
-				return NutritionistPatientSortIndexQuery.MEDICAL_RECORD;
+				return "medicalRecordKey.code";
 			case "name":
-				return NutritionistPatientSortIndexQuery.NAME;
+				return "profile.name";
 			default:
 				return undefined;
 		}
@@ -51,4 +59,18 @@ export class NutritionistPatientIndexQuery
 	})
 	@IsOptional()
 	registered?: boolean;
+
+	/**
+	 *
+	 * @description Include Nutritionist gender
+	 *
+	 * @type {string}
+	 *
+	 */
+	@Transform(genderEnumStringTransformer)
+	@IsEnum(Gender, {
+		message: ProfileValidationMessage.ERR_GENDER_INVALID,
+	})
+	@IsOptional()
+	readonly gender?: Gender;
 }

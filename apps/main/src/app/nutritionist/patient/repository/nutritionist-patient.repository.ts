@@ -1,10 +1,10 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { NutritionistPatientIndexQuery } from "@app/app/nutritionist/patient/dto/query/nutritionist-patient-index.query";
 import { PrismaSelector, PrismaService } from "@config/prisma";
 import { IPaginationResult, IPatientEntity } from "@contract";
-import { DatabaseUtil, PaginationUtil } from "@util";
-import { NutritionistPatientIndexQuery } from "@app/app/nutritionist/patient/dto/query/nutritionist-patient-index.query";
-import { Prisma } from "@prisma/client";
 import { createDatabaseErrorHandler } from "@infrastructure";
+import { Injectable, Logger } from "@nestjs/common";
+import { Prisma } from "@prisma/client";
+import { DatabaseUtil, PaginationUtil } from "@util";
 
 @Injectable()
 export class NutritionistPatientRepository {
@@ -46,15 +46,23 @@ export class NutritionistPatientRepository {
 						?.toLowerCase()
 						.startsWith("rm-");
 
+					const isQueryRegistered =
+						query.registered !== undefined
+							? {
+									...(query.registered ? { isNot: null } : { is: null }),
+								}
+							: undefined;
+
 					const whereCondition: Prisma.PatientWhereInput = {
-						profile: isSearchingByMedicalRecordKey
-							? undefined
-							: {
-									name: {
+						profile: {
+							name: isSearchingByMedicalRecordKey
+								? undefined
+								: {
 										contains: query.search ?? undefined,
 										mode: "insensitive",
 									},
-								},
+							gender: query.gender,
+						},
 						medicalRecordKey: isSearchingByMedicalRecordKey
 							? {
 									code: {
@@ -62,11 +70,7 @@ export class NutritionistPatientRepository {
 										mode: "insensitive",
 									},
 								}
-							: query.registered != undefined
-								? query.registered
-									? { isNot: null }
-									: { is: null }
-								: undefined,
+							: isQueryRegistered,
 					};
 
 					const count = await trx.patient.count({
