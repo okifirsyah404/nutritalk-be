@@ -192,6 +192,7 @@ export interface ITransactionPriceEntity {
 
 export interface ITransactionPaymentEntity {
 	id: string;
+	midtransSnapToken?: string | null;
 	method?: string | null;
 	code?: string | null;
 	status?: string | null;

@@ -81,10 +81,11 @@ model TransactionPayment {
   id String @id @default(cuid())
 
   // Main Fields
-  method String?
-  code   String?
-  status String?
-  date   DateTime?
+  midtransSnapToken String?
+  method            String?
+  code              String?
+  status            String?
+  date              DateTime?
 
   // Date Metadata
   createdAt DateTime? @default(now())

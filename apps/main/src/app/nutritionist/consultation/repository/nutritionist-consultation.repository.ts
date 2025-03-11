@@ -16,7 +16,13 @@ export class NutritionistConsultationRepository {
 
 	private readonly logger = new Logger(NutritionistConsultationRepository.name);
 
-	async paginate(
+	/**
+	 * Paginate consultations for a nutritionist
+	 * @param nutritionistId - ID of the nutritionist
+	 * @param query - Query parameters for pagination and filtering
+	 * @returns Paginated result of consultations
+	 */
+	async paginateConsultations(
 		nutritionistId: string,
 		query: NutritionistConsultationIndexQuery,
 	): Promise<IPaginationResult<IConsultationEntity>> {
@@ -115,6 +121,12 @@ export class NutritionistConsultationRepository {
 		}
 	}
 
+	/**
+	 * Get a consultation by ID for a nutritionist
+	 * @param nutritionistId - ID of the nutritionist
+	 * @param consultationId - ID of the consultation
+	 * @returns Consultation entity
+	 */
 	async getConsultationById(
 		nutritionistId: string,
 		consultationId: string,

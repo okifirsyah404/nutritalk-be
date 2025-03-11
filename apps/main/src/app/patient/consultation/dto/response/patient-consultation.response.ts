@@ -1,0 +1,56 @@
+import {
+	IConsultationEntity,
+	IConsultationReviewEntity,
+	IConsultationTimeEntity,
+	INutritionistEntity,
+	IPatientEntity,
+	ITransactionPaymentEntity,
+	ITransactionPriceEntity,
+} from "@contract";
+import { ConsultationType, TransactionStatus } from "@prisma/client";
+
+export class PatientConsultationResponse implements IConsultationEntity {
+	private constructor(entity: IConsultationEntity) {
+		this.id = entity.id;
+		this.trId = entity.trId;
+		this.status = entity.status;
+		this.type = entity.type;
+		this.patientNote = entity.patientNote;
+		this.nutritionistNote = entity.nutritionistNote;
+		this.createdAt = entity.createdAt;
+		this.updatedAt = entity.updatedAt;
+		this.patient = entity.patient;
+		this.nutritionist = entity.nutritionist;
+		this.transactionPrice = entity.transactionPrice;
+		this.transactionPayment = entity.transactionPayment;
+		this.consultationTime = entity.consultationTime;
+		this.consultationReview = entity.consultationReview;
+	}
+
+	id: string;
+	trId: string;
+	status: TransactionStatus;
+	type: ConsultationType;
+	patientNote?: string;
+	nutritionistNote?: string;
+	createdAt?: Date;
+	updatedAt?: Date;
+	patient?: IPatientEntity;
+	nutritionist?: INutritionistEntity;
+	transactionPrice?: ITransactionPriceEntity;
+	transactionPayment?: ITransactionPaymentEntity;
+	consultationTime?: IConsultationTimeEntity;
+	consultationReview?: IConsultationReviewEntity;
+
+	static fromEntity(entity: IConsultationEntity): PatientConsultationResponse {
+		return new PatientConsultationResponse(entity);
+	}
+
+	static fromEntities(
+		entities: IConsultationEntity[],
+	): PatientConsultationResponse[] {
+		return entities.map((entity) =>
+			PatientConsultationResponse.fromEntity(entity),
+		);
+	}
+}

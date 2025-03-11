@@ -138,6 +138,7 @@ Table TransactionPrice {
 
 Table TransactionPayment {
   id String [pk]
+  midtransSnapToken String
   method String
   code String
   status String
