@@ -99,10 +99,10 @@ import { PatientAppModule } from "./app/patient/patient.app.module";
 		}),
 		MidtransModule,
 
-		PatientAppModule,
-		NutritionistAppModule,
-		AdminModule,
 		HealthCheckModule,
+		AdminModule,
+		NutritionistAppModule,
+		PatientAppModule,
 		CommonAppModule,
 	],
 	controllers: [],

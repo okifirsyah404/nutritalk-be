@@ -5,6 +5,7 @@ export * from "./dice-bear/dice-bear.interface";
 export * from "./entities/prisma.entity.interface";
 export * from "./enum/consultation-fee-type.enum";
 export * from "./enum/index-sort.enum";
+export * from "./enum/midtrans-transaction-status.enum";
 export * from "./enum/sort-order.enum";
 export * from "./file/image-download.interface";
 export * from "./firebase/auth/google-user.interface";
