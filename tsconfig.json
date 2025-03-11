@@ -60,6 +60,8 @@
 			"@module/dice-bear/*": ["libs/module/dice-bear/src/*"],
 			"@module/mailer": ["libs/module/mailer/src"],
 			"@module/mailer/*": ["libs/module/mailer/src/*"],
+			"@module/midtrans": ["libs/module/midtrans/src"],
+			"@module/midtrans/*": ["libs/module/midtrans/src/*"],
 			"@module/otp": ["libs/module/otp/src"],
 			"@module/otp/*": ["libs/module/otp/src/*"],
 			"@module/permission": ["libs/module/permission/src"],

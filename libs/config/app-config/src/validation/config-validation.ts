@@ -1,7 +1,6 @@
 import { IntersectionType } from "@nestjs/mapped-types";
 import { plainToInstance } from "class-transformer";
 import { validateSync } from "class-validator";
-import { AmpqConfigEnvironmentVariables } from "../configs/amqp.config";
 import { AppAdminEnvironmentVariables } from "../configs/app-admin.config";
 import { AppNutritionistEnvironmentVariables } from "../configs/app-nutritionist.config";
 import { AppPatientEnvironmentVariables } from "../configs/app-patient.config";
@@ -10,6 +9,7 @@ import { BcryptEnvironmentVariables } from "../configs/bcrypt.config";
 import { DatabaseEnvironmentVariables } from "../configs/database.config";
 import { DiceBearEnvironmentVariables } from "../configs/dice-bear.config";
 import { JwtEnvironmentVariables } from "../configs/jwt.config";
+import { MidtransEnvironmentVariables } from "../configs/midtrans.config";
 import { MultipartEnvironmentVariables } from "../configs/multipart.config";
 import { PaggingEnvironmentVariables } from "../configs/pagging.config";
 import { RedisEnvironmentVariables } from "../configs/redis.config";
@@ -30,8 +30,8 @@ class EnvironmentVariables extends IntersectionType(
 	PaggingEnvironmentVariables,
 	DatabaseEnvironmentVariables,
 	BcryptEnvironmentVariables,
-	AmpqConfigEnvironmentVariables,
-	//   FirebaseEnvironmentVariables,
+	MidtransEnvironmentVariables,
+	// AmpqConfigEnvironmentVariables,
 ) {}
 
 /**

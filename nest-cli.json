@@ -1,153 +1,162 @@
 {
 	"$schema": "https://json.schemastore.org/nest-cli",
 	"collection": "@nestjs/schematics",
-	"sourceRoot": "apps/main/src",
-	"root": "apps/main",
 	"compilerOptions": {
 		"deleteOutDir": true,
-		"webpack": true,
-		"tsConfigPath": "apps/main/tsconfig.app.json",
 		"plugins": [
 			{
 				"name": "@nestjs/swagger",
 				"options": {
-					"introspectComments": true,
-					"controllerKeyOfComment": "description"
+					"controllerKeyOfComment": "description",
+					"introspectComments": true
 				}
 			}
-		]
+		],
+		"tsConfigPath": "apps/main/tsconfig.app.json",
+		"webpack": true
 	},
-	"monorepo": true,
 	"generateOptions": {
 		"spec": false
 	},
 	"language": "ts",
+	"monorepo": true,
 	"projects": {
 		"app-cache": {
-			"type": "library",
-			"root": "libs/config/app-cache",
-			"entryFile": "index",
-			"sourceRoot": "libs/config/app-cache/src",
 			"compilerOptions": {
 				"tsConfigPath": "libs/config/app-cache/tsconfig.lib.json"
-			}
+			},
+			"entryFile": "index",
+			"root": "libs/config/app-cache",
+			"sourceRoot": "libs/config/app-cache/src",
+			"type": "library"
 		},
 		"app-config": {
-			"type": "library",
-			"root": "libs/config/app-config",
-			"entryFile": "index",
-			"sourceRoot": "libs/config/app-config/src",
 			"compilerOptions": {
 				"tsConfigPath": "libs/config/app-config/tsconfig.lib.json"
-			}
+			},
+			"entryFile": "index",
+			"root": "libs/config/app-config",
+			"sourceRoot": "libs/config/app-config/src",
+			"type": "library"
 		},
 		"app-jwt": {
-			"type": "library",
-			"root": "libs/module/app-jwt",
-			"entryFile": "index",
-			"sourceRoot": "libs/module/app-jwt/src",
 			"compilerOptions": {
 				"tsConfigPath": "libs/module/app-jwt/tsconfig.lib.json"
-			}
+			},
+			"entryFile": "index",
+			"root": "libs/module/app-jwt",
+			"sourceRoot": "libs/module/app-jwt/src",
+			"type": "library"
 		},
 		"bmi": {
-			"type": "library",
-			"root": "libs/module/bmi",
-			"entryFile": "index",
-			"sourceRoot": "libs/module/bmi/src",
 			"compilerOptions": {
 				"tsConfigPath": "libs/module/bmi/tsconfig.lib.json"
-			}
+			},
+			"entryFile": "index",
+			"root": "libs/module/bmi",
+			"sourceRoot": "libs/module/bmi/src",
+			"type": "library"
 		},
 		"cron": {
-			"type": "application",
-			"root": "apps/cron",
-			"entryFile": "main",
-			"sourceRoot": "apps/cron/src",
 			"compilerOptions": {
 				"tsConfigPath": "apps/cron/tsconfig.app.json"
-			}
+			},
+			"entryFile": "main",
+			"root": "apps/cron",
+			"sourceRoot": "apps/cron/src",
+			"type": "application"
 		},
 		"dice-bear": {
-			"type": "library",
-			"root": "libs/module/dice-bear",
-			"entryFile": "index",
-			"sourceRoot": "libs/module/dice-bear/src",
 			"compilerOptions": {
 				"tsConfigPath": "libs/module/dice-bear/tsconfig.lib.json"
-			}
+			},
+			"entryFile": "index",
+			"root": "libs/module/dice-bear",
+			"sourceRoot": "libs/module/dice-bear/src",
+			"type": "library"
 		},
 		"firebase": {
-			"type": "library",
-			"root": "libs/config/firebase",
-			"entryFile": "index",
-			"sourceRoot": "libs/config/firebase/src",
 			"compilerOptions": {
 				"tsConfigPath": "libs/config/firebase/tsconfig.lib.json"
-			}
+			},
+			"entryFile": "index",
+			"root": "libs/config/firebase",
+			"sourceRoot": "libs/config/firebase/src",
+			"type": "library"
 		},
 		"mailer": {
-			"type": "library",
-			"root": "libs/module/mailer",
-			"entryFile": "index",
-			"sourceRoot": "libs/module/mailer/src",
 			"compilerOptions": {
 				"tsConfigPath": "libs/module/mailer/tsconfig.lib.json"
-			}
+			},
+			"entryFile": "index",
+			"root": "libs/module/mailer",
+			"sourceRoot": "libs/module/mailer/src",
+			"type": "library"
 		},
 		"main": {
-			"type": "application",
-			"root": "apps/main",
-			"entryFile": "main",
-			"sourceRoot": "apps/main/src",
 			"compilerOptions": {
 				"tsConfigPath": "apps/main/tsconfig.app.json"
-			}
+			},
+			"entryFile": "main",
+			"root": "apps/main",
+			"sourceRoot": "apps/main/src",
+			"type": "application"
+		},
+		"midtrans": {
+			"compilerOptions": {
+				"tsConfigPath": "libs/module/midtrans/tsconfig.lib.json"
+			},
+			"entryFile": "index",
+			"root": "libs/module/midtrans",
+			"sourceRoot": "libs/module/midtrans/src",
+			"type": "library"
 		},
 		"otp": {
-			"type": "library",
-			"root": "libs/module/otp",
-			"entryFile": "index",
-			"sourceRoot": "libs/module/otp/src",
 			"compilerOptions": {
 				"tsConfigPath": "libs/module/otp/tsconfig.lib.json"
-			}
+			},
+			"entryFile": "index",
+			"root": "libs/module/otp",
+			"sourceRoot": "libs/module/otp/src",
+			"type": "library"
 		},
 		"permission": {
-			"type": "library",
-			"root": "libs/module/permission",
-			"entryFile": "index",
-			"sourceRoot": "libs/module/permission/src",
 			"compilerOptions": {
 				"tsConfigPath": "libs/module/permission/tsconfig.lib.json"
-			}
+			},
+			"entryFile": "index",
+			"root": "libs/module/permission",
+			"sourceRoot": "libs/module/permission/src",
+			"type": "library"
 		},
 		"prisma": {
-			"type": "library",
-			"root": "libs/config/prisma",
-			"entryFile": "index",
-			"sourceRoot": "libs/config/prisma/src",
 			"compilerOptions": {
 				"tsConfigPath": "libs/config/prisma/tsconfig.lib.json"
-			}
+			},
+			"entryFile": "index",
+			"root": "libs/config/prisma",
+			"sourceRoot": "libs/config/prisma/src",
+			"type": "library"
 		},
 		"s3storage": {
-			"type": "library",
-			"root": "libs/config/s3storage",
-			"entryFile": "index",
-			"sourceRoot": "libs/config/s3storage/src",
 			"compilerOptions": {
 				"tsConfigPath": "libs/config/s3storage/tsconfig.lib.json"
-			}
+			},
+			"entryFile": "index",
+			"root": "libs/config/s3storage",
+			"sourceRoot": "libs/config/s3storage/src",
+			"type": "library"
 		},
 		"signature": {
-			"type": "library",
-			"root": "libs/module/signature",
-			"entryFile": "index",
-			"sourceRoot": "libs/module/signature/src",
 			"compilerOptions": {
 				"tsConfigPath": "libs/module/signature/tsconfig.lib.json"
-			}
+			},
+			"entryFile": "index",
+			"root": "libs/module/signature",
+			"sourceRoot": "libs/module/signature/src",
+			"type": "library"
 		}
-	}
+	},
+	"root": "apps/main",
+	"sourceRoot": "apps/main/src"
 }

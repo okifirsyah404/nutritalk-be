@@ -7,6 +7,7 @@ import { PrismaModule } from "@config/prisma";
 import { S3StorageModule } from "@config/s3storage";
 import { FirebaseServicePath } from "@constant/path/main/firebase-service-path";
 import { MailerModule } from "@module/mailer";
+import { MidtransModule } from "@module/midtrans";
 import { HttpModule } from "@nestjs/axios";
 import { BullModule } from "@nestjs/bull";
 import { Logger, Module } from "@nestjs/common";
@@ -14,10 +15,10 @@ import { APP_GUARD } from "@nestjs/core";
 import { seconds, ThrottlerModule } from "@nestjs/throttler";
 import { UtilityModule } from "@util";
 import { AdminModule } from "./app/admin/admin.module";
+import { CommonAppModule } from "./app/common/common.app.module";
 import { HealthCheckModule } from "./app/health-check/health-check.module";
 import { NutritionistAppModule } from "./app/nutritionist/nutritionist.app.module";
 import { PatientAppModule } from "./app/patient/patient.app.module";
-import { CommonAppModule } from "./app/common/common.app.module";
 
 @Module({
 	imports: [
@@ -96,6 +97,7 @@ import { CommonAppModule } from "./app/common/common.app.module";
 		HttpModule.register({
 			global: true,
 		}),
+		MidtransModule,
 
 		PatientAppModule,
 		NutritionistAppModule,

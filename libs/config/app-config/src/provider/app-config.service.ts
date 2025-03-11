@@ -9,6 +9,7 @@ import { DatabaseConfig } from "../configs/database.config";
 import { DiceBearConfig } from "../configs/dice-bear.config";
 import { DocsConfig } from "../configs/docs.config";
 import { JwtConfig } from "../configs/jwt.config";
+import { MidtransConfig } from "../configs/midtrans.config";
 import { MultipartConfig } from "../configs/multipart.config";
 import { PaggingConfig } from "../configs/pagging.config";
 import { RedisConfig } from "../configs/redis.config";
@@ -68,6 +69,10 @@ export class AppConfigService {
 	 */
 	get jwtConfig(): JwtConfig {
 		return this.config.get<JwtConfig>("jwtConfig");
+	}
+
+	get midtransConfig(): MidtransConfig {
+		return this.config.get<MidtransConfig>("midtransConfig");
 	}
 
 	/**
