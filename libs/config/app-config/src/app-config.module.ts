@@ -9,6 +9,7 @@ import { databaseConfig } from "./configs/database.config";
 import { diceBearConfig } from "./configs/dice-bear.config";
 import { docsConfig } from "./configs/docs.config";
 import { jwtConfig } from "./configs/jwt.config";
+import { midtransConfig } from "./configs/midtrans.config";
 import { multipartConfig } from "./configs/multipart.config";
 import { paggingConfig } from "./configs/pagging.config";
 import { redisConfig } from "./configs/redis.config";
@@ -44,6 +45,7 @@ import { validateConfig } from "./validation/config-validation";
 				smtpConfig,
 				throttleConfig,
 				paggingConfig,
+				midtransConfig,
 				multipartConfig,
 				databaseConfig,
 				bcryptConfig,

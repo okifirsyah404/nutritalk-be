@@ -9,6 +9,7 @@ export * from "./configs/database.config";
 export * from "./configs/dice-bear.config";
 export * from "./configs/docs.config";
 export * from "./configs/jwt.config";
+export * from "./configs/midtrans.config";
 export * from "./configs/multipart.config";
 export * from "./configs/pagging.config";
 export * from "./configs/redis.config";

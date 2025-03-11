@@ -11,6 +11,7 @@ export * from "./firebase/auth/google-user.interface";
 export * from "./jwt/app-jwt.interface";
 export * from "./mail/mail.interface";
 export * from "./mail/mailer.interface";
+export * from "./midtrans/midtrans.interface";
 export * from "./otp/otp.interface";
 export * from "./pagination/pagination.interface";
 export * from "./request/auth/change-password-request.interface";
