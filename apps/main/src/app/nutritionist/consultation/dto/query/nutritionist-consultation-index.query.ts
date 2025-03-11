@@ -1,13 +1,9 @@
 import { IndexPaginationRequest } from "@common";
 import { QueryFilterValidationMessage } from "@constant/message";
-import {
-	IIndexPaginationOption,
-	NutritionistConsultationSortIndexQuery,
-	SortOrderEnum,
-} from "@contract";
+import { IIndexPaginationOption } from "@contract";
 import { ConsultationType, TransactionStatus } from "@prisma/client";
 import { Transform } from "class-transformer";
-import { IsDate, IsEnum, IsOptional } from "class-validator";
+import { IsDate, IsEnum, IsOptional, IsString } from "class-validator";
 
 export class NutritionistConsultationIndexQuery
 	extends IndexPaginationRequest
@@ -40,25 +36,11 @@ export class NutritionistConsultationIndexQuery
 				return undefined;
 		}
 	})
-	@IsEnum(NutritionistConsultationSortIndexQuery, {
+	@IsString({
 		message: QueryFilterValidationMessage.ERR_SORT_FILTER_INVALID,
 	})
 	@IsOptional()
 	declare sort?: string;
-
-	/**
-	 *
-	 * @description Sort order
-	 *
-	 * @type {SortOrderEnum}
-	 *
-	 */
-	@Transform(({ value }): string | undefined => (value === "" ? "desc" : value))
-	@IsEnum(SortOrderEnum, {
-		message: QueryFilterValidationMessage.ERR_ORDER_INVALID,
-	})
-	@IsOptional()
-	order: SortOrderEnum = SortOrderEnum.DESC;
 
 	/**
 	 *
