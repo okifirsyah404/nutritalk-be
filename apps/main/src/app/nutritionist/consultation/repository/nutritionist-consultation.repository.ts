@@ -2,7 +2,7 @@ import { PrismaSelector, PrismaService } from "@config/prisma";
 import { IConsultationEntity, IPaginationResult } from "@contract";
 import { createDatabaseErrorHandler } from "@infrastructure";
 import { Injectable, Logger } from "@nestjs/common";
-import { TransactionStatus } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { DatabaseUtil, PaginationUtil } from "@util";
 import { NutritionistConsultationIndexQuery } from "../dto/query/nutritionist-consultation-index.query";
 
@@ -37,96 +37,160 @@ export class NutritionistConsultationRepository {
 			query.order,
 		);
 
-		const totalItems = await this.prisma.consultation.count({
-			where: {
-				nutritionist: {
-					id: nutritionistId,
-				},
-				patient: {
-					profile: {
-						name: {
-							contains: query.search ?? undefined,
-							mode: "insensitive",
+		try {
+			const [totalItems, items]: [number, IConsultationEntity[]] =
+				await this.prisma.$transaction(async (trx) => {
+					const whereCondition: Prisma.ConsultationWhereInput = {
+						nutritionist: {
+							id: nutritionistId,
 						},
-					},
-				},
-				status: query.statusFilter,
-				type: query.typeFilter,
-				consultationTime: {
-					start: {
-						gte: query.startDateFilter,
-					},
-					end: {
-						lte: query.endDateFilter,
-					},
-				},
-				NOT: {
-					status: TransactionStatus.WAITING_PAYMENT,
-				},
-			},
-		});
+						patient: {
+							profile: {
+								name: {
+									contains: query.search ?? undefined,
+									mode: "insensitive",
+								},
+							},
+						},
+						status: query.statusFilter,
+						type: query.typeFilter,
+						consultationTime: {
+							start: {
+								gte: query.startDateFilter,
+							},
+							end: {
+								lte: query.endDateFilter,
+							},
+						},
+						NOT: {
+							status: "WAITING_PAYMENT",
+						},
+					};
 
-		const items = await this.prisma.consultation.findMany({
-			skip: this.paginationUtil.countOffset(query),
-			take: query.limit,
-			orderBy: order,
-			where: {
-				nutritionist: {
-					id: nutritionistId,
-				},
-				patient: {
-					profile: {
-						name: {
-							contains: query.search ?? undefined,
-							mode: "insensitive",
-						},
-					},
-				},
-				status: query.statusFilter,
-				type: query.typeFilter,
-				consultationTime: {
-					start: {
-						gte: query.startDateFilter,
-					},
-					end: {
-						lte: query.endDateFilter,
-					},
-				},
-				NOT: {
-					status: TransactionStatus.WAITING_PAYMENT,
-				},
-			},
-			select: {
-				...PrismaSelector.CONSULTATION,
-				patient: {
-					select: {
-						...PrismaSelector.PATIENT_WITH_PROFILE,
-						medicalRecordKey: {
-							select: PrismaSelector.MEDICAL_RECORD_KEY,
-						},
-					},
-				},
-				transactionPrice: {
-					select: PrismaSelector.TRANSACTION_PRICE,
-				},
-				consultationTime: {
-					select: PrismaSelector.CONSULTATION_TIME,
-				},
-			},
-		});
+					const count = await trx.consultation.count({
+						where: whereCondition,
+					});
 
-		return {
-			pagination: {
-				page: query.page,
-				limit: query.limit,
-				totalItems,
-				totalPages: this.paginationUtil.countTotalPages({
-					totalItems,
+					const data = await trx.consultation.findMany({
+						skip: this.paginationUtil.countOffset(query),
+						take: query.limit,
+						orderBy: order,
+						where: whereCondition,
+						select: {
+							...PrismaSelector.CONSULTATION,
+							patient: {
+								select: {
+									...PrismaSelector.PATIENT_WITH_PROFILE,
+									medicalRecordKey: {
+										select: PrismaSelector.MEDICAL_RECORD_KEY,
+									},
+								},
+							},
+							transactionPrice: {
+								select: PrismaSelector.TRANSACTION_PRICE,
+							},
+							consultationTime: {
+								select: PrismaSelector.CONSULTATION_TIME,
+							},
+						},
+					});
+
+					return [count, data];
+				});
+
+			return {
+				pagination: {
+					page: query.page,
 					limit: query.limit,
-				}),
-			},
-			items,
-		};
+					totalItems,
+					totalPages: this.paginationUtil.countTotalPages({
+						totalItems,
+						limit: query.limit,
+					}),
+				},
+				items,
+			};
+		} catch (error) {
+			createDatabaseErrorHandler(error);
+		}
+
+		// const totalItems = await this.prisma.consultation.count({
+		// 	where: {
+		// 		nutritionist: {
+		// 			id: nutritionistId,
+		// 		},
+		// 		patient: {
+		// 			profile: {
+		// 				name: {
+		// 					contains: query.search ?? undefined,
+		// 					mode: "insensitive",
+		// 				},
+		// 			},
+		// 		},
+		// 		status: query.statusFilter,
+		// 		type: query.typeFilter,
+		// 		consultationTime: {
+		// 			start: {
+		// 				gte: query.startDateFilter,
+		// 			},
+		// 			end: {
+		// 				lte: query.endDateFilter,
+		// 			},
+		// 		},
+		// 		NOT: {
+		// 			status: TransactionStatus.WAITING_PAYMENT,
+		// 		},
+		// 	},
+		// });
+
+		// const items = await this.prisma.consultation.findMany({
+		// 	skip: this.paginationUtil.countOffset(query),
+		// 	take: query.limit,
+		// 	orderBy: order,
+		// 	where: {
+		// 		nutritionist: {
+		// 			id: nutritionistId,
+		// 		},
+		// 		patient: {
+		// 			profile: {
+		// 				name: {
+		// 					contains: query.search ?? undefined,
+		// 					mode: "insensitive",
+		// 				},
+		// 			},
+		// 		},
+		// 		status: query.statusFilter,
+		// 		type: query.typeFilter,
+		// 		consultationTime: {
+		// 			start: {
+		// 				gte: query.startDateFilter,
+		// 			},
+		// 			end: {
+		// 				lte: query.endDateFilter,
+		// 			},
+		// 		},
+		// 		NOT: {
+		// 			status: TransactionStatus.WAITING_PAYMENT,
+		// 		},
+		// 	},
+		// 	select: {
+		// 		...PrismaSelector.CONSULTATION,
+		// 		patient: {
+		// 			select: {
+		// 				...PrismaSelector.PATIENT_WITH_PROFILE,
+		// 				medicalRecordKey: {
+		// 					select: PrismaSelector.MEDICAL_RECORD_KEY,
+		// 				},
+		// 			},
+		// 		},
+		// 		transactionPrice: {
+		// 			select: PrismaSelector.TRANSACTION_PRICE,
+		// 		},
+		// 		consultationTime: {
+		// 			select: PrismaSelector.CONSULTATION_TIME,
+		// 		},
+		// 	},
+		// });
 	}
 
 	async getConsultationById(
