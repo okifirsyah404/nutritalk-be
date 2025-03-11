@@ -13,11 +13,20 @@ export class NutritionistConsultationService {
 		private readonly storageService: S3StorageService,
 	) {}
 
+	/**
+	 * Paginate consultations for a nutritionist
+	 * @param nutritionistId - ID of the nutritionist
+	 * @param query - Query parameters for pagination and filtering
+	 * @returns Paginated result of consultations
+	 */
 	async paginateConsultation(
 		nutritionistId: string,
 		query: NutritionistConsultationIndexQuery,
 	): Promise<IPaginationResult<IConsultationEntity>> {
-		const result = await this.repository.paginate(nutritionistId, query);
+		const result = await this.repository.paginateConsultations(
+			nutritionistId,
+			query,
+		);
 		const formattedData = await Promise.all(
 			result.items.map(async (item) => ({
 				...item,
@@ -42,6 +51,12 @@ export class NutritionistConsultationService {
 		};
 	}
 
+	/**
+	 * Get a consultation by ID for a nutritionist
+	 * @param nutritionistId - ID of the nutritionist
+	 * @param consultationId - ID of the consultation
+	 * @returns Consultation entity
+	 */
 	@SetCache(
 		(nutritionistId: string, consultationId: string) =>
 			`consultation:${nutritionistId}:${consultationId}`,
