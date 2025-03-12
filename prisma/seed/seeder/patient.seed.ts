@@ -151,6 +151,11 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 						dateOfBirth: dateOfBirth,
 					},
 				},
+				credit: {
+					create: {
+						balance: 1000000,
+					},
+				},
 			},
 		});
 
@@ -250,6 +255,11 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 							bio: faker.person.bio(),
 						},
 					},
+					credit: {
+						create: {
+							balance: 1000000,
+						},
+					},
 				},
 			});
 		}
@@ -293,6 +303,9 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 							age: _age,
 							dateOfBirth: _dateOfBirth,
 						},
+					},
+					credit: {
+						create: {},
 					},
 				},
 			});

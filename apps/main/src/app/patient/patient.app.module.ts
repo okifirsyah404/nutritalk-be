@@ -6,6 +6,7 @@ import { PatientConsultationModule } from "./consultation/patient-consultation.m
 import { PatientMedicalRecordModule } from "./medical-record/patient-medical-record.module";
 import { PatientProfileModule } from "./profile/patient-profile.module";
 import { PatientNutritionistModule } from "@app/app/patient/nutritionist/patient-nutritionist.module";
+import { PatientDashboardModule } from "./patient-dashboard/patient-dashboard.module";
 
 @Module({
 	controllers: [],
@@ -18,6 +19,7 @@ import { PatientNutritionistModule } from "@app/app/patient/nutritionist/patient
 		PatientMedicalRecordModule,
 		PatientBMIModule,
 		PatientNutritionistModule,
+		PatientDashboardModule,
 	],
 })
 export class PatientAppModule {}
