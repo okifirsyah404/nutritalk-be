@@ -11,6 +11,14 @@ import { Prisma, TransactionStatus } from "@prisma/client";
 export class PatientDashboardRepository {
 	constructor(private readonly prisma: PrismaService) {}
 
+	/**
+	 *
+	 * Find a patient by id.
+	 *
+	 * @param id - The id of the patient.
+	 * @returns The patient entity.
+	 *
+	 */
 	async findPatientById(id: string): Promise<IPatientEntity> {
 		return this.prisma.patient
 			.findUnique({
@@ -30,6 +38,14 @@ export class PatientDashboardRepository {
 			.catch(createDatabaseErrorHandler);
 	}
 
+	/**
+	 *
+	 * Count the number of finished consultations by patient id.
+	 *
+	 * @param patientId - The id of the patient.
+	 * @returns The number of finished consultations.
+	 *
+	 */
 	async countFinishedConsultationsByPatientId(
 		patientId: string,
 	): Promise<number> {
@@ -41,6 +57,14 @@ export class PatientDashboardRepository {
 		});
 	}
 
+	/**
+	 *
+	 * Count the number of ongoing consultations by patient id.
+	 *
+	 * @param patientId - The id of the patient.
+	 * @returns The number of ongoing consultations.
+	 *
+	 */
 	async findConsultationsByPatientId(
 		patientId: string,
 	): Promise<IPatientDashboardConsultationResponse> {

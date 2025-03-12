@@ -8,6 +8,14 @@ import { PatientDashboardRepository } from "../repository/patient-dashboard.repo
 export class PatientDashboardService {
 	constructor(private readonly repository: PatientDashboardRepository) {}
 
+	/**
+	 *
+	 * Get the patient dashboard.
+	 *
+	 * @param patientId - The id of the patient.
+	 * @returns The patient dashboard response.
+	 *
+	 */
 	@SetCache((patientId: string) => `patient-dashboard-${patientId}`, {
 		ttl: 1,
 		unit: "minute",
