@@ -1,4 +1,5 @@
 import { SetCache } from "@config/app-cache";
+import { AppS3StorageService } from "@config/s3storage";
 import { PatientErrorMessage } from "@constant/message";
 import { IPatientDashboardResponse } from "@contract";
 import { Injectable, NotFoundException } from "@nestjs/common";
@@ -6,7 +7,10 @@ import { PatientDashboardRepository } from "../repository/patient-dashboard.repo
 
 @Injectable()
 export class PatientDashboardService {
-	constructor(private readonly repository: PatientDashboardRepository) {}
+	constructor(
+		private readonly repository: PatientDashboardRepository,
+		private readonly s3Service: AppS3StorageService,
+	) {}
 
 	/**
 	 *
@@ -38,6 +42,7 @@ export class PatientDashboardService {
 		return {
 			patient: {
 				...patient,
+				profile: await this.s3Service.getProfileSignedUrl(patient.profile),
 				credit: undefined,
 			},
 			credit: patient.credit,
