@@ -39,6 +39,42 @@ export class PatientDashboardService {
 		const consultations =
 			await this.repository.findConsultationsByPatientId(patientId);
 
+		const ongoingConsultations = await Promise.all(
+			consultations.ongoingConsultations.map(async (consultation) => ({
+				...consultation,
+				nutritionist: {
+					...consultation.nutritionist,
+					profile: await this.s3Service.getProfileSignedUrl(
+						consultation.nutritionist.profile,
+					),
+				},
+			})),
+		);
+
+		const pendingConsultations = await Promise.all(
+			consultations.pendingConsultations.map(async (consultation) => ({
+				...consultation,
+				nutritionist: {
+					...consultation.nutritionist,
+					profile: await this.s3Service.getProfileSignedUrl(
+						consultation.nutritionist.profile,
+					),
+				},
+			})),
+		);
+
+		const finishedConsultations = await Promise.all(
+			consultations.finishedConsultations.map(async (consultation) => ({
+				...consultation,
+				nutritionist: {
+					...consultation.nutritionist,
+					profile: await this.s3Service.getProfileSignedUrl(
+						consultation.nutritionist.profile,
+					),
+				},
+			})),
+		);
+
 		return {
 			patient: {
 				...patient,
@@ -47,9 +83,9 @@ export class PatientDashboardService {
 			},
 			credit: patient.credit,
 			consultationCount,
-			ongoingConsultations: consultations.ongoingConsultations,
-			pendingConsultations: consultations.pendingConsultations,
-			finishedConsultations: consultations.finishedConsultations,
+			ongoingConsultations,
+			pendingConsultations,
+			finishedConsultations,
 		};
 	}
 }
