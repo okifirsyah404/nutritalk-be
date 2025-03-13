@@ -2,7 +2,7 @@ import { PrismaSelector, PrismaService } from "@config/prisma";
 import { IConsultationEntity, IPaginationResult } from "@contract";
 import { createDatabaseErrorHandler } from "@infrastructure";
 import { Injectable, Logger } from "@nestjs/common";
-import { Prisma } from "@prisma/client";
+import { Prisma, TransactionStatus } from "@prisma/client";
 import { DatabaseUtil, PaginationUtil } from "@util";
 import { PatientConsultationIndexQuery } from "../dto/query/patient-consultation-index.query";
 
@@ -59,7 +59,15 @@ export class PatientConsultationRepository {
 								},
 							},
 						},
-						status: query.statusFilter,
+						status:
+							query.statusFilter === TransactionStatus.CANCELED
+								? {
+										in: [
+											TransactionStatus.CANCELED,
+											TransactionStatus.CANCELED_PAYMENT,
+										],
+									}
+								: query.statusFilter,
 						type: query.typeFilter,
 						consultationTime: {
 							start: {
