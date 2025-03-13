@@ -30,16 +30,64 @@ export class NutritionistDashboardService {
 		const consultations =
 			await this.repository.findConsultations(nutritionistId);
 
+		const ongoingConsultations = await Promise.all(
+			consultations.ongoingConsultations.map(async (consultation) => ({
+				...consultation,
+				patient: {
+					...consultation.patient,
+					profile: await this.s3Service.getProfileSignedUrl(
+						consultation.patient.profile,
+					),
+				},
+			})),
+		);
+
+		const waitingConfirmConsultations = await Promise.all(
+			consultations.waitingConfirmConsultations.map(async (consultation) => ({
+				...consultation,
+				patient: {
+					...consultation.patient,
+					profile: await this.s3Service.getProfileSignedUrl(
+						consultation.patient.profile,
+					),
+				},
+			})),
+		);
+
+		const scheduledConsultations = await Promise.all(
+			consultations.scheduledConsultations.map(async (consultation) => ({
+				...consultation,
+				patient: {
+					...consultation.patient,
+					profile: await this.s3Service.getProfileSignedUrl(
+						consultation.patient.profile,
+					),
+				},
+			})),
+		);
+
+		const finishedConsultations = await Promise.all(
+			consultations.finishedConsultations.map(async (consultation) => ({
+				...consultation,
+				patient: {
+					...consultation.patient,
+					profile: await this.s3Service.getProfileSignedUrl(
+						consultation.patient.profile,
+					),
+				},
+			})),
+		);
+
 		return {
 			nutritionist: {
 				...nutritionist,
 				profile: await this.s3Service.getProfileSignedUrl(nutritionist.profile),
 			},
 			dashboardMeta,
-			ongoingConsultations: consultations.ongoingConsultations,
-			scheduledConsultations: consultations.scheduledConsultations,
-			waitingConfirmConsultations: consultations.waitingConfirmConsultations,
-			finishedConsultations: consultations.finishedConsultations,
+			ongoingConsultations,
+			scheduledConsultations,
+			waitingConfirmConsultations,
+			finishedConsultations,
 		};
 	}
 }
