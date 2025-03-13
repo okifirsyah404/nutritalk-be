@@ -14,7 +14,7 @@ import { AutoAvailableSchedulerModule } from "./app/auto-available-scheduler/aut
 import { OtpSchedulerModule } from "./app/otp-scheduler/otp-scheduler.module";
 import { SignatureSchedulerModule } from "./app/signature-scheduler/signature-scheduler.module";
 import { ScheduleService } from "./schedule/schedule.service";
-import { ConsultationSchedulerModule } from './app/consultation-scheduler/consultation-scheduler.module';
+import { ConsultationSchedulerModule } from "./app/consultation-scheduler/consultation-scheduler.module";
 
 @Module({
 	imports: [
