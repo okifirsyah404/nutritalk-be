@@ -40,6 +40,7 @@ enum TransactionStatus {
   FINISHED
   RE_SCHEDULED
   CANCELED
+  CANCELED_PAYMENT
 }
 
 // ------------------------------------------------------------------

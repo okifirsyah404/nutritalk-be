@@ -144,7 +144,9 @@ export class NutritionistDashboardRepository {
 
 			const scheduledConsultations = await trx.consultation.findMany({
 				orderBy: {
-					trId: "desc",
+					consultationTime: {
+						start: "asc",
+					},
 				},
 				take: 3,
 				where: {

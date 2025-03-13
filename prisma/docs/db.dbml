@@ -487,6 +487,7 @@ Enum TransactionStatus {
   FINISHED
   RE_SCHEDULED
   CANCELED
+  CANCELED_PAYMENT
 }
 
 Enum OtpPurpose {

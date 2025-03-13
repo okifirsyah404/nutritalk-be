@@ -62,9 +62,16 @@ async function seedConsultation(prisma: PrismaClient): Promise<void> {
 			};
 		}[] = [];
 
-		for (let i = 0; i < 30; i++) {
-			const date = faker.date.soon({ days: 20 });
-			const endTime = new Date(date.getTime() + 60 * 60 * 1000);
+		for (let i = 0; i < 100; i++) {
+			const soonStartTime = faker.date.soon({ days: 20 });
+			const soonEndTime = new Date(soonStartTime.getTime() + 60 * 60 * 1000);
+
+			const recentStartTime = faker.date.recent({ days: 20 });
+			const recentEndTime = new Date(
+				recentStartTime.getTime() + 60 * 60 * 1000,
+			);
+
+			const isRecent = faker.datatype.boolean();
 
 			const status: TransactionStatus = randomEnum(TransactionStatus);
 
@@ -89,14 +96,14 @@ async function seedConsultation(prisma: PrismaClient): Promise<void> {
 							: null,
 					consultationTime: {
 						create: {
-							start: date,
-							end: endTime,
+							start: isRecent ? recentStartTime : soonStartTime,
+							end: isRecent ? recentEndTime : soonEndTime,
 						},
 					},
 					transactionPayment: {
 						create: {
 							code: faker.string.alphanumeric(12),
-							date: date,
+							date: soonStartTime,
 							method: "BANK_TRANSFER",
 							status: "FINISHED",
 						},

@@ -13,7 +13,8 @@ export type TransactionStatusEnum =
 	| "ON_PROCESS"
 	| "FINISHED"
 	| "RE_SCHEDULED"
-	| "CANCELED";
+	| "CANCELED"
+	| "CANCELED_PAYMENT";
 
 export type OtpPurposeEnum =
 	| "AUTH"
