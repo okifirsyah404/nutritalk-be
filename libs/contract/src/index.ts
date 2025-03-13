@@ -23,5 +23,6 @@ export * from "./request/medical-record/create-medical-record-key.interface";
 export * from "./response/api-response.interface";
 export * from "./response/auth/auth-response.interface";
 export * from "./response/dashboard/nutritionist-dashboard-meta.interface";
+export * from "./response/dashboard/nutritionist-dashboard.interface";
 export * from "./response/dashboard/patient-dashboard.interface";
 export * from "./signature/signature.interface";

@@ -7,6 +7,7 @@ import { NutritionistCertificateModule } from "./certificate/nutritionist-certif
 import { NutritionistConsultationMetaModule } from "./consultation-meta/nutritionist-consultation-meta.module";
 import { NutritionistConsultationModule } from "./consultation/nutritionist-consultation.module";
 import { NutritionistCredentialModule } from "./credential/nutritionist-credential.module";
+import { NutritionistDashboardModule } from "./dashboard/nutritionist-dashboard.module";
 import { NutritionistModule } from "./nutritionist/nutritionist.module";
 import { NutritionistOccupationModule } from "./occupation/nutritionist-occupation.module";
 import { NutritionistPatientModule } from "./patient/nutritionist-patient.module";
@@ -27,6 +28,7 @@ import { NutritionistSettingModule } from "./setting/nutritionist-setting.module
 		NutritionistConsultationMetaModule,
 		NutritionistCredentialModule,
 		NutritionistConsultationModule,
+		NutritionistDashboardModule,
 		NutritionistDashboardMetaModule,
 		NutritionistPatientModule,
 		NutritionistMedicalRecordModule,
