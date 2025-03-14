@@ -8,6 +8,7 @@ import {
 	PrismaClient,
 	TransactionStatus,
 } from "@prisma/client";
+import moment from "moment-timezone";
 
 async function seedConsultation(prisma: PrismaClient): Promise<void> {
 	const logger = new Logger("ConsultationSeeder");
@@ -63,13 +64,21 @@ async function seedConsultation(prisma: PrismaClient): Promise<void> {
 		}[] = [];
 
 		for (let i = 0; i < 100; i++) {
-			const soonStartTime = faker.date.soon({ days: 20 });
-			const soonEndTime = new Date(soonStartTime.getTime() + 60 * 60 * 1000);
+			const soonStartTime = moment(faker.date.soon({ days: 20 }))
+				.tz("Asia/Jakarta")
+				.set("hours", faker.number.int({ min: 7, max: 15 }));
 
-			const recentStartTime = faker.date.recent({ days: 20 });
-			const recentEndTime = new Date(
-				recentStartTime.getTime() + 60 * 60 * 1000,
-			);
+			const soonEndTime = moment(soonStartTime)
+				.add(faker.number.int({ min: 1, max: 3 }), "hours")
+				.tz("Asia/Jakarta");
+
+			const recentStartTime = moment(faker.date.recent({ days: 20 }))
+				.tz("Asia/Jakarta")
+				.set("hours", faker.number.int({ min: 7, max: 15 }));
+
+			const recentEndTime = moment(recentStartTime)
+				.add(faker.number.int({ min: 1, max: 3 }), "hours")
+				.tz("Asia/Jakarta");
 
 			const isRecent = faker.datatype.boolean();
 
@@ -96,14 +105,16 @@ async function seedConsultation(prisma: PrismaClient): Promise<void> {
 							: null,
 					consultationTime: {
 						create: {
-							start: isRecent ? recentStartTime : soonStartTime,
-							end: isRecent ? recentEndTime : soonEndTime,
+							start: isRecent
+								? recentStartTime.toDate()
+								: soonStartTime.toDate(),
+							end: isRecent ? recentEndTime.toDate() : soonEndTime.toDate(),
 						},
 					},
 					transactionPayment: {
 						create: {
 							code: faker.string.alphanumeric(12),
-							date: soonStartTime,
+							date: soonStartTime.toDate(),
 							method: "BANK_TRANSFER",
 							status: "FINISHED",
 						},
