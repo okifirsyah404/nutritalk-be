@@ -8,6 +8,7 @@ import {
 } from "@prisma/client";
 import { hashPassword } from "../helper/crypto-helper";
 
+import { faker } from "@faker-js/faker";
 import { Logger } from "@nestjs/common";
 import * as nutritionistRawData from "../raw/nutritionist.json";
 import * as priceRawData from "../raw/price.json";
@@ -118,6 +119,10 @@ async function seedNutritionist(prisma: PrismaClient): Promise<void> {
 									gender: Gender[nutritionist.gender],
 									phoneNumber: nutritionist.phone,
 									address: nutritionist.address,
+									bio:
+										process.env.NODE_ENV === "production"
+											? null
+											: faker.lorem.paragraph(),
 								},
 							},
 							occupation: {

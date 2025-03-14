@@ -217,7 +217,7 @@ export interface IConsultationReviewEntity {
 
 export interface ICreditEntity {
 	id: string;
-	balance: number;
+	balance?: number | null;
 	createdAt?: Date | null;
 	updatedAt?: Date | null;
 	patient?: IPatientEntity | null;
@@ -411,7 +411,7 @@ export interface IOccupationEntity {
 	id: string;
 	name: string;
 	workPlace: string;
-	experience: number;
+	experience?: number | null;
 	createdAt?: Date | null;
 	updatedAt?: Date | null;
 	nutritionist?: INutritionistEntity | null;

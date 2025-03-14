@@ -162,7 +162,7 @@ Table ConsultationReview {
 
 Table Credit {
   id String [pk]
-  balance Int [not null, default: 0]
+  balance Int [default: 0]
   createdAt DateTime [default: `now()`]
   updatedAt DateTime
   patient Patient
@@ -356,7 +356,7 @@ Table Occupation {
   id String [pk]
   name String [not null, default: 'Konselor Gizi']
   workPlace String [not null, default: 'TEFA NCC Polije']
-  experience Int [not null, default: 0]
+  experience Int [default: 0]
   createdAt DateTime [default: `now()`]
   updatedAt DateTime
   nutritionist Nutritionist
