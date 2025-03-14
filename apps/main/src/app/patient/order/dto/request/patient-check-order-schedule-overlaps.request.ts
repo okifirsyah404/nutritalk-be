@@ -1,8 +1,9 @@
+import { consultationTypeEnumStringTransformer } from "@common";
 import { IsWithinHourRange } from "@common/validator/is-within-hour-range.validator";
 import { NutritionistValidationMessage } from "@constant/message";
 import { ICheckOrderScheduleOverlaps } from "@contract";
 import { ConsultationType } from "@prisma/client";
-import { Type } from "class-transformer";
+import { Transform, Type } from "class-transformer";
 import {
 	IsDate,
 	IsEnum,
@@ -48,6 +49,7 @@ export class PatientCheckOrderScheduleOverlapsRequest
 	})
 	end: Date;
 
+	@Transform(consultationTypeEnumStringTransformer)
 	@IsEnum(ConsultationType, {})
 	@IsOptional()
 	type?: ConsultationType;
