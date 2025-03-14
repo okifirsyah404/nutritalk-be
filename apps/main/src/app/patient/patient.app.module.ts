@@ -6,6 +6,7 @@ import { PatientBMIModule } from "./bmi/patient-bmi.module";
 import { PatientConsultationModule } from "./consultation/patient-consultation.module";
 import { PatientCreditModule } from "./credit/patient-credit.module";
 import { PatientMedicalRecordModule } from "./medical-record/patient-medical-record.module";
+import { PatientOrderModule } from "./order/patient-order.module";
 import { PatientDashboardModule } from "./patient-dashboard/patient-dashboard.module";
 import { PatientProfileModule } from "./profile/patient-profile.module";
 
@@ -22,6 +23,7 @@ import { PatientProfileModule } from "./profile/patient-profile.module";
 		PatientNutritionistModule,
 		PatientDashboardModule,
 		PatientCreditModule,
+		PatientOrderModule,
 	],
 })
 export class PatientAppModule {}

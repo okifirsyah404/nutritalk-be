@@ -1,19 +1,17 @@
 import { dateTimeTransformer } from "@common";
-import { DateContent } from "@constant/content";
+import { IsWithinHourRange } from "@common/validator/is-within-hour-range.validator";
 import { NutritionistValidationMessage } from "@constant/message";
 import { IScheduleTimeEntity } from "@contract";
 import { Transform } from "class-transformer";
-import { IsDate, IsNotEmpty, MaxDate, MinDate } from "class-validator";
+import { IsDate, IsNotEmpty } from "class-validator";
 
 export class NutritionistCreateScheduleTimeRequest
 	implements Pick<IScheduleTimeEntity, "start" | "end">
 {
 	@Transform(dateTimeTransformer)
-	@MinDate(DateContent.MIN_SCHEDULE_TIME, {
-		message: NutritionistValidationMessage.ERR_MIN_END_TIME_7_AM_WIB,
-	})
-	@MaxDate(DateContent.MAX_SCHEDULE_TIME, {
-		message: NutritionistValidationMessage.ERR_MAX_END_TIME_7_PM_WIB,
+	@IsWithinHourRange({
+		message:
+			NutritionistValidationMessage.ERR_START_TIME_MUST_BETWEEN_7_AM_7_PM_WIB,
 	})
 	@IsDate({
 		message: NutritionistValidationMessage.ERR_START_MUST_BE_DATE,
@@ -24,11 +22,9 @@ export class NutritionistCreateScheduleTimeRequest
 	start: Date;
 
 	@Transform(dateTimeTransformer)
-	@MinDate(DateContent.MIN_SCHEDULE_TIME, {
-		message: NutritionistValidationMessage.ERR_MIN_END_TIME_7_AM_WIB,
-	})
-	@MaxDate(DateContent.MAX_SCHEDULE_TIME, {
-		message: NutritionistValidationMessage.ERR_MAX_END_TIME_7_PM_WIB,
+	@IsWithinHourRange({
+		message:
+			NutritionistValidationMessage.ERR_END_TIME_MUST_BETWEEN_7_AM_7_PM_WIB,
 	})
 	@IsDate({
 		message: NutritionistValidationMessage.ERR_END_MUST_BE_DATE,

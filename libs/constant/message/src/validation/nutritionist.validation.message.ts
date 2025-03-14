@@ -1,4 +1,9 @@
 export abstract class NutritionistValidationMessage {
+	static readonly ERR_NUTRITIONIST_ID_REQUIRED = "ERR_NUTRITIONIST_ID_REQUIRED";
+	static readonly ERR_NUTRITIONIST_ID_MUST_BE_STRING =
+		"ERR_NUTRITIONIST_ID_MUST_BE_STRING";
+	static readonly ERR_NUTRITIONIST_ID_INVALID = "ERR_NUTRITIONIST_ID_INVALID";
+
 	static readonly ERR_NIDN_INVALID = "ERR_NIDN_INVALID";
 	static readonly ERR_NIDN_REQUIRED = "ERR_NIDN_REQUIRED";
 	static readonly ERR_NIDN_MUST_BE_STRING = "ERR_NIDN_MUST_BE_STRING";
@@ -49,8 +54,12 @@ export abstract class NutritionistValidationMessage {
 	static readonly ERR_MAX_TIME_7_PM_WIB = "ERR_MAX_TIME_7_PM_WIB";
 	static readonly ERR_MIN_START_TIME_7_AM_WIB = "ERR_MIN_START_TIME_7_AM_WIB";
 	static readonly ERR_MAX_START_TIME_7_PM_WIB = "ERR_MAX_START_TIME_7_PM_WIB";
-	static readonly ERR_MAX_END_TIME_7_PM_WIB = "ERR_MAX_END_TIME_7_PM_WIB";
 	static readonly ERR_MIN_END_TIME_7_AM_WIB = "ERR_MIN_END_TIME_7_AM_WIB";
+	static readonly ERR_MAX_END_TIME_7_PM_WIB = "ERR_MAX_END_TIME_7_PM_WIB";
+	static readonly ERR_START_TIME_MUST_BETWEEN_7_AM_7_PM_WIB =
+		"ERR_START_TIME_MUST_BETWEEN_7_AM_7_PM_WIB";
+	static readonly ERR_END_TIME_MUST_BETWEEN_7_AM_7_PM_WIB =
+		"ERR_END_TIME_MUST_BETWEEN_7_AM_7_PM_WIB";
 
 	static readonly ERR_TIME_REQUIRED = "ERR_TIME_REQUIRED";
 	static readonly ERR_TIME_MUST_BE_DATE = "ERR_TIME_MUST_BE_DATE";

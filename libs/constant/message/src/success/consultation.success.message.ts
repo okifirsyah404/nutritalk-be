@@ -1,3 +1,5 @@
 export abstract class ConsultationSuccessMessage {
 	static readonly SUCCESS_GET_CONSULTATION = "SUCCESS_GET_CONSULTATION";
+	static readonly SUCCESS_CHECK_ORDER_SCHEDULE_OVERLAPS =
+		"SUCCESS_CHECK_ORDER_SCHEDULE_OVERLAPS";
 }
