@@ -2,41 +2,41 @@
 // CREDIT MODEL
 // ------------------------------------------------------------------
 model Credit {
-    id String @id @default(cuid())
+  id String @id @default(cuid())
 
-    // Main Fields
-    balance Int @default(0)
+  // Main Fields
+  balance Int? @default(0)
 
-    // Date Metadata
-    createdAt DateTime? @default(now())
-    updatedAt DateTime? @updatedAt
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 
-    // Relations
-    patient         Patient?        @relation(fields: [patientId], references: [id], onDelete: Cascade)
-    creditHistories CreditHistory[]
+  // Relations
+  patient         Patient?        @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  creditHistories CreditHistory[]
 
-    // Foreign Keys
-    patientId String? @unique
+  // Foreign Keys
+  patientId String? @unique
 }
 
 // ------------------------------------------------------------------
 // CREDIT HISTORY MODEL
 // ------------------------------------------------------------------
 model CreditHistory {
-    id String @id @default(cuid())
+  id String @id @default(cuid())
 
-    // Main Fields
-    action CreditAction
-    amount Int
-    note   String?
+  // Main Fields
+  action CreditAction
+  amount Int
+  note   String?
 
-    // Date Metadata
-    createdAt DateTime? @default(now())
-    updatedAt DateTime? @updatedAt
+  // Date Metadata
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 
-    // Relations
-    credit Credit? @relation(fields: [creditId], references: [id], onDelete: Cascade)
+  // Relations
+  credit Credit? @relation(fields: [creditId], references: [id], onDelete: Cascade)
 
-    // Foreign Keys
-    creditId String?
+  // Foreign Keys
+  creditId String?
 }

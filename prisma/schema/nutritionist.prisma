@@ -79,7 +79,7 @@ model Occupation {
   // Main Fields
   name       String @default("Konselor Gizi")
   workPlace  String @default("TEFA NCC Polije")
-  experience Int    @default(0)
+  experience Int?   @default(0)
 
   // Date Metadata
   createdAt DateTime? @default(now())
