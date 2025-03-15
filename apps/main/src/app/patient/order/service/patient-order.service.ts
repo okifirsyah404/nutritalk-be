@@ -9,14 +9,15 @@ import {
 	IPatientEntity,
 	MidtransGenerateSnapTokenResponse,
 } from "@contract";
+import { MidtransService } from "@module/midtrans";
 import {
 	Injectable,
+	Logger,
 	NotFoundException,
 	UnprocessableEntityException,
 } from "@nestjs/common";
-import { PatientOrderRepository } from "../repository/patient-order.repository";
-import { MidtransService } from "@module/midtrans";
 import { ConsultationType, PaymentSource } from "@prisma/client";
+import { PatientOrderRepository } from "../repository/patient-order.repository";
 
 @Injectable()
 export class PatientOrderService {
@@ -24,6 +25,8 @@ export class PatientOrderService {
 		private readonly repository: PatientOrderRepository,
 		private readonly midtransService: MidtransService,
 	) {}
+
+	private readonly logger = new Logger(PatientOrderService.name);
 
 	/**
 	 * Check if the order schedule overlaps with existing consultations.
