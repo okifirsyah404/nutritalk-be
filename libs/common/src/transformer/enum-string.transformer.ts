@@ -1,11 +1,12 @@
-import { ConsultationType, DayOfWeek, Gender } from "@prisma/client";
 import { MidtransTransactionStatus } from "@contract";
+import { ConsultationType, DayOfWeek, Gender } from "@prisma/client";
 
 export const genderEnumStringTransformer = ({
 	value,
 }: {
 	value: string;
 }): Gender | undefined => {
+	if (!value) return undefined;
 	if (value.toLowerCase() === Gender.MALE.toLowerCase()) return Gender.MALE;
 	if (value.toLowerCase() === Gender.FEMALE.toLowerCase()) return Gender.FEMALE;
 
@@ -17,6 +18,7 @@ export const dayOfWeekStringTransformer = ({
 }: {
 	value: string;
 }): DayOfWeek | undefined => {
+	if (!value) return undefined;
 	switch (value.toLowerCase()) {
 		case "sunday":
 			return DayOfWeek.SUNDAY;
@@ -42,6 +44,8 @@ export const consultationTypeEnumStringTransformer = ({
 }: {
 	value: string;
 }): ConsultationType | undefined => {
+	if (!value) return undefined;
+
 	if (value.toLowerCase() === ConsultationType.ONLINE.toLowerCase())
 		return ConsultationType.ONLINE;
 	if (value.toLowerCase() === ConsultationType.OFFLINE.toLowerCase())
@@ -55,6 +59,8 @@ export const midtransTransactionStatusEnumStringTransformer = ({
 }: {
 	value: string;
 }): MidtransTransactionStatus | undefined => {
+	if (!value) return undefined;
+
 	switch (value.toLowerCase()) {
 		case "authorize":
 			return MidtransTransactionStatus.AUTHORIZE;
@@ -83,6 +89,4 @@ export const midtransTransactionStatusEnumStringTransformer = ({
 		default:
 			return undefined;
 	}
-
-	return undefined;
 };
