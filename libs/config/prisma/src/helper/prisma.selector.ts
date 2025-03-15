@@ -250,6 +250,8 @@ export abstract class PrismaSelector {
 
 	static readonly TRANSACTION_PAYMENT = {
 		id: true,
+		midtransSnapToken: true,
+		midtransRedirectUrl: true,
 		method: true,
 		code: true,
 		status: true,

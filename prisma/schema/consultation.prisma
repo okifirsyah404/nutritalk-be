@@ -60,7 +60,7 @@ model TransactionPrice {
   sources  PaymentSource[]
   price    Int
   subTotal Int
-  credit   Int             @default(0)
+  credit   Int?            @default(0)
   total    Int
 
   // Date Metadata
@@ -81,11 +81,12 @@ model TransactionPayment {
   id String @id @default(cuid())
 
   // Main Fields
-  midtransSnapToken String?
-  method            String?
-  code              String?
-  status            String?
-  date              DateTime?
+  midtransSnapToken   String?
+  midtransRedirectUrl String?
+  method              String?
+  code                String?
+  status              String?
+  date                DateTime?
 
   // Date Metadata
   createdAt DateTime? @default(now())

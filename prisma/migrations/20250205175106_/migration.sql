@@ -1,25 +1,26 @@
 -- Create Function
 CREATE OR REPLACE FUNCTION generate_custom_id(prefix text) RETURNS text AS $$
 DECLARE
-    new_value int;
+new_value int;
     formatted_id text;
     date_part text := to_char(CURRENT_DATE, 'YYYYMMDD');
+    epoch_timestamp bigint := EXTRACT(EPOCH FROM now())::bigint;
 BEGIN
     -- Retrieve the maximum sequence value for the current date in the pattern TR/YYYYMMDD/####
-    SELECT COALESCE(
-        MAX(CAST(SPLIT_PART("trId", '/', 3) AS int)),
-        0
-    ) INTO new_value
-    FROM public."Consultation"  -- Explicitly specify the schema and table name
-    WHERE "trId" LIKE prefix || '/' || date_part || '/%';
+SELECT COALESCE(
+				 MAX(CAST(SPLIT_PART("trId", '/', 3) AS int)),
+				 0
+			 ) INTO new_value
+FROM public."Consultation"  -- Explicitly specify the schema and table name
+WHERE "trId" LIKE prefix || '/' || date_part || '/%';
 
-    -- Increment sequence or start at 1 if no records found
-    new_value := new_value + 1;
+-- Increment sequence or start at 1 if no records found
+new_value := new_value + 1;
 
-    -- Construct the final formatted ID with padded sequence
-    formatted_id := prefix || '/' || date_part || '/' || lpad(new_value::text, 4, '0');
+    -- Construct the final formatted ID with padded sequence and epoch timestamp
+    formatted_id := prefix || '/' || date_part || '/' || lpad(new_value::text, 4, '0') || '/' || epoch_timestamp;
 
-    RETURN formatted_id;
+RETURN formatted_id;
 END;
 $$ LANGUAGE PLPGSQL VOLATILE;
 

@@ -11,7 +11,7 @@ export class MidtransNotificationController {
 		return { token };
 	}
 
-	@Get("pending")
+	@Get("unfinish")
 	@Render("midtrans-redirect")
 	pendingNotification(@Param("token") token: string): { token: string } {
 		return { token };

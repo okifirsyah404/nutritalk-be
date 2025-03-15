@@ -183,7 +183,7 @@ export interface ITransactionPriceEntity {
 	sources: PaymentSourceEnum[];
 	price: number;
 	subTotal: number;
-	credit: number;
+	credit?: number | null;
 	total: number;
 	createdAt?: Date | null;
 	updatedAt?: Date | null;
@@ -194,6 +194,7 @@ export interface ITransactionPriceEntity {
 export interface ITransactionPaymentEntity {
 	id: string;
 	midtransSnapToken?: string | null;
+	midtransRedirectUrl?: string | null;
 	method?: string | null;
 	code?: string | null;
 	status?: string | null;

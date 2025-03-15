@@ -11,6 +11,7 @@ import {
 	Logger,
 } from "@nestjs/common";
 import { catchError, firstValueFrom } from "rxjs";
+import moment from "moment-timezone";
 
 @Injectable()
 export class MidtransService {
@@ -31,18 +32,15 @@ export class MidtransService {
 				gross_amount:
 					transactionDetail.consultationFee * transactionDetail.quantity,
 			},
-			item_details: [
-				{
-					id: transactionDetail.nutritionistId,
-					price: transactionDetail.consultationFee,
-					quantity: transactionDetail.quantity,
-					name: transactionDetail.nutritionistName,
-				},
-			],
 			customer_details: {
 				first_name: customerDetail.name,
 				email: customerDetail.email,
 				phone: customerDetail.phone,
+			},
+			expiry: {
+				start_time: moment().tz("Asia/Jakarta").format("YYYY-MM-DD HH:mm:ss Z"),
+				unit: "hours",
+				duration: 6,
 			},
 		};
 
@@ -61,14 +59,13 @@ export class MidtransService {
 				})
 				.pipe(
 					catchError((error) => {
-						this.logger.error("Error generating snap token", error);
 						throw new InternalServerErrorException(
+							this.logger.error(error),
 							AppErrrorMessage.ERR_FAILED_GENERATE_SNAP_TOKEN,
 						);
 					}),
 				),
 		);
-
 		return {
 			token: data.token,
 			redirectUrl: data.redirect_url,
