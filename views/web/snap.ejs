@@ -1,0 +1,70 @@
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script
+			type="text/javascript"
+			src="https://app.sandbox.midtrans.com/snap/snap.js"
+			data-client-key="<%= clientKey %>"
+		></script>
+	</head>
+
+	<!-- <body onload="setTimeout(function(){pay()}, 1000)"> -->
+	<body>
+		<script type="text/javascript">
+			function postResult(result) {
+				// fetch('/api/v1/transaction/order/payment/', {
+				//   method: 'POST',
+				//   headers: {
+				//     'Content-Type': 'application/json',
+				//   },
+				//   body: JSON.stringify({
+				//     result: result,
+				//     log: 'log',
+				//   }),
+				// })
+				//   .then((res) => res.json())
+				//   .then((data) => {
+				//     console.log(data);
+				//   });
+			}
+
+			function pay() {
+				snap.pay("<%= token %>", {
+					onSuccess: function (result) {
+						console.log(result);
+						postResult(result);
+						window.flutter_inappwebview.callHandler("Android", "ok");
+						window.flutter_inappwebview.callHandler("Print", result);
+					},
+					onPending: function (result) {
+						console.log(result);
+						postResult(result);
+						window.flutter_inappwebview.callHandler("Android", "pending");
+						window.flutter_inappwebview.callHandler("Print", result);
+					},
+					onError: function (result) {
+						console.log(result);
+						postResult(result);
+						window.flutter_inappwebview.callHandler("Android", "error");
+						window.flutter_inappwebview.callHandler("Print", result);
+					},
+					onClose: function () {
+						window.flutter_inappwebview.callHandler("Android", "close");
+						window.flutter_inappwebview.callHandler("Print", "close");
+					},
+				});
+			}
+
+			window.addEventListener(
+				"flutterInAppWebViewPlatformReady",
+				function (event) {
+					setTimeout(function () {
+						pay();
+					}, 1000);
+				},
+			);
+
+			// pay();
+		</script>
+	</body>
+</html>
