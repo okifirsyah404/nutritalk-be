@@ -1,3 +1,4 @@
+import { Logger } from "@nestjs/common";
 import {
 	registerDecorator,
 	ValidationOptions,
@@ -10,21 +11,16 @@ import moment from "moment-timezone";
 export class IsWithinHourRangeConstraint
 	implements ValidatorConstraintInterface
 {
+	private readonly logger = new Logger(IsWithinHourRangeConstraint.name);
+
 	validate(value: Date): boolean {
 		if (!moment(value).isValid()) return false;
 
 		// Convert UTC to WIB (Asia/Jakarta)
 		const time = moment(value).tz("Asia/Jakarta");
+		const hour = time.hour();
 
-		// Allowed time: 07:00:00 - 19:00:00 WIB
-		const startTime = moment()
-			.tz("Asia/Jakarta")
-			.set({ hour: 7, minute: 0, second: 0 });
-		const endTime = moment()
-			.tz("Asia/Jakarta")
-			.set({ hour: 19, minute: 0, second: 0 });
-
-		return time.isBetween(startTime, endTime, null, "[]");
+		return hour >= 7 && hour <= 19; // Allowed between 07:00 and 19:00 WIB
 	}
 
 	defaultMessage(): string {
