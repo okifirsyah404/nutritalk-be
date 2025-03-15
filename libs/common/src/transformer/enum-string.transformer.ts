@@ -1,4 +1,5 @@
 import { ConsultationType, DayOfWeek, Gender } from "@prisma/client";
+import { MidtransTransactionStatus } from "@contract";
 
 export const genderEnumStringTransformer = ({
 	value,
@@ -45,6 +46,43 @@ export const consultationTypeEnumStringTransformer = ({
 		return ConsultationType.ONLINE;
 	if (value.toLowerCase() === ConsultationType.OFFLINE.toLowerCase())
 		return ConsultationType.OFFLINE;
+
+	return undefined;
+};
+
+export const midtransTransactionStatusEnumStringTransformer = ({
+	value,
+}: {
+	value: string;
+}): MidtransTransactionStatus | undefined => {
+	switch (value.toLowerCase()) {
+		case "authorize":
+			return MidtransTransactionStatus.AUTHORIZE;
+		case "capture":
+			return MidtransTransactionStatus.CAPTURE;
+		case "pending":
+			return MidtransTransactionStatus.PENDING;
+		case "settlement":
+			return MidtransTransactionStatus.SETTLEMENT;
+		case "deny":
+			return MidtransTransactionStatus.DENY;
+		case "expire":
+			return MidtransTransactionStatus.EXPIRE;
+		case "cancel":
+			return MidtransTransactionStatus.CANCEL;
+		case "refund":
+			return MidtransTransactionStatus.REFUND;
+		case "partial_refund":
+			return MidtransTransactionStatus.PARTIAL_REFUND;
+		case "chargeback":
+			return MidtransTransactionStatus.CHARGEBACK;
+		case "partial_chargeback":
+			return MidtransTransactionStatus.PARTIAL_CHARGEBACK;
+		case "failure":
+			return MidtransTransactionStatus.FAILURE;
+		default:
+			return undefined;
+	}
 
 	return undefined;
 };
