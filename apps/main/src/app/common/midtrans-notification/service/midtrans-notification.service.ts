@@ -34,7 +34,7 @@ export class MidtransNotificationService {
 				data.payment_type,
 				data.store,
 				data.va_numbers,
-			),
+			).toUpperCase(),
 			payment_code: this.generateStringPaymentCode(
 				data.payment_type,
 				data.va_numbers,
