@@ -14,13 +14,21 @@ export class IsWithinHourRangeConstraint
 		if (!moment(value).isValid()) return false;
 
 		// Convert UTC to WIB (Asia/Jakarta)
-		const hour = moment(value).tz("Asia/Jakarta").hour();
+		const time = moment(value).tz("Asia/Jakarta");
 
-		return hour >= 7 && hour <= 19; // Allowed between 07:00 and 19:00 WIB
+		// Allowed time: 07:00:00 - 19:00:00 WIB
+		const startTime = moment()
+			.tz("Asia/Jakarta")
+			.set({ hour: 7, minute: 0, second: 0 });
+		const endTime = moment()
+			.tz("Asia/Jakarta")
+			.set({ hour: 19, minute: 0, second: 0 });
+
+		return time.isBetween(startTime, endTime, null, "[]");
 	}
 
 	defaultMessage(): string {
-		return "Time must be between 08:00 and 18:00";
+		return "Time must be between 07:00 and 19:00";
 	}
 }
 
