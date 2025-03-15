@@ -14,6 +14,7 @@ export * from "./success/nutritionist.success.message";
 export * from "./success/patient.success.message";
 export * from "./success/profile.success.message";
 export * from "./validation/account.validation.message";
+export * from "./validation/consultation.validation.message";
 export * from "./validation/file.validation.message";
 export * from "./validation/nutritionist.validation.message";
 export * from "./validation/profile.validation.message";

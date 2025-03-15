@@ -21,6 +21,7 @@ export * from "./request/auth/register-request.interface";
 export * from "./request/index-pagination-option.interface";
 export * from "./request/medical-record/create-medical-record-key.interface";
 export * from "./request/order/check-order-schedule-overlaps.interface";
+export * from "./request/order/create-consultation-order.interface";
 export * from "./response/api-response.interface";
 export * from "./response/auth/auth-response.interface";
 export * from "./response/dashboard/nutritionist-dashboard-meta.interface";

@@ -128,7 +128,7 @@ Table TransactionPrice {
   sources PaymentSource[] [not null]
   price Int [not null]
   subTotal Int [not null]
-  credit Int [not null, default: 0]
+  credit Int [default: 0]
   total Int [not null]
   createdAt DateTime [default: `now()`]
   updatedAt DateTime
@@ -139,6 +139,7 @@ Table TransactionPrice {
 Table TransactionPayment {
   id String [pk]
   midtransSnapToken String
+  midtransRedirectUrl String
   method String
   code String
   status String
