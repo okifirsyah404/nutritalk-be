@@ -8,17 +8,17 @@ new_value int;
 BEGIN
     -- Retrieve the maximum sequence value for the current date in the pattern TR/YYYYMMDD/####
 SELECT COALESCE(
-				 MAX(CAST(SPLIT_PART("trId", '/', 3) AS int)),
+				 MAX(CAST(SPLIT_PART("trId", '_', 3) AS int)),
 				 0
 			 ) INTO new_value
 FROM public."Consultation"  -- Explicitly specify the schema and table name
-WHERE "trId" LIKE prefix || '/' || date_part || '/%';
+WHERE "trId" LIKE prefix || '_' || date_part || '_%';
 
 -- Increment sequence or start at 1 if no records found
 new_value := new_value + 1;
 
     -- Construct the final formatted ID with padded sequence and epoch timestamp
-    formatted_id := prefix || '/' || date_part || '/' || lpad(new_value::text, 4, '0') || '/' || epoch_timestamp;
+    formatted_id := prefix || '_' || date_part || '_' || lpad(new_value::text, 4, '0') || '_' || epoch_timestamp;
 
 RETURN formatted_id;
 END;

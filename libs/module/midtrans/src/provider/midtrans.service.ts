@@ -26,17 +26,27 @@ export class MidtransService {
 		transactionDetail,
 		customerDetail,
 	}: MidtransGenerateSnapTokenRequestBody): Promise<MidtransGenerateSnapTokenResponse> {
+		const grossAmount =
+			transactionDetail.consultationFee * transactionDetail.quantity;
+
 		const reqBody = {
 			transaction_details: {
 				order_id: transactionDetail.trId,
-				gross_amount:
-					transactionDetail.consultationFee * transactionDetail.quantity,
+				gross_amount: grossAmount,
 			},
 			customer_details: {
 				first_name: customerDetail.name,
 				email: customerDetail.email,
 				phone: customerDetail.phone,
 			},
+			item_details: [
+				{
+					id: transactionDetail.nutritionistId,
+					price: grossAmount,
+					quantity: 1,
+					name: `Consultation with ${transactionDetail.nutritionistName}`,
+				},
+			],
 			expiry: {
 				start_time: moment().tz("Asia/Jakarta").format("YYYY-MM-DD HH:mm:ss Z"),
 				unit: "hours",
