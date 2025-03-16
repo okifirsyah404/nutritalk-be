@@ -5,6 +5,7 @@ export interface MidtransGenerateSnapTokenRequestBody {
 		nutritionistName: string;
 		consultationFee: number;
 		quantity: number;
+		grossAmount: number;
 	};
 	customerDetail: {
 		name: string;

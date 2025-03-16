@@ -10,8 +10,8 @@ import {
 	InternalServerErrorException,
 	Logger,
 } from "@nestjs/common";
-import { catchError, firstValueFrom } from "rxjs";
 import moment from "moment-timezone";
+import { catchError, firstValueFrom } from "rxjs";
 
 @Injectable()
 export class MidtransService {
@@ -26,13 +26,10 @@ export class MidtransService {
 		transactionDetail,
 		customerDetail,
 	}: MidtransGenerateSnapTokenRequestBody): Promise<MidtransGenerateSnapTokenResponse> {
-		const grossAmount =
-			transactionDetail.consultationFee * transactionDetail.quantity;
-
 		const reqBody = {
 			transaction_details: {
 				order_id: transactionDetail.trId,
-				gross_amount: grossAmount,
+				gross_amount: transactionDetail.grossAmount,
 			},
 			customer_details: {
 				first_name: customerDetail.name,
@@ -42,7 +39,7 @@ export class MidtransService {
 			item_details: [
 				{
 					id: transactionDetail.nutritionistId,
-					price: grossAmount,
+					price: transactionDetail.grossAmount,
 					quantity: 1,
 					name: `Consultation with ${transactionDetail.nutritionistName}`,
 				},

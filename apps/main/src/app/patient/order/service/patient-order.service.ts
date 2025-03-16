@@ -96,6 +96,7 @@ export class PatientOrderService {
 							quantity: reqBody.duration,
 							nutritionistId: nutritionist.id,
 							nutritionistName: nutritionist.profile.name,
+							grossAmount: totalPrice,
 						},
 						customerDetail: {
 							name: patient.profile.name,
