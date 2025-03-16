@@ -132,7 +132,9 @@ export class PatientOrderRepository {
 				});
 
 				const transactionPayment = await trx.transactionPayment.create({
-					data: {},
+					data: {
+						method: isUsingCredit ? PaymentSource.CREDIT.toString() : null,
+					},
 					select: PrismaSelector.TRANSACTION_PAYMENT,
 				});
 
