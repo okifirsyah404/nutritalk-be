@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Param, Post, Render } from "@nestjs/common";
-import { MidtransNotificationService } from "../service/midtrans-notification.service";
 import { MidtransNotificationRequest } from "@app/app/common/midtrans-notification/dto/request/midtrans-notification.request";
 import { BaseApiResponse } from "@common";
+import { Body, Controller, Get, Param, Post, Render } from "@nestjs/common";
+import { MidtransNotificationService } from "../service/midtrans-notification.service";
 
 @Controller("midtrans-notification")
 export class MidtransNotificationController {
@@ -20,19 +20,19 @@ export class MidtransNotificationController {
 	}
 
 	@Get("finish")
-	@Render("midtrans-redirect")
+	@Render("finish-payment")
 	finishNotification(@Param("token") token: string): { token: string } {
 		return { token };
 	}
 
 	@Get("unfinish")
-	@Render("midtrans-redirect")
+	@Render("unfinish-payment")
 	pendingNotification(@Param("token") token: string): { token: string } {
 		return { token };
 	}
 
 	@Get("error")
-	@Render("midtrans-redirect")
+	@Render("error-payment")
 	errorNotification(@Param("token") token: string): { token: string } {
 		return { token };
 	}
