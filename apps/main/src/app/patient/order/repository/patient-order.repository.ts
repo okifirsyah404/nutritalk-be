@@ -8,7 +8,7 @@ import {
 } from "@contract";
 import { createDatabaseErrorHandler } from "@infrastructure";
 import { Injectable } from "@nestjs/common";
-import { PaymentSource, TransactionStatus } from "@prisma/client";
+import { CreditAction, PaymentSource, TransactionStatus } from "@prisma/client";
 
 @Injectable()
 export class PatientOrderRepository {
@@ -184,14 +184,33 @@ export class PatientOrderRepository {
 				});
 
 				if (isUsingCredit) {
-					await trx.credit.update({
+					const credit = await trx.credit.findUnique({
 						where: {
 							patientId,
+						},
+						select: {
+							id: true,
+							balance: true,
+						},
+					});
+
+					await trx.credit.update({
+						where: {
+							id: credit.id,
 						},
 						data: {
 							balance: {
 								decrement: total,
 							},
+						},
+					});
+
+					await trx.creditHistory.create({
+						data: {
+							creditId: credit.id,
+							action: CreditAction.PAY_CONSULTATION,
+							amount: total,
+							note: `Payment for consultation ${consultation.trId}`,
 						},
 					});
 				}
