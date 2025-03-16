@@ -63,7 +63,7 @@ async function seedConsultation(prisma: PrismaClient): Promise<void> {
 			};
 		}[] = [];
 
-		for (let i = 0; i < 100; i++) {
+		for (let i = 0; i < 50; i++) {
 			const soonStartTime = moment(faker.date.soon({ days: 20 }))
 				.tz("Asia/Jakarta")
 				.set("hours", faker.number.int({ min: 7, max: 15 }));
@@ -72,6 +72,8 @@ async function seedConsultation(prisma: PrismaClient): Promise<void> {
 				.add(faker.number.int({ min: 1, max: 3 }), "hours")
 				.tz("Asia/Jakarta");
 
+			const soonDurationInMinutes = soonEndTime.diff(soonStartTime, "minutes");
+
 			const recentStartTime = moment(faker.date.recent({ days: 20 }))
 				.tz("Asia/Jakarta")
 				.set("hours", faker.number.int({ min: 7, max: 15 }));
@@ -79,6 +81,11 @@ async function seedConsultation(prisma: PrismaClient): Promise<void> {
 			const recentEndTime = moment(recentStartTime)
 				.add(faker.number.int({ min: 1, max: 3 }), "hours")
 				.tz("Asia/Jakarta");
+
+			const recentDurationInMinutes = recentEndTime.diff(
+				recentStartTime,
+				"minutes",
+			);
 
 			const isRecent = faker.datatype.boolean();
 
@@ -109,6 +116,9 @@ async function seedConsultation(prisma: PrismaClient): Promise<void> {
 								? recentStartTime.toDate()
 								: soonStartTime.toDate(),
 							end: isRecent ? recentEndTime.toDate() : soonEndTime.toDate(),
+							duration: isRecent
+								? recentDurationInMinutes
+								: soonDurationInMinutes,
 						},
 					},
 					transactionPayment: {

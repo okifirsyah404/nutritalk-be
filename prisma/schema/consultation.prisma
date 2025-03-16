@@ -36,8 +36,9 @@ model ConsultationTime {
   id String @id @default(cuid())
 
   // Main Fields
-  start DateTime?
-  end   DateTime?
+  start    DateTime?
+  end      DateTime?
+  duration Int?
 
   // Date Metadata
   createdAt DateTime? @default(now())

@@ -103,6 +103,7 @@ export class PatientOrderRepository {
 		price,
 		subTotal,
 		total,
+		duration,
 	}: ICreateConsultationOrder): Promise<IConsultationEntity> {
 		const result = await this.prisma
 			.$transaction(async (trx) => {
@@ -116,6 +117,7 @@ export class PatientOrderRepository {
 					data: {
 						start,
 						end,
+						duration,
 					},
 					select: PrismaSelector.CONSULTATION_TIME,
 				});

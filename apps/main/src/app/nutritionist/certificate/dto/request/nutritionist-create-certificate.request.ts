@@ -1,7 +1,8 @@
+import { dateTransformer } from "@common";
 import { NutritionistValidationMessage } from "@constant/message";
 import { RegexConstant } from "@constant/regex";
 import { IRegistrationCertificateEntity } from "@contract";
-import { Type } from "class-transformer";
+import { Transform } from "class-transformer";
 import {
 	IsDate,
 	IsNotEmpty,
@@ -29,14 +30,14 @@ export class NutritionistCreateCertificateRequest
 	})
 	registrationNumber: string;
 
-	@Type(() => Date)
+	@Transform(dateTransformer)
 	@IsDate({
 		message: NutritionistValidationMessage.ERR_ISSUE_DATE_MUST_BE_DATE,
 	})
 	@IsOptional()
 	issueDate: Date;
 
-	@Type(() => Date)
+	@Transform(dateTransformer)
 	@IsDate({
 		message: NutritionistValidationMessage.ERR_VALID_UNTIL_MUST_BE_DATE,
 	})

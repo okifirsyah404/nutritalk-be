@@ -3,10 +3,13 @@
 // transaction_status
 // transaction_time
 
-import { IsDate, IsEnum, IsNotEmpty, IsOptional } from "class-validator";
+import {
+	dateTransformer,
+	midtransTransactionStatusEnumStringTransformer,
+} from "@common";
 import { MidtransTransactionStatus } from "@contract";
-import { Transform, Type } from "class-transformer";
-import { midtransTransactionStatusEnumStringTransformer } from "@common";
+import { Transform } from "class-transformer";
+import { IsDate, IsEnum, IsNotEmpty, IsOptional } from "class-validator";
 
 export class MidtransNotificationRequest {
 	@IsNotEmpty()
@@ -29,7 +32,7 @@ export class MidtransNotificationRequest {
 	@IsOptional()
 	payment_code: string;
 
-	@Type(() => Date)
+	@Transform(dateTransformer)
 	@IsDate()
 	@IsOptional()
 	transaction_time: Date;

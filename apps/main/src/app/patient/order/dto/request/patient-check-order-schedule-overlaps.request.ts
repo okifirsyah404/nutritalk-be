@@ -1,4 +1,7 @@
-import { consultationTypeEnumStringTransformer } from "@common";
+import {
+	consultationTypeEnumStringTransformer,
+	dateTransformer,
+} from "@common";
 import { IsWithinHourRange } from "@common/validator/is-within-hour-range.validator";
 import {
 	ConsultationValidationMessage,
@@ -6,7 +9,7 @@ import {
 } from "@constant/message";
 import { ICheckOrderScheduleOverlaps } from "@contract";
 import { ConsultationType } from "@prisma/client";
-import { Transform, Type } from "class-transformer";
+import { Transform } from "class-transformer";
 import {
 	IsDate,
 	IsEnum,
@@ -26,7 +29,7 @@ export class PatientCheckOrderScheduleOverlapsRequest
 	})
 	nutritionistId: string;
 
-	@Type(() => Date)
+	@Transform(dateTransformer)
 	@IsWithinHourRange({
 		message:
 			NutritionistValidationMessage.ERR_START_TIME_MUST_BETWEEN_7_AM_7_PM_WIB,
@@ -39,7 +42,7 @@ export class PatientCheckOrderScheduleOverlapsRequest
 	})
 	start: Date;
 
-	@Type(() => Date)
+	@Transform(dateTransformer)
 	@IsWithinHourRange({
 		message:
 			NutritionistValidationMessage.ERR_END_TIME_MUST_BETWEEN_7_AM_7_PM_WIB,

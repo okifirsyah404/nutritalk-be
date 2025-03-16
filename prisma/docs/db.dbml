@@ -117,6 +117,7 @@ Table ConsultationTime {
   id String [pk]
   start DateTime
   end DateTime
+  duration Int
   createdAt DateTime [default: `now()`]
   updatedAt DateTime
   consultation Consultation
