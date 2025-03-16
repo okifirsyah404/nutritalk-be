@@ -7,10 +7,19 @@ import {
 	INutritionistEntity,
 } from "@contract";
 import { AccessTokenGuard, GetNutritionistLogged } from "@module/app-jwt";
-import { Controller, Get, Param, Query, UseGuards } from "@nestjs/common";
+import {
+	Body,
+	Controller,
+	Get,
+	Param,
+	Put,
+	Query,
+	UseGuards,
+} from "@nestjs/common";
 import { AccountRole } from "@prisma/client";
 import { UriUtil } from "@util";
 import { NutritionistConsultationIndexQuery } from "../dto/query/nutritionist-consultation-index.query";
+import { NutritionistRescheduleConsultationRequest } from "../dto/request/nutritionist-reschedule-consultation.request";
 import { NutritionistConsultationService } from "../service/nutritionist-consultation.service";
 
 @UseGuards(AccessTokenGuard)
@@ -47,6 +56,76 @@ export class NutritionistConsultationController {
 
 		return BaseApiResponse.success({
 			message: ConsultationSuccessMessage.SUCCESS_GET_CONSULTATION,
+			data: NutritionistConsultationResponse.fromEntity(result),
+		});
+	}
+
+	@Get(":consultationId/status/scheduled")
+	async setConsultationStatusScheduled(
+		@GetNutritionistLogged() nutritionist: INutritionistEntity,
+		@Param("consultationId") consultationId: string,
+	): Promise<IApiResponse<NutritionistConsultationResponse>> {
+		const result = await this.service.setConsultationStatusAsScheduled(
+			nutritionist.id,
+			consultationId,
+		);
+
+		return BaseApiResponse.success({
+			message:
+				ConsultationSuccessMessage.SUCCESS_UPDATE_CONSULTATION_AS_SCHEDULED,
+			data: NutritionistConsultationResponse.fromEntity(result),
+		});
+	}
+
+	@Get(":consultationId/status/finished")
+	async setConsultationStatusFinished(
+		@GetNutritionistLogged() nutritionist: INutritionistEntity,
+		@Param("consultationId") consultationId: string,
+	): Promise<IApiResponse<NutritionistConsultationResponse>> {
+		const result = await this.service.setConsultationStatusAsFinished(
+			nutritionist.id,
+			consultationId,
+		);
+
+		return BaseApiResponse.success({
+			message:
+				ConsultationSuccessMessage.SUCCESS_UPDATE_CONSULTATION_AS_FINISHED,
+			data: NutritionistConsultationResponse.fromEntity(result),
+		});
+	}
+
+	@Get(":consultationId/status/canceled")
+	async setConsultationStatusCanceled(
+		@GetNutritionistLogged() nutritionist: INutritionistEntity,
+		@Param("consultationId") consultationId: string,
+	): Promise<IApiResponse<NutritionistConsultationResponse>> {
+		const result = await this.service.setConsultationStatusAsCanceled(
+			nutritionist.id,
+			consultationId,
+		);
+
+		return BaseApiResponse.success({
+			message:
+				ConsultationSuccessMessage.SUCCESS_UPDATE_CONSULTATION_AS_CANCELLED,
+			data: NutritionistConsultationResponse.fromEntity(result),
+		});
+	}
+
+	@Put(":consultationId/status/reschedule")
+	async setConsultationStatusReScheduled(
+		@GetNutritionistLogged() nutritionist: INutritionistEntity,
+		@Param("consultationId") consultationId: string,
+		@Body() reqBody: NutritionistRescheduleConsultationRequest,
+	): Promise<IApiResponse<NutritionistConsultationResponse>> {
+		const result = await this.service.rescheduleConsultation(
+			nutritionist.id,
+			consultationId,
+			reqBody,
+		);
+
+		return BaseApiResponse.success({
+			message:
+				ConsultationSuccessMessage.SUCCESS_UPDATE_CONSULTATION_AS_RE_SCHEDULED,
 			data: NutritionistConsultationResponse.fromEntity(result),
 		});
 	}

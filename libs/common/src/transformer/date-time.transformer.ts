@@ -21,3 +21,17 @@ export const dateTimeTransformer = ({
 		})
 		.toDate();
 };
+
+export const dateTransformer = ({
+	value,
+}: {
+	value: string;
+}): Date | undefined => {
+	const date = moment(value);
+
+	if (!date.isValid()) {
+		return undefined;
+	}
+
+	return date.toDate();
+};

@@ -172,6 +172,7 @@ export interface IConsultationTimeEntity {
 	id: string;
 	start?: Date | null;
 	end?: Date | null;
+	duration?: number | null;
 	createdAt?: Date | null;
 	updatedAt?: Date | null;
 	consultation?: IConsultationEntity | null;

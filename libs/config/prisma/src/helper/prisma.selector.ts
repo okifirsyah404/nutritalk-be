@@ -237,6 +237,7 @@ export abstract class PrismaSelector {
 		id: true,
 		start: true,
 		end: true,
+		duration: true,
 	} satisfies Prisma.ConsultationTimeSelect;
 
 	static readonly TRANSACTION_PRICE = {

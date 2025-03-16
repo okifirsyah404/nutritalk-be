@@ -1,10 +1,10 @@
 import { PatientForgetPasswordRequest } from "@app/app/patient/auth/dto/request/patient-forget-password.request";
-import { IsIndonesianPhoneNumber } from "@common";
+import { dateTransformer, IsIndonesianPhoneNumber } from "@common";
 import { ProfileValidationMessage } from "@constant/message";
 import { IRegisterRequest } from "@contract";
 import { PickType } from "@nestjs/swagger";
 import { Gender } from "@prisma/client";
-import { Type } from "class-transformer";
+import { Transform } from "class-transformer";
 import {
 	IsDate,
 	IsEnum,
@@ -47,7 +47,7 @@ export class PatientAuthRegisterRequest
 	@IsOptional()
 	readonly placeOfBirth?: string;
 
-	@Type(() => Date)
+	@Transform(dateTransformer)
 	@IsDate({
 		message: ProfileValidationMessage.ERR_DATE_OF_BIRTH_MUST_BE_DATE,
 	})

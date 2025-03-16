@@ -128,6 +128,6 @@ export class PatientOrderService {
 	 * @returns The total price of the consultation.
 	 * */
 	private countTotalPrice(price: number, duration: number): number {
-		return price * duration;
+		return price * (duration / 60);
 	}
 }
