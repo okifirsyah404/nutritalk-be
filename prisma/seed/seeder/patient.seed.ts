@@ -153,7 +153,7 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 				},
 				credit: {
 					create: {
-						balance: 1000000,
+						balance: 200000,
 					},
 				},
 			},
@@ -256,9 +256,7 @@ async function seedPatient(prisma: PrismaClient): Promise<void> {
 						},
 					},
 					credit: {
-						create: {
-							balance: 1000000,
-						},
+						create: {},
 					},
 				},
 			});
