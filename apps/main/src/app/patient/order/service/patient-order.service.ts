@@ -1,7 +1,4 @@
-import {
-	ConsultationErrorMessage,
-	NutritionistErrorMessage,
-} from "@constant/message";
+import { NutritionistErrorMessage } from "@constant/message";
 import {
 	ICheckOrderScheduleOverlaps,
 	ICreateConsultationOrderRequest,
@@ -10,12 +7,7 @@ import {
 	MidtransGenerateSnapTokenResponse,
 } from "@contract";
 import { MidtransService } from "@module/midtrans";
-import {
-	Injectable,
-	Logger,
-	NotFoundException,
-	UnprocessableEntityException,
-} from "@nestjs/common";
+import { Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { ConsultationType, PaymentSource } from "@prisma/client";
 import { PatientOrderRepository } from "../repository/patient-order.repository";
 
@@ -48,13 +40,13 @@ export class PatientOrderService {
 			);
 		}
 
-		const result = await this.repository.getOverlapsConsultation(reqBody);
+		// const result = await this.repository.getOverlapsConsultation(reqBody);
 
-		if (result) {
-			throw new UnprocessableEntityException(
-				ConsultationErrorMessage.ERR_ORDER_SCHEDULE_OVERLAPS,
-			);
-		}
+		// if (result) {
+		// 	throw new UnprocessableEntityException(
+		// 		ConsultationErrorMessage.ERR_ORDER_SCHEDULE_OVERLAPS,
+		// 	);
+		// }
 
 		return reqBody;
 	}
