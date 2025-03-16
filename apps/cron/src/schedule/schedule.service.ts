@@ -33,11 +33,16 @@ export class ScheduleService {
 	async everyDayAt7PM(): Promise<void> {
 		this.logger.log("Running everyDayAt7PM");
 		await this.autoAvailableScheduler.setUnavailableNutritionist();
+		await this.consultationScheduler.updateWaitingConfirmationConsultation();
+		await this.consultationScheduler.updateScheduledConsultation();
+		await this.consultationScheduler.updateWaitingPaymentConsultation();
+		await this.consultationScheduler.updateWaitingConfirmationConsultation();
 	}
 
-	// @Cron(CronExpression.EVERY_10_SECONDS)
-	// async every10Seconds(): Promise<void> {
-	// 	this.logger.log("Running every10Seconds");
-	// 	await this.consultationScheduler.updateWaitingPaymentConsultation();
-	// }
+	@Cron(CronExpression.EVERY_10_MINUTES)
+	async every10Minutes(): Promise<void> {
+		this.logger.log("Running every10Minutes");
+		await this.consultationScheduler.updateScheduledConsultation();
+		await this.consultationScheduler.updateOnProcessConsultation();
+	}
 }
